@@ -7,6 +7,7 @@ import ItemDetail from "./Pages/ItemDetail";
 import ShoppingList from "./Pages/ShoppingList";
 import MemberPage from "./Pages/MemberPage";
 import ItemsTopList from "./Pages/ItemsTopList";
+import Login from "./Pages/Login";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <div className="Contents_Wrap">
           <BrowserRouter>
             <Routes>
+              <Route path="/login" element={<Login/>}/>
               <Route path="/memberPage/:memberId" element={<MemberPage />} />
               <Route path="/itemDetail/:itemId" element={<ItemDetail />} />
               <Route path="/" element={<Home />} />
