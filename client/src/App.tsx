@@ -3,6 +3,7 @@ import Home from "./Pages/Home";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import ShoppingList from "./Pages/ShoppingList";
+import ItemsTopList from "./Pages/ItemsTopList";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/items" element={<ShoppingList />} />
+              <Route path="/items-list" element={<ShoppingList />} />
+              <Route path="/items-top-list" element={<ItemsTopList />} />
             </Routes>
           </BrowserRouter>
         </div>
