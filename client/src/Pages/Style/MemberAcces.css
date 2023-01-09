@@ -1,17 +1,17 @@
-.LogIn_Container{
+.MemberAcces_Container{
   display: flex;
   gap: 30px;
   justify-content: center;
 }
 
-.LogIn_Menu{
+.MemberAcces_Menu{
   width: 100%;
   max-width: 370px;
   height: 500px;
   background-color: var(--dark2);
 }
 
-.LogIn_Menu li{
+.MemberAcces_Menu li{
   text-align: center;
   cursor: pointer;
   width: 100%;
@@ -20,14 +20,14 @@
   border: 1px solid var(--lightgray);
 }
 
-.LogIn_Contents{
+.MemberAcces_Contents{
   width: 370px;
   height: 500px;
   background-color: lightcoral;
   background-color: var(--dark2);
 }
 
-.LogIn_Contents li{
+.MemberAcces_Contents li{
   display: flex;
   cursor: pointer;
   width: 100%;
@@ -35,21 +35,21 @@
   background-color: var(--dark3);
   border: 1px solid var(--lightgray);
 }
-.LogIn_Contents li:first-child{
+.MemberAcces_Contents li:first-child{
   justify-content: center;
 }
 
-.LogIn_Contents li label{
+.MemberAcces_Contents li label{
   display: block;
   width: 100px;
   text-align: center;
 }
 
-.LogIn_Contents li input{
+.MemberAcces_Contents li input{
   border: 0px;
 }
 
-.LogIn_Contents li button{
+.MemberAcces_Contents li button{
   width: 100px;
   color: var(--white);
   background-color: var(--dark);

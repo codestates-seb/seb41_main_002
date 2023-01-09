@@ -1,16 +1,16 @@
 import React from "react";
-import "./Style/Login.css";
+import "./Style/MemberAcces.css";
 
 const Login = () => {
   return (
-    <div className="LogIn_Container">
-      <ul className="LogIn_Menu">
+    <div className="MemberAcces_Container">
+      <ul className="MemberAcces_Menu">
         <li>회원가입</li>
         <li>로그인</li>
         <li>아이디 찾기</li>
         <li>비밀번호 찾기</li>
       </ul>
-      <ul className="LogIn_Contents">
+      <ul className="MemberAcces_Contents">
         <li>로그인</li>
         <li>
           <label htmlFor="LogIn_id">ID</label>
