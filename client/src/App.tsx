@@ -11,11 +11,8 @@ function App() {
         <div className="Contents_Wrap">
           <BrowserRouter>
             <Routes>
-<<<<<<< HEAD
-              <Route path="/items" element={<ShoppingList />} />
-=======
               <Route path="/" element={<Home />} />
->>>>>>> 849731ba0cca22e5bf631ca7ffe383ca10433dc2
+              <Route path="/items" element={<ShoppingList />} />
             </Routes>
           </BrowserRouter>
         </div>
