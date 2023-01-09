@@ -22,12 +22,10 @@ public class OrderPostDto {
 
     private Integer usedReserve;
 
-    private static class ItemInfo {
+    @Getter
+    @NoArgsConstructor
+    public static class ItemInfo {
         private Long itemId;
-
-        private String titleImageUrl;
-
-        private String itemTitle;
 
         private Integer itemCount;
 
