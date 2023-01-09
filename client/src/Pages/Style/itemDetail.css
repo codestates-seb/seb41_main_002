@@ -17,8 +17,7 @@
   height: 280px;
 }
 
-.Item_Img,
-.Item_Img img {
+.Item_Img,.Item_Img img {
   width: 100%;
   min-width: 275px;
   height: 280px;
