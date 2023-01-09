@@ -1,0 +1,33 @@
+.Top_List_Title {
+  text-align: center;
+  font-size: 27px;
+}
+
+.Filter_Options {
+  display: flex;
+  height: 50px;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.Filter_Button {
+  width: 75px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+.Products_Gallery {
+  padding: 20px 0;
+  background-color: var(--gray);
+}
+
+.Products_Row {
+  display: flex;
+  margin: 20px 0;
+  justify-content: space-evenly;
+}
+
+.Product_Detail {
+  text-align: center;
+  font-size: 17px;
+}
