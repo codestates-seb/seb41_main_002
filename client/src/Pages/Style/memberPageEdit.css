@@ -30,24 +30,6 @@
   height: 50px;
 }
 
-.Type_Title{
-  display: flex;
-  justify-content: center;
-  border: 1px solid;
-  width: 40%;
-  align-items: center;
-  background-color: peru;
-}
-
-.Type_Content{
-  display: flex;
-  justify-content: center;
-  border: 1px solid;
-  width: 60%;
-  align-items: center;
-  background-color: peru;
-}
-
 .Edit_Button_Wrap{
   margin-top: 30px;
 }
@@ -67,22 +49,4 @@
 .Subscribe_Start_Date{
   display: flex;
   height: 70px;
-}
-
-.Subscribe_Start_Title{
-  display: flex;
-  justify-content: center;
-  border: 1px solid;
-  width: 40%;
-  align-items: center;
-  background-color: peru;
-}
-
-.Subscribe_Start_Content{
-  display: flex;
-  justify-content: center;
-  border: 1px solid;
-  width: 60%;
-  align-items: center;
-  background-color: peru;
 }

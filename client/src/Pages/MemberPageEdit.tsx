@@ -15,6 +15,24 @@ const MemberInfoText = styled.span`
   display: flex;
 `;
 
+const InfoTitle = styled.div`
+  display: flex;
+  justify-content: center;
+  border: 1px solid;
+  width: 40%;
+  align-items: center;
+  background-color: peru;
+`;
+
+const InfoContent = styled.div`
+  display: flex;
+  justify-content: center;
+  border: 1px solid;
+  width: 60%;
+  align-items: center;
+  background-color: peru;
+`;
+
 export default function MemberPageEdit() {
   return (
     // 추후 데이터 수정 예정
@@ -27,7 +45,7 @@ export default function MemberPageEdit() {
           <div className="Info_Title">
             <MemberInfoText>ID</MemberInfoText>
           </div>
-          <div className="Info_Content">
+          <div>
             <MemberInfoText>AccountId</MemberInfoText>
           </div>
         </MemberInfoContent>
@@ -35,7 +53,7 @@ export default function MemberPageEdit() {
           <div className="Info_Title">
             <MemberInfoText>PW</MemberInfoText>
           </div>
-          <div className="Info_Content">
+          <div>
             <MemberInfoText>**********</MemberInfoText>
           </div>
         </MemberInfoContent>
@@ -43,7 +61,7 @@ export default function MemberPageEdit() {
           <div className="Info_Title">
             <MemberInfoText>이름</MemberInfoText>
           </div>
-          <div className="Info_Content">
+          <div>
             <MemberInfoText>홍길동</MemberInfoText>
           </div>
         </MemberInfoContent>
@@ -51,7 +69,7 @@ export default function MemberPageEdit() {
           <div className="Info_Title">
             <MemberInfoText>생년월일</MemberInfoText>
           </div>
-          <div className="Info_Content">
+          <div>
             <MemberInfoText>1997/05/07</MemberInfoText>
           </div>
         </MemberInfoContent>
@@ -59,7 +77,7 @@ export default function MemberPageEdit() {
           <div className="Info_Title">
             <MemberInfoText>이메일</MemberInfoText>
           </div>
-          <div className="Info_Content">
+          <div>
             <MemberInfoText>dlaruddls@nate.com</MemberInfoText>
           </div>
         </MemberInfoContent>
@@ -67,7 +85,7 @@ export default function MemberPageEdit() {
           <div className="Info_Title">
             <MemberInfoText>핸드폰 번호</MemberInfoText>
           </div>
-          <div className="Info_Content">
+          <div>
             <MemberInfoText>010-7702-9884</MemberInfoText>
           </div>
         </MemberInfoContent>
@@ -75,7 +93,7 @@ export default function MemberPageEdit() {
           <div className="Info_Title">
             <MemberInfoText>내 배송지</MemberInfoText>
           </div>
-          <div className="Info_Content">
+          <div>
             <MemberInfoText>
               대표주소: 서울특별시 강서구 화곡동 56-536 501호
             </MemberInfoText>
@@ -87,7 +105,7 @@ export default function MemberPageEdit() {
               <button>대표주소 설정</button>
             </MemberInfoText>
           </div>
-          <div className="Info_Content">
+          <div>
             <MemberInfoText>
               주소Title1: 서울특별시 강서구 화곡동 56-536 501호
             </MemberInfoText>
@@ -99,7 +117,7 @@ export default function MemberPageEdit() {
               <button>대표주소 설정</button>
             </MemberInfoText>
           </div>
-          <div className="Info_Content">
+          <div>
             <MemberInfoText>
               주소Title1: 서울특별시 강서구 화곡동 56-536 501호
             </MemberInfoText>
@@ -110,28 +128,28 @@ export default function MemberPageEdit() {
         </MemberInfoContent>
         <div>
           <div className="Edit_Type_Container">
-            <div className="Type_Title">
+            <InfoTitle>
               <MemberInfoText>내 피부타입</MemberInfoText>
-            </div>
-            <div className="Type_Content">
+            </InfoTitle>
+            <InfoContent>
               <MemberInfoText>내 피부타입</MemberInfoText>
-            </div>
+            </InfoContent>
           </div>
           <div className="Edit_Type_Container">
-            <div className="Type_Title">
+            <InfoTitle>
               <MemberInfoText>내 피부타입</MemberInfoText>
-            </div>
-            <div className="Type_Content">
+            </InfoTitle>
+            <InfoContent>
               <MemberInfoText>내 피부타입</MemberInfoText>
-            </div>
+            </InfoContent>
           </div>
           <div className="Edit_Type_Container">
-            <div className="Type_Title">
+            <InfoTitle>
               <MemberInfoText>내 피부타입</MemberInfoText>
-            </div>
-            <div className="Type_Content">
+            </InfoTitle>
+            <InfoContent>
               <MemberInfoText>내 피부타입</MemberInfoText>
-            </div>
+            </InfoContent>
           </div>
         </div>
       </ul>
@@ -140,16 +158,23 @@ export default function MemberPageEdit() {
       </div>
       <div className="Subscribe_Edit_Container">
         <div className="Subscribe_Start_Date">
-        <div className="Subscribe_Start_Title">
-          <MemberInfoText>구독 시작일</MemberInfoText>
-        </div>
-        <div className="Subscribe_Start_Content">
-          <MemberInfoText>구독 시작일</MemberInfoText>
-        </div>
+          <div className="Subscribe_Start_Title">
+            <MemberInfoText>구독 시작일</MemberInfoText>
+          </div>
+          <div className="Subscribe_Start_Content">
+            <MemberInfoText>구독 시작일</MemberInfoText>
+          </div>
         </div>
         <div className="Subscribe_Benefits_Container">
-          <div className="Subscribe_Benefits_Title"></div>
-          <div className="Subscribe_Benefits_Contents"></div>
+          <div className="Subscribe_Benefits_Title">
+            <MemberInfoText>지금까지 받은 혜택</MemberInfoText>
+          </div>
+          <div className="Subscribe_Benefits_Contents">
+            <MemberInfoText>구독일로부터</MemberInfoText>
+            <MemberInfoText>4개의 샘플</MemberInfoText>
+            <MemberInfoText>4개의 샘플</MemberInfoText>
+            <MemberInfoText>4개의 샘플</MemberInfoText>
+          </div>
         </div>
       </div>
     </div>
