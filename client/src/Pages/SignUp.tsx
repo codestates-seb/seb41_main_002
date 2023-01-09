@@ -41,6 +41,9 @@ const SignUp = () => {
           <label htmlFor="SignUp_phoneNumber">핸드폰 번호</label>
           <input id="SignUp_phoneNumber" type="tel" />
         </li>
+        <li>
+          <button>확인</button>
+        </li>
       </ul>
     </div>
   );

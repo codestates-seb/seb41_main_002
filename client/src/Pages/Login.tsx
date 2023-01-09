@@ -20,6 +20,9 @@ const Login = () => {
           <label htmlFor="LogIn_pw">PW</label>
           <input id="LogIn_pw" type="password" />
         </li>
+        <li>
+          <button>확인</button>
+        </li>
       </ul>
     </div>
   );

@@ -39,6 +39,15 @@
   justify-content: center;
 }
 
+.MemberAcces_Contents li:last-child{
+  justify-content: center;
+}
+
+.MemberAcces_Contents li:last-child button{
+  width: 100%;
+  border: 0px;
+}
+
 .MemberAcces_Contents li label{
   display: block;
   width: 100px;
@@ -51,6 +60,7 @@
 
 .MemberAcces_Contents li button{
   width: 100px;
+  line-height: 40px;
   color: var(--white);
   background-color: var(--dark);
   border: 1px solid var(--lightgray);
