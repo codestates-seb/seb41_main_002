@@ -33,6 +33,13 @@ const InfoContent = styled.div`
   background-color: peru;
 `;
 
+const SubscribeBenefit = styled(InfoContent)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 20px;
+`;
+
 export default function MemberPageEdit() {
   return (
     // 추후 데이터 수정 예정
@@ -158,24 +165,28 @@ export default function MemberPageEdit() {
       </div>
       <div className="Subscribe_Edit_Container">
         <div className="Subscribe_Start_Date">
-          <div className="Subscribe_Start_Title">
+          <InfoTitle>
             <MemberInfoText>구독 시작일</MemberInfoText>
-          </div>
-          <div className="Subscribe_Start_Content">
+          </InfoTitle>
+          <InfoContent>
             <MemberInfoText>구독 시작일</MemberInfoText>
-          </div>
+          </InfoContent>
         </div>
         <div className="Subscribe_Benefits_Container">
-          <div className="Subscribe_Benefits_Title">
+          <InfoTitle>
             <MemberInfoText>지금까지 받은 혜택</MemberInfoText>
-          </div>
-          <div className="Subscribe_Benefits_Contents">
+          </InfoTitle>
+          <SubscribeBenefit>
             <MemberInfoText>구독일로부터</MemberInfoText>
             <MemberInfoText>4개의 샘플</MemberInfoText>
             <MemberInfoText>4개의 샘플</MemberInfoText>
             <MemberInfoText>4개의 샘플</MemberInfoText>
-          </div>
+          </SubscribeBenefit>
         </div>
+      </div>
+      {/* 밑 코드는 추후 공용 컴포넌트로 교체 예정 */}
+      <div className="Edit_Button_Wrap">
+        <button className="Edit_Button">구독 취소</button>
       </div>
     </div>
   );
