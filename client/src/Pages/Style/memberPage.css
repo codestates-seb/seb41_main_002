@@ -1,0 +1,44 @@
+.MemberPage_Container{
+  display: grid;
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+  background-color: lightcoral;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 280px 500px;
+  gap: 30px;
+}
+
+.MemberPage_Tags{
+  background-color: blue;
+}
+
+.MemberPage_Reviews{
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.MemberPage_Reviews ul{
+  display: flex;
+}
+
+.MemberPage_Reviews li{
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  background-color: var(--dark3);
+  border: 1px solid var(--lightgray);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  text-align: center;
+}
+.MemberPage_Reviews li:last-child{
+  position: relative;
+  right: 1px;
+}
+
+.Reviews_Contents{
+  background-color: var(--dark3);
+  border: 1px solid var(--lightgray);
+  height: calc(100% - 30px);
+}
