@@ -1,0 +1,56 @@
+.Detail_Container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.Item_Container {
+  display: flex;
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+  background-color: lightcoral;
+}
+.Item_Described {
+  width: 100%;
+  min-width: 275px;
+  height: 280px;
+}
+
+.Item_Img,.Item_Img img {
+  width: 100%;
+  min-width: 275px;
+  height: 280px;
+}
+
+.Item_Described li {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 9px 13px;
+}
+.Item_Contents {
+  width: 100%;
+  max-width: 1024px;
+  height: 500px;
+  margin: 0 auto;
+  background-color: lightgray;
+}
+
+.Item_Submit {
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.Item_Submit button {
+  float: right;
+  margin-left: 20px;
+}
+
+.Item_Reviews {
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+  background-color: lightgreen;
+}
