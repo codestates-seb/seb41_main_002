@@ -1,0 +1,40 @@
+.Shopping_List_Search {
+  margin: 0 auto;
+}
+
+.Search_Bar {
+  width: calc(100% - 20px);
+  height: 50px;
+  font-size: 23px;
+  padding-left: 20px;
+  text-align: center;
+}
+
+.Filter_Options {
+  display: flex;
+  height: 50px;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.Filter_Button {
+  width: 75px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+.Products_Gallery {
+  padding: 20px 0;
+  background-color: var(--gray);
+}
+
+.Products_Row {
+  display: flex;
+  margin: 20px 0;
+  justify-content: space-evenly;
+}
+
+.Product_Detail {
+  text-align: center;
+  font-size: 17px;
+}

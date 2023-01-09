@@ -1,15 +1,20 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import ShoppingList from "./Pages/ShoppingList";
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route />
-        </Routes>
-      </BrowserRouter>
+      <div className="Browser_Container">
+        <div className="Contents_Wrap">
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<ShoppingList />} />
+            </Routes>
+          </BrowserRouter>
+        </div>
+      </div>
     </>
   );
 }
