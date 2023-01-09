@@ -1,56 +1,56 @@
-.Edit_Page_Container{
+.Edit_Page_Container {
   padding: 20px 20px;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
-.Member_Infomation_Contents{
+.Member_Infomation_Contents {
   border: 1px solid blue;
   height: 100%;
   width: 900px;
 }
 
-.Info_Title{
+.Info_Title {
   position: absolute;
   left: 340px;
 }
 
-.Info_Content{
+.Info_Content {
   display: flex;
   justify-content: center;
 }
 
-.Address_Add_Button{
+.Address_Add_Button {
   color: blue;
 }
 
-.Edit_Type_Container{
+.Edit_Type_Container {
   display: flex;
   height: 50px;
 }
 
-.Edit_Button_Wrap{
+.Edit_Button_Wrap {
   margin-top: 30px;
 }
 
-.Edit_Button{
+.Edit_Button {
   width: 120px;
   height: 30px;
 }
 
-.Subscribe_Edit_Container{
+.Subscribe_Edit_Container {
   margin-top: 30px;
   width: 900px;
   height: 100%;
   background-color: rgb(38, 104, 162);
 }
 
-.Subscribe_Start_Date{
+.Subscribe_Start_Date {
   display: flex;
   height: 70px;
 }
 
-.Subscribe_Benefits_Container{
+.Subscribe_Benefits_Container {
   display: flex;
 }
