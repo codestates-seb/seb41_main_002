@@ -43,7 +43,11 @@ const ItemDetail = () => {
         <button>장바구니에 추가</button>
         <button>바로 구매</button>
       </div>
-      <div className="Item_Reviews"></div>
+      <div className="Item_Reviews">
+        <ul>
+          <li>리뷰1</li>
+        </ul>
+      </div>
     </div>
   );
 };
