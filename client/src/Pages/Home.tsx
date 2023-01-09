@@ -11,7 +11,7 @@ const BannerContainer = styled.div<{ height: string }>`
 `;
 
 const TopBannerContainer = styled(BannerContainer)`
-box-sizing: border-box;
+  box-sizing: border-box;
   padding: 20px 40px;
 `;
 
