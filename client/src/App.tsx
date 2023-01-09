@@ -2,6 +2,7 @@ import React from "react";
 import Home from "./Pages/Home";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import ShoppingList from "./Pages/ShoppingList";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/items" element={<ShoppingList />} />
             </Routes>
           </BrowserRouter>
         </div>
