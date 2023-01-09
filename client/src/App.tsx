@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import ItemDetail from "./Pages/ItemDetail";
 import ShoppingList from "./Pages/ShoppingList";
 import ItemsTopList from "./Pages/ItemsTopList";
+import Review from "./Pages/Review";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/items-list" element={<ShoppingList />} />
               <Route path="/items-top-list" element={<ItemsTopList />} />
+              <Route path="/reviews" element={<Review/>}/>
             </Routes>
           </BrowserRouter>
         </div>

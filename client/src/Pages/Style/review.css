@@ -1,0 +1,53 @@
+.Review_Container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.Review_TopBox{
+  display: flex;
+  gap: 30px;
+}
+
+.Review_Item{
+  width: 300px;
+  text-align: center;
+}
+
+.Review_Item li{
+  border: 1px solid var(--lightgray);
+  background-color: var(--dark3);
+  line-height: 30px;
+}
+
+.Review_Item li:last-child{
+  height: 50px;
+}
+
+.Review_MyTags{
+  width: 100%;
+  height: 150px;
+  background-color: lightcoral;
+}
+
+.Review_Title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background-color: lightcyan;
+}
+
+.Review_Title input{
+  width: 400px;
+  height: 30px;
+  font-size: 27px;
+}
+
+.Review_TextBox{
+  width: 100%;
+  height: 400px;
+  border: 1px solid var(--lightgray);
+  background-color: var(--dark3);
+}
