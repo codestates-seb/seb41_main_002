@@ -8,8 +8,8 @@ export default function ItemsTopList() {
   const changeCategory = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    const button: HTMLButtonElement = event.currentTarget;
-    setCategory(button.name);
+    const filterButton: HTMLButtonElement = event.currentTarget;
+    setCategory(filterButton.name);
   };
   return (
     <div>
