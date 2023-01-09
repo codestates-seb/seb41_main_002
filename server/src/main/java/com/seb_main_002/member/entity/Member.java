@@ -55,14 +55,14 @@ public class Member extends Auditable {
     }
 
     public void setSubscribe(Subscribe subscribe) {
-        this.setSubscribe(subscribe);
+        this.subscribe = subscribe;
         if(subscribe.getMember() != this) {
             subscribe.setMember(this);
         }
     }
 
     public void setCart(Cart cart) {
-        this.setCart(cart);
+        this.cart = cart;
         if(cart.getMember() != this) {
             cart.setMember(this);
         }
