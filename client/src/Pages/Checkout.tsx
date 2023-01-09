@@ -27,7 +27,7 @@ export default function Checkout() {
         </div>
         <div className="to_Be_Replaced Order_Item">
           <img src="https://picsum.photos/75?random=2" alt="sample image" />
-          <span>어머 너무 이뻐요 앰플 </span>
+          <span>어머 너무 촉촉해요 앰플 </span>
           <span>수량: {item2Count}개 </span>
           <span>가격: {item2Count * item2Price}원 </span>
         </div>

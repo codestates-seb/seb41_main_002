@@ -7,6 +7,7 @@ import ItemDetail from "./Pages/ItemDetail";
 import ShoppingList from "./Pages/ShoppingList";
 import MemberPage from "./Pages/MemberPage";
 import ItemsTopList from "./Pages/ItemsTopList";
+import Checkout from "./Pages/Checkout";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/member/edit" element={<MemberPageEdit />} />
               <Route path="/items-list" element={<ShoppingList />} />
               <Route path="/items-top-list" element={<ItemsTopList />} />
+              <Route path="/checkout" element={<Checkout />} />
             </Routes>
           </BrowserRouter>
         </div>
