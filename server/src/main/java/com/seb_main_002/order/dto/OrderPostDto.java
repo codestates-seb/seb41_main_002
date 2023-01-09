@@ -1,4 +1,4 @@
-package com.seb_main_002.order.entity.dto;
+package com.seb_main_002.order.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
