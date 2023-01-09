@@ -1,5 +1,6 @@
 import React from "react";
 import Home from "./Pages/Home";
+import MemberPageEdit from "./Pages/MemberPageEdit";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
@@ -11,6 +12,7 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/member/edit" element={<MemberPageEdit/>}/>
             </Routes>
           </BrowserRouter>
         </div>
