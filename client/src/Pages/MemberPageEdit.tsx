@@ -34,10 +34,9 @@ const InfoContent = styled.div`
 `;
 
 const SubscribeBenefit = styled(InfoContent)`
-  display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 20px;
+  align-items: center;
 `;
 
 const AddressEditContainer = styled.div`
