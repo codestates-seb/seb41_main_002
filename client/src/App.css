@@ -1,4 +1,4 @@
-.Browser_Container{
+.Browser_Container {
   width: 100%;
   margin: 0 auto;
   max-width: 1600px;
@@ -6,7 +6,7 @@
   height: 100%;
 }
 
-.Contents_Wrap{
+.Contents_Wrap {
   width: 100%;
   margin: 0 auto;
   max-width: 1400px;
@@ -14,6 +14,6 @@
   height: 100%;
 }
 
-html{
+html {
   width: 100%;
 }
