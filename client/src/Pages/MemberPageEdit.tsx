@@ -40,6 +40,14 @@ const SubscribeBenefit = styled(InfoContent)`
   padding-top: 20px;
 `;
 
+const AddressEditContainer = styled.div`
+  position: absolute;
+  right: 298px;
+  button {
+    margin-left: 10px;
+  }
+`;
+
 export default function MemberPageEdit() {
   return (
     // 추후 데이터 수정 예정
@@ -105,6 +113,10 @@ export default function MemberPageEdit() {
               대표주소: 서울특별시 강서구 화곡동 56-536 501호
             </MemberInfoText>
           </div>
+          <AddressEditContainer>
+            <button>수정</button>
+            <button>삭제</button>
+          </AddressEditContainer>
         </MemberInfoContent>
         <MemberInfoContent>
           <div className="Info_Title">
@@ -117,6 +129,10 @@ export default function MemberPageEdit() {
               주소Title1: 서울특별시 강서구 화곡동 56-536 501호
             </MemberInfoText>
           </div>
+          <AddressEditContainer>
+            <button>수정</button>
+            <button>삭제</button>
+          </AddressEditContainer>
         </MemberInfoContent>
         <MemberInfoContent>
           <div className="Info_Title">
@@ -124,11 +140,15 @@ export default function MemberPageEdit() {
               <button>대표주소 설정</button>
             </MemberInfoText>
           </div>
-          <div>
+          <div className="Address_Contents">
             <MemberInfoText>
               주소Title1: 서울특별시 강서구 화곡동 56-536 501호
             </MemberInfoText>
           </div>
+          <AddressEditContainer>
+            <button>수정</button>
+            <button>삭제</button>
+          </AddressEditContainer>
         </MemberInfoContent>
         <MemberInfoContent>
           <button className="Address_Add_Button">주소 추가하기</button>
@@ -140,6 +160,7 @@ export default function MemberPageEdit() {
             </InfoTitle>
             <InfoContent>
               <MemberInfoText>내 피부타입</MemberInfoText>
+              <select />
             </InfoContent>
           </div>
           <div className="Edit_Type_Container">
@@ -148,6 +169,7 @@ export default function MemberPageEdit() {
             </InfoTitle>
             <InfoContent>
               <MemberInfoText>내 피부타입</MemberInfoText>
+              <select />
             </InfoContent>
           </div>
           <div className="Edit_Type_Container">
@@ -156,6 +178,7 @@ export default function MemberPageEdit() {
             </InfoTitle>
             <InfoContent>
               <MemberInfoText>내 피부타입</MemberInfoText>
+              <select />
             </InfoContent>
           </div>
         </div>

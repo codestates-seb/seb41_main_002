@@ -54,3 +54,13 @@
 .Subscribe_Benefits_Container {
   display: flex;
 }
+
+.Address_Contents{
+  display: flex;
+}
+
+.Address_Contents > div {
+  display: flex;
+  justify-content: flex-end;
+}
+
