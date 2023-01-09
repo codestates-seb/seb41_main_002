@@ -10,7 +10,7 @@ function App() {
         <div className="Contents_Wrap">
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<ShoppingList />} />
+              <Route path="/items" element={<ShoppingList />} />
             </Routes>
           </BrowserRouter>
         </div>

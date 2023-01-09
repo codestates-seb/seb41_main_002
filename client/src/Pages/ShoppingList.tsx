@@ -2,7 +2,7 @@ import "./Style/ShoppingList.css";
 
 export default function ShoppingList(): JSX.Element {
   return (
-    <div className="Shopping_List_Wrapper">
+    <div>
       <div className="Shopping_List_Search">
         <input
           type="text"
