@@ -1,0 +1,19 @@
+.Browser_Container{
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1600px;
+  background-color: pink;
+  height: 100vh;
+}
+
+.Contents_Wrap{
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1400px;
+  background-color: black;
+  height: 100vh;
+}
+
+html{
+  width: 100%;
+}
