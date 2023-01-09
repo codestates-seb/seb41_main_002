@@ -12,7 +12,6 @@ const MemberTextBox = styled.li`
 
 const InfoText = styled.div<{ width: string }>`
   width: ${(props) => props.width};
-  height: 100%;
   text-align: center;
   line-height: 40px;
 `;
