@@ -18,7 +18,7 @@ public class Delivery extends Auditable {
     @JoinColumn(name = "ORDER_ID")
     private Order order;
 
-    private DeliveryStatus deliveryStatus;
+    private DeliveryStatus deliveryStatus = DeliveryStatus.DELIVERY_BEFORE;
 
     private String address;
 
