@@ -28,7 +28,7 @@ public class Order extends Auditable {
 
     private Integer totalPrice;
 
-    private OrderStatus orderStatus;
+    private OrderStatus orderStatus = OrderStatus.ORDER_CONFIRM;
 
     @OneToMany(mappedBy = "order", cascade={CascadeType.ALL})
     private List<OrderItem> orderItems = new ArrayList<>();
