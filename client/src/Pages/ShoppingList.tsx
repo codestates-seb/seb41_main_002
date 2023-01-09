@@ -1,6 +1,6 @@
 import "./Style/ShoppingList.css";
 
-export default function ShoppingList(): JSX.Element {
+export default function ShoppingList() {
   return (
     <div>
       <div className="Shopping_List_Search">
