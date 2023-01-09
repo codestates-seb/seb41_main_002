@@ -27,7 +27,7 @@ public class MemberService {
             member.setSubscribe(subscribe);
             memberRepository.save(member);
         } else {
-            throw new BusinessLogicException(ExceptionCode.NOT_IMPLEMENTATION);
+            throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_SUBSCRIBE);
         }
 
     }
