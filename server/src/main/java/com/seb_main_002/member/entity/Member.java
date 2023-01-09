@@ -25,8 +25,7 @@ public class Member extends Auditable {
     private String email;
     private String birthdate;
 
-    @OneToMany
-    @JoinColumn(name = "ADDRESS_ID")
+    @OneToMany(mappedBy = "member")
     private List<Address> addressList = new ArrayList<>();
 
     private String phoneNumber;

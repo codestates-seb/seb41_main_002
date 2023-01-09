@@ -21,7 +21,7 @@ public class Order extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToOne(mappedBy = "delivery", cascade = {CascadeType.ALL})
+    @OneToOne(mappedBy = "order", cascade = {CascadeType.ALL})
     private Delivery delivery;
 
     private Integer reserve;
