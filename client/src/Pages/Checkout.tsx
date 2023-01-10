@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./Style/Checkout.css";
+import "./Style/checkout.css";
 
 export default function Checkout() {
   // 아래 더미 데이터는 이후 데이터 연동 후 대치 될 예정입니다.
