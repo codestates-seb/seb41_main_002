@@ -22,7 +22,7 @@ public class Subscribe extends Auditable {
     private Boolean isSubscribed;
     @ColumnDefault("0")
     private Integer sampleCount;
-    private LocalDateTime subScribedDate;
+    private LocalDateTime subscribedDate;
     @ColumnDefault("0")
     private Integer totalDeliveryDiscount;
     @ColumnDefault("0")
