@@ -6,13 +6,16 @@ import com.seb_main_002.cart.entity.Cart;
 import com.seb_main_002.order.entity.Order;
 import com.seb_main_002.review.entity.Review;
 import com.seb_main_002.subscribe.entity.Subscribe;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Member extends Auditable {
 
