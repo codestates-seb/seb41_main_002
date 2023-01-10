@@ -1,4 +1,5 @@
-import "./Style/ShoppingList.css";
+import CustomButton from "../Components/Commons/Buttons";
+import "./Style/shoppingList.css";
 
 export default function ShoppingList() {
   return (
@@ -11,6 +12,9 @@ export default function ShoppingList() {
         ></input>
       </div>
       <ul className="Filter_Options">
+        <li>
+          <CustomButton color="blue" content="토너" width="100px" />
+        </li>
         <li>
           <button className="Filter_Button">토너</button>
         </li>
