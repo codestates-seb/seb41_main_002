@@ -17,7 +17,7 @@ public class Delivery extends Auditable {
     @OneToOne
     @JoinColumn(name = "ORDER_ID")
     private Order order;
-
+    @Enumerated(value = EnumType.STRING)
     private DeliveryStatus deliveryStatus;
 
     private String address;
