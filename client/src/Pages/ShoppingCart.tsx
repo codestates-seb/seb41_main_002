@@ -34,16 +34,31 @@ export default function ShoppingCart() {
             <div className="Product_Container">
               <div className="Product_Info">
                 <img src="" className="List_Product_Image" />
-                <span className="List_Product_Name">어머 너무 이뻐요 앰플</span>
+                <a>
+                  <span className="List_Product_Name">
+                    어머 너무 이뻐요 앰플
+                  </span>
+                </a>
               </div>
               <div className="Product_Price_Info">
                 <span className="Product_Count">수량: 1개</span>
                 <span className="Product_Price">가격: 40,000원</span>
               </div>
             </div>
-            <div className="Product_Delete"><button className="Cart_Delete_Button">상품 삭제</button></div>
+            <div className="Product_Delete">
+              <button className="Cart_Delete_Button">상품 삭제</button>
+            </div>
           </li>
         </ul>
+      </div>
+      <div className="Price_Info_Container">
+        <span >제품가격: 40,000원</span>
+        <span> + 배송비 4,000원</span>
+        <span> - 구독 2,000원</span>
+        <span> = 총 42,000원</span>
+        <div className="Cart_Payment_Button">
+          <button>결제하기</button>
+        </div>
       </div>
     </div>
   );

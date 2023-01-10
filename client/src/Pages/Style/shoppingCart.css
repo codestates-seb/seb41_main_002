@@ -22,8 +22,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 60vh;
+  height: 73vh;
   background-color: white;
+  border: 1px solid black;
 }
 
 .All_Check_Section {
@@ -113,4 +114,30 @@ background-color: black;
 
 .Cart_Delete_Button{
   background-color: none
+}
+
+.Price_Info_Container{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 20px;
+  height: 50px;
+  width: 100%;
+  background-color: white;
+  border: 1px solid black;
+}
+
+.Price_Info_Container > span {
+  font-size: 17px;
+  color: black;
+  margin-right: 10px;
+}
+
+.Cart_Payment_Button{
+  width: 83.625px;
+  height: 100%;
+  border-left: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
