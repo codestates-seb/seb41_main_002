@@ -30,13 +30,13 @@ public class MemberService {
                 subscribe.setSampleCount(0);
                 subscribe.setReserveProfit(0);
                 subscribe.setTotalDeliveryDiscount(0);
-                subscribe.setSubScribedDate(null);
+                subscribe.setSubscribedDate(null);
             } else {
                 //구독 신청의 경우
                 subscribe.setIsSubscribed(isSubScribed);
                 Integer sampleCount = subscribe.getSampleCount();
                 subscribe.setSampleCount(sampleCount + 10);
-                subscribe.setSubScribedDate(LocalDateTime.now());
+                subscribe.setSubscribedDate(LocalDateTime.now());
             }
             member.setSubscribe(subscribe);
             memberRepository.save(member);
@@ -51,5 +51,8 @@ public class MemberService {
         Member member = optionalMember.orElseThrow(
                 () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         return member;
+    }
+    public Member findMember(Long memberId) {
+        return verifyMember(memberId);
     }
 }

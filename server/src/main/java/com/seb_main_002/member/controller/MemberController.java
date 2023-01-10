@@ -1,6 +1,7 @@
 package com.seb_main_002.member.controller;
 
 import com.seb_main_002.member.dto.MemberPatchDto;
+import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.member.mapper.MemberMapper;
 import com.seb_main_002.member.repository.MemberRepository;
 import com.seb_main_002.member.service.MemberService;
@@ -24,5 +25,10 @@ public class MemberController {
         Boolean isSubscribed = requestBody.getIsSubscribed();
         memberService.updateSubscribe(memberId,isSubscribed);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("{memberId}")
+    public ResponseEntity getMember(@PathVariable("memberId") Long memberId) {
+        Member member = memberService.findMember(memberId);
+        return new ResponseEntity(mapper.memberToMemberResponseDto(member),HttpStatus.OK);
     }
 }
