@@ -1,0 +1,64 @@
+.Header_Nav {
+  height: 100px;
+  border: solid rgb(232, 223, 223) 1px;
+  background-color: var(--dark3);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.Header_Logo {
+  font-size: 35px;
+  /* 해당 폰트체는 이후 디자인 과정에서 대치될 예정입니다. */
+  font-family: cursive;
+}
+
+.Nav_List {
+  width: 50%;
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 20px;
+}
+
+.Nav_Dropdown_Button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: white;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.Nav_Dropdown_Button:hover,
+.Nav_Dropdown_Content a:hover {
+  color: gold;
+}
+
+.Nav_Dropdown_Content {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  background-color: rgba(54, 57, 63, 0.7);
+  min-width: 160px;
+  z-index: 1;
+}
+
+.Nav_Dropdown_Content a {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.Nav_Dropdown_Content a:first-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.Header_Icons {
+  width: 5%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Header_Icon {
+  width: 25px;
+}
