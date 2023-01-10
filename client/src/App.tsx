@@ -18,6 +18,7 @@ function App() {
         <div className="Contents_Wrap">
           <BrowserRouter>
             <Routes>
+              <Route />
               <Route path="/signUp" element={<SignUp/>}/>
               <Route path="/login" element={<Login/>}/>
               <Route path="/memberPage/:memberId" element={<MemberPage />} />
