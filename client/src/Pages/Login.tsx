@@ -13,12 +13,12 @@ const Login = () => {
       <ul className="Member_Access_Contents">
         <li>로그인</li>
         <li>
-          <label htmlFor="LogIn_id">ID</label>
-          <input id="LogIn_id" type="text" />
+          <label htmlFor="LogIn_Id">ID</label>
+          <input id="LogIn_Id" type="text" />
         </li>
         <li>
-          <label htmlFor="LogIn_pw">PW</label>
-          <input id="LogIn_pw" type="password" />
+          <label htmlFor="LogIn_Pw">PW</label>
+          <input id="LogIn_Pw" type="password" />
         </li>
         <li>
           <button>확인</button>
