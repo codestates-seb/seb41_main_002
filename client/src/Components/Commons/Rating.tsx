@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 
-interface settingType {
+interface SettingType {
   ratingEdit: boolean;
   ratingSize: number;
 }
@@ -9,15 +9,15 @@ interface settingType {
 interface RatingProps {
   starRating: number;
   setStarRating: Dispatch<SetStateAction<number>>;
-  ratingSetting: settingType;
+  ratingSetting: SettingType;
 }
 
-interface ratingStyleType {
+interface RatingStyleType {
   rating: number;
   size: number;
 }
 
-const RatingBox = styled.div<ratingStyleType>`
+const RatingBox = styled.div<RatingStyleType>`
   position: relative;
   font-size: ${(props) => props.size + "px"};
   width: max-content;
