@@ -17,6 +17,7 @@
   width: 50%;
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
   font-size: 20px;
 }
 
