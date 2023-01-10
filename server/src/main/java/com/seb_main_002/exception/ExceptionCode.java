@@ -9,7 +9,8 @@ public enum ExceptionCode {
     ORDER_NOT_FOUND(404, "Order not found"),
     CANNOT_CANCEL_ORDER(403, "Order can not change"),
     NOT_IMPLEMENTATION(501, "Not Implementation"),
-    UNAUTHORIZED(401,"Unauthorized");
+    UNAUTHORIZED(401,"Unauthorized"),
+    CANNOT_CHANGE_SUBSCRIBE(403,"Subscription can not be changed");
 
     @Getter
     private int status;
