@@ -17,6 +17,10 @@ public class Subscribe extends Auditable {
 
     private Integer sampleCount;
 
+    private Integer totalDeliveryDiscount;
+
+    private Integer reserveProfit;
+
     @OneToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
