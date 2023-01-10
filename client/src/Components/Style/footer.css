@@ -7,29 +7,29 @@
   margin-bottom: 5px;
 }
 
-.left{
+.Footer_Members{
   display: flex;
 }
 
-.left li{
+.Footer_Members li{
   height: 25px;
   font-size: 15px;
 }
 
-.left_1 li{
+.Member_Name li{
   width: 100px;
   text-align: center;
 }
 
-.left_2 li{
+.Member_GitHub li{
   width: 250px;
 }
 
-.Position{
+.Footer_Position{
   color: yellow;
 }
 
-.right{
+.Project_Outline{
   padding: 0 23px;
 }
 
@@ -37,7 +37,7 @@
   .Footer_Inside{
     flex-direction: column;
    }
-   .right{
+   .Project_Outline{
     margin-bottom: 30px;
    }
 }
