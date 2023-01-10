@@ -12,13 +12,28 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  position: relative;
+  width: 400px;
+  height: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--dark3);
+  border-radius: 10px;
+
+  .Close_btn{
+    color: var(--gray);
+  }
 `;
 
 const Modal = () => {
   return (
     <ModalOverlay>
-      <ModalContainer>Modal</ModalContainer>
+      <ModalContainer>
+        <div className="Close_btn">
+
+        </div>
+      </ModalContainer>
     </ModalOverlay>
   );
 };
