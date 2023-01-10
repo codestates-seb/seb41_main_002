@@ -15,6 +15,10 @@ spring:
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size : 100MB
 logging:
   level:
     org:
@@ -26,4 +30,16 @@ server:
     encoding:
       force-response: true
 
-# 화이팅!
+#aws image upload
+cloud:
+  aws:
+    credentials:
+      accessKey : ${AWS_ACCESS_KEY_ID} #AWS IAM AccessKey
+      secretKey : ${AWS_SECRET_ACCESS_KEY} #AWS IAM SecretKey
+    s3:
+      bucket: "jbawsbucket1"
+      dir : "/itemImg"
+    region:
+      static: ap-northeast-2
+    stack:
+      auto : false
