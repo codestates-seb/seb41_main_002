@@ -2,11 +2,14 @@ package com.seb_main_002.Address;
 
 import com.seb_main_002.audit.Auditable;
 import com.seb_main_002.member.entity.Member;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Address extends Auditable {
     @Id
