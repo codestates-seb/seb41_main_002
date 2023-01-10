@@ -3,6 +3,7 @@ package com.seb_main_002.member.dto;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -30,7 +31,7 @@ public class MemberResponseDto {
         private String orderCreatedAt;
         private String orderStatus;
         private Integer totalPrice;
-        private List<OrderItemResponseDto> orderItems;
+        private List<OrderItemResponseDto> orderItems = new ArrayList<>();
     }
 
     @Getter
