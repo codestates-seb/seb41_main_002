@@ -4,33 +4,43 @@ import "./Style/Checkout.css";
 export default function Checkout() {
   // 아래 더미 데이터는 이후 데이터 연동 후 대치 될 예정입니다.
   const [myReserve, setMyReserve] = useState<number>(1500);
-  const item1Count: number = 1;
-  const item1Price: number = 30000;
-  const item2Count: number = 2;
-  const item2Price: number = 20000;
-  const totalPrice: number = item1Count * item1Price + item2Count * item2Price;
+  const [totalPrice, setTotalPrice] = useState<number>(50000);
+  interface ItemInterface {
+    name: string;
+    price: number;
+    count: number;
+  }
+
+  const items: ItemInterface[] = [
+    { name: "어머 너무 이뻐요 앰플", price: 30000, count: 1 },
+    { name: "어머 너무 촉촉해요 앰플", price: 20000, count: 2 },
+  ];
 
   return (
     <div className="Checkout_Container">
-      <h1>결제 정보 요약</h1>
+      <h1 className="Checkout_Header">결제 정보 요약</h1>
       <section className="Price_Total_Summary">
         <div className="Summary_List_Item">
           <span className="List_Item_Title">내 적립금: 총 {myReserve}원 </span>
           <span className="List_Item_Content">현재 구독중</span>
         </div>
         {/* 예시 상품 2개는 이후 데이터로 연동된 후 삭제될 예정입니다. */}
-        <div className="to_Be_Replaced Order_Item">
-          <img src="https://picsum.photos/75?random=1" alt="sample image" />
-          <span>어머 너무 이뻐요 앰플 </span>
-          <span>수량: {item1Count}개 </span>
-          <span>가격: {item1Count * item1Price}원 </span>
-        </div>
-        <div className="to_Be_Replaced Order_Item">
-          <img src="https://picsum.photos/75?random=2" alt="sample image" />
-          <span>어머 너무 촉촉해요 앰플 </span>
-          <span>수량: {item2Count}개 </span>
-          <span>가격: {item2Count * item2Price}원 </span>
-        </div>
+        {items.map((a, idx) => {
+          return (
+            <div
+              className="to_Be_Replaced Checkout_Order_Item"
+              key={`Order${idx}`}
+            >
+              <img
+                src={`https://picsum.photos/75?random=${idx + 1}`}
+                alt="sample image"
+              />
+              <span>{a.name} </span>
+              <span>수량: {a.count}개 </span>
+              <span>가격: {a.count * a.price}원 </span>
+            </div>
+          );
+        })}
         <div className="List_Item_Reserve">
           <label>적립금: </label>
           <input type="text" placeholder={`${myReserve}원 사용 가능`} />

@@ -3,7 +3,7 @@ input[type="text"] {
   padding: 5px;
 }
 
-h1 {
+.Checkout_Header {
   margin-bottom: 30px;
 }
 
@@ -28,7 +28,7 @@ h1 {
   height: 75px;
 }
 
-.Order_Item {
+.Checkout_Order_Item {
   height: 100px;
   display: flex;
   justify-content: space-evenly;
