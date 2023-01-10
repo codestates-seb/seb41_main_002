@@ -7,7 +7,11 @@ import ItemDetail from "./Pages/ItemDetail";
 import ShoppingList from "./Pages/ShoppingList";
 import MemberPage from "./Pages/MemberPage";
 import ItemsTopList from "./Pages/ItemsTopList";
+<<<<<<< HEAD
 import Checkout from "./Pages/Checkout";
+=======
+import Review from "./Pages/Review";
+>>>>>>> ccc4f32b454e7dd55dfa59388f30ebebf1dcec38
 
 function App() {
   return (
@@ -22,7 +26,11 @@ function App() {
               <Route path="/member/edit" element={<MemberPageEdit />} />
               <Route path="/items-list" element={<ShoppingList />} />
               <Route path="/items-top-list" element={<ItemsTopList />} />
+<<<<<<< HEAD
               <Route path="/checkout" element={<Checkout />} />
+=======
+              <Route path="/reviews" element={<Review/>}/>
+>>>>>>> ccc4f32b454e7dd55dfa59388f30ebebf1dcec38
             </Routes>
           </BrowserRouter>
         </div>
