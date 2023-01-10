@@ -24,6 +24,8 @@ public class Item extends Auditable {
     List<String> tagList = new ArrayList<>();
     private Integer price;
     private String contentImageUrl;
+
+    @Column(length = 65535)
     private String content;
     private String titleImageUrl;
     private Double rating;
