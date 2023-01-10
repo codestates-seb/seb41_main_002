@@ -69,7 +69,7 @@ export default function ShoppingCart() {
             </div>
             <div className="Product_Container">
               <div className="Product_Container">
-                <OrderedListItem item={items[1]} idx={1} />;
+                <OrderedListItem item={items[1]} idx={1} />
               </div>
             </div>
             <div className="Product_Delete">

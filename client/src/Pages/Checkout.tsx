@@ -27,7 +27,13 @@ export default function Checkout() {
         </div>
         {/* 예시 상품 2개는 이후 데이터로 연동된 후 삭제될 예정입니다. */}
         {items.map((item, idx) => {
-          return <OrderedListItem item={item} idx={idx} />;
+          return (
+            <OrderedListItem
+              item={item}
+              idx={idx}
+              key={`OrderListItem${idx}`}
+            />
+          );
         })}
         <div className="List_Item_Reserve">
           <label>적립금: </label>
