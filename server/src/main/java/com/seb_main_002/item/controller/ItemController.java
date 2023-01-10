@@ -49,12 +49,26 @@ public class ItemController {
 
     @GetMapping("/toplist/{categoryENName}")
     public ResponseEntity getItems(@PathVariable("categoryENName") String categoryENName){
+
         List<Item> items = itemService.findTopListItems(categoryENName);
-        List<ItemTopListResponseDto> response = items.stream()
-                .map(item -> new ItemTopListResponseDto(item))
+        List<ItemTopListResponseDto.TopItemDto> topItemDtos = items.stream()
+                .map(item -> ItemTopListResponseDto.TopItemDto.builder()
+                        .itemId(item.getItemId())
+                        .itemTitle(item.getItemTitle())
+                        .categoryKRName(item.getCategoryKRName())
+                        .categoryENName(item.getCategoryENName())
+                        .titleImageURL(item.getTitleImageUrl())
+                        .price(item.getPrice())
+                        .salesCount(item.getSalesCount())
+                        .tagsList(item.getTagList())
+                        .build())
                 .collect(Collectors.toList());
 
-        return new ResponseEntity<>(new ItemTopListResponseDto.Response(response),HttpStatus.OK);
+        ItemTopListResponseDto response = ItemTopListResponseDto.builder()
+                .topList(topItemDtos)
+                .build();
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
 
