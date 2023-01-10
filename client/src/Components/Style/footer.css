@@ -1,0 +1,43 @@
+.Footer_Inside{
+ display: flex;   
+}
+
+.Footer_Title{
+  font-size: 19px;
+  margin-bottom: 5px;
+}
+
+.left{
+  display: flex;
+}
+
+.left li{
+  height: 25px;
+  font-size: 15px;
+}
+
+.left_1 li{
+  width: 100px;
+  text-align: center;
+}
+
+.left_2 li{
+  width: 250px;
+}
+
+.Position{
+  color: yellow;
+}
+
+.right{
+  padding: 0 23px;
+}
+
+@media (max-width:767px){
+  .Footer_Inside{
+    flex-direction: column;
+   }
+   .right{
+    margin-bottom: 30px;
+   }
+}
