@@ -12,16 +12,22 @@ export default function ShoppingList() {
       </div>
       <ul className="Filter_Options">
         <li>
-          <button className="Filter_Button">토너</button>
+          <button className="Filter_Button">스킨/토너</button>
         </li>
         <li>
-          <button className="Filter_Button">에센스</button>
+          <button className="Filter_Button">크림</button>
         </li>
         <li>
           <button className="Filter_Button">로션</button>
         </li>
         <li>
-          <button className="Filter_Button">토글</button>
+          <button className="Filter_Button">클렌징</button>
+        </li>
+        <li>
+          <button className="Filter_Button">선크림</button>
+        </li>
+        <li>
+          <button className="Filter_Button">내 맞춤</button>
         </li>
       </ul>
       <div className="Products_Gallery">

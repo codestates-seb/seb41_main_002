@@ -28,6 +28,7 @@ export default function Header() {
                 <Link to="/items-list">스킨/토너</Link>
                 <Link to="/items-list">크림</Link>
                 <Link to="/items-list">로션</Link>
+                <Link to="/items-list">클렌징</Link>
                 <Link to="/items-list">선크림</Link>
               </div>
             ) : null}
@@ -40,10 +41,10 @@ export default function Header() {
           </Link>
         </ul>
         <div className="Header_Icons">
-          <Link to="">
+          <Link to="/members/:memberId/carts">
             <CartIcon name="Header_Icon" />
           </Link>
-          <Link to="">
+          <Link to="/memberPage/:memberId">
             <UserIcon name="Header_Icon" />
           </Link>
         </div>
