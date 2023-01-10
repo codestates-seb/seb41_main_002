@@ -1,16 +1,16 @@
-import React from "react";
 import Home from "./Pages/Home";
-import MemberPageEdit from "./Pages/MemberPageEdit";
-import "./App.css";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import ItemDetail from "./Pages/ItemDetail";
-import ShoppingList from "./Pages/ShoppingList";
-import MemberPage from "./Pages/MemberPage";
-import ItemsTopList from "./Pages/ItemsTopList";
 import Login from "./Pages/Login";
+import Review from "./Pages/Review";
 import SignUp from "./Pages/SignUp";
 import Checkout from "./Pages/Checkout";
-import Review from "./Pages/Review";
+import ItemDetail from "./Pages/ItemDetail";
+import MemberPage from "./Pages/MemberPage";
+import ShoppingList from "./Pages/ShoppingList";
+import ItemsTopList from "./Pages/ItemsTopList";
+import ShoppingCart from "./Pages/ShoppingCart";
+import MemberPageEdit from "./Pages/MemberPageEdit";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import "./App.css"
 
 function App() {
   return (
@@ -28,6 +28,7 @@ function App() {
               <Route path="/member/edit" element={<MemberPageEdit />} />
               <Route path="/items-list" element={<ShoppingList />} />
               <Route path="/items-top-list" element={<ItemsTopList />} />
+              <Route path="/members/:memberId/carts" element={<ShoppingCart/>}/>
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/reviews" element={<Review/>}/>
             </Routes>
