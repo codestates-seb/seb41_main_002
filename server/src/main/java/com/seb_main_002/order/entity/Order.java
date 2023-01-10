@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Entity
+@Entity(name = "ORDERS")
 public class Order extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class Order extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToOne(mappedBy = "delivery", cascade = {CascadeType.ALL})
+    @OneToOne(mappedBy = "order", cascade = {CascadeType.ALL})
     private Delivery delivery;
 
     private Integer reserve;
