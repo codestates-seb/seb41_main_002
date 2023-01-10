@@ -1,5 +1,7 @@
 import Home from "./Pages/Home";
+import Login from "./Pages/Login";
 import Review from "./Pages/Review";
+import SignUp from "./Pages/SignUp";
 import Checkout from "./Pages/Checkout";
 import ItemDetail from "./Pages/ItemDetail";
 import MemberPage from "./Pages/MemberPage";
@@ -8,7 +10,7 @@ import ItemsTopList from "./Pages/ItemsTopList";
 import ShoppingCart from "./Pages/ShoppingCart";
 import MemberPageEdit from "./Pages/MemberPageEdit";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import "./App.css";
+import "./App.css"
 
 function App() {
   return (
@@ -17,6 +19,9 @@ function App() {
         <div className="Contents_Wrap">
           <BrowserRouter>
             <Routes>
+              <Route />
+              <Route path="/signUp" element={<SignUp/>}/>
+              <Route path="/login" element={<Login/>}/>
               <Route path="/memberPage/:memberId" element={<MemberPage />} />
               <Route path="/itemDetail/:itemId" element={<ItemDetail />} />
               <Route path="/" element={<Home />} />
