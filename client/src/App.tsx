@@ -9,6 +9,7 @@ import MemberPage from "./Pages/MemberPage";
 import ItemsTopList from "./Pages/ItemsTopList";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
+import Review from "./Pages/Review";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route path="/member/edit" element={<MemberPageEdit />} />
               <Route path="/items-list" element={<ShoppingList />} />
               <Route path="/items-top-list" element={<ItemsTopList />} />
+              <Route path="/reviews" element={<Review/>}/>
             </Routes>
           </BrowserRouter>
         </div>
