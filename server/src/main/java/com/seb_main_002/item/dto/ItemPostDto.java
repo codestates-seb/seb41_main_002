@@ -23,12 +23,6 @@ public class ItemPostDto {
     private String content;
 
     @NotNull
-    private Double rating;
-
-    @NotNull
-    private Integer salesCount;
-
-    @NotNull
     private String categoryKRName;
 
     @NotNull
