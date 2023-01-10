@@ -1,14 +1,14 @@
-import React from "react";
 import Home from "./Pages/Home";
-import MemberPageEdit from "./Pages/MemberPageEdit";
-import "./App.css";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Review from "./Pages/Review";
+import Checkout from "./Pages/Checkout";
 import ItemDetail from "./Pages/ItemDetail";
-import ShoppingList from "./Pages/ShoppingList";
 import MemberPage from "./Pages/MemberPage";
+import ShoppingList from "./Pages/ShoppingList";
 import ItemsTopList from "./Pages/ItemsTopList";
 import ShoppingCart from "./Pages/ShoppingCart";
-import Review from "./Pages/Review";
+import MemberPageEdit from "./Pages/MemberPageEdit";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import "./App.css";
 
 function App() {
   return (
@@ -24,6 +24,7 @@ function App() {
               <Route path="/items-list" element={<ShoppingList />} />
               <Route path="/items-top-list" element={<ItemsTopList />} />
               <Route path="/members/:memberId/carts" element={<ShoppingCart/>}/>
+              <Route path="/checkout" element={<Checkout />} />
               <Route path="/reviews" element={<Review/>}/>
             </Routes>
           </BrowserRouter>
