@@ -27,7 +27,7 @@ public class Order extends Auditable {
     private Integer reserve;
 
     private Integer totalPrice;
-
+    @Enumerated(value = EnumType.STRING)
     private OrderStatus orderStatus;
 
     @OneToMany(mappedBy = "order", cascade={CascadeType.ALL})
@@ -45,7 +45,6 @@ public class Order extends Auditable {
             orderItem.setOrder(this);
         }
     }
-
 
     public enum OrderStatus {
         ORDER_CONFIRM(1, "주문 확정"),
