@@ -8,8 +8,8 @@ import MemberPage from "./Pages/MemberPage";
 import ShoppingList from "./Pages/ShoppingList";
 import ItemsTopList from "./Pages/ItemsTopList";
 import ShoppingCart from "./Pages/ShoppingCart";
-import Footer from "./Components/Commons/Footer";
 import MemberPageEdit from "./Pages/MemberPageEdit";
+import Footer from "./Components/Commons/Footer";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css"
 
