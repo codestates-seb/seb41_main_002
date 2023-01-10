@@ -13,7 +13,12 @@ export default function ShoppingList() {
       </div>
       <ul className="Filter_Options">
         <li>
-          <CustomButton color="blue" content="토너" width="100px" />
+          <CustomButton
+            bgColor="gray"
+            fontColor="white"
+            content="샘플"
+            width="100px"
+          />
         </li>
         <li>
           <button className="Filter_Button">토너</button>
