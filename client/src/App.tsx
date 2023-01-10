@@ -9,8 +9,9 @@ import ShoppingList from "./Pages/ShoppingList";
 import ItemsTopList from "./Pages/ItemsTopList";
 import ShoppingCart from "./Pages/ShoppingCart";
 import MemberPageEdit from "./Pages/MemberPageEdit";
+import Header from "./Components/Commons/Header";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import "./App.css"
+import "./App.css";
 
 function App() {
   return (
@@ -18,19 +19,23 @@ function App() {
       <div className="Browser_Container">
         <div className="Contents_Wrap">
           <BrowserRouter>
+            <Header />
             <Routes>
               <Route />
-              <Route path="/signUp" element={<SignUp/>}/>
-              <Route path="/login" element={<Login/>}/>
+              <Route path="/signUp" element={<SignUp />} />
+              <Route path="/login" element={<Login />} />
               <Route path="/memberPage/:memberId" element={<MemberPage />} />
               <Route path="/itemDetail/:itemId" element={<ItemDetail />} />
               <Route path="/" element={<Home />} />
               <Route path="/member/edit" element={<MemberPageEdit />} />
               <Route path="/items-list" element={<ShoppingList />} />
               <Route path="/items-top-list" element={<ItemsTopList />} />
-              <Route path="/members/:memberId/carts" element={<ShoppingCart/>}/>
+              <Route
+                path="/members/:memberId/carts"
+                element={<ShoppingCart />}
+              />
               <Route path="/checkout" element={<Checkout />} />
-              <Route path="/reviews" element={<Review/>}/>
+              <Route path="/reviews" element={<Review />} />
             </Routes>
           </BrowserRouter>
         </div>
