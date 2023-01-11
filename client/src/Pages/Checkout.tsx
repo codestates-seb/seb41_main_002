@@ -1,8 +1,5 @@
 import { useState } from "react";
-<<<<<<< HEAD
 import OrderedListItem from "../Components/Commons/OrderedListItem";
-=======
->>>>>>> 8a86b5cc0ac5534aac016140b4e9c8a2d10547b1
 import "./Style/checkout.css";
 
 export default function Checkout() {
