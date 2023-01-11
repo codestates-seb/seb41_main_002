@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Style/ItemsTopList.css";
+import "./Style/itemsTopList.css";
 
 export default function ItemsTopList() {
   // 해당 상태의 기본값은 이전 페이지에서 이동할 때 전달받는 방식을 채택 예정

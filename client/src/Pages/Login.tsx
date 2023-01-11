@@ -1,5 +1,5 @@
 import React from "react";
-import "./Style/MemberAccess.css";
+import "./Style/memberAccess.css";
 
 const Login = () => {
   return (

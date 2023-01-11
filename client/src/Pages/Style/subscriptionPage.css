@@ -7,12 +7,12 @@
   align-items: center;
 }
 
-.Suvscription_Banner {
+.Subscription_Banner {
   width: 100%;
   height: 500px;
 }
 
-.Subscrip_Benefit_Info {
+.Subscription_Benefit_Info {
   margin-top: 20px;
   width: 80%;
   height: 260px;
@@ -22,13 +22,13 @@
   align-items: center;
 }
 
-.Sample_Bannefit_Info {
+.Sample_Benefit_Info {
   width: 72%;
   display: flex;
   flex-wrap: wrap;
 }
 
-.Sample_Bannefit_Info > span {
+.Sample_Benefit_Info > span {
   font-size: 19px;
   font-weight: bold;
   margin-top: 20px;
