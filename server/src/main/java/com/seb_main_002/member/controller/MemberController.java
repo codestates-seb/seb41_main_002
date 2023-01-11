@@ -36,4 +36,11 @@ public class MemberController {
         Member member = memberService.findMember(memberId);
         return new ResponseEntity(mapper.memberToMemberBeforeEditResponseDto(member),HttpStatus.OK);
     }
+    @PatchMapping("/edit/{memberId}")
+    public ResponseEntity patchMember(@PathVariable("memberId") Long memberId,
+                                      @RequestBody MemberPatchDto requestBody) {
+        Member member = mapper.memberPatchDtoToMember(requestBody);
+        memberService.updateMember(memberId, member);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

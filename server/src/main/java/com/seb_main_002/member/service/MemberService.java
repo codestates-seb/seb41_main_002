@@ -23,7 +23,7 @@ public class MemberService {
         Member member = verifyMember(memberId);
         Subscribe subscribe = member.getSubscribe();
 
-        if(subscribe.getIsSubscribed() !=isSubScribed) {
+        if (subscribe.getIsSubscribed() != isSubScribed) {
             //구독 취소할 경우
             if (subscribe.getIsSubscribed() == true) {
                 subscribe.setIsSubscribed(isSubScribed);
@@ -52,7 +52,31 @@ public class MemberService {
                 () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         return member;
     }
+    public void verifyExistsEmail(String email) {
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+        if(optionalMember.isPresent()) {
+            throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
+        }
+    }
+
     public Member findMember(Long memberId) {
         return verifyMember(memberId);
     }
+    @Transactional
+    public void updateMember(Long memberId, Member member) {
+        Member verifedMember = verifyMember(memberId);
+        verifyExistsEmail(member.getEmail());
+
+        Optional.ofNullable(member.getName())
+                .ifPresent(name -> verifedMember.setName(name));
+        Optional.ofNullable(member.getEmail())
+                .ifPresent(email -> verifedMember.setEmail(email));
+        Optional.ofNullable(member.getPhoneNumber())
+                .ifPresent(phoneNumber -> verifedMember.setPhoneNumber(phoneNumber));
+        Optional.ofNullable(member.getTagList())
+                .ifPresent(tagList -> verifedMember.setTagList(tagList));
+
+        memberRepository.save(verifedMember);
+    }
+
 }
