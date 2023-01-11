@@ -1,4 +1,5 @@
 import { useState } from "react";
+import OrderedListItem from "../Components/Commons/OrderedListItem";
 import "./Style/Checkout.css";
 
 export default function Checkout() {
@@ -25,20 +26,13 @@ export default function Checkout() {
           <span className="List_Item_Content">현재 구독중</span>
         </div>
         {/* 예시 상품 2개는 이후 데이터로 연동된 후 삭제될 예정입니다. */}
-        {items.map((a, idx) => {
+        {items.map((item, idx) => {
           return (
-            <div
-              className="to_Be_Replaced Checkout_Order_Item"
-              key={`Order${idx}`}
-            >
-              <img
-                src={`https://picsum.photos/75?random=${idx + 1}`}
-                alt="sample image"
-              />
-              <span>{a.name} </span>
-              <span>수량: {a.count}개 </span>
-              <span>가격: {a.count * a.price}원 </span>
-            </div>
+            <OrderedListItem
+              item={item}
+              idx={idx}
+              key={`OrderListItem${idx}`}
+            />
           );
         })}
         <div className="List_Item_Reserve">

@@ -19,18 +19,18 @@ export default function ItemsTopList() {
           <button
             className="Filter_Button"
             onClick={changeCategory}
-            name="토너"
+            name="스킨/토너"
           >
-            토너
+            스킨/토너
           </button>
         </li>
         <li>
           <button
             className="Filter_Button"
             onClick={changeCategory}
-            name="에센스"
+            name="크림"
           >
-            에센스
+            크림
           </button>
         </li>
         <li>
@@ -46,9 +46,27 @@ export default function ItemsTopList() {
           <button
             className="Filter_Button"
             onClick={changeCategory}
-            name="크림"
+            name="클렌징"
           >
-            크림
+            클렌징
+          </button>
+        </li>
+        <li>
+          <button
+            className="Filter_Button"
+            onClick={changeCategory}
+            name="선크림"
+          >
+            선크림
+          </button>
+        </li>
+        <li>
+          <button
+            className="Filter_Button"
+            onClick={changeCategory}
+            name="내 맞춤"
+          >
+            내 맞춤
           </button>
         </li>
       </ul>

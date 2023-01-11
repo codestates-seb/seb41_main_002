@@ -1,6 +1,7 @@
 :root {
   /* colors */
   --black: #0c0d0e;
+  --black2: #18191C;
   --dark: #202225;
   --dark2: #2f3136;
   --dark3: #36393f;
@@ -15,22 +16,27 @@
 
 /* layout*/
 html {
+  width: 100%;
   font-size: 13px;
   color: var(--white);
   background-color: var(--lightgray);
 }
 
-/* app.css 에서 들고올 예정
-.container {
+.Browser_Container {
+  width: 100%;
   margin: 0 auto;
   max-width: 1600px;
+  background-color: pink;
+  height: 100%;
+}
+
+.Contents_Wrap {
   width: 100%;
-} 
-.wrap {
   margin: 0 auto;
   max-width: 1400px;
-  width: 100%;
-*/
+  background-color: black;
+  height: 100%;
+}
 
 /* input */
 input[type="text"].textBox{
