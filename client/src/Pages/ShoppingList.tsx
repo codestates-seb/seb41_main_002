@@ -1,3 +1,4 @@
+import CustomButton from "../Components/Commons/Buttons";
 import "./Style/shoppingList.css";
 
 export default function ShoppingList() {
@@ -11,6 +12,15 @@ export default function ShoppingList() {
         ></input>
       </div>
       <ul className="Filter_Options">
+        <li>
+          <CustomButton
+            bgColor="gray"
+            fontColor="white"
+            content="샘플"
+            width="100px"
+            padding="9px 15px"
+          />
+        </li>
         <li>
           <button className="Filter_Button">토너</button>
         </li>
