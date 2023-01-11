@@ -18,6 +18,7 @@ export default function ShoppingList() {
             fontColor="white"
             content="샘플"
             width="100px"
+            padding="9px 15px"
           />
         </li>
         <li>
