@@ -26,7 +26,7 @@ public class Order extends Auditable {
     @OneToOne(mappedBy = "order", cascade = {CascadeType.ALL})
     private Delivery delivery;
 
-    private Integer reserve; // 이번 구매를 통해 쌓이는 적립금
+    private Integer reserve;
 
     private Integer totalPrice;
 
