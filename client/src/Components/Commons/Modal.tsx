@@ -13,14 +13,15 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  width: 400px;
-  height: 500px;
+  min-width: 100px;
+  display: inline-block;
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--dark3);
   border-radius: 10px;
+  padding: 45px 13px;
 
   .Close_Btn {
     position: absolute;
@@ -55,6 +56,7 @@ const ModalContainer = styled.div`
 interface ModalProps {
   modalState: boolean;
   setModalState: Dispatch<SetStateAction<boolean>>;
+  element: JSX.Element;
 }
 
 const Modal = (props: ModalProps) => {
@@ -75,6 +77,7 @@ const Modal = (props: ModalProps) => {
           <span></span>
           <span></span>
         </div>
+        {props.element}
       </ModalContainer>
     </ModalOverlay>
   );
