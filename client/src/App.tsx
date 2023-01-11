@@ -9,6 +9,7 @@ import ShoppingList from "./Pages/ShoppingList";
 import ItemsTopList from "./Pages/ItemsTopList";
 import ShoppingCart from "./Pages/ShoppingCart";
 import MemberPageEdit from "./Pages/MemberPageEdit";
+import SubscriptionPage from "./Pages/SubscriptionPage";
 import Footer from "./Components/Commons/Footer";
 import EventDetail from "./Pages/EventDetail";
 import Header from "./Components/Commons/Header";
@@ -38,6 +39,7 @@ function App() {
               />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/reviews" element={<Review />} />
+              <Route path="/members/:memberId/subscribe" element={<SubscriptionPage />} />
               <Route path="/events/:eventId" element={<EventDetail />} />
             </Routes>
           </BrowserRouter>
