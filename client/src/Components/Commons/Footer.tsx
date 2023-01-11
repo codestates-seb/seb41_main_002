@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import "../Style/footer.css";
 
 const Footer = () => {
