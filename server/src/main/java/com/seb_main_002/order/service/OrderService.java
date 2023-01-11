@@ -31,7 +31,7 @@ public class OrderService {
     // reserveUsableCheck
     // 사용하려는 적립금이 보유중인 적립금 범위 내인지 판단 후 계산된 값을 member의 적립금에 저장합니다.
     public void reserveUsableCheck(Long memberId, Integer wantUseReserve) {
-        Member findMember = verifyMember(memberRepository.findById(memberId));
+        Member findMember = verifyMember(memberId);
 
         if(findMember.getMemberReserve() >= wantUseReserve) {
             findMember.setMemberReserve(findMember.getMemberReserve() - wantUseReserve);
@@ -44,7 +44,7 @@ public class OrderService {
     // saveTotalDeliveryDiscount
     // 구독중인 member가 주문할 경우 2000원의 배송 할인 내역을 subscribe에 저장합니다.
     public void saveTotalDeliveryDiscount(Long memberId) {
-        Member findMember = verifyMember(memberRepository.findById(memberId));
+        Member findMember = verifyMember(memberId);
 
         Subscribe subscribe = findMember.getSubscribe();
 
@@ -59,7 +59,7 @@ public class OrderService {
     // calculateReserve
     // 해당 주문으로 인해 적립되는 적립금을 계산합니다.
     public int calculateReserve(Long memberId, Integer itemsTotalPrice) {
-        Member findMember = verifyMember(memberRepository.findById(memberId));
+        Member findMember = verifyMember(memberId);
 
         int reservePercent = findMember.getSubscribe().getIsSubscribed() ? 5 : 3;
 
@@ -69,7 +69,7 @@ public class OrderService {
     // saveMemberReserve
     // 해당 주문으로 인해 적립되는 적립금을 member에 저장합니다.
     public void saveMemberReserve(Long memberId, Integer reserve) {
-        Member findMember = verifyMember(memberRepository.findById(memberId));
+        Member findMember = verifyMember(memberId);
 
         findMember.setMemberReserve(findMember.getMemberReserve() + reserve);
 
@@ -79,7 +79,7 @@ public class OrderService {
     // setDeliveryAddress
     // 해당 주문의 배송지를 delivery에 저장하고 대표 배송지 변경 사항을 감지하여 address에 저장합니다.
     public Delivery setDeliveryAddress(Long memberId, Long addressId, Boolean isPrimary) {
-        Member findMember = verifyMember(memberRepository.findById(memberId));
+        Member findMember = verifyMember(memberId);
 
         Delivery delivery = new Delivery();
         List<Address> addressList = findMember.getAddressList();
@@ -111,16 +111,18 @@ public class OrderService {
     // setReserveProfit
     // 구독중인 member가 주문할 경우 구독자 추가 적립 내역을 subscribe에 저장합니다.
     public void setReserveProfit(Long memberId, Integer reserve) {
-        Member findMember = verifyMember(memberRepository.findById(memberId));
+        Member findMember = verifyMember(memberId);
         if(findMember.getSubscribe().getIsSubscribed()) {
             findMember.getSubscribe().setReserveProfit((reserve / 5) * 2);
             memberRepository.save(findMember);
         }
     }
 
-    private Member verifyMember(Optional<Member> optionalMember) {
-        return optionalMember.orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    public Member verifyMember(Long memberId) {
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        Member member = optionalMember.orElseThrow(
+                () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        return member;
     }
 
 }
