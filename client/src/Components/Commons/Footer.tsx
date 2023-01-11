@@ -1,22 +1,9 @@
 import styled from "styled-components";
 import "../Style/footer.css";
 
-const FooterContainer = styled.div`
-  width: 100%;
-  padding: 20px 0;
-  border-top: 1px solid var(--lightgray);
-  background-color: var(--dark);
-
-  .Contents_Wrap {
-    background-color: var(--dark);
-  }
-
-  
-`;
-
 const Footer = () => {
   return (
-    <FooterContainer>
+    <div className="FooterContainer">
       <div className="Contents_Wrap">
         <div className="Footer_Inside">
           <div className="Footer_Members">
@@ -53,7 +40,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </FooterContainer>
+    </div>
   );
 };
 

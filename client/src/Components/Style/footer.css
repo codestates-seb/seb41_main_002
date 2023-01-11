@@ -1,3 +1,9 @@
+.FooterContainer{
+  width: 100%;
+  padding: 20px 0;
+  border-top: 1px solid var(--lightgray);
+  background-color: var(--dark);
+}
 .Footer_Inside{
  display: flex;   
 }
