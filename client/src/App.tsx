@@ -9,6 +9,7 @@ import ShoppingList from "./Pages/ShoppingList";
 import ItemsTopList from "./Pages/ItemsTopList";
 import ShoppingCart from "./Pages/ShoppingCart";
 import MemberPageEdit from "./Pages/MemberPageEdit";
+import EventDetail from "./Pages/EventDetail";
 import Header from "./Components/Commons/Header";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
@@ -36,6 +37,7 @@ function App() {
               />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/reviews" element={<Review />} />
+              <Route path="/events/:eventId" element={<EventDetail />} />
             </Routes>
           </BrowserRouter>
         </div>
