@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface MemberMapper {
-    Member memberPatchDtoToMember(MemberPatchDto memberPatchDto);
+
     default MemberResponseDto memberToMemberResponseDto(Member member) {
         if (member ==null) {
             return null;
@@ -98,5 +98,13 @@ public interface MemberMapper {
                 .totalDeliveryDiscount(member.getSubscribe().getTotalDeliveryDiscount())
                 .reserveProfit(member.getSubscribe().getReserveProfit())
                 .build();
+    }
+    default Member memberPatchDtoToMember(MemberPatchDto memberPatchDto) {
+        Member member = new Member();
+        member.setName(memberPatchDto.getMemberName());
+        member.setEmail(memberPatchDto.getEmail());
+        member.setPhoneNumber(memberPatchDto.getPhoneNumber());
+        member.setTagList(memberPatchDto.getTagList());
+        return member;
     }
 }
