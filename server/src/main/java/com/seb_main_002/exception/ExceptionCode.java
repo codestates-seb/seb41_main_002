@@ -10,7 +10,8 @@ public enum ExceptionCode {
     CANNOT_CANCEL_ORDER(403, "Order can not change"),
     NOT_IMPLEMENTATION(501, "Not Implementation"),
     UNAUTHORIZED(401,"Unauthorized"),
-    CANNOT_CHANGE_SUBSCRIBE(403,"Subscription can not be changed");
+    CANNOT_CHANGE_SUBSCRIBE(403,"Subscription can not be changed"),
+    EMAIL_EXISTS(409, "Email exists");
 
     @Getter
     private int status;
