@@ -22,7 +22,7 @@ public class Delivery extends Auditable {
     @JoinColumn(name = "ORDER_ID")
     private Order order;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value=EnumType.STRING)
     private DeliveryStatus deliveryStatus = DeliveryStatus.DELIVERY_BEFORE;
 
     private String address;

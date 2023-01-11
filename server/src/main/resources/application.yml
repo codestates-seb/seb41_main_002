@@ -34,8 +34,8 @@ server:
 cloud:
   aws:
     credentials:
-      accessKey : ${AWS_ACCESS_KEY_ID} #AWS IAM AccessKey
-      secretKey : ${AWS_SECRET_ACCESS_KEY} #AWS IAM SecretKey
+      accessKey : ${{ secrets.AWS_ACCESS_KEY }} #AWS IAM AccessKey in github secret #${AWS_ACCESS_KEY_ID}
+      secretKey : ${{ secrets.AWS_SECRET_ACCESS_KEY }} #AWS IAM SecretKey in github secret #${AWS_SECRET_ACCESS_KEY}
     s3:
       bucket: "jbawsbucket1"
       dir : "/itemImg"

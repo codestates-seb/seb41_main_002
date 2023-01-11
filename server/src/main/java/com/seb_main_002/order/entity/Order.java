@@ -30,19 +30,19 @@ public class Order extends Auditable {
 
     private Integer totalPrice;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value=EnumType.STRING)
     private OrderStatus orderStatus = OrderStatus.ORDER_COMPLETE;
 
     @OneToMany(mappedBy = "order", cascade={CascadeType.ALL})
     private List<OrderItem> orderItems = new ArrayList<>();
 
     public void setDelivery(Delivery delivery) {
-        this.delivery = delivery;
+        this.setDelivery(delivery);
         if(delivery.getOrder() != this) {
             delivery.setOrder(this);
         }
     }
-    public void addOrderItems(OrderItem orderItem) {
+    public void setOrderItems(OrderItem orderItem) {
         this.orderItems.add(orderItem);
         if(orderItem.getOrder() != this) {
             orderItem.setOrder(this);

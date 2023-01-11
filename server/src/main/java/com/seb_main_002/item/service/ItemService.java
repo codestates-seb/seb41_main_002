@@ -2,14 +2,21 @@ package com.seb_main_002.item.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.seb_main_002.exception.BusinessLogicException;
+import com.seb_main_002.exception.ExceptionCode;
 import com.seb_main_002.item.entity.Item;
 import com.seb_main_002.item.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Transactional
@@ -27,6 +34,16 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
+    public Item createItem(Item item){
+        return itemRepository.save(item);
+    }
+
+    //public Item updateItem(Item item){}
+
+    public Item findItem(Long itemId){
+        return findVerifiedItem(itemId);
+    }
+
     public String uploadImage(InputStream input, String fileName, long fileSize) throws IOException {
         String s3FileName = UUID.randomUUID()+"-"+ fileName;
 
@@ -38,7 +55,24 @@ public class ItemService {
         return amazonS3.getUrl(bucket, s3FileName).toString();
     }
 
-    public Item createItem(Item item){
-        return itemRepository.save(item);
+
+    //상위 10개만 출력
+    public List<Item> findTopListItems(String categoryENName){
+        Page<Item> findItems;
+        if(categoryENName.equals("ALL")) {
+            findItems = itemRepository.findAll(PageRequest.of(0, 10, Sort.by("salesCount").descending()));
+        }
+        else {
+            findItems = itemRepository.findAllByCategoryENName(categoryENName, PageRequest.of(0, 10, Sort.by("salesCount").descending()));
+        }
+        return findItems.getContent();
+    }
+
+    public Item findVerifiedItem(Long itemId){
+        Optional<Item> optionalItem = itemRepository.findById(itemId);
+        Item findItem = optionalItem
+                .orElseThrow( () ->
+                        new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
+        return findItem;
     }
 }
