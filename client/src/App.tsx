@@ -9,6 +9,7 @@ import ShoppingList from "./Pages/ShoppingList";
 import ItemsTopList from "./Pages/ItemsTopList";
 import ShoppingCart from "./Pages/ShoppingCart";
 import MemberPageEdit from "./Pages/MemberPageEdit";
+import Footer from "./Components/Commons/Footer";
 import EventDetail from "./Pages/EventDetail";
 import Header from "./Components/Commons/Header";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
@@ -41,6 +42,7 @@ function App() {
             </Routes>
           </BrowserRouter>
         </div>
+        <Footer/>
       </div>
     </>
   );
