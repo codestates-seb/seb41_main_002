@@ -37,12 +37,12 @@ public class Order extends Auditable {
     private List<OrderItem> orderItems = new ArrayList<>();
 
     public void setDelivery(Delivery delivery) {
-        this.setDelivery(delivery);
+        this.delivery = delivery;
         if(delivery.getOrder() != this) {
             delivery.setOrder(this);
         }
     }
-    public void setOrderItems(OrderItem orderItem) {
+    public void addOrderItems(OrderItem orderItem) {
         this.orderItems.add(orderItem);
         if(orderItem.getOrder() != this) {
             orderItem.setOrder(this);
