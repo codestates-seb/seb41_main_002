@@ -52,12 +52,12 @@ const ModalContainer = styled.div`
   }
 `;
 
-interface Props {
+interface ModalProps {
   modalState: boolean;
   setModalState: Dispatch<SetStateAction<boolean>>;
 }
 
-const Modal = (props: Props) => {
+const Modal = (props: ModalProps) => {
   const modalClose = () => {
     props.setModalState(!props.modalState);
   };
