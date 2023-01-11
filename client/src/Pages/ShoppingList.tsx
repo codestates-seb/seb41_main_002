@@ -1,4 +1,4 @@
-import "./Style/ShoppingList.css";
+import "./Style/shoppingList.css";
 
 export default function ShoppingList() {
   return (
