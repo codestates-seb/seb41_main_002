@@ -1,4 +1,5 @@
-import "./Style/ShoppingList.css";
+import CustomButton from "../Components/Commons/Buttons";
+import "./Style/shoppingList.css";
 
 export default function ShoppingList() {
   return (
@@ -12,16 +13,31 @@ export default function ShoppingList() {
       </div>
       <ul className="Filter_Options">
         <li>
+          <CustomButton
+            bgColor="gray"
+            fontColor="white"
+            content="샘플"
+            width="100px"
+            padding="9px 15px"
+          />
+        </li>
+        <li>
           <button className="Filter_Button">토너</button>
         </li>
         <li>
-          <button className="Filter_Button">에센스</button>
+          <button className="Filter_Button">크림</button>
         </li>
         <li>
           <button className="Filter_Button">로션</button>
         </li>
         <li>
-          <button className="Filter_Button">토글</button>
+          <button className="Filter_Button">클렌징</button>
+        </li>
+        <li>
+          <button className="Filter_Button">선크림</button>
+        </li>
+        <li>
+          <button className="Filter_Button">내 맞춤</button>
         </li>
       </ul>
       <div className="Products_Gallery">
