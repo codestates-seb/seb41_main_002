@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction, useRef } from "react";
 import styled from "styled-components";
 
 const ModalOverlay = styled.div`
@@ -21,7 +22,7 @@ const ModalContainer = styled.div`
   background-color: var(--dark3);
   border-radius: 10px;
 
-  .Close_Btn{
+  .Close_Btn {
     position: absolute;
     top: 13px;
     right: 13px;
@@ -30,7 +31,7 @@ const ModalContainer = styled.div`
     cursor: pointer;
   }
 
-  .Close_Btn > span{
+  .Close_Btn > span {
     position: absolute;
     top: 50%;
     width: 100%;
@@ -38,24 +39,39 @@ const ModalContainer = styled.div`
     background-color: var(--gray);
   }
 
-  .Close_Btn:hover > span{
+  .Close_Btn:hover > span {
     background-color: var(--white);
   }
 
-  .Close_Btn > span:first-child{
+  .Close_Btn > span:first-child {
     transform: rotate(135deg) translateX(0%);
   }
-  
-  .Close_Btn > span:last-child{
+
+  .Close_Btn > span:last-child {
     transform: rotate(45deg) translateX(0%);
   }
 `;
 
-const Modal = () => {
+interface Props {
+  modalState: boolean;
+  setModalState: Dispatch<SetStateAction<boolean>>;
+}
+
+const Modal = (props: Props) => {
+  const modalClose = () => {
+    props.setModalState(!props.modalState);
+  };
+  const outSide = useRef<HTMLDivElement>(null);
+
   return (
-    <ModalOverlay>
+    <ModalOverlay
+      ref={outSide}
+      onClick={(e) => {
+        if (e.target === outSide.current) props.setModalState(false);
+      }}
+    >
       <ModalContainer>
-        <div className="Close_Btn">
+        <div className="Close_Btn" onClick={modalClose}>
           <span></span>
           <span></span>
         </div>
