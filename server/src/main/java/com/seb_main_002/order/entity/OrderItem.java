@@ -2,11 +2,14 @@ package com.seb_main_002.order.entity;
 
 import com.seb_main_002.audit.Auditable;
 import com.seb_main_002.item.entity.Item;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class OrderItem extends Auditable {
     @Id

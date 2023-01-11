@@ -3,14 +3,16 @@ package com.seb_main_002.order.entity;
 import com.seb_main_002.audit.Auditable;
 import com.seb_main_002.delivery.entity.Delivery;
 import com.seb_main_002.member.entity.Member;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "ORDERS")
 public class Order extends Auditable {
     @Id
@@ -28,18 +30,19 @@ public class Order extends Auditable {
 
     private Integer totalPrice;
 
-    private OrderStatus orderStatus = OrderStatus.ORDER_CONFIRM;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus = OrderStatus.ORDER_COMPLETE;
 
     @OneToMany(mappedBy = "order", cascade={CascadeType.ALL})
     private List<OrderItem> orderItems = new ArrayList<>();
 
     public void setDelivery(Delivery delivery) {
-        this.setDelivery(delivery);
+        this.delivery = delivery;
         if(delivery.getOrder() != this) {
             delivery.setOrder(this);
         }
     }
-    public void setOrderItems(OrderItem orderItem) {
+    public void addOrderItems(OrderItem orderItem) {
         this.orderItems.add(orderItem);
         if(orderItem.getOrder() != this) {
             orderItem.setOrder(this);
