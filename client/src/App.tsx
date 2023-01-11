@@ -10,6 +10,7 @@ import ItemsTopList from "./Pages/ItemsTopList";
 import ShoppingCart from "./Pages/ShoppingCart";
 import MemberPageEdit from "./Pages/MemberPageEdit";
 import EventDetail from "./Pages/EventDetail";
+import Header from "./Components/Commons/Header";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 
@@ -19,6 +20,7 @@ function App() {
       <div className="Browser_Container">
         <div className="Contents_Wrap">
           <BrowserRouter>
+            <Header />
             <Routes>
               <Route />
               <Route path="/signUp" element={<SignUp />} />
