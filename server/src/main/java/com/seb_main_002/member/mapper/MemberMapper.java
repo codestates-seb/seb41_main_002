@@ -1,10 +1,12 @@
 package com.seb_main_002.member.mapper;
 
+import com.seb_main_002.member.dto.MemberBeforeEditResponseDto;
 import com.seb_main_002.member.dto.MemberPatchDto;
 import com.seb_main_002.member.dto.MemberResponseDto;
 import com.seb_main_002.member.entity.Member;
 import org.mapstruct.Mapper;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +18,6 @@ public interface MemberMapper {
         if (member ==null) {
             return null;
         }
-        MemberResponseDto.ReviewResponseDto.builder();
 
         //addressResponseDto
         List<MemberResponseDto.AddressResponseDto> addresses = member.getAddressList().stream()
@@ -46,7 +47,7 @@ public interface MemberMapper {
                 .reviewRating(review.getReviewRating())
                 .build()).collect(Collectors.toList());
 
-        //
+        //MemberResponseDto
         return MemberResponseDto.builder()
                 .accountId(member.getAccountId())
                 .email(member.getEmail())
@@ -56,6 +57,46 @@ public interface MemberMapper {
                 .tags(member.getTagList())
                 .ordersHistory(orderHistory)
                 .reviews(reviews)
+                .build();
+    }
+
+    default MemberBeforeEditResponseDto memberToMemberBeforeEditResponseDto(Member member) {
+        if(member == null) {
+            return null;
+        }
+
+        LocalDateTime subscribedDate = member.getSubscribe().getSubscribedDate();
+        String stringSubscribedDate = null;
+
+        if( subscribedDate != null) {
+            stringSubscribedDate = subscribedDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
+        }
+
+
+
+        List<MemberBeforeEditResponseDto.AddressDetailResponseDto> addresses = member.getAddressList().stream().map(address -> MemberBeforeEditResponseDto.AddressDetailResponseDto.builder()
+                        .addressId(address.getAddressId())
+                        .isPrimary(address.getIsPrimary())
+                        .addressTitle(address.getTitle())
+                        .zipcode(address.getZipCode())
+                        .address(address.getAddress())
+                        .build())
+                .collect(Collectors.toList());
+
+
+        return MemberBeforeEditResponseDto.builder()
+                .accountId(member.getAccountId())
+                .memberName(member.getName())
+                .birthdate(member.getBirthdate())
+                .email(member.getEmail())
+                .phoneNumber(member.getPhoneNumber())
+                .addressList(addresses)
+                .tagList(member.getTagList())
+                .subscribedDate(stringSubscribedDate)
+                .nowDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")))
+                .sampleCount(member.getSubscribe().getSampleCount())
+                .totalDeliveryDiscount(member.getSubscribe().getTotalDeliveryDiscount())
+                .reserveProfit(member.getSubscribe().getReserveProfit())
                 .build();
     }
 }

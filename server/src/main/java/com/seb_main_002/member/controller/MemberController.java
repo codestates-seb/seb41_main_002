@@ -26,9 +26,14 @@ public class MemberController {
         memberService.updateSubscribe(memberId,isSubscribed);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @GetMapping("{memberId}")
+    @GetMapping("/{memberId}")
     public ResponseEntity getMember(@PathVariable("memberId") Long memberId) {
         Member member = memberService.findMember(memberId);
         return new ResponseEntity(mapper.memberToMemberResponseDto(member),HttpStatus.OK);
+    }
+    @GetMapping("/edit/{memberId}")
+    public ResponseEntity getMemberBeforeEdit(@PathVariable("memberId") Long memberId) {
+        Member member = memberService.findMember(memberId);
+        return new ResponseEntity(mapper.memberToMemberBeforeEditResponseDto(member),HttpStatus.OK);
     }
 }

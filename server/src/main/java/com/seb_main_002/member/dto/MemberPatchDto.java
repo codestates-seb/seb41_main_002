@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -12,6 +13,6 @@ public class MemberPatchDto {
     private String memberName;
     private String email;
     private String phoneNumber;
-    private List<String> tagList;
+    private List<String> tagList = new ArrayList<>();
     private Boolean isSubscribed;
 }
