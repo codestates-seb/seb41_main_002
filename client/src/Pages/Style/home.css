@@ -38,7 +38,7 @@
 .Events_Banner {
   height: 600px;
   padding: 50px 0;
-  background-color: darkgrey;
+  background-color: black;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -47,7 +47,7 @@
 
 .Events_Carousel {
   height: 100%;
-  width: 800px;
+  width: 1000px;
   display: flex;
   overflow-x: scroll;
   scroll-behavior: smooth;
@@ -58,15 +58,12 @@
   display: none;
 }
 
-.Carousel_Slide {
-}
-
 .Carousel_Arrow {
-  color: white;
-  border: none;
+  color: rgb(250, 249, 233);
   background-color: transparent;
+  border: none;
   cursor: pointer;
-  font-size: 5rem;
+  font-size: 71px;
   overflow: hidden;
   z-index: 100;
 }
@@ -74,17 +71,34 @@
 .Event_Caption_Text {
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  font-size: 21px;
+  font-size: 25px;
   padding: 8px 12px;
   position: absolute;
-  bottom: 8px;
+  bottom: 15px;
   width: 100%;
+  line-height: 1.75;
   text-align: center;
 }
 
 .Event_Number_Text {
-  font-size: 15px;
+  color: white;
+  font-size: 19px;
   padding: 8px 12px;
   position: absolute;
   top: 0;
+}
+
+.Event_Title {
+  font-size: 31px;
+  background: linear-gradient(to right, #faf8f1, #faeab1, #e5ba73, #c58940);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.Event_Title:hover {
+  background: linear-gradient(to right, #ff6701, #dd8d1d, #ffc288, #fcecdd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

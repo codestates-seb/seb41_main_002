@@ -3,6 +3,7 @@ import dummyData from "./../data/HomeData.json";
 import styled from "styled-components";
 import CustomButton from "../Components/Commons/Buttons";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const HeroImage = styled.div<{ bgUrl: string }>`
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
@@ -58,16 +59,16 @@ export default function Home() {
 
   const slideCarousel = (event: React.MouseEvent<HTMLButtonElement>) => {
     const arrowButton: HTMLButtonElement = event.currentTarget;
-    const maxXPos: number = -800 * (dummyData.eventsInfo.length - 1);
+    const maxXPos: number = -1000 * (dummyData.eventsInfo.length - 1);
 
     if (arrowButton.name === "left" && xPos === 0) {
       setXPos(maxXPos);
     } else if (arrowButton.name === "left" && xPos !== 0) {
-      setXPos(xPos + 800);
+      setXPos(xPos + 1000);
     } else if (arrowButton.name === "right" && xPos === maxXPos) {
       setXPos(0);
     } else if (arrowButton.name === "right" && xPos > maxXPos) {
-      setXPos(xPos - 800);
+      setXPos(xPos - 1000);
     }
   };
 
@@ -99,7 +100,12 @@ export default function Home() {
                 <div className="Event_Number_Text">
                   {a.eventId} / {dummyData.eventsInfo.length}
                 </div>
-                <div className="Event_Caption_Text">{a.title}</div>
+                <div className="Event_Caption_Text">
+                  <Link to="/events/:eventId">
+                    <h4 className="Event_Title">{a.title}</h4>
+                  </Link>
+                  <p>{`${a.createdAt} ~ ${a.endAt}`}</p>
+                </div>
               </CarouselSlide>
             );
           })}
