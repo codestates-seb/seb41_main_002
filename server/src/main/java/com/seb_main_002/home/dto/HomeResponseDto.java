@@ -27,6 +27,8 @@ public class HomeResponseDto {
         private String endAt;
     }
 
+    @Getter
+    @Builder
     public static class TopRankBanner {
         private String categoryKRName;
 
