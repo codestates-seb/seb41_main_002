@@ -21,7 +21,7 @@
   background-color: var(--gray);
 }
 
-.Products_Row {
+.Products_Row{
   display: flex;
   margin: 20px 0;
   justify-content: space-evenly;

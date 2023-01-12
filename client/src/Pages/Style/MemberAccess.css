@@ -1,17 +1,17 @@
-.Member_Access_Container{
+.Member_Access_Container {
   display: flex;
   gap: 30px;
   justify-content: center;
 }
 
-.Member_Access_Menu{
+.Member_Access_Menu {
   width: 100%;
   max-width: 370px;
   height: 500px;
   background-color: var(--dark2);
 }
 
-.Member_Access_Menu li{
+.Member_Access_Menu li {
   text-align: center;
   cursor: pointer;
   width: 100%;
@@ -20,14 +20,14 @@
   border: 1px solid var(--lightgray);
 }
 
-.Member_Access_Contents{
+.Member_Access_Contents {
   width: 370px;
   height: 500px;
   background-color: lightcoral;
   background-color: var(--dark2);
 }
 
-.Member_Access_Contents li{
+.Member_Access_Contents li {
   display: flex;
   cursor: pointer;
   width: 100%;
@@ -35,26 +35,26 @@
   background-color: var(--dark3);
   border: 1px solid var(--lightgray);
 }
-.Member_Access_Contents li:first-child{
+.Member_Access_Contents li:first-child {
   justify-content: center;
 }
 
-.Member_Access_Contents li:last-child button{
+.Member_Access_Contents li:last-child button {
   width: 100%;
   border: 0px;
 }
 
-.Member_Access_Contents li label{
+.Member_Access_Contents li label {
   display: block;
   width: 100px;
   text-align: center;
 }
 
-.Member_Access_Contents li input{
+.Member_Access_Contents li input {
   border: 0px;
 }
 
-.Member_Access_Contents li button{
+.Member_Access_Contents li button {
   width: 100px;
   line-height: 40px;
   color: var(--white);
