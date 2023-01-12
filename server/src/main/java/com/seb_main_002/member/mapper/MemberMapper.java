@@ -1,10 +1,7 @@
 package com.seb_main_002.member.mapper;
 
 import com.seb_main_002.Address.Address;
-import com.seb_main_002.member.dto.MemberBeforeEditResponseDto;
-import com.seb_main_002.member.dto.MemberBeforeOrderResponseDto;
-import com.seb_main_002.member.dto.MemberPatchDto;
-import com.seb_main_002.member.dto.MemberResponseDto;
+import com.seb_main_002.member.dto.*;
 import com.seb_main_002.member.entity.Member;
 import org.mapstruct.Mapper;
 
@@ -136,5 +133,21 @@ public interface MemberMapper {
                 .memberReserve(member.getMemberReserve())
                 .addressList(addresses)
                 .build();
+    }
+
+     default Member memberPostDtoToMember(MemberPostDto memberPostDto) {
+        if(memberPostDto == null) {
+            return null;
+        }
+
+        Member member = new Member();
+        member.setAccountId(memberPostDto.getAccountId());
+        member.setPassword(memberPostDto.getPassword());
+        member.setName(memberPostDto.getMemberName());
+        member.setBirthdate(memberPostDto.getBirthDate());
+        member.setEmail(memberPostDto.getEmail());
+        member.setPhoneNumber(memberPostDto.getPhoneNumber());
+        member.setMemberReserve(0);
+        return member;
     }
 }

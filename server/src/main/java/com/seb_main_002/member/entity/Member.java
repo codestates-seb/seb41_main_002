@@ -7,6 +7,7 @@ import com.seb_main_002.order.entity.Order;
 import com.seb_main_002.review.entity.Review;
 import com.seb_main_002.subscribe.entity.Subscribe;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class Member extends Auditable {
 
     @ElementCollection
     private List<String> tagList = new ArrayList<>();
-
+    @ColumnDefault("0")
     private Integer memberReserve;
 
     @OneToMany(mappedBy = "member")

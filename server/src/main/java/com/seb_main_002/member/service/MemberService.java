@@ -61,6 +61,12 @@ public class MemberService {
             throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
         }
     }
+    public void verifyExistsAccountId(String accountId) {
+        Optional<Member> optionalMember = memberRepository.findByAccountId(accountId);
+        if(optionalMember.isPresent()) {
+            throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
+        }
+    }
 
     public Member findMember(Long memberId) {
         return verifyMember(memberId);
@@ -80,5 +86,12 @@ public class MemberService {
                 .ifPresent(tagList -> verifedMember.setTagList(tagList));
 
         memberRepository.save(verifedMember);
+    }
+    @Transactional
+    public Member createMember(Member member) {
+        verifyExistsEmail(member.getEmail());
+        verifyExistsAccountId(member.getAccountId());
+        memberRepository.save(member);
+        return member;
     }
 }
