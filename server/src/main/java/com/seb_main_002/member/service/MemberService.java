@@ -2,6 +2,7 @@ package com.seb_main_002.member.service;
 
 import com.seb_main_002.exception.BusinessLogicException;
 import com.seb_main_002.exception.ExceptionCode;
+import com.seb_main_002.item.repository.ItemRepository;
 import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.member.repository.MemberRepository;
 import com.seb_main_002.subscribe.entity.Subscribe;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
@@ -17,6 +19,7 @@ import java.util.Optional;
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final ItemRepository itemRepository;
 
     @Transactional
     public void updateSubscribe(Long memberId, Boolean isSubScribed) {
@@ -79,4 +82,13 @@ public class MemberService {
         memberRepository.save(verifedMember);
     }
 
+    @Transactional
+    public void postTags(Long memberId, List<String> tagList) {
+        Member verifyMember = verifyMember(memberId);
+        List<String> memberTagList = verifyMember.getTagList();
+        for (String tag : tagList) {
+            memberTagList.add(tag);
+        }
+        memberRepository.save(verifyMember);
+    }
 }
