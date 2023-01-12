@@ -1,6 +1,6 @@
 package com.seb_main_002.member.entity;
 
-import com.seb_main_002.Address.Address;
+import com.seb_main_002.Address.entity.Address;
 import com.seb_main_002.audit.Auditable;
 import com.seb_main_002.cart.entity.Cart;
 import com.seb_main_002.order.entity.Order;
@@ -23,10 +23,17 @@ public class Member extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
+
     private String name;
+
+    @Column(unique = true)
     private String accountId;
+
     private String password;
+
+    @Column(unique = true)
     private String email;
+
     private String birthdate;
 
     @OneToMany(mappedBy = "member")

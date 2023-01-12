@@ -1,6 +1,6 @@
 package com.seb_main_002.member.mapper;
 
-import com.seb_main_002.Address.Address;
+import com.seb_main_002.Address.entity.Address;
 import com.seb_main_002.member.dto.*;
 import com.seb_main_002.member.entity.Member;
 import org.mapstruct.Mapper;
@@ -49,7 +49,7 @@ public interface MemberMapper {
         for (Address memberAddress : addressList) {
             if(memberAddress.getIsPrimary() ==true) {
                 address = memberAddress.getAddress();
-                zipcode = memberAddress.getZipCode();
+                zipcode = memberAddress.getZipcode();
             }
         }
 
@@ -86,8 +86,8 @@ public interface MemberMapper {
         List<MemberBeforeEditResponseDto.AddressDetailResponseDto> addresses = member.getAddressList().stream().map(address -> MemberBeforeEditResponseDto.AddressDetailResponseDto.builder()
                         .addressId(address.getAddressId())
                         .isPrimary(address.getIsPrimary())
-                        .addressTitle(address.getTitle())
-                        .zipcode(address.getZipCode())
+                        .addressTitle(address.getAddressTitle())
+                        .zipcode(address.getZipcode())
                         .address(address.getAddress())
                         .build())
                 .collect(Collectors.toList());
@@ -122,8 +122,8 @@ public interface MemberMapper {
         List<MemberBeforeEditResponseDto.AddressDetailResponseDto> addresses = member.getAddressList().stream().map(address -> MemberBeforeEditResponseDto.AddressDetailResponseDto.builder()
                         .addressId(address.getAddressId())
                         .isPrimary(address.getIsPrimary())
-                        .addressTitle(address.getTitle())
-                        .zipcode(address.getZipCode())
+                        .addressTitle(address.getAddressTitle())
+                        .zipcode(address.getZipcode())
                         .address(address.getAddress())
                         .build())
                 .collect(Collectors.toList());
