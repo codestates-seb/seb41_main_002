@@ -1,4 +1,5 @@
 import "./Style/home.css";
+import dummyData from "./../data/HomeData.json";
 import styled from "styled-components";
 
 const BannerContainer = styled.div<{ height: string }>`
@@ -21,9 +22,12 @@ const BannerContent = styled.img<{ width: string }>`
 `;
 
 export default function Home() {
+  console.log(dummyData);
   return (
     <div className="Home_Container">
-      <BannerContainer height="500px"></BannerContainer>
+      <BannerContainer height="500px">
+        <img src={dummyData.bannerImageUrl} alt="home main banner image" />
+      </BannerContainer>
       <BannerContainer height="500px">
         <BannerContent src="" width={"500px"} />
       </BannerContainer>

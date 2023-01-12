@@ -1,0 +1,33 @@
+{
+  "bannerImageUrl": "https://picsum.photos/1920/500",
+  "eventsInfo": [
+    {
+      "eventId": 1,
+      "title": "abc",
+      "eventImageURL": "https://picsum.photos/200?random=1",
+      "createdAt": "2022/2/22",
+      "endAt": "2022/2/22"
+    },
+    {
+      "eventId": 2,
+      "title": "abc",
+      "eventImageURL": "https://picsum.photos/200?random=2",
+      "createdAt": "2022/2/22",
+      "endAt": "2022/2/22"
+    },
+    {
+      "eventId": 3,
+      "title": "abc",
+      "eventImageURL": "https://picsum.photos/200?random=3",
+      "createdAt": "2022/2/22",
+      "endAt": "2022/2/22"
+    }
+  ],
+  "topRankBanners": [
+    {
+      "categoryKRName": "토너",
+      "categoryENName": "toner",
+      "topListURL": "https://picsum.photos/150?random=1"
+    }
+  ]
+}
