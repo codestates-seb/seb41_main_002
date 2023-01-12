@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import "./Style/checkout.css";
+import ShippingAddress from "../Components/Payment/ShippingAddress";
 
 const 멤버구독 = styled.span<{ 구독여부: boolean }>`
   color: ${(props) => (props.구독여부 ? "green" : "red")};
@@ -27,14 +28,16 @@ export default function Checkout() {
   const memberId: number = 1;
 
   interface 주소타입 {
-    addressId: number;
-    isPrimary: boolean;
-    addressTitle: string;
-    zipcode: string;
     address: string;
+    addressId: number;
+    addressTitle: string;
+    isPrimary: boolean;
+    zipcode: string;
   }
 
   interface 멤버타입 {
+    phoneNumber: string;
+    memberName: string;
     isSubscribe: boolean;
     memberReserve: number;
     addressList: 주소타입[];
@@ -136,16 +139,37 @@ export default function Checkout() {
         </div>
       </section>
       <section className="Checkout_Section">
+        <h2>배송지 정보</h2>
+        <div className="배송지선택">
+          <p>배송지 선택</p>
+          <div>
+            <div className="배송지박스">
+              <input id="newAddress" type="radio" name="address"/>
+              <label htmlFor="newAddress">신규배송지</label>
+            </div>
+            <div className="배송지박스">
+              최근 :{
+                멤버정보값 &&
+                  멤버정보값["addressList"].map(
+                    (address: 주소타입, index: number) => {
+                      return (
+                        <ShippingAddress
+                          key={"address" + index}
+                          address={address}
+                        />
+                      );
+                    }
+                  )
+              }
+            </div>
+          </div>
+        </div>
         <div className="Summary_List_Item">
           대표 주소: 서울특별시 서초구 서초대로 396 20층, 06619 (집)
         </div>
         <div className="Summary_List_Item">
           <span className="List_Item_Title">이름</span>
           <span className="List_Item_Content">홍길동</span>
-        </div>
-        <div className="Summary_List_Item">
-          <span className="List_Item_Title">이메일</span>
-          <span className="List_Item_Content">sampleemail@gmail.com</span>
         </div>
         <div className="Summary_List_Item">
           <span className="List_Item_Title">연락처</span>
