@@ -50,4 +50,9 @@ public class MemberController {
         memberService.updateMember(memberId,member);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("/{memberId}/payment")
+    public ResponseEntity getMemberBeforeOrder(@PathVariable("memberId") Long memberId) {
+        Member member = memberService.findMember(memberId);
+        return new ResponseEntity<>(mapper.memberToMemberBeforeOrderResponseDto(member),HttpStatus.OK);
+    }
 }

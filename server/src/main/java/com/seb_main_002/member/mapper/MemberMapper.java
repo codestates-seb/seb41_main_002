@@ -2,6 +2,7 @@ package com.seb_main_002.member.mapper;
 
 import com.seb_main_002.Address.Address;
 import com.seb_main_002.member.dto.MemberBeforeEditResponseDto;
+import com.seb_main_002.member.dto.MemberBeforeOrderResponseDto;
 import com.seb_main_002.member.dto.MemberPatchDto;
 import com.seb_main_002.member.dto.MemberResponseDto;
 import com.seb_main_002.member.entity.Member;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Mapper(componentModel = "spring")
 public interface MemberMapper {
@@ -117,5 +119,22 @@ public interface MemberMapper {
         member.setPhoneNumber(memberPatchDto.getPhoneNumber());
         member.setTagList(memberPatchDto.getTagList());
         return member;
+    }
+    default MemberBeforeOrderResponseDto memberToMemberBeforeOrderResponseDto(Member member) {
+
+        List<MemberBeforeEditResponseDto.AddressDetailResponseDto> addresses = member.getAddressList().stream().map(address -> MemberBeforeEditResponseDto.AddressDetailResponseDto.builder()
+                        .addressId(address.getAddressId())
+                        .isPrimary(address.getIsPrimary())
+                        .addressTitle(address.getTitle())
+                        .zipcode(address.getZipCode())
+                        .address(address.getAddress())
+                        .build())
+                .collect(Collectors.toList());
+
+        return MemberBeforeOrderResponseDto.builder()
+                .isSubscribed(member.getSubscribe().getIsSubscribed())
+                .memberReserve(member.getMemberReserve())
+                .addressList(addresses)
+                .build();
     }
 }
