@@ -4,21 +4,21 @@
     {
       "eventId": 1,
       "title": "Event One",
-      "eventImageURL": "https://picsum.photos/200?random=1",
+      "eventImageURL": "https://picsum.photos/2000?random=1",
       "createdAt": "2022/2/22",
       "endAt": "2022/2/22"
     },
     {
       "eventId": 2,
       "title": "Event Two",
-      "eventImageURL": "https://picsum.photos/200?random=2",
+      "eventImageURL": "https://picsum.photos/2000?random=2",
       "createdAt": "2022/2/22",
       "endAt": "2022/2/22"
     },
     {
       "eventId": 3,
       "title": "Event Three",
-      "eventImageURL": "https://picsum.photos/200?random=3",
+      "eventImageURL": "https://picsum.photos/2000?random=3",
       "createdAt": "2022/2/22",
       "endAt": "2022/2/22"
     }

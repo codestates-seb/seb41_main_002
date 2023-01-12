@@ -34,12 +34,15 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 .Events_Banner {
-  height: 500px;
-  background-color: rgb(230, 231, 251);
+  height: 600px;
+  padding: 50px 0;
+  background-color: darkgrey;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  color: black;
 }
 
 .Events_Carousel {
@@ -55,29 +58,22 @@
   display: none;
 }
 
-.Event_Slide {
-  position: relative;
-  flex-basis: 100%;
-  flex-shrink: 0;
-  background-image: url("https://picsum.photos/1000");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+.Carousel_Slide {
 }
 
-.left,
-.right {
+.Carousel_Arrow {
+  color: white;
   border: none;
   background-color: transparent;
   cursor: pointer;
-  color: brown;
   font-size: 5rem;
   overflow: hidden;
   z-index: 100;
 }
 
 .Event_Caption_Text {
-  color: black;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
   font-size: 21px;
   padding: 8px 12px;
   position: absolute;
@@ -86,8 +82,7 @@
   text-align: center;
 }
 
-.Carousel_Page {
-  color: black;
+.Event_Number_Text {
   font-size: 15px;
   padding: 8px 12px;
   position: absolute;
