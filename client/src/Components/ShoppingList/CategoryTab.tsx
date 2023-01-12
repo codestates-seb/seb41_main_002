@@ -1,6 +1,7 @@
+import CustomButton from "../Commons/Buttons";
 import "./Style/categoryTab.css";
 
-export const ShoppingCategoryTab:Function = () => {
+export const ShoppingCategoryTab: Function = () => {
   const categoryTitle: string[] = [
     "전체",
     "토너",
@@ -12,10 +13,16 @@ export const ShoppingCategoryTab:Function = () => {
   ];
 
   return categoryTitle.map((category) => {
-    return(
-    <li key={category}>
-      <button className="Category_Button">{category}</button>
-    </li>
-    )
+    return (
+      <li key={category}>
+        <CustomButton
+          fontColor="white"
+          bgColor="gray"
+          width="100px"
+          padding="5px"
+          content={`${category}`}
+        />
+      </li>
+    );
   });
 };
