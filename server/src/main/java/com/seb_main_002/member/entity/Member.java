@@ -1,12 +1,13 @@
 package com.seb_main_002.member.entity;
 
-import com.seb_main_002.Address.Address;
+import com.seb_main_002.Address.entity.Address;
 import com.seb_main_002.audit.Auditable;
 import com.seb_main_002.cart.entity.Cart;
 import com.seb_main_002.order.entity.Order;
 import com.seb_main_002.review.entity.Review;
 import com.seb_main_002.subscribe.entity.Subscribe;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,10 +23,17 @@ public class Member extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
+
     private String name;
+
+    @Column(unique = true)
     private String accountId;
+
     private String password;
+
+    @Column(unique = true)
     private String email;
+
     private String birthdate;
 
     @OneToMany(mappedBy = "member")
@@ -35,7 +43,7 @@ public class Member extends Auditable {
 
     @ElementCollection
     private List<String> tagList = new ArrayList<>();
-
+    @ColumnDefault("0")
     private Integer memberReserve;
 
     @OneToMany(mappedBy = "member")

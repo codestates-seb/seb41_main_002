@@ -1,8 +1,7 @@
 package com.seb_main_002.member.mapper;
 
-import com.seb_main_002.member.dto.MemberBeforeEditResponseDto;
-import com.seb_main_002.member.dto.MemberPatchDto;
-import com.seb_main_002.member.dto.MemberResponseDto;
+import com.seb_main_002.Address.entity.Address;
+import com.seb_main_002.member.dto.*;
 import com.seb_main_002.member.entity.Member;
 import org.mapstruct.Mapper;
 
@@ -10,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Mapper(componentModel = "spring")
 public interface MemberMapper {
@@ -19,11 +19,6 @@ public interface MemberMapper {
             return null;
         }
 
-        //addressResponseDto
-        List<MemberResponseDto.AddressResponseDto> addresses = member.getAddressList().stream()
-                .map(address -> MemberResponseDto.AddressResponseDto.builder()
-                        .zipcode(address.getZipCode())
-                        .address(address.getAddress()).build()).collect(Collectors.toList());
 
 
         //OrderResponseDto
@@ -47,14 +42,28 @@ public interface MemberMapper {
                 .reviewRating(review.getReviewRating())
                 .build()).collect(Collectors.toList());
 
+        // 대표주소
+        List<Address> addressList = member.getAddressList();
+        String address = null;
+        String zipcode = null;
+        for (Address memberAddress : addressList) {
+            if(memberAddress.getIsPrimary() ==true) {
+                address = memberAddress.getAddress();
+                zipcode = memberAddress.getZipcode();
+            }
+        }
+
         //MemberResponseDto
         return MemberResponseDto.builder()
                 .accountId(member.getAccountId())
                 .email(member.getEmail())
                 .birthdate(member.getBirthdate())
                 .memberName(member.getName())
-                .addresses(addresses)
-                .tags(member.getTagList())
+                .zipcode(zipcode)
+                .address(address)
+                .isSubscribed(member.getSubscribe().getIsSubscribed())
+                .memberReserve(member.getMemberReserve())
+                .tagList(member.getTagList())
                 .ordersHistory(orderHistory)
                 .reviews(reviews)
                 .build();
@@ -77,8 +86,8 @@ public interface MemberMapper {
         List<MemberBeforeEditResponseDto.AddressDetailResponseDto> addresses = member.getAddressList().stream().map(address -> MemberBeforeEditResponseDto.AddressDetailResponseDto.builder()
                         .addressId(address.getAddressId())
                         .isPrimary(address.getIsPrimary())
-                        .addressTitle(address.getTitle())
-                        .zipcode(address.getZipCode())
+                        .addressTitle(address.getAddressTitle())
+                        .zipcode(address.getZipcode())
                         .address(address.getAddress())
                         .build())
                 .collect(Collectors.toList());
@@ -92,6 +101,7 @@ public interface MemberMapper {
                 .phoneNumber(member.getPhoneNumber())
                 .addressList(addresses)
                 .tagList(member.getTagList())
+                .isSubscribed(member.getSubscribe().getIsSubscribed())
                 .subscribedDate(stringSubscribedDate)
                 .nowDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")))
                 .sampleCount(member.getSubscribe().getSampleCount())
@@ -105,6 +115,39 @@ public interface MemberMapper {
         member.setEmail(memberPatchDto.getEmail());
         member.setPhoneNumber(memberPatchDto.getPhoneNumber());
         member.setTagList(memberPatchDto.getTagList());
+        return member;
+    }
+    default MemberBeforeOrderResponseDto memberToMemberBeforeOrderResponseDto(Member member) {
+
+        List<MemberBeforeEditResponseDto.AddressDetailResponseDto> addresses = member.getAddressList().stream().map(address -> MemberBeforeEditResponseDto.AddressDetailResponseDto.builder()
+                        .addressId(address.getAddressId())
+                        .isPrimary(address.getIsPrimary())
+                        .addressTitle(address.getAddressTitle())
+                        .zipcode(address.getZipcode())
+                        .address(address.getAddress())
+                        .build())
+                .collect(Collectors.toList());
+
+        return MemberBeforeOrderResponseDto.builder()
+                .isSubscribed(member.getSubscribe().getIsSubscribed())
+                .memberReserve(member.getMemberReserve())
+                .addressList(addresses)
+                .build();
+    }
+
+     default Member memberPostDtoToMember(MemberPostDto memberPostDto) {
+        if(memberPostDto == null) {
+            return null;
+        }
+
+        Member member = new Member();
+        member.setAccountId(memberPostDto.getAccountId());
+        member.setPassword(memberPostDto.getPassword());
+        member.setName(memberPostDto.getMemberName());
+        member.setBirthdate(memberPostDto.getBirthDate());
+        member.setEmail(memberPostDto.getEmail());
+        member.setPhoneNumber(memberPostDto.getPhoneNumber());
+        member.setMemberReserve(0);
         return member;
     }
 }

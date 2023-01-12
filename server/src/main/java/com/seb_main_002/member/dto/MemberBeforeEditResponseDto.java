@@ -14,8 +14,9 @@ public class MemberBeforeEditResponseDto {
     private String birthdate;
     private String email;
     private String phoneNumber;
-    private List<AddressDetailResponseDto> addressList = new ArrayList<>();
-    private List<String> tagList = new ArrayList<>();
+    private List<AddressDetailResponseDto> addressList;
+    private List<String> tagList;
+    private Boolean isSubscribed;
     private String subscribedDate;
     private String nowDate;
     private Integer sampleCount;

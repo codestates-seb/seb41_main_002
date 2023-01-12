@@ -2,6 +2,7 @@ package com.seb_main_002.member.service;
 
 import com.seb_main_002.exception.BusinessLogicException;
 import com.seb_main_002.exception.ExceptionCode;
+import com.seb_main_002.item.repository.ItemRepository;
 import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.member.repository.MemberRepository;
 import com.seb_main_002.subscribe.entity.Subscribe;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
@@ -17,6 +19,7 @@ import java.util.Optional;
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final ItemRepository itemRepository;
 
     @Transactional
     public void updateSubscribe(Long memberId, Boolean isSubScribed) {
@@ -58,6 +61,12 @@ public class MemberService {
             throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
         }
     }
+    public void verifyExistsAccountId(String accountId) {
+        Optional<Member> optionalMember = memberRepository.findByAccountId(accountId);
+        if(optionalMember.isPresent()) {
+            throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
+        }
+    }
 
     public Member findMember(Long memberId) {
         return verifyMember(memberId);
@@ -78,5 +87,11 @@ public class MemberService {
 
         memberRepository.save(verifedMember);
     }
-
+    @Transactional
+    public Member createMember(Member member) {
+        verifyExistsEmail(member.getEmail());
+        verifyExistsAccountId(member.getAccountId());
+        memberRepository.save(member);
+        return member;
+    }
 }
