@@ -1,9 +1,8 @@
-import "./Style/home.css";
 import dummyData from "./../data/HomeData.json";
 import styled from "styled-components";
-import CustomButton from "../Components/Commons/Buttons";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import "./Style/home.css";
 
 const HeroImage = styled.div<{ bgUrl: string }>`
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
