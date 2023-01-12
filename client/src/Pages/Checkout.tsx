@@ -1,6 +1,14 @@
-import { useState } from "react";
 import OrderedListItem from "../Components/Commons/OrderedListItem";
+import { 멤버정보, 결제, 주소입력 } from "../API/Payment";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+
 import "./Style/checkout.css";
+
+const 멤버구독 = styled.span<{ 구독여부: boolean }>`
+  color: ${(props) => (props.구독여부 ? "green" : "red")};
+  font-weight: 900;
+`;
 
 export default function Checkout() {
   // 아래 더미 데이터는 이후 데이터 연동 후 대치 될 예정입니다.
@@ -16,36 +24,118 @@ export default function Checkout() {
     { name: "어머 너무 이뻐요 앰플", price: 30000, count: 1 },
     { name: "어머 너무 촉촉해요 앰플", price: 20000, count: 2 },
   ];
+  const memberId: number = 1;
+
+  interface 주소타입 {
+    addressId: number;
+    isPrimary: boolean;
+    addressTitle: string;
+    zipcode: string;
+    address: string;
+  }
+
+  interface 멤버타입 {
+    isSubscribe: boolean;
+    memberReserve: number;
+    addressList: 주소타입[];
+  }
+
+  const [멤버정보값, set멤버정보값] = useState<any>();
+  const [사용할적립금, set사용할적립금] = useState();
+
+  useEffect(() => {
+    멤버정보(memberId)
+      .then((res) => {
+        console.log(res);
+        set멤버정보값(res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+    const 주문 = {
+      memberId: 1, // 맴버 id
+      isPrimary: false, // 구독여부
+      addressId: 1, //주소 id
+      itemList: [
+        //아이템 리스트(로컬 스토리지에서 받아오기)
+        {
+          itemId: 1,
+          itemCount: 1,
+          itemTotalPrice: 100,
+        },
+        {
+          itemId: 2,
+          itemCount: 1,
+          itemTotalPrice: 100,
+        },
+      ],
+      itemsTotalPrice: 100, // [ 원가 ]
+      totalPrice: 100, // [ 배송비 포함가격 or 포함+할인적용가격 ]
+      usedReserve: 3000, //사용 포인트
+    };
+    결제(주문).then((res) => {
+      console.log(res);
+    });
+    const 주소1개 = {
+      memberId: 1, // number
+      isPrimary: false, // boolean
+      addressTitle: "집", // string
+      zipcode: "04567", // string
+      address: "서울시 강서구 화곡동 56-536", // string
+    };
+    주소입력(주소1개).then((res) => {
+      console.log(res);
+    });
+  }, []);
 
   return (
     <div className="Checkout_Container">
-      <h1 className="Checkout_Header">결제 정보 요약</h1>
-      <section className="Price_Total_Summary">
-        <div className="Summary_List_Item">
-          <span className="List_Item_Title">내 적립금: 총 {myReserve}원 </span>
-          <span className="List_Item_Content">현재 구독중</span>
+      <h1 className="Checkout_Header">결제 페이지</h1>
+      <section className="Checkout_Section">
+        <div className="멤버정보">
+          <span className="멤버적립금">
+            내 적립금 : {멤버정보값 && 멤버정보값["memberReserve"]}원
+          </span>
+          <멤버구독 구독여부={멤버정보값 && 멤버정보값["isSubscribe"]}>
+            프리미엄 구독{" "}
+            {멤버정보값 && 멤버정보값["isSubscribe"] ? "사용" : "미사용"}
+          </멤버구독>
         </div>
-        {/* 예시 상품 2개는 이후 데이터로 연동된 후 삭제될 예정입니다. */}
-        {items.map((item, idx) => {
-          return (
-            <OrderedListItem
-              item={item}
-              idx={idx}
-              key={`OrderListItem${idx}`}
-            />
-          );
-        })}
-        <div className="List_Item_Reserve">
-          <label>적립금: </label>
-          <input type="text" placeholder={`${myReserve}원 사용 가능`} />
+        <div className="상품리스트">
+          {/* 예시 상품 2개는 이후 데이터로 연동된 후 삭제될 예정입니다. */}
+          {items.map((item, idx) => {
+            return (
+              <OrderedListItem
+                item={item}
+                idx={idx}
+                key={`OrderListItem${idx}`}
+              />
+            );
+          })}
+        </div>
+        <div className="적립금사용">
+          <label htmlFor="memberReserve">적립금 : </label>
+          <input
+            className="textBox"
+            id="memberReserve"
+            type="text"
+            value={사용할적립금}
+            placeholder={`${
+              멤버정보값 && 멤버정보값["memberReserve"]
+            }원 사용 가능`}
+          />
         </div>
 
-        <div className="Summary_List_Item">
-          제품 가격: {totalPrice}원 + 배송비 3,000원 - 구독 1,000원 - 적립금{" "}
-          {myReserve} 원 = 총 {totalPrice + 500} 원
+        <div className="금액계산">
+          총 금액 : {totalPrice}원 + 배송비 3000원{" "}
+          {멤버정보값 && 멤버정보값["isSubscribe"]
+            ? "- 구독 혜택 1000원"
+            : null}{" "}
+          - 적립금 {myReserve} 원 = 총 {totalPrice + 500} 원
         </div>
       </section>
-      <section className="Delivery_Summary">
+      <section className="Checkout_Section">
         <div className="Summary_List_Item">
           대표 주소: 서울특별시 서초구 서초대로 396 20층, 06619 (집)
         </div>
@@ -82,7 +172,7 @@ export default function Checkout() {
           </select>
         </div>
       </section>
-      <section className="Payment_Method_Summary">
+      <section className="Checkout_Section">
         <div className="Summary_List_Item">
           <label className="List_Item_Title">결제 수단: </label>
           <select name="requests" className="List_Item_Select">
