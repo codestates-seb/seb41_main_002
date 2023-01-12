@@ -1,6 +1,6 @@
 import OrderedListItem from "../Components/Commons/OrderedListItem";
-import { 멤버정보, 결제, 주소입력 } from "../API/Payment";
-import { 상품계산 } from "../Function/payment";
+import { 멤버정보, 결제, 주소입력, 카카오결제 } from "../API/Payment";
+import { 상품계산, 상품정리 } from "../Function/payment";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -13,11 +13,6 @@ const 멤버구독 = styled.span<{ 구독여부: boolean }>`
 `;
 
 export default function Checkout() {
-  const [멤버정보값, set멤버정보값] = useState<any>();
-  const [사용할적립금, set사용할적립금] = useState<
-    number | undefined | string
-  >();
-
   interface ItemInterface {
     name: string;
     price: number;
@@ -32,6 +27,39 @@ export default function Checkout() {
     itemTotalPrice: number;
   }
 
+  interface 주소타입 {
+    address: string;
+    addressId: number;
+    addressTitle: string;
+    isPrimary: boolean;
+    zipcode: string;
+  }
+
+  interface 주문서타입 {
+    memberId: number;
+    isPrimary: any;
+    addressId: number;
+    itemList: {
+      itemId: number;
+      itemCount: number;
+      itemTotalPrice: number;
+    }[];
+    itemsTotalPrice: number;
+    totalPrice: number;
+    usedReserve: number;
+  }
+
+  const [멤버정보값, set멤버정보값] = useState<any>();
+  const [사용할적립금, set사용할적립금] = useState<
+    number | undefined | string
+  >();
+  const [주문, set주문] = useState<주문서타입 | undefined>();
+  const { itemsTotalPrice, totalPrice, 적립금제외, 상품필터 } = 상품계산(
+    사용할적립금,
+    멤버정보값 && 멤버정보값["isSubscribe"]
+  );
+
+  // 더미 데이터 연동 후 지울 예정
   const arr = [
     {
       itemId: 1,
@@ -59,28 +87,8 @@ export default function Checkout() {
   const arrString = JSON.stringify(arr);
   window.localStorage.setItem("itemList", arrString);
 
-  let { itemsTotalPrice, totalPrice, 적립금제외, 상품필터 } = 상품계산(
-    사용할적립금,
-    멤버정보값 && 멤버정보값["isSubscribe"]
-  );
-
   const memberId: number = 1;
-
-  interface 주소타입 {
-    address: string;
-    addressId: number;
-    addressTitle: string;
-    isPrimary: boolean;
-    zipcode: string;
-  }
-
-  interface 멤버타입 {
-    phoneNumber: string;
-    memberName: string;
-    isSubscribe: boolean;
-    memberReserve: number;
-    addressList: 주소타입[];
-  }
+  //----------------------------------------------------------
 
   const 적립금입력 = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
@@ -97,6 +105,30 @@ export default function Checkout() {
     }
   };
 
+  const 결제하기 = () => {
+    const itemList = 상품정리();
+    const 주문서: 주문서타입 = {
+      memberId: memberId, //연동 이후 변경
+      isPrimary: 멤버정보값["isSubscribe"],
+      addressId: 1, //주소 id
+      itemList: itemList,
+      itemsTotalPrice: itemsTotalPrice,
+      totalPrice: totalPrice,
+      usedReserve: (사용할적립금 !== undefined ? Number(사용할적립금) : 0),
+    };
+    console.log(주문서)
+    결제(주문서).then((res) => {
+      console.log("결제가 완료되었습니다.");
+    });
+    카카오결제(주문서, 상품필터[0].name).then((res:string | URL | undefined) => {
+      if(typeof res !== 'undefined'){
+        window.location.replace(res);
+      }
+      console.log("카카오 결제가 완료되었습니다");
+    });
+    set주문(주문서);
+  };
+
   useEffect(() => {
     멤버정보(memberId)
       .then((res) => {
@@ -106,31 +138,7 @@ export default function Checkout() {
       .catch((err) => {
         console.error(err);
       });
-
-    const 주문 = {
-      memberId: 1, // 맴버 id
-      isPrimary: false, // 구독여부
-      addressId: 1, //주소 id
-      itemList: [
-        //아이템 리스트(로컬 스토리지에서 받아오기)
-        {
-          itemId: 1,
-          itemCount: 1,
-          itemTotalPrice: 100,
-        },
-        {
-          itemId: 2,
-          itemCount: 1,
-          itemTotalPrice: 100,
-        },
-      ],
-      itemsTotalPrice: 100, // [ 원가 ]
-      totalPrice: 100, // [ 배송비 포함가격 or 포함+할인적용가격 ]
-      usedReserve: 3000, //사용 포인트
-    };
-    결제(주문).then((res) => {
-      console.log(res);
-    });
+    
     const 주소1개 = {
       memberId: 1, // number
       isPrimary: false, // boolean
@@ -260,7 +268,9 @@ export default function Checkout() {
             <div>
               <img src="https://picsum.photos/75?random=3" alt="sample image" />
             </div>
-            <button className="Pay_Button">결제하기</button>
+            <button className="Pay_Button" onClick={결제하기}>
+              결제하기
+            </button>
           </div>
           <div className="Payment_Item">
             <div>카드 최종 결제 금액</div>

@@ -21,4 +21,14 @@ export const 상품계산 = (사용적립금: string | number | undefined, 구�
   return {itemsTotalPrice, totalPrice, 적립금제외, 상품필터}
 };
 
-export const 상품정리 = (memberId: number) => {};
+export const 상품정리 = () => {
+  let itemList = 상품배열화.map((item:any) => {
+    return{
+      itemId: item.itemId,
+      itemCount: item.itemCount,
+      itemTotalPrice: item.itemTotalPrice,
+    }
+  })
+
+  return itemList
+};
