@@ -1,7 +1,6 @@
-package com.seb_main_002.EventImage.entity;
+package com.seb_main_002.eventImage.entity;
 
 import com.seb_main_002.audit.Auditable;
-import com.seb_main_002.order.entity.Order;
 import lombok.*;
 
 import javax.persistence.*;

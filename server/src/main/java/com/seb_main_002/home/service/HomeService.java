@@ -1,9 +1,9 @@
 package com.seb_main_002.home.service;
 
-import com.seb_main_002.EventImage.entity.BannerImage;
-import com.seb_main_002.EventImage.entity.Event;
-import com.seb_main_002.EventImage.repository.BannerImageRepository;
-import com.seb_main_002.EventImage.repository.EventRepository;
+import com.seb_main_002.eventImage.entity.BannerImage;
+import com.seb_main_002.eventImage.entity.Event;
+import com.seb_main_002.eventImage.repository.BannerImageRepository;
+import com.seb_main_002.eventImage.repository.EventRepository;
 import com.seb_main_002.exception.BusinessLogicException;
 import com.seb_main_002.exception.ExceptionCode;
 import com.seb_main_002.item.entity.Item;
