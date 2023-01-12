@@ -1,6 +1,18 @@
 import "./Style/home.css";
 import dummyData from "./../data/HomeData.json";
 import styled from "styled-components";
+import CustomButton from "../Components/Commons/Buttons";
+
+const HeroImage = styled.div<{ bgUrl: string }>`
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(${(props) => props.bgUrl});
+  height: 600px;
+  position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 20px;
+`;
 
 const BannerContainer = styled.div<{ height: string }>`
   display: flex;
@@ -22,15 +34,23 @@ const BannerContent = styled.img<{ width: string }>`
 `;
 
 export default function Home() {
-  console.log(dummyData);
+  // console.log(dummyData);
   return (
     <div className="Home_Container">
-      <BannerContainer height="500px">
-        <img src={dummyData.bannerImageUrl} alt="home main banner image" />
-      </BannerContainer>
-      <BannerContainer height="500px">
-        <BannerContent src="" width={"500px"} />
-      </BannerContainer>
+      <HeroImage bgUrl={dummyData.bannerImageUrl}>
+        <div className="Hero_Text">
+          <h1 className="Hero_Text_Gradient">남성 전용 화장품</h1>
+          <p className="Hero_Text_Gradient">
+            당신의 피부타입을 알아보고 화장품을 추천 받아보세요.
+          </p>
+          <button className="Hero_Button">
+            <span className="Hero_Text_Gradient">알아보기</span>
+          </button>
+        </div>
+      </HeroImage>
+      <div className="Events_Banner">
+        <div className="Events_Carousel"></div>
+      </div>
       <TopBannerContainer height="250px">
         <BannerContent src="" width={"250px"} />
       </TopBannerContainer>
