@@ -13,7 +13,8 @@ public enum ExceptionCode {
     UNAUTHORIZED(401,"Unauthorized"),
     CANNOT_CHANGE_SUBSCRIBE(403,"Subscription can not be changed"),
     EMAIL_EXISTS(409, "Email exists"),
-    BANNER_IMAGE_NOT_FOUND(404, "BannerImage not found");
+    BANNER_IMAGE_NOT_FOUND(404, "BannerImage not found"),
+    ACCOUNTID_EXISTS(409,"AccountId exists");
 
     @Getter
     private int status;

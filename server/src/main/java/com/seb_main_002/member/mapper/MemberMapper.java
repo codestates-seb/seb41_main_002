@@ -1,10 +1,7 @@
 package com.seb_main_002.member.mapper;
 
-import com.seb_main_002.Address.Address;
-import com.seb_main_002.member.dto.MemberBeforeEditResponseDto;
-import com.seb_main_002.member.dto.MemberBeforeOrderResponseDto;
-import com.seb_main_002.member.dto.MemberPatchDto;
-import com.seb_main_002.member.dto.MemberResponseDto;
+import com.seb_main_002.Address.entity.Address;
+import com.seb_main_002.member.dto.*;
 import com.seb_main_002.member.entity.Member;
 import org.mapstruct.Mapper;
 
@@ -52,7 +49,7 @@ public interface MemberMapper {
         for (Address memberAddress : addressList) {
             if(memberAddress.getIsPrimary() ==true) {
                 address = memberAddress.getAddress();
-                zipcode = memberAddress.getZipCode();
+                zipcode = memberAddress.getZipcode();
             }
         }
 
@@ -89,8 +86,8 @@ public interface MemberMapper {
         List<MemberBeforeEditResponseDto.AddressDetailResponseDto> addresses = member.getAddressList().stream().map(address -> MemberBeforeEditResponseDto.AddressDetailResponseDto.builder()
                         .addressId(address.getAddressId())
                         .isPrimary(address.getIsPrimary())
-                        .addressTitle(address.getTitle())
-                        .zipcode(address.getZipCode())
+                        .addressTitle(address.getAddressTitle())
+                        .zipcode(address.getZipcode())
                         .address(address.getAddress())
                         .build())
                 .collect(Collectors.toList());
@@ -125,8 +122,8 @@ public interface MemberMapper {
         List<MemberBeforeEditResponseDto.AddressDetailResponseDto> addresses = member.getAddressList().stream().map(address -> MemberBeforeEditResponseDto.AddressDetailResponseDto.builder()
                         .addressId(address.getAddressId())
                         .isPrimary(address.getIsPrimary())
-                        .addressTitle(address.getTitle())
-                        .zipcode(address.getZipCode())
+                        .addressTitle(address.getAddressTitle())
+                        .zipcode(address.getZipcode())
                         .address(address.getAddress())
                         .build())
                 .collect(Collectors.toList());
@@ -136,5 +133,21 @@ public interface MemberMapper {
                 .memberReserve(member.getMemberReserve())
                 .addressList(addresses)
                 .build();
+    }
+
+     default Member memberPostDtoToMember(MemberPostDto memberPostDto) {
+        if(memberPostDto == null) {
+            return null;
+        }
+
+        Member member = new Member();
+        member.setAccountId(memberPostDto.getAccountId());
+        member.setPassword(memberPostDto.getPassword());
+        member.setName(memberPostDto.getMemberName());
+        member.setBirthdate(memberPostDto.getBirthDate());
+        member.setEmail(memberPostDto.getEmail());
+        member.setPhoneNumber(memberPostDto.getPhoneNumber());
+        member.setMemberReserve(0);
+        return member;
     }
 }

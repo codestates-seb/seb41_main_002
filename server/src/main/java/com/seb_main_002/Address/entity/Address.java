@@ -1,4 +1,4 @@
-package com.seb_main_002.Address;
+package com.seb_main_002.Address.entity;
 
 import com.seb_main_002.audit.Auditable;
 import com.seb_main_002.member.entity.Member;
@@ -16,13 +16,13 @@ public class Address extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long addressId;
 
-    private String title;
+    private String addressTitle;
 
     private String address;
 
     private Boolean isPrimary;
 
-    private String zipCode;
+    private String zipcode;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")

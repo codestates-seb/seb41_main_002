@@ -1,6 +1,6 @@
 package com.seb_main_002.order.service;
 
-import com.seb_main_002.Address.Address;
+import com.seb_main_002.Address.entity.Address;
 import com.seb_main_002.delivery.entity.Delivery;
 import com.seb_main_002.exception.BusinessLogicException;
 import com.seb_main_002.exception.ExceptionCode;
@@ -88,7 +88,7 @@ public class OrderService {
         addressList.stream().forEach(address -> {
             if(address.getAddressId().equals(addressId)) {
                 delivery.setAddress(address.getAddress());
-                delivery.setZipcode(address.getZipCode());
+                delivery.setZipcode(address.getZipcode());
             }
         });
 
