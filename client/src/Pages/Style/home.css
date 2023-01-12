@@ -22,12 +22,74 @@
 
 .Hero_Button {
   background-color: black;
+  color: white;
   padding: 10px;
   font-size: 17px;
   border: none;
 }
 
+.Hero_Button span:hover {
+  background: linear-gradient(to right, #fcecdd, #ffc288, #fea82f, #ff6701);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .Events_Banner {
   height: 500px;
-  background-color: indianred;
+  background-color: rgb(230, 231, 251);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.Events_Carousel {
+  height: 100%;
+  width: 800px;
+  display: flex;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.Events_Carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.Event_Slide {
+  position: relative;
+  flex-basis: 100%;
+  flex-shrink: 0;
+  background-image: url("https://picsum.photos/1000");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.left,
+.right {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: brown;
+  font-size: 5rem;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.Event_Caption_Text {
+  color: black;
+  font-size: 21px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+.Carousel_Page {
+  color: black;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
 }

@@ -11,7 +11,7 @@ const HeroImage = styled.div<{ bgUrl: string }>`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 `;
 
 const BannerContainer = styled.div<{ height: string }>`
@@ -44,12 +44,25 @@ export default function Home() {
             당신의 피부타입을 알아보고 화장품을 추천 받아보세요.
           </p>
           <button className="Hero_Button">
-            <span className="Hero_Text_Gradient">알아보기</span>
+            <span>알아보기</span>
           </button>
         </div>
       </HeroImage>
       <div className="Events_Banner">
-        <div className="Events_Carousel"></div>
+        <button className="left"> ◀ </button>
+        <div className="Events_Carousel">
+          {dummyData.eventsInfo.map((a) => {
+            return (
+              <div className="Event_Slide fade">
+                <div className="Carousel_Page">
+                  {a.eventId} / {dummyData.eventsInfo.length}
+                </div>
+                <div className="Event_Caption_Text">{a.title}</div>
+              </div>
+            );
+          })}
+        </div>
+        <button className="right"> ▶ </button>
       </div>
       <TopBannerContainer height="250px">
         <BannerContent src="" width={"250px"} />
