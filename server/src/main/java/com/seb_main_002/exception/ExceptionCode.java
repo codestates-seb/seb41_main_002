@@ -7,6 +7,7 @@ public enum ExceptionCode {
     MEMBER_EXISTS(409, "Member exists"),
     ITEM_NOT_FOUND(404, "Item not found"),
     ORDER_NOT_FOUND(404, "Order not found"),
+    CANNOT_POST_ORDER(400, "Can not Post Order"),
     CANNOT_CANCEL_ORDER(403, "Order can not change"),
     NOT_IMPLEMENTATION(501, "Not Implementation"),
     UNAUTHORIZED(401,"Unauthorized"),
