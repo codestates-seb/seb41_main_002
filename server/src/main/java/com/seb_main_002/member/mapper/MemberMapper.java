@@ -13,7 +13,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.seb_main_002.member.dto.MemberBeforeEditResponseDto.*;
 
 @Mapper(componentModel = "spring")
 public interface MemberMapper {
@@ -87,7 +86,7 @@ public interface MemberMapper {
 
 
 
-        List<AddressDetailResponseDto> addresses = member.getAddressList().stream().map(address -> AddressDetailResponseDto.builder()
+        List<MemberBeforeEditResponseDto.AddressDetailResponseDto> addresses = member.getAddressList().stream().map(address -> MemberBeforeEditResponseDto.AddressDetailResponseDto.builder()
                         .addressId(address.getAddressId())
                         .isPrimary(address.getIsPrimary())
                         .addressTitle(address.getTitle())
@@ -97,7 +96,7 @@ public interface MemberMapper {
                 .collect(Collectors.toList());
 
 
-        return builder()
+        return MemberBeforeEditResponseDto.builder()
                 .accountId(member.getAccountId())
                 .memberName(member.getName())
                 .birthdate(member.getBirthdate())
@@ -123,7 +122,7 @@ public interface MemberMapper {
     }
     default MemberBeforeOrderResponseDto memberToMemberBeforeOrderResponseDto(Member member) {
 
-        List<AddressDetailResponseDto> addresses = member.getAddressList().stream().map(address -> AddressDetailResponseDto.builder()
+        List<MemberBeforeEditResponseDto.AddressDetailResponseDto> addresses = member.getAddressList().stream().map(address -> MemberBeforeEditResponseDto.AddressDetailResponseDto.builder()
                         .addressId(address.getAddressId())
                         .isPrimary(address.getIsPrimary())
                         .addressTitle(address.getTitle())
