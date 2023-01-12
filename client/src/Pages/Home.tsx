@@ -16,25 +16,6 @@ const HeroImage = styled.div<{ bgUrl: string }>`
   margin-bottom: 50px;
 `;
 
-const BannerContainer = styled.div<{ height: string }>`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  height: ${(props) => props.height};
-  background-color: white;
-  margin-bottom: 20px;
-`;
-
-const TopBannerContainer = styled(BannerContainer)`
-  box-sizing: border-box;
-  padding: 20px 40px;
-`;
-
-const BannerContent = styled.img<{ width: string }>`
-  width: ${(props) => props.width};
-  height: 100%;
-`;
-
 const CarouselSlide = styled.div<{ bgUrl: string }>`
   position: relative;
   flex-basis: 100%;
@@ -46,12 +27,33 @@ const CarouselSlide = styled.div<{ bgUrl: string }>`
   transition: all 1s;
 `;
 
+const TopSalesContent = styled.div<{ bgUrl: string }>`
+  background-image: url(${(props) => props.bgUrl});
+  width: 250px;
+  height: 100%;
+  border: solid red 1px;
+  text-align: center;
+
+  p {
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    font-size: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+
+  p:hover {
+    color: burlywood;
+  }
+`;
+
 export default function Home() {
   const [xPos, setXPos] = useState(0);
   const [carouselStyleToSlide, setCarouselStyleToSlide] = useState({
     transform: `translateX(${xPos}px)`,
   });
-  // console.log(dummyData);
 
   useEffect(() => {
     setCarouselStyleToSlide({ transform: `translateX(${xPos}px)` });
@@ -114,9 +116,15 @@ export default function Home() {
           ▶
         </button>
       </div>
-      <TopBannerContainer height="250px">
-        <BannerContent src="" width={"250px"} />
-      </TopBannerContainer>
+      <div className="Top_Sales_Banner">
+        {dummyData.topRankBanners.map((a) => {
+          return (
+            <TopSalesContent bgUrl={a.topListURL}>
+              <p>이 달의 Top 10 {a.categoryKRName}</p>
+            </TopSalesContent>
+          );
+        })}
+      </div>
     </div>
   );
 }

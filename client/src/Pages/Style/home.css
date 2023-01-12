@@ -82,7 +82,8 @@
 
 .Event_Number_Text {
   color: white;
-  font-size: 19px;
+  font-size: 21px;
+  font-weight: bold;
   padding: 8px 12px;
   position: absolute;
   top: 0;
@@ -101,4 +102,13 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.Top_Sales_Banner {
+  padding: 25px 0;
+  height: 350px;
+  background-color: gray;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
