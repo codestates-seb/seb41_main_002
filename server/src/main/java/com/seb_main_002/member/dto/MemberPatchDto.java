@@ -13,6 +13,6 @@ public class MemberPatchDto {
     private String memberName;
     private String email;
     private String phoneNumber;
-    private List<String> tagList = new ArrayList<>();
+    private List<String> tagList;
     private Boolean isSubscribed;
 }

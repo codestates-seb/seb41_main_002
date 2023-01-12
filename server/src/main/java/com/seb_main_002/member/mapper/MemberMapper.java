@@ -1,5 +1,6 @@
 package com.seb_main_002.member.mapper;
 
+import com.seb_main_002.Address.Address;
 import com.seb_main_002.member.dto.MemberBeforeEditResponseDto;
 import com.seb_main_002.member.dto.MemberPatchDto;
 import com.seb_main_002.member.dto.MemberResponseDto;
@@ -19,11 +20,6 @@ public interface MemberMapper {
             return null;
         }
 
-        //addressResponseDto
-        List<MemberResponseDto.AddressResponseDto> addresses = member.getAddressList().stream()
-                .map(address -> MemberResponseDto.AddressResponseDto.builder()
-                        .zipcode(address.getZipCode())
-                        .address(address.getAddress()).build()).collect(Collectors.toList());
 
 
         //OrderResponseDto
@@ -47,14 +43,28 @@ public interface MemberMapper {
                 .reviewRating(review.getReviewRating())
                 .build()).collect(Collectors.toList());
 
+        // 대표주소
+        List<Address> addressList = member.getAddressList();
+        String address = null;
+        String zipcode = null;
+        for (Address memberAddress : addressList) {
+            if(memberAddress.getIsPrimary() ==true) {
+                address = memberAddress.getAddress();
+                zipcode = memberAddress.getZipCode();
+            }
+        }
+
         //MemberResponseDto
         return MemberResponseDto.builder()
                 .accountId(member.getAccountId())
                 .email(member.getEmail())
                 .birthdate(member.getBirthdate())
                 .memberName(member.getName())
-                .addresses(addresses)
-                .tags(member.getTagList())
+                .zipcode(zipcode)
+                .address(address)
+                .isSubscribed(member.getSubscribe().getIsSubscribed())
+                .memberReserve(member.getMemberReserve())
+                .tagList(member.getTagList())
                 .ordersHistory(orderHistory)
                 .reviews(reviews)
                 .build();

@@ -13,17 +13,14 @@ public class MemberResponseDto {
     private String email;
     private String birthdate;
     private String memberName;
-    private List<AddressResponseDto> addresses;
-    private List<String> tags;
+    private String zipcode;
+    private String address;
+    private Boolean isSubscribed;
+    private Integer memberReserve;
+    private List<String> tagList;
     private List<OrderResponseDto> ordersHistory;
     private List<ReviewResponseDto> reviews;
 
-    @Getter
-    @Builder
-    public static class AddressResponseDto {
-        private String zipcode;
-        private String address;
-    }
     @Getter
     @Builder
     public static class OrderResponseDto {
@@ -31,7 +28,7 @@ public class MemberResponseDto {
         private String orderCreatedAt;
         private String orderStatus;
         private Integer totalPrice;
-        private List<OrderItemResponseDto> orderItems = new ArrayList<>();
+        private List<OrderItemResponseDto> orderItems;
     }
 
     @Getter
