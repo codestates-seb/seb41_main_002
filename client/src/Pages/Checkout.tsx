@@ -14,7 +14,7 @@ const 멤버구독 = styled.span<{ 구독여부: boolean }>`
 
 export default function Checkout() {
   const [멤버정보값, set멤버정보값] = useState<any>();
-  const [사용할적립금, set사용할적립금] = useState<number | undefined | string>(0);
+  const [사용할적립금, set사용할적립금] = useState<number | undefined | string>();
 
   interface ItemInterface {
     name: string;
@@ -57,7 +57,7 @@ export default function Checkout() {
   const arrString = JSON.stringify(arr);
   window.localStorage.setItem("itemList", arrString);
 
-  const {itemsTotalPrice, totalPrice, 상품필터} = 상품계산(사용할적립금, 멤버정보값 && 멤버정보값["isSubscribe"]);
+  let {itemsTotalPrice, totalPrice, 상품필터} = 상품계산(사용할적립금, 멤버정보값 && 멤버정보값["isSubscribe"]);
 
   const memberId: number = 1;
 
