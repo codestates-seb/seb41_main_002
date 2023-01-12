@@ -1,7 +1,6 @@
 package com.seb_main_002.member.controller;
 
 import com.seb_main_002.member.dto.MemberPatchDto;
-import com.seb_main_002.member.dto.MemberPostTagDto;
 import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.member.mapper.MemberMapper;
 import com.seb_main_002.member.repository.MemberRepository;
@@ -46,8 +45,9 @@ public class MemberController {
     }
     @PostMapping("/{memberId}/tags")
     public ResponseEntity postTags(@PathVariable("memberId") Long memberId,
-                                   @RequestBody MemberPostTagDto requestBody) {
-        memberService.postTags(memberId, requestBody.getTagList());
+                                   @RequestBody MemberPatchDto requestBody) {
+        Member member = mapper.memberPatchDtoToMember(requestBody);
+        memberService.updateMember(memberId,member);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

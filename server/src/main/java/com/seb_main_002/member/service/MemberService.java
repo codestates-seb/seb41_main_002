@@ -81,15 +81,4 @@ public class MemberService {
 
         memberRepository.save(verifedMember);
     }
-
-    @Transactional
-    public void postTags(Long memberId, List<String> tagList) {
-        Member verifyMember = verifyMember(memberId);
-        List<String> memberTagList = verifyMember.getTagList();
-        memberTagList.clear();
-        for (String tag : tagList) {
-            memberTagList.add(tag);
-        }
-        memberRepository.save(verifyMember);
-    }
 }
