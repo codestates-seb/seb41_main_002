@@ -29,9 +29,12 @@ const CarouselSlide = styled.div<{ bgUrl: string }>`
 
 const TopSalesContent = styled.div<{ bgUrl: string }>`
   background-image: url(${(props) => props.bgUrl});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: solid 0.5px burlywood;
   width: 250px;
   height: 100%;
-  border: solid red 1px;
   text-align: center;
 
   p {
@@ -45,7 +48,7 @@ const TopSalesContent = styled.div<{ bgUrl: string }>`
   }
 
   p:hover {
-    color: burlywood;
+    color: paleturquoise;
   }
 `;
 
@@ -119,9 +122,11 @@ export default function Home() {
       <div className="Top_Sales_Banner">
         {dummyData.topRankBanners.map((a) => {
           return (
-            <TopSalesContent bgUrl={a.topListURL}>
-              <p>이 달의 Top 10 {a.categoryKRName}</p>
-            </TopSalesContent>
+            <Link to="/items-top-list" className="Top_Sales">
+              <TopSalesContent bgUrl={a.topListURL}>
+                <p>이 달의 Top 10 {a.categoryKRName}</p>
+              </TopSalesContent>
+            </Link>
           );
         })}
       </div>

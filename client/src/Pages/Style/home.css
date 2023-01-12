@@ -36,13 +36,15 @@
 }
 
 .Events_Banner {
+  width: 85%;
   height: 600px;
+  margin: 0 auto;
   padding: 50px 0;
   background-color: black;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  color: black;
+  color: white;
 }
 
 .Events_Carousel {
@@ -59,18 +61,21 @@
 }
 
 .Carousel_Arrow {
-  color: rgb(250, 249, 233);
+  color: white;
   background-color: transparent;
   border: none;
   cursor: pointer;
-  font-size: 71px;
+  font-size: 51px;
   overflow: hidden;
   z-index: 100;
 }
 
+.Carousel_Arrow:hover {
+  color: burlywood;
+}
+
 .Event_Caption_Text {
   background-color: rgba(0, 0, 0, 0.5);
-  color: white;
   font-size: 25px;
   padding: 8px 12px;
   position: absolute;
@@ -81,7 +86,6 @@
 }
 
 .Event_Number_Text {
-  color: white;
   font-size: 21px;
   font-weight: bold;
   padding: 8px 12px;
@@ -98,7 +102,7 @@
 }
 
 .Event_Title:hover {
-  background: linear-gradient(to right, #ff6701, #dd8d1d, #ffc288, #fcecdd);
+  background: linear-gradient(to right, #fcecdd, #ffc288, #fea82f, #ff6701);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -107,8 +111,11 @@
 .Top_Sales_Banner {
   padding: 25px 0;
   height: 350px;
-  background-color: gray;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+}
+
+.Top_Sales {
+  height: 100%;
 }
