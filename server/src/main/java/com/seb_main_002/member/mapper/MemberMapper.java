@@ -92,6 +92,7 @@ public interface MemberMapper {
                 .phoneNumber(member.getPhoneNumber())
                 .addressList(addresses)
                 .tagList(member.getTagList())
+                .isSubscribed(member.getSubscribe().getIsSubscribed())
                 .subscribedDate(stringSubscribedDate)
                 .nowDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")))
                 .sampleCount(member.getSubscribe().getSampleCount())
