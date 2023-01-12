@@ -1,5 +1,9 @@
+import { ShoppingCategoryTab } from "../Components/ShoppingList/CategoryTab"
 import CustomButton from "../Components/Commons/Buttons";
+import shoppingList from "../data/shoppingList.json"
 import "./Style/shoppingList.css";
+
+console.log(shoppingList.cosmetics)
 
 export default function ShoppingList() {
   return (
@@ -12,33 +16,7 @@ export default function ShoppingList() {
         ></input>
       </div>
       <ul className="Filter_Options">
-        <li>
-          <CustomButton
-            bgColor="gray"
-            fontColor="white"
-            content="샘플"
-            width="100px"
-            padding="9px 15px"
-          />
-        </li>
-        <li>
-          <button className="Filter_Button">토너</button>
-        </li>
-        <li>
-          <button className="Filter_Button">크림</button>
-        </li>
-        <li>
-          <button className="Filter_Button">로션</button>
-        </li>
-        <li>
-          <button className="Filter_Button">클렌징</button>
-        </li>
-        <li>
-          <button className="Filter_Button">선크림</button>
-        </li>
-        <li>
-          <button className="Filter_Button">내 맞춤</button>
-        </li>
+        <ShoppingCategoryTab/>
       </ul>
       <div className="Products_Gallery">
         {/* 아래 상품들은 이후 데이터를 활용한 .map 방식으로 구성할 예정 */}
