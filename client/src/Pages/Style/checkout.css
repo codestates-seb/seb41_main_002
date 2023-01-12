@@ -13,7 +13,8 @@
   border-radius: 10px;
 }
 
-.Checkout_Section:nth-child(3){
+.Checkout_Section:nth-child(3),
+.Checkout_Section:nth-child(4){
   padding: 20px;
 }
 
@@ -68,6 +69,8 @@
 .배송지선택{
   display: flex;
   margin-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--lightgray);
 }
 
 .배송지박스{

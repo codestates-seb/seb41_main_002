@@ -21,10 +21,50 @@ export default function Checkout() {
     count: number;
   }
 
-  const items: ItemInterface[] = [
-    { name: "어머 너무 이뻐요 앰플", price: 30000, count: 1 },
-    { name: "어머 너무 촉촉해요 앰플", price: 20000, count: 2 },
+  interface 로컬타입 {
+    itemId: number;
+    itemTitle: string;
+    titleImageURL: string;
+    itemCount: number;
+    itemTotalPrice: number;
+  }
+
+  const arr = [
+    {
+      itemId: 1,
+      itemTitle: "상품이름1",
+      titleImageURL: "https://picsum.photos/75?random=1",
+      itemCount: 3,
+      itemTotalPrice: 10000,
+    },
+    {
+      itemId: 2,
+      itemTitle: "상품이름2",
+      titleImageURL: "https://picsum.photos/75?random=2",
+      itemCount: 2,
+      itemTotalPrice: 20000,
+    },
+    {
+      itemId: 3,
+      itemTitle: "상품이름3",
+      titleImageURL: "https://picsum.photos/75?random=3",
+      itemCount: 6,
+      itemTotalPrice: 50000,
+    },
   ];
+
+  const arrString = JSON.stringify(arr);
+  window.localStorage.setItem("itemList", arrString);
+  const 상품가져오기: any = window.localStorage.getItem("itemList");
+  const 상품배열화 = JSON.parse(상품가져오기);
+  const 상품필터 = 상품배열화.map((data: any) => {
+    return {
+      name: data.itemTitle,
+      price: data.itemTotalPrice,
+      count: data.itemCount,
+    };
+  });
+
   const memberId: number = 1;
 
   interface 주소타입 {
@@ -106,8 +146,7 @@ export default function Checkout() {
           </멤버구독>
         </div>
         <div className="상품리스트">
-          {/* 예시 상품 2개는 이후 데이터로 연동된 후 삭제될 예정입니다. */}
-          {items.map((item, idx) => {
+          {상품필터.map((item:ItemInterface, idx:number) => {
             return (
               <OrderedListItem
                 item={item}
@@ -144,40 +183,28 @@ export default function Checkout() {
           <p>배송지 선택</p>
           <div>
             <div className="배송지박스">
-              <input id="newAddress" type="radio" name="address"/>
+              <input id="newAddress" type="radio" name="address" />
               <label htmlFor="newAddress">신규배송지</label>
             </div>
             <div className="배송지박스">
-              최근 :{
-                멤버정보값 &&
-                  멤버정보값["addressList"].map(
-                    (address: 주소타입, index: number) => {
-                      return (
-                        <ShippingAddress
-                          key={"address" + index}
-                          address={address}
-                        />
-                      );
-                    }
-                  )
-              }
+              최근 :
+              {멤버정보값 &&
+                멤버정보값["addressList"].map(
+                  (address: 주소타입, index: number) => {
+                    return (
+                      <ShippingAddress
+                        key={"address" + index}
+                        address={address}
+                      />
+                    );
+                  }
+                )}
             </div>
           </div>
         </div>
+        <div className="배송지상세정보"></div>
         <div className="Summary_List_Item">
-          대표 주소: 서울특별시 서초구 서초대로 396 20층, 06619 (집)
-        </div>
-        <div className="Summary_List_Item">
-          <span className="List_Item_Title">이름</span>
-          <span className="List_Item_Content">홍길동</span>
-        </div>
-        <div className="Summary_List_Item">
-          <span className="List_Item_Title">연락처</span>
-          <span className="List_Item_Content">010-1234-5678</span>
-        </div>
-        <div className="Summary_List_Item">
-          <label className="List_Item_Title">배송 시 요청사항</label>
-          <select name="requests" className="List_Item_Select">
+          <select name="requests" className="">
             <option value="배송메모를 선택해 주세요.">
               배송메모를 선택해 주세요.
             </option>
@@ -197,6 +224,7 @@ export default function Checkout() {
         </div>
       </section>
       <section className="Checkout_Section">
+        <h2>카카오페이 결제</h2>
         <div className="Summary_List_Item">
           <label className="List_Item_Title">결제 수단: </label>
           <select name="requests" className="List_Item_Select">
