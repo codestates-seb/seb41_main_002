@@ -1,12 +1,10 @@
 package com.seb_main_002.EventImage.entity;
 
 import com.seb_main_002.audit.Auditable;
+import com.seb_main_002.order.entity.Order;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -23,5 +21,24 @@ public class Event extends Auditable {
     private String content;
 
     private String eventImageUrl;
+
+    @Enumerated(value=EnumType.STRING)
+    private Event.EventStatus eventStatus = EventStatus.EVENT_PROGRESS;
+
+    public enum EventStatus {
+        EVENT_PROGRESS(1, "진행중인 이벤트"),
+        EVENT_ENDED(2, "종료된 이벤트");
+
+        @Getter
+        private int stepNumber;
+
+        @Getter
+        private String stepDescription;
+
+        EventStatus(int stepNumber, String stepDescription) {
+            this.stepNumber = stepNumber;
+            this.stepDescription = stepDescription;
+        }
+    }
 
 }
