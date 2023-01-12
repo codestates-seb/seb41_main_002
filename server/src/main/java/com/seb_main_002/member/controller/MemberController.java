@@ -43,4 +43,11 @@ public class MemberController {
         memberService.updateMember(memberId, member);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @PostMapping("/{memberId}/tags")
+    public ResponseEntity postTags(@PathVariable("memberId") Long memberId,
+                                   @RequestBody MemberPatchDto requestBody) {
+        Member member = mapper.memberPatchDtoToMember(requestBody);
+        memberService.updateMember(memberId,member);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
