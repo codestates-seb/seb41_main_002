@@ -1,4 +1,4 @@
-package com.seb_main_002.eventImage.entity;
+package com.seb_main_002.EventImage.entity;
 
 import com.seb_main_002.audit.Auditable;
 import lombok.*;
