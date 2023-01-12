@@ -28,7 +28,7 @@ public class MemberResponseDto {
         private String orderCreatedAt;
         private String orderStatus;
         private Integer totalPrice;
-        private List<OrderItemResponseDto> orderItems = new ArrayList<>();
+        private List<OrderItemResponseDto> orderItems;
     }
 
     @Getter
