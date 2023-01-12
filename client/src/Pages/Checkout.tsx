@@ -14,7 +14,9 @@ const 멤버구독 = styled.span<{ 구독여부: boolean }>`
 
 export default function Checkout() {
   const [멤버정보값, set멤버정보값] = useState<any>();
-  const [사용할적립금, set사용할적립금] = useState<number | undefined | string>();
+  const [사용할적립금, set사용할적립금] = useState<
+    number | undefined | string
+  >();
 
   interface ItemInterface {
     name: string;
@@ -57,7 +59,10 @@ export default function Checkout() {
   const arrString = JSON.stringify(arr);
   window.localStorage.setItem("itemList", arrString);
 
-  let {itemsTotalPrice, totalPrice, 상품필터} = 상품계산(사용할적립금, 멤버정보값 && 멤버정보값["isSubscribe"]);
+  let { itemsTotalPrice, totalPrice, 적립금제외, 상품필터 } = 상품계산(
+    사용할적립금,
+    멤버정보값 && 멤버정보값["isSubscribe"]
+  );
 
   const memberId: number = 1;
 
@@ -78,16 +83,19 @@ export default function Checkout() {
   }
 
   const 적립금입력 = (e: React.ChangeEvent) => {
-    const target = (e.target as HTMLInputElement)
-    console.log(target.value)
-    if(Number(target.value) > Number(멤버정보값 && 멤버정보값["memberReserve"])){
-      set사용할적립금(멤버정보값 && 멤버정보값["memberReserve"])
-    } else if(target.value === ""){
-      set사용할적립금(0)
+    const target = e.target as HTMLInputElement;
+    if (적립금제외 < Number(target.value)) {
+      set사용할적립금(적립금제외);
+    } else if (
+      Number(target.value) > Number(멤버정보값 && 멤버정보값["memberReserve"])
+    ) {
+      set사용할적립금(멤버정보값 && 멤버정보값["memberReserve"]);
+    } else if (target.value === "") {
+      set사용할적립금(0);
     } else {
-      set사용할적립금(target.value.replace(/(^0+)/, ""))
+      set사용할적립금(target.value.replace(/(^0+)/, ""));
     }
-  }
+  };
 
   useEffect(() => {
     멤버정보(memberId)
@@ -165,7 +173,9 @@ export default function Checkout() {
             className="textBox"
             id="memberReserve"
             type="text"
-            onChange={(e)=>{적립금입력(e)}}
+            onChange={(e) => {
+              적립금입력(e);
+            }}
             value={사용할적립금}
             placeholder={`${
               멤버정보값 && 멤버정보값["memberReserve"]
@@ -178,7 +188,10 @@ export default function Checkout() {
           {멤버정보값 && 멤버정보값["isSubscribe"]
             ? "- 구독 혜택 1000원"
             : null}{" "}
-          {사용할적립금 === undefined ? null : "- 적립금 " + 사용할적립금+"원"}  = 총 {totalPrice} 원
+          {사용할적립금 === undefined
+            ? null
+            : "- 적립금 " + 사용할적립금 + "원"}{" "}
+          = 총 {totalPrice} 원
         </div>
       </section>
       <section className="Checkout_Section">

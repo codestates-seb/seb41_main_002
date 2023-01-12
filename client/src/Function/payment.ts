@@ -12,12 +12,13 @@ export const 상품계산 = (사용적립금: string | number | undefined, 구�
   let totalPrice = 0;
   let itemsTotalPrice = 상품배열화.reduce((sum: number, value: any) => sum + value.itemTotalPrice, 0);
   let 배송비 = 구독여부 ? 2000 : 3000;
+  let 적립금제외 = itemsTotalPrice + 배송비
   if(typeof 사용적립금 === "undefined"){
     totalPrice = itemsTotalPrice + 배송비;
   } else {
     totalPrice = itemsTotalPrice + 배송비 - Number(사용적립금);
   }
-  return {itemsTotalPrice, totalPrice, 상품필터}
+  return {itemsTotalPrice, totalPrice, 적립금제외, 상품필터}
 };
 
 export const 상품정리 = (memberId: number) => {};
