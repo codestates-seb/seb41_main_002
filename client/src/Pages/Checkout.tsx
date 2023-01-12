@@ -1,6 +1,7 @@
 import OrderedListItem from "../Components/Commons/OrderedListItem";
 import { 멤버정보, 결제, 주소입력 } from "../API/Payment";
-import { useEffect, useState } from "react";
+import { 상품계산 } from "../Function/payment";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import "./Style/checkout.css";
@@ -12,9 +13,9 @@ const 멤버구독 = styled.span<{ 구독여부: boolean }>`
 `;
 
 export default function Checkout() {
-  // 아래 더미 데이터는 이후 데이터 연동 후 대치 될 예정입니다.
-  const [myReserve, setMyReserve] = useState<number>(1500);
-  const [totalPrice, setTotalPrice] = useState<number>(50000);
+  const [멤버정보값, set멤버정보값] = useState<any>();
+  const [사용할적립금, set사용할적립금] = useState<number | undefined | string>(0);
+
   interface ItemInterface {
     name: string;
     price: number;
@@ -35,7 +36,7 @@ export default function Checkout() {
       itemTitle: "상품이름1",
       titleImageURL: "https://picsum.photos/75?random=1",
       itemCount: 3,
-      itemTotalPrice: 10000,
+      itemTotalPrice: 30000,
     },
     {
       itemId: 2,
@@ -49,21 +50,14 @@ export default function Checkout() {
       itemTitle: "상품이름3",
       titleImageURL: "https://picsum.photos/75?random=3",
       itemCount: 6,
-      itemTotalPrice: 50000,
+      itemTotalPrice: 60000,
     },
   ];
 
   const arrString = JSON.stringify(arr);
   window.localStorage.setItem("itemList", arrString);
-  const 상품가져오기: any = window.localStorage.getItem("itemList");
-  const 상품배열화 = JSON.parse(상품가져오기);
-  const 상품필터 = 상품배열화.map((data: any) => {
-    return {
-      name: data.itemTitle,
-      price: data.itemTotalPrice,
-      count: data.itemCount,
-    };
-  });
+
+  const {itemsTotalPrice, totalPrice, 상품필터} = 상품계산(사용할적립금, 멤버정보값 && 멤버정보값["isSubscribe"]);
 
   const memberId: number = 1;
 
@@ -83,8 +77,10 @@ export default function Checkout() {
     addressList: 주소타입[];
   }
 
-  const [멤버정보값, set멤버정보값] = useState<any>();
-  const [사용할적립금, set사용할적립금] = useState();
+  const 적립금입력 = (e: React.ChangeEvent) => {
+    const target = (e.target as HTMLInputElement)
+    set사용할적립금(target.value)
+  }
 
   useEffect(() => {
     멤버정보(memberId)
@@ -146,7 +142,7 @@ export default function Checkout() {
           </멤버구독>
         </div>
         <div className="상품리스트">
-          {상품필터.map((item:ItemInterface, idx:number) => {
+          {상품필터.map((item: ItemInterface, idx: number) => {
             return (
               <OrderedListItem
                 item={item}
@@ -162,6 +158,7 @@ export default function Checkout() {
             className="textBox"
             id="memberReserve"
             type="text"
+            onChange={(e)=>{적립금입력(e)}}
             value={사용할적립금}
             placeholder={`${
               멤버정보값 && 멤버정보값["memberReserve"]
@@ -170,11 +167,11 @@ export default function Checkout() {
         </div>
 
         <div className="금액계산">
-          총 금액 : {totalPrice}원 + 배송비 3000원{" "}
+          총 금액 : {itemsTotalPrice}원 + 배송비 3000원{" "}
           {멤버정보값 && 멤버정보값["isSubscribe"]
             ? "- 구독 혜택 1000원"
             : null}{" "}
-          - 적립금 {myReserve} 원 = 총 {totalPrice + 500} 원
+          {사용할적립금 === undefined ? null : "- 적립금 " + 사용할적립금+"원"}  = 총 {totalPrice} 원
         </div>
       </section>
       <section className="Checkout_Section">
