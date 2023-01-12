@@ -79,7 +79,11 @@ export default function Checkout() {
 
   const 적립금입력 = (e: React.ChangeEvent) => {
     const target = (e.target as HTMLInputElement)
-    set사용할적립금(target.value)
+    if(Number(target.value) > Number(멤버정보값 && 멤버정보값["memberReserve"])){
+      set사용할적립금(멤버정보값 && 멤버정보값["memberReserve"])
+    } else {
+      set사용할적립금(target.value)
+    }
   }
 
   useEffect(() => {
