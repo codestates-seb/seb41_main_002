@@ -8,7 +8,7 @@
   "address": "서울시 강서구 화곡동 56-536 살렘하우스 501호",
   "isSubscribed": "true",
   "memberReserve": 3000,
-  "tagList": ["tags", "tags"],
+  "tagList": ["건성", "여드름 많음", "수분", "진정"],
   "ordersHistory": [
     {
       "orderId": 1,
@@ -20,7 +20,8 @@
           "itemId": 1,
           "itemImageURL": "URL",
           "itemTitle": "제목",
-          "count": 1
+          "count": 1,
+          "itemTotalPrice": 10000
         }
       ]
     }

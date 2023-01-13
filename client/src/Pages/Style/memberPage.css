@@ -4,6 +4,7 @@
   flex-direction: column;
   text-align: center;
   padding: 25px 50px;
+  margin: 20px 0;
   gap: 30px;
 }
 
@@ -12,8 +13,12 @@
 }
 
 .Profile_Tags {
-  background-color: blue;
-  height: 300px;
+  margin: 25px 0;
+}
+
+.Profile_Type_Badges {
+  color: black;
+  font-weight: bold;
 }
 
 .Profile_Reviews {
@@ -35,6 +40,7 @@
   border-top-right-radius: 10px;
   text-align: center;
 }
+
 .Profile_Reviews li:last-child {
   position: relative;
   right: 1px;

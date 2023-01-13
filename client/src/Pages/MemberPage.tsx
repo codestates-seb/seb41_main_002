@@ -4,23 +4,23 @@ import "./Style/memberPage.css";
 import styled from "styled-components";
 import CustomButton from "../Components/Commons/Buttons";
 import { Link } from "react-router-dom";
+import TypeBadge from "../Components/Commons/TypeBadge";
+import OrderedListItem from "../Components/Commons/OrderedListItem";
 
 const MemberTextBox = styled.li`
   display: flex;
+  align-items: center;
   width: 100%;
-  height: 40px;
+  height: 50px;
   background-color: var(--dark3);
   border: 1px solid var(--lightgray);
 `;
 
 const InfoText = styled.div<{ width: string }>`
   width: ${(props) => props.width};
-  text-align: center;
-  line-height: 40px;
 `;
 
 const MemberPage = () => {
-  console.log(dummyData);
   return (
     <div className="Profile_Container">
       <h1>내 정보</h1>
@@ -62,13 +62,55 @@ const MemberPage = () => {
           </InfoText>
         </MemberTextBox>
       </ul>
-      <div className="Profile_Tags">{/* 나의 태그 */}</div>
+      <h2>내 태그 정보</h2>
+      <ul className="Profile_Tags">
+        <MemberTextBox>
+          <InfoText width="33%">내 피부 타입</InfoText>
+          <InfoText width="67%" className="Profile_Type_Badges">
+            <TypeBadge
+              bgColor="beige"
+              content={dummyData.tagList[0]}
+              padding="10px"
+              fontSize="15px"
+            />
+          </InfoText>
+        </MemberTextBox>
+        <MemberTextBox>
+          <InfoText width="33%">여드름성 피부 여부</InfoText>
+          <InfoText width="67%" className="Profile_Type_Badges">
+            <TypeBadge
+              bgColor="beige"
+              content={dummyData.tagList[1]}
+              padding="10px"
+              fontSize="15px"
+            />
+          </InfoText>
+        </MemberTextBox>
+        <MemberTextBox>
+          <InfoText width="33%">원하는 기능</InfoText>
+          <InfoText width="67%" className="Profile_Type_Badges">
+            {dummyData.tagList
+              .slice(2, dummyData.tagList.length)
+              .map((a, idx) => {
+                return (
+                  <TypeBadge
+                    bgColor="beige"
+                    content={a}
+                    padding="10px"
+                    fontSize="15px"
+                    key={`item${idx + 2}`}
+                  />
+                );
+              })}
+          </InfoText>
+        </MemberTextBox>
+      </ul>
       <div className="Profile_Reviews">
         <ul>
           <li>주문 내역</li>
           <li>내 리뷰</li>
         </ul>
-        <div className="Reviews_Contents">{/* 컴포넌트 사용 */}</div>
+        <div className="Reviews_Contents"></div>
       </div>
     </div>
   );

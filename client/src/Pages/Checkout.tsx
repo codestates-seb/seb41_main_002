@@ -7,14 +7,28 @@ export default function Checkout() {
   const [myReserve, setMyReserve] = useState<number>(1500);
   const [totalPrice, setTotalPrice] = useState<number>(50000);
   interface ItemInterface {
-    name: string;
-    price: number;
+    itemId: number;
+    itemImageURL: string;
+    itemTitle: string;
+    itemTotalPrice: number;
     count: number;
   }
 
   const items: ItemInterface[] = [
-    { name: "어머 너무 이뻐요 앰플", price: 30000, count: 1 },
-    { name: "어머 너무 촉촉해요 앰플", price: 20000, count: 2 },
+    {
+      itemId: 1,
+      itemImageURL: "https://picsum.photos/75?random=1",
+      itemTitle: "어머 너무 이뻐요 앰플",
+      itemTotalPrice: 30000,
+      count: 1,
+    },
+    {
+      itemId: 2,
+      itemImageURL: "https://picsum.photos/75?random=2",
+      itemTitle: "어머 너무 촉촉해요 앰플",
+      itemTotalPrice: 20000,
+      count: 2,
+    },
   ];
 
   return (
@@ -27,13 +41,7 @@ export default function Checkout() {
         </div>
         {/* 예시 상품 2개는 이후 데이터로 연동된 후 삭제될 예정입니다. */}
         {items.map((item, idx) => {
-          return (
-            <OrderedListItem
-              item={item}
-              idx={idx}
-              key={`OrderListItem${idx}`}
-            />
-          );
+          return <OrderedListItem item={item} key={`OrderListItem${idx}`} />;
         })}
         <div className="List_Item_Reserve">
           <label>적립금: </label>
