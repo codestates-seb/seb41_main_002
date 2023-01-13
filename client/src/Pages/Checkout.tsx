@@ -55,6 +55,7 @@ export default function Checkout() {
   const [사용할적립금, set사용할적립금] = useState<
     number | undefined | string
   >();
+  const [checkedList, setCheckedList] = useState<any>({});
   const { itemsTotalPrice, totalPrice, 적립금제외, 상품필터 } = 상품계산(
     사용할적립금,
     멤버정보값 && 멤버정보값["isSubscribe"]
@@ -111,7 +112,7 @@ export default function Checkout() {
     const 주문서: 주문서타입 = {
       memberId: memberId, //연동 이후 변경
       isPrimary: 멤버정보값["isSubscribe"],
-      addressId: 1, //주소 id
+      addressId: checkedList.addressId,
       itemList: itemList,
       itemsTotalPrice: itemsTotalPrice,
       totalPrice: totalPrice,
@@ -129,6 +130,10 @@ export default function Checkout() {
         console.log("카카오 결제가 완료되었습니다");
       }
     );
+  };
+
+  const 주소체크 = (address: any) => {
+    setCheckedList(address);
   };
 
   useEffect(() => {
@@ -199,7 +204,15 @@ export default function Checkout() {
           <p>배송지 선택</p>
           <div>
             <div className="배송지박스">
-              <input id="newAddress" type="radio" name="address" />
+              <input
+                id="newAddress"
+                type="radio"
+                name="address"
+                defaultChecked
+                onChange={() => {
+                  주소체크({ addressId: 0 });
+                }}
+              />
               <label htmlFor="newAddress">신규배송지</label>
             </div>
             <div className="배송지박스">
@@ -211,6 +224,7 @@ export default function Checkout() {
                       <ShippingAddress
                         key={"address" + index}
                         address={address}
+                        주소체크={주소체크}
                       />
                     );
                   }
@@ -218,8 +232,17 @@ export default function Checkout() {
             </div>
           </div>
         </div>
-        <NewAddress/>
-        <AddressDetail/>
+        {checkedList?.addressId > 0 ? (
+          <AddressDetail
+            이름={멤버정보값.memberName}
+            전화번호={멤버정보값.phoneNumber}
+            우편번호={checkedList.zipcode}
+            주소={checkedList.address}
+          />
+        ) : (
+          <NewAddress />
+        )}
+
         <div className="배송지상세정보"></div>
       </section>
       <section className="Checkout_Section">
@@ -230,7 +253,13 @@ export default function Checkout() {
             <ul className="결제내역">
               <li>카드 최종 결제 금액</li>
               <li>최종 금액: {totalPrice}원</li>
-              <li>적립금: {멤버정보값 && 멤버정보값["isSubscribe"] ? itemsTotalPrice*0.03 : itemsTotalPrice*0.01}원</li>
+              <li>
+                적립금:{" "}
+                {멤버정보값 && 멤버정보값["isSubscribe"]
+                  ? itemsTotalPrice * 0.03
+                  : itemsTotalPrice * 0.01}
+                원
+              </li>
               <li>
                 <button className="Pay_Button" onClick={결제요청}>
                   결제하기

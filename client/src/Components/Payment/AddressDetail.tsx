@@ -11,12 +11,19 @@ const DetailContainer = styled.ul`
   }
 `;
 
-const AddressDetail = () => {
+interface 디테일타입 {
+  이름: string;
+  전화번호: string;
+  우편번호: string;
+  주소: string;
+}
+
+const AddressDetail = (props:디테일타입) => {
   return (
     <DetailContainer>
-      <li>이름</li>
-      <li>전화번호</li>
-      <li>(우편번호)주소</li>
+      <li>{props.이름}</li>
+      <li>{props.전화번호}</li>
+      <li>({props.우편번호}){props.주소}</li>
     </DetailContainer>
   )
 }

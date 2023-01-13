@@ -5,8 +5,8 @@ const AddressContainer = styled.div`
   margin-left: 10px;
   display: flex;
   align-items: center;
-  span{
-    margin-left:5px;
+  span {
+    margin-left: 5px;
   }
 `;
 
@@ -18,11 +18,20 @@ interface 주소타입 {
   zipcode: string;
 }
 
-const ShippingAddress = ({address}: any) => {
+const ShippingAddress = ({ address, 주소체크 }: any) => {
   return (
     <AddressContainer>
-      <input id={`${address.zipcode}${address.addressId}`} type="radio" name="address"/>
-      <label htmlFor={`${address.zipcode}${address.addressId}`}>{address["addressTitle"]}</label>
+      <input
+        id={`${address.zipcode}${address.addressId}`}
+        type="radio"
+        name="address"
+        onChange={() => {
+          주소체크(address);
+        }}
+      />
+      <label htmlFor={`${address.zipcode}${address.addressId}`}>
+        {address["addressTitle"]}
+      </label>
     </AddressContainer>
   );
 };
