@@ -12,6 +12,7 @@ public class MemberResponseDto {
     private String accountId;
     private String email;
     private String birthdate;
+    private String phoneNumber;
     private String memberName;
     private String zipcode;
     private String address;
@@ -38,6 +39,7 @@ public class MemberResponseDto {
         private String itemImageURL;
         private String itemTitle;
         private Integer count;
+        private Integer itemTotalPrice;
     }
     @Getter
     @Builder

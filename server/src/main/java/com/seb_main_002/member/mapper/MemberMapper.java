@@ -31,7 +31,8 @@ public interface MemberMapper {
                         .itemId(orderItem.getItem().getItemId())
                         .itemTitle(orderItem.getItem().getItemTitle())
                         .itemImageURL(orderItem.getItem().getTitleImageUrl())
-                        .count(orderItem.getItemCount()).build()).collect(Collectors.toList())).build()).collect(Collectors.toList());
+                        .count(orderItem.getItemCount())
+                        .itemTotalPrice(orderItem.getItemTotalPrice()).build()).collect(Collectors.toList())).build()).collect(Collectors.toList());
 
         //ReviewResponseDto
         List<MemberResponseDto.ReviewResponseDto> reviews = member.getReviews().stream().map(review -> MemberResponseDto.ReviewResponseDto.builder()
@@ -58,6 +59,7 @@ public interface MemberMapper {
                 .accountId(member.getAccountId())
                 .email(member.getEmail())
                 .birthdate(member.getBirthdate())
+                .phoneNumber(member.getPhoneNumber())
                 .memberName(member.getName())
                 .zipcode(zipcode)
                 .address(address)
@@ -129,6 +131,8 @@ public interface MemberMapper {
                 .collect(Collectors.toList());
 
         return MemberBeforeOrderResponseDto.builder()
+                .memberName(member.getName())
+                .phoneNumber(member.getPhoneNumber())
                 .isSubscribed(member.getSubscribe().getIsSubscribed())
                 .memberReserve(member.getMemberReserve())
                 .addressList(addresses)
