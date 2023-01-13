@@ -51,3 +51,14 @@
   border: 1px solid var(--lightgray);
   height: calc(100% - 30px);
 }
+
+.Order_History_Item {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.Order_Detail_Indicator {
+  font-size: 17px;
+  color: gray;
+}

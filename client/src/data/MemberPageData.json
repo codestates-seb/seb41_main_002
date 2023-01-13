@@ -14,12 +14,12 @@
       "orderId": 1,
       "orderCreatedAt": "2022/01/05/14:25",
       "orderStatus": "배송전",
-      "totalPrice": 100,
+      "totalPrice": 70000,
       "orderItems": [
         {
           "itemId": 1,
-          "itemImageURL": "URL",
-          "itemTitle": "제목",
+          "itemImageURL": "https://picsum.photos/75?random=1",
+          "itemTitle": "어머 너무 촉촉해 엠플",
           "count": 1,
           "itemTotalPrice": 10000
         }

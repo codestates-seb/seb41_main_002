@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import dummyData from "./../data/MemberPageData.json";
 import "./Style/memberPage.css";
 import styled from "styled-components";
@@ -6,6 +6,7 @@ import CustomButton from "../Components/Commons/Buttons";
 import { Link } from "react-router-dom";
 import TypeBadge from "../Components/Commons/TypeBadge";
 import OrderedListItem from "../Components/Commons/OrderedListItem";
+import OrderHistoryItem from "../Components/Commons/OrderHistoryItem";
 
 const MemberTextBox = styled.li`
   display: flex;
@@ -110,7 +111,14 @@ const MemberPage = () => {
           <li>주문 내역</li>
           <li>내 리뷰</li>
         </ul>
-        <div className="Reviews_Contents"></div>
+        <div className="Reviews_Contents">
+          {/* {dummyData.ordersHistory.map((a) => {
+            return (
+              <div></div>
+            )
+          })} */}
+          <OrderHistoryItem title="hello" content="hello" />
+        </div>
       </div>
     </div>
   );
