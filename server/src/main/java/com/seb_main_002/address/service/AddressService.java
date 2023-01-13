@@ -6,6 +6,8 @@ import com.seb_main_002.exception.BusinessLogicException;
 import com.seb_main_002.exception.ExceptionCode;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AddressService {
     private final AddressRepository addressRepository;
@@ -15,7 +17,7 @@ public class AddressService {
     }
 
     public void createAddress(Address address) {
-        verifyExistAddress(address.getZipcode());
+        verifyDuplicateAddress(address.getZipcode());
 
         if(address.getIsPrimary()) {
             addressRepository.findAll().forEach(existsAddress -> {
@@ -26,9 +28,19 @@ public class AddressService {
         addressRepository.save(address);
     }
 
-    private void verifyExistAddress(String zipcode) {
+    public void updateAddress(Address address){
+        Address verifiedAddress = verifyExistAddress(address.getAddressId());
+
+    }
+
+    private Address verifyExistAddress(Long addressId) {
+        Optional<Address> optionalAddress = addressRepository.findById(addressId);
+        return optionalAddress.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ADDRESS_NOT_FOUND));
+    }
+
+    private void verifyDuplicateAddress(String zipcode) {
         addressRepository.findAll().forEach(address -> {
-            if(address.getZipcode().equals(zipcode)) throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
+            if(address.getZipcode().equals(zipcode)) throw new BusinessLogicException(ExceptionCode.ADDRESS_EXISTS);
         });
     }
 }
