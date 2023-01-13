@@ -2,6 +2,7 @@ package com.seb_main_002.address.controller;
 
 import com.seb_main_002.address.dto.AddressPatchDto;
 import com.seb_main_002.address.dto.AddressPostDto;
+import com.seb_main_002.address.entity.Address;
 import com.seb_main_002.address.mapper.AddressMapper;
 import com.seb_main_002.address.service.AddressService;
 import org.springframework.http.HttpStatus;
@@ -26,10 +27,11 @@ public class AddressController {
     }
 
     @PatchMapping("/{addressId}")
-    public ResponseEntity patchAddress(@RequestParam("addressId") Long addressId,
+    public ResponseEntity patchAddress(@PathVariable("addressId") Long addressId,
                                        @RequestBody AddressPatchDto addressPatchDto) {
-
-        addressService.updateAddress(mapper.addressPatchDtoToAddress(addressPatchDto).setAddressId(addressId));
+        Address address = mapper.addressPatchDtoToAddress(addressPatchDto);
+        address.setAddressId(addressId);
+        addressService.updateAddress(address);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
