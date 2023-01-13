@@ -19,6 +19,7 @@ const InfoText = styled.div<{ width: string }>`
 const MemberPage = () => {
   return (
     <div className="MemberPage_Container">
+      <h1>내 정보</h1>
       <ul>
         <MemberTextBox>
           <InfoText width="33%">이름</InfoText>
@@ -40,23 +41,21 @@ const MemberPage = () => {
           <InfoText width="100%">대표 주소</InfoText>
         </MemberTextBox>
         <MemberTextBox>
-          <InfoText width="100%">서울특별시 서초구 서초대로 396 20층, 06619 (집)</InfoText>
+          <InfoText width="100%">
+            서울특별시 서초구 서초대로 396 20층, 06619 (집)
+          </InfoText>
         </MemberTextBox>
         <MemberTextBox>
           <InfoText width="100%">구독 중</InfoText>
         </MemberTextBox>
       </ul>
-      <div className="MemberPage_Tags">
-        {/* 나의 태그 */}
-      </div>
+      <div className="MemberPage_Tags">{/* 나의 태그 */}</div>
       <div className="MemberPage_Reviews">
         <ul>
           <li>주문 내역</li>
           <li>내 리뷰</li>
         </ul>
-        <div className="Reviews_Contents">
-          {/* 컴포넌트 사용 */}
-        </div>
+        <div className="Reviews_Contents">{/* 컴포넌트 사용 */}</div>
       </div>
     </div>
   );

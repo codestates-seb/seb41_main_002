@@ -1,0 +1,37 @@
+{
+  "accountId": "아이디",
+  "email": "eee@naver.com",
+  "birthdate": "2022/01/05",
+  "memberName": "임경인",
+  "zipcode": "04567",
+  "address": "서울시 강서구 화곡동 56-536 살렘하우스 501호",
+  "isSubscribed": "true",
+  "memberReserve": 3000,
+  "tagList": ["tags", "tags"],
+  "ordersHistory": [
+    {
+      "orderId": 1,
+      "orderCreatedAt": "2022/01/05/14:25",
+      "orderStatus": "배송전",
+      "totalPrice": 100,
+      "orderItems": [
+        {
+          "itemId": 1,
+          "itemImageURL": "URL",
+          "itemTitle": "제목",
+          "count": 1
+        }
+      ]
+    }
+  ],
+  "reviews": [
+    {
+      "reviewId": 1,
+      "itemId": 1,
+      "reviewTitle": "제목",
+      "createdAt": "2022/01/05/14:25",
+      "modifiedAt": "2022/01/05/14:26",
+      "reviewRating": 3.5
+    }
+  ]
+}
