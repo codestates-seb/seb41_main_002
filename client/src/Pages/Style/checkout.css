@@ -84,6 +84,26 @@
   margin-left: 7px;
 }
 
+.결제컨테이너{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding-top: 20px;
+}
+
+.결제컨테이너 img{
+  border-radius: 20px;
+}
+
+.결제내역{
+  font-size: 19px;
+}
+
+.결제내역 li {
+  width: 200px;
+  padding-bottom: 19px;
+}
+
 .Summary_List_Item {
   display: flex;
   justify-content: center;

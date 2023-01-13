@@ -53,7 +53,6 @@ export default function Checkout() {
   const [사용할적립금, set사용할적립금] = useState<
     number | undefined | string
   >();
-  const [주문, set주문] = useState<주문서타입 | undefined>();
   const { itemsTotalPrice, totalPrice, 적립금제외, 상품필터 } = 상품계산(
     사용할적립금,
     멤버정보값 && 멤버정보값["isSubscribe"]
@@ -114,20 +113,20 @@ export default function Checkout() {
       itemList: itemList,
       itemsTotalPrice: itemsTotalPrice,
       totalPrice: totalPrice,
-      usedReserve: (사용할적립금 !== undefined ? Number(사용할적립금) : 0),
+      usedReserve: 사용할적립금 !== undefined ? Number(사용할적립금) : 0,
     };
-    
+
     window.localStorage.setItem("orderSheet", JSON.stringify(주문서));
-    
-    카카오결제요청(주문서, 상품필터[0].name).then((res:{결제URL: string; tid: string} | undefined) => {
-      if(typeof res !== 'undefined'){
-        window.localStorage.setItem("tid", res.tid);
-        window.location.replace(res.결제URL);
-        console.log(res)
+
+    카카오결제요청(주문서, 상품필터[0].name).then(
+      (res: { 결제URL: string; tid: string } | undefined) => {
+        if (typeof res !== "undefined") {
+          window.localStorage.setItem("tid", res.tid);
+          window.location.replace(res.결제URL);
+        }
+        console.log("카카오 결제가 완료되었습니다");
       }
-      console.log("카카오 결제가 완료되었습니다");
-    });
-    set주문(주문서);
+    );
   };
 
   useEffect(() => {
@@ -139,7 +138,7 @@ export default function Checkout() {
       .catch((err) => {
         console.error(err);
       });
-    
+
     const 주소1개 = {
       memberId: 1, // number
       isPrimary: false, // boolean
@@ -251,32 +250,19 @@ export default function Checkout() {
       </section>
       <section className="Checkout_Section">
         <h2>카카오페이 결제</h2>
-        <div className="Summary_List_Item">
-          <label className="List_Item_Title">결제 수단: </label>
-          <select name="requests" className="List_Item_Select">
-            <option value="결제수단을 선택해 주세요.">
-              결제수단을 선택해 주세요.
-            </option>
-            <option value="카드 결제">카드 결제</option>
-            <option value="카카오페이">카카오페이</option>
-            <option value="네이버페이">네이버페이</option>
-            <option value="계좌 이체">계좌 이체</option>
-          </select>
-        </div>
         <div className="Final_Summary">
-          <div className="Payment_Item">
-            <div>결제 수단 이미지</div>
-            <div>
-              <img src="https://picsum.photos/75?random=3" alt="sample image" />
-            </div>
-            <button className="Pay_Button" onClick={결제요청}>
-              결제하기
-            </button>
-          </div>
-          <div className="Payment_Item">
-            <div>카드 최종 결제 금액</div>
-            <div>최종 금액: 42,000원</div>
-            <div>적립금: 100원</div>
+          <div className="결제컨테이너">
+            <img src="https://img.seoul.co.kr/img/upload/2022/01/04/SSI_20220104190629_O2.jpg" />
+            <ul className="결제내역">
+              <li>카드 최종 결제 금액</li>
+              <li>최종 금액: {totalPrice}원</li>
+              <li>적립금: {멤버정보값 && 멤버정보값["isSubscribe"] ? itemsTotalPrice*0.03 : itemsTotalPrice*0.01}원</li>
+              <li>
+                <button className="Pay_Button" onClick={결제요청}>
+                  결제하기
+                </button>
+              </li>
+            </ul>
           </div>
         </div>
       </section>
