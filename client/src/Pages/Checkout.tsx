@@ -52,9 +52,9 @@ export default function Checkout() {
   }
 
   const [멤버정보값, set멤버정보값] = useState<any>();
-  const [사용할적립금, set사용할적립금] = useState<
-    number | undefined | string
-  >();
+  const [사용할적립금, set사용할적립금] = useState<number | undefined | string>(
+    0
+  );
   const [checkedList, setCheckedList] = useState<any>({});
   const { itemsTotalPrice, totalPrice, 적립금제외, 상품필터 } = 상품계산(
     사용할적립금,
@@ -111,7 +111,7 @@ export default function Checkout() {
     const itemList = 상품정리();
     const 주문서: 주문서타입 = {
       memberId: memberId, //연동 이후 변경
-      isPrimary: 멤버정보값["isSubscribe"],
+      isPrimary: checkedList.isPrimary,
       addressId: checkedList.addressId,
       itemList: itemList,
       itemsTotalPrice: itemsTotalPrice,
@@ -139,7 +139,6 @@ export default function Checkout() {
   useEffect(() => {
     멤버정보(memberId)
       .then((res) => {
-        console.log(res);
         set멤버정보값(res);
       })
       .catch((err) => {
@@ -186,7 +185,6 @@ export default function Checkout() {
             }원 사용 가능`}
           />
         </div>
-
         <div className="금액계산">
           총 금액 : {itemsTotalPrice}원 + 배송비 3000원{" "}
           {멤버정보값 && 멤버정보값["isSubscribe"]
@@ -242,7 +240,6 @@ export default function Checkout() {
         ) : (
           <NewAddress />
         )}
-
         <div className="배송지상세정보"></div>
       </section>
       <section className="Checkout_Section">

@@ -47,6 +47,8 @@ const CompletePayment = () => {
       });
       window.localStorage.removeItem("tid");
       window.localStorage.removeItem("orderSheet");
+    }).catch(err => {
+      console.error(err);
     });
   }, []);
 
