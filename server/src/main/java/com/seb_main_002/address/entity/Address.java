@@ -1,4 +1,4 @@
-package com.seb_main_002.Address.entity;
+package com.seb_main_002.address.entity;
 
 import com.seb_main_002.audit.Auditable;
 import com.seb_main_002.member.entity.Member;

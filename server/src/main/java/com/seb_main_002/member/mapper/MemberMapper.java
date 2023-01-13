@@ -1,6 +1,6 @@
 package com.seb_main_002.member.mapper;
 
-import com.seb_main_002.Address.entity.Address;
+import com.seb_main_002.address.entity.Address;
 import com.seb_main_002.member.dto.*;
 import com.seb_main_002.member.entity.Member;
 import org.mapstruct.Mapper;
