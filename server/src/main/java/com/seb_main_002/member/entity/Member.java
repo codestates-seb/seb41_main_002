@@ -1,6 +1,6 @@
 package com.seb_main_002.member.entity;
 
-import com.seb_main_002.Address.entity.Address;
+import com.seb_main_002.address.entity.Address;
 import com.seb_main_002.audit.Auditable;
 import com.seb_main_002.cart.entity.Cart;
 import com.seb_main_002.order.entity.Order;
