@@ -1,5 +1,5 @@
 import OrderedListItem from "../Components/Commons/OrderedListItem";
-import { 멤버정보, 결제, 주소입력, 카카오결제요청 } from "../API/Payment";
+import { 멤버정보, 주소입력, 카카오결제요청 } from "../API/Payment";
 import { 상품계산, 상품정리 } from "../Function/payment";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -117,12 +117,13 @@ export default function Checkout() {
       usedReserve: (사용할적립금 !== undefined ? Number(사용할적립금) : 0),
     };
     
-    결제(주문서).then((res) => {
-      console.log("결제가 완료되었습니다.");
-    });
-    카카오결제요청(주문서, 상품필터[0].name).then((res:string | URL | undefined) => {
+    window.localStorage.setItem("orderSheet", JSON.stringify(주문서));
+    
+    카카오결제요청(주문서, 상품필터[0].name).then((res:{결제URL: string; tid: string} | undefined) => {
       if(typeof res !== 'undefined'){
-        window.location.replace(res);
+        window.localStorage.setItem("tid", res.tid);
+        window.location.replace(res.결제URL);
+        console.log(res)
       }
       console.log("카카오 결제가 완료되었습니다");
     });

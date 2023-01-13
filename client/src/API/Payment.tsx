@@ -54,12 +54,12 @@ export const 멤버정보 = async (memberId: number) => {
   }
 };
 
-export const 결제 = async (주문: 결제타입) => {
+export const 결제완료 = async (주문: 결제타입) => {
   try {
     await axios
       .post("http://localhost:8080/api/v1/orders", 주문)
       .then((res) => {
-        console.log("API 결제가 완료되었습니다.");
+        console.log("API 서버 저장 완료");
       });
   } catch (error) {
     console.error(error);
@@ -87,6 +87,7 @@ export const 주소입력 = async (주소1개: 주소타입) => {
 export const 카카오결제요청 = async (주문서: 주문서타입, 첫상품명: string) => {
   try {
     let 결제URL = "";
+    let tid = "";
     let 상품명 =
       주문서.itemList.length > 1
         ? `${첫상품명}+ 외 ${주문서.itemList.length - 1}`
@@ -101,7 +102,7 @@ export const 카카오결제요청 = async (주문서: 주문서타입, 첫상�
       total_amount: 총금액, //토탈 금액
       vat_amount: 0, //상품 부가세 금액
       tax_free_amount: 0, //상품 비과세 금액
-      approval_url: "http://localhost:3000/payment/complete", //결제 성공시 redirect url
+      approval_url: `http://localhost:3000/payment/complete`, //결제 성공시 redirect url
       fail_url: "http://localhost:3000/checkout", //결제 취소 시 redirect url
       cancel_url: "http://localhost:3000/checkout", //결제 실패 시 redirect url
     };
@@ -115,11 +116,12 @@ export const 카카오결제요청 = async (주문서: 주문서타입, 첫상�
       },
       params,
     }).then((res) => {
-      console.log(res.data);
+      console.log(res.data.tid);
+      tid = res.data.tid;
       결제URL = res.data.next_redirect_pc_url;
     });
 
-    return 결제URL;
+    return {결제URL, tid};
   } catch (error) {
     console.error(error);
   }
