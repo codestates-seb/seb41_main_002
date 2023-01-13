@@ -39,6 +39,7 @@ public class MemberResponseDto {
         private String itemImageURL;
         private String itemTitle;
         private Integer count;
+        private Integer itemTotalPrice;
     }
     @Getter
     @Builder

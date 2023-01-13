@@ -31,7 +31,8 @@ public interface MemberMapper {
                         .itemId(orderItem.getItem().getItemId())
                         .itemTitle(orderItem.getItem().getItemTitle())
                         .itemImageURL(orderItem.getItem().getTitleImageUrl())
-                        .count(orderItem.getItemCount()).build()).collect(Collectors.toList())).build()).collect(Collectors.toList());
+                        .count(orderItem.getItemCount())
+                        .itemTotalPrice(orderItem.getItemTotalPrice()).build()).collect(Collectors.toList())).build()).collect(Collectors.toList());
 
         //ReviewResponseDto
         List<MemberResponseDto.ReviewResponseDto> reviews = member.getReviews().stream().map(review -> MemberResponseDto.ReviewResponseDto.builder()
