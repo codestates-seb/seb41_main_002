@@ -20,5 +20,4 @@ public class BannerImage extends Auditable {
 
     private String bannerImageUrl;
 
-
 }
