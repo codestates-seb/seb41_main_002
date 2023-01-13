@@ -1,11 +1,13 @@
 import OrderedListItem from "../Components/Commons/OrderedListItem";
-import { 멤버정보, 주소입력, 카카오결제요청 } from "../API/Payment";
+import { 멤버정보, 카카오결제요청 } from "../API/Payment";
 import { 상품계산, 상품정리 } from "../Function/payment";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import "./Style/checkout.css";
 import ShippingAddress from "../Components/Payment/ShippingAddress";
+import NewAddress from "../Components/Payment/NewAddress";
+import AddressDetail from "../Components/Payment/AddressDetail";
 
 const 멤버구독 = styled.span<{ 구독여부: boolean }>`
   color: ${(props) => (props.구독여부 ? "green" : "red")};
@@ -138,17 +140,6 @@ export default function Checkout() {
       .catch((err) => {
         console.error(err);
       });
-
-    const 주소1개 = {
-      memberId: 1, // number
-      isPrimary: false, // boolean
-      addressTitle: "집", // string
-      zipcode: "04567", // string
-      address: "서울시 강서구 화곡동 56-536", // string
-    };
-    주소입력(주소1개).then((res) => {
-      console.log(res);
-    });
   }, []);
 
   return (
@@ -227,26 +218,9 @@ export default function Checkout() {
             </div>
           </div>
         </div>
+        <NewAddress/>
+        <AddressDetail/>
         <div className="배송지상세정보"></div>
-        <div className="Summary_List_Item">
-          <select name="requests" className="">
-            <option value="배송메모를 선택해 주세요.">
-              배송메모를 선택해 주세요.
-            </option>
-            <option value="배송 전에 미리 연락 바랍니다.">
-              배송 전에 미리 연락 바랍니다.
-            </option>
-            <option value="부재 시 경비실에 맡겨 주세요.">
-              부재 시 경비실에 맡겨 주세요.
-            </option>
-            <option value="부재 시 전화 주시거나 문자 남겨 주세요.">
-              부재 시 전화 주시거나 문자 남겨 주세요.
-            </option>
-            <option value="요청 사항을 직접 입력합니다.">
-              요청 사항을 직접 입력합니다.
-            </option>
-          </select>
-        </div>
       </section>
       <section className="Checkout_Section">
         <h2>카카오페이 결제</h2>

@@ -66,12 +66,12 @@ export const 결제완료 = async (주문: 결제타입) => {
   }
 };
 
-export const 주소입력 = async (주소1개: 주소타입) => {
+export const 주소입력 = async (주소: 주소타입) => {
   try {
     let 입력한주소 = {};
 
     await axios
-      .post("http://localhost:8080/api/v1/addresses", 주소1개)
+      .post("http://localhost:8080/api/v1/addresses", 주소)
       .then((res) => {
         입력한주소 = { ...res.data };
         console.log(res.data);
