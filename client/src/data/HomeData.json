@@ -1,0 +1,53 @@
+{
+  "bannerImageUrl": "https://picsum.photos/1920/800",
+  "eventsInfo": [
+    {
+      "eventId": 1,
+      "title": "현장에서 진행하는 정밀 피부타입 측정",
+      "eventImageURL": "https://picsum.photos/2000?random=1",
+      "createdAt": "2022/1/10",
+      "endAt": "2022/1/31"
+    },
+    {
+      "eventId": 2,
+      "title": "이달의 특가 상품 2+1 이벤트",
+      "eventImageURL": "https://picsum.photos/2000?random=2",
+      "createdAt": "2022/1/12",
+      "endAt": "2022/2/02"
+    },
+    {
+      "eventId": 3,
+      "title": "일본 여행 추첨 응모하기",
+      "eventImageURL": "https://picsum.photos/2000?random=3",
+      "createdAt": "2022/1/11",
+      "endAt": "2022/1/17"
+    }
+  ],
+  "topRankBanners": [
+    {
+      "categoryKRName": "스킨/토너",
+      "categoryENName": "toner",
+      "topListURL": "https://picsum.photos/500?random=1"
+    },
+    {
+      "categoryKRName": "크림",
+      "categoryENName": "cream",
+      "topListURL": "https://picsum.photos/500?random=2"
+    },
+    {
+      "categoryKRName": "로션",
+      "categoryENName": "lotion",
+      "topListURL": "https://picsum.photos/500?random=3"
+    },
+    {
+      "categoryKRName": "세안",
+      "categoryENName": "cleansing",
+      "topListURL": "https://picsum.photos/500?random=4"
+    },
+    {
+      "categoryKRName": "선크림",
+      "categoryENName": "suncream",
+      "topListURL": "https://picsum.photos/500?random=5"
+    }
+  ]
+}
