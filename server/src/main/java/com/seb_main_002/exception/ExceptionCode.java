@@ -14,7 +14,8 @@ public enum ExceptionCode {
     CANNOT_CHANGE_SUBSCRIBE(403,"Subscription can not be changed"),
     EMAIL_EXISTS(409, "Email exists"),
     BANNER_IMAGE_NOT_FOUND(404, "BannerImage not found"),
-    ACCOUNTID_EXISTS(409,"AccountId exists");
+    ACCOUNTID_EXISTS(409,"AccountId exists"),
+    ADDRESS_EXISTS(409,"Address exists");
 
     @Getter
     private int status;
