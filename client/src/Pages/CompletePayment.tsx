@@ -1,27 +1,13 @@
+import { completePayment } from "../API/Payment";
+import axios from "axios";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { 결제완료 } from "../API/Payment";
-import axios from "axios";
 import "./Style/completePayment.css";
 
 const CompletePayment = () => {
   const urlParams = new URL(window.location.href).searchParams;
   const pg_token = urlParams.get("pg_token");
   const tid = window.localStorage.getItem("tid");
-
-  interface 주문서타입 {
-    memberId: number;
-    isPrimary: any;
-    addressId: number;
-    itemList: {
-      itemId: number;
-      itemCount: number;
-      itemTotalPrice: number;
-    }[];
-    itemsTotalPrice: number;
-    totalPrice: number;
-    usedReserve: number;
-  }
 
   useEffect(() => {
     const params = {
@@ -40,9 +26,9 @@ const CompletePayment = () => {
       },
       params,
     }).then((res) => {
-      const 로컬주문서:any = window.localStorage.getItem("orderSheet")
-      let 주문서= JSON.parse(로컬주문서)
-      결제완료(주문서).then((res) => {
+      const localOrder:any = window.localStorage.getItem("orderSheet")
+      let orderSheet= JSON.parse(localOrder)
+      completePayment(orderSheet).then((res) => {
         console.log("결제가 완료되었습니다.");
       });
       window.localStorage.removeItem("tid");

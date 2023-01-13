@@ -1,16 +1,15 @@
-import OrderedListItem from "../Components/Commons/OrderedListItem";
-import { 멤버정보, 카카오결제요청 } from "../API/Payment";
-import { 상품계산, 상품정리 } from "../Function/payment";
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-
-import "./Style/checkout.css";
-import ShippingAddress from "../Components/Payment/ShippingAddress";
 import NewAddress from "../Components/Payment/NewAddress";
 import AddressDetail from "../Components/Payment/AddressDetail";
+import OrderedListItem from "../Components/Commons/OrderedListItem";
+import ShippingAddress from "../Components/Payment/ShippingAddress";
+import { memberData, kakaoPaymentRequest } from "../API/Payment";
+import { itemsCalculation, itemsOrganize } from "../Function/payment";
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import "./Style/checkout.css";
 
-const 멤버구독 = styled.span<{ 구독여부: boolean }>`
-  color: ${(props) => (props.구독여부 ? "green" : "red")};
+const MemberSubscribe = styled.span<{ subscribeCheck: boolean }>`
+  color: ${(props) => (props.subscribeCheck ? "green" : "red")};
   font-weight: 900;
 `;
 
@@ -21,7 +20,7 @@ export default function Checkout() {
     count: number;
   }
 
-  interface 로컬타입 {
+  interface Local {
     itemId: number;
     itemTitle: string;
     titleImageURL: string;
@@ -29,7 +28,7 @@ export default function Checkout() {
     itemTotalPrice: number;
   }
 
-  interface 주소타입 {
+  interface AddressType {
     address: string;
     addressId: number;
     addressTitle: string;
@@ -37,7 +36,7 @@ export default function Checkout() {
     zipcode: string;
   }
 
-  interface 주문서타입 {
+  interface OrderSheetType {
     memberId: number;
     isPrimary: any;
     addressId: number;
@@ -51,17 +50,13 @@ export default function Checkout() {
     usedReserve: number;
   }
 
-  const [멤버정보값, set멤버정보값] = useState<any>();
-  const [사용할적립금, set사용할적립금] = useState<number | undefined | string>(
-    0
-  );
+  const [memberInfo, setmemberInfo] = useState<any>();
+  const [useReserve, setUseReserve] = useState<number | undefined | string>(0);
   const [checkedList, setCheckedList] = useState<any>({});
-  const { itemsTotalPrice, totalPrice, 적립금제외, 상품필터 } = 상품계산(
-    사용할적립금,
-    멤버정보값 && 멤버정보값["isSubscribe"]
-  );
+  const { itemsTotalPrice, totalPrice, excludingPoints, itemsFilter } =
+    itemsCalculation(useReserve, memberInfo && memberInfo["isSubscribe"]);
 
-  // 더미 데이터 연동 후 지울 예정
+  // 더미 데이터 연동 후 지울 예정---------------------------
   const arr = [
     {
       itemId: 1,
@@ -92,54 +87,54 @@ export default function Checkout() {
   const memberId: number = 1;
   //----------------------------------------------------------
 
-  const 적립금입력 = (e: React.ChangeEvent) => {
+  const reserveInput = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
-    if (적립금제외 < Number(target.value)) {
-      set사용할적립금(적립금제외);
+    if (excludingPoints < Number(target.value)) {
+      setUseReserve(excludingPoints);
     } else if (
-      Number(target.value) > Number(멤버정보값 && 멤버정보값["memberReserve"])
+      Number(target.value) > Number(memberInfo && memberInfo["memberReserve"])
     ) {
-      set사용할적립금(멤버정보값 && 멤버정보값["memberReserve"]);
+      setUseReserve(memberInfo && memberInfo["memberReserve"]);
     } else if (target.value === "") {
-      set사용할적립금(0);
+      setUseReserve(0);
     } else {
-      set사용할적립금(target.value.replace(/(^0+)/, ""));
+      setUseReserve(target.value.replace(/(^0+)/, ""));
     }
   };
 
-  const 결제요청 = () => {
-    const itemList = 상품정리();
-    const 주문서: 주문서타입 = {
+  const paymentRequest = () => {
+    const itemList = itemsOrganize();
+    const orderSheet: OrderSheetType = {
       memberId: memberId, //연동 이후 변경
       isPrimary: checkedList.isPrimary,
       addressId: checkedList.addressId,
       itemList: itemList,
       itemsTotalPrice: itemsTotalPrice,
       totalPrice: totalPrice,
-      usedReserve: 사용할적립금 !== undefined ? Number(사용할적립금) : 0,
+      usedReserve: useReserve !== undefined ? Number(useReserve) : 0,
     };
 
-    window.localStorage.setItem("orderSheet", JSON.stringify(주문서));
+    window.localStorage.setItem("orderSheet", JSON.stringify(orderSheet));
 
-    카카오결제요청(주문서, 상품필터[0].name).then(
-      (res: { 결제URL: string; tid: string } | undefined) => {
+    kakaoPaymentRequest(orderSheet, itemsFilter[0].name).then(
+      (res: { paymentURL: string; tid: string } | undefined) => {
         if (typeof res !== "undefined") {
           window.localStorage.setItem("tid", res.tid);
-          window.location.replace(res.결제URL);
+          window.location.replace(res.paymentURL);
         }
         console.log("카카오 결제가 완료되었습니다");
       }
     );
   };
 
-  const 주소체크 = (address: any) => {
+  const addressCheck = (address: any) => {
     setCheckedList(address);
   };
 
   useEffect(() => {
-    멤버정보(memberId)
+    memberData(memberId)
       .then((res) => {
-        set멤버정보값(res);
+        setmemberInfo(res);
       })
       .catch((err) => {
         console.error(err);
@@ -150,17 +145,19 @@ export default function Checkout() {
     <div className="Checkout_Container">
       <h1 className="Checkout_Header">결제 페이지</h1>
       <section className="Checkout_Section">
-        <div className="멤버정보">
-          <span className="멤버적립금">
-            내 적립금 : {멤버정보값 && 멤버정보값["memberReserve"]}원
+        <div className="Member_Info">
+          <span className="Member_Reserve">
+            내 적립금 : {memberInfo && memberInfo["memberReserve"]}원
           </span>
-          <멤버구독 구독여부={멤버정보값 && 멤버정보값["isSubscribe"]}>
+          <MemberSubscribe
+            subscribeCheck={memberInfo && memberInfo["isSubscribe"]}
+          >
             프리미엄 구독{" "}
-            {멤버정보값 && 멤버정보값["isSubscribe"] ? "사용" : "미사용"}
-          </멤버구독>
+            {memberInfo && memberInfo["isSubscribe"] ? "사용" : "미사용"}
+          </MemberSubscribe>
         </div>
-        <div className="상품리스트">
-          {상품필터.map((item: ItemInterface, idx: number) => {
+        <div className="Item_List">
+          {itemsFilter.map((item: ItemInterface, idx: number) => {
             return (
               <OrderedListItem
                 item={item}
@@ -170,59 +167,57 @@ export default function Checkout() {
             );
           })}
         </div>
-        <div className="적립금사용">
+        <div className="Reserve_Container">
           <label htmlFor="memberReserve">적립금 : </label>
           <input
             className="textBox"
             id="memberReserve"
             type="text"
             onChange={(e) => {
-              적립금입력(e);
+              reserveInput(e);
             }}
-            value={사용할적립금}
+            value={useReserve}
             placeholder={`${
-              멤버정보값 && 멤버정보값["memberReserve"]
+              memberInfo && memberInfo["memberReserve"]
             }원 사용 가능`}
           />
         </div>
-        <div className="금액계산">
+        <div className="Calculate_Container">
           총 금액 : {itemsTotalPrice}원 + 배송비 3000원{" "}
-          {멤버정보값 && 멤버정보값["isSubscribe"]
+          {memberInfo && memberInfo["isSubscribe"]
             ? "- 구독 혜택 1000원"
             : null}{" "}
-          {사용할적립금 === undefined
-            ? null
-            : "- 적립금 " + 사용할적립금 + "원"}{" "}
-          = 총 {totalPrice} 원
+          {useReserve === undefined ? null : "- 적립금 " + useReserve + "원"} =
+          총 {totalPrice} 원
         </div>
       </section>
       <section className="Checkout_Section">
         <h2>배송지 정보</h2>
-        <div className="배송지선택">
+        <div className="Shipping_Address_Check">
           <p>배송지 선택</p>
           <div>
-            <div className="배송지박스">
+            <div className="Shipping_Address_Container">
               <input
                 id="newAddress"
                 type="radio"
                 name="address"
                 defaultChecked
                 onChange={() => {
-                  주소체크({ addressId: 0 });
+                  addressCheck({ addressId: 0 });
                 }}
               />
               <label htmlFor="newAddress">신규배송지</label>
             </div>
-            <div className="배송지박스">
+            <div className="Shipping_Address_Container">
               최근 :
-              {멤버정보값 &&
-                멤버정보값["addressList"].map(
-                  (address: 주소타입, index: number) => {
+              {memberInfo &&
+                memberInfo["addressList"].map(
+                  (address: AddressType, index: number) => {
                     return (
                       <ShippingAddress
                         key={"address" + index}
                         address={address}
-                        주소체크={주소체크}
+                        addressCheck={addressCheck}
                       />
                     );
                   }
@@ -232,33 +227,32 @@ export default function Checkout() {
         </div>
         {checkedList?.addressId > 0 ? (
           <AddressDetail
-            이름={멤버정보값.memberName}
-            전화번호={멤버정보값.phoneNumber}
-            우편번호={checkedList.zipcode}
-            주소={checkedList.address}
+            memberName={memberInfo.memberName}
+            phoneNumber={memberInfo.phoneNumber}
+            zipcode={checkedList.zipcode}
+            address={checkedList.address}
           />
         ) : (
           <NewAddress />
         )}
-        <div className="배송지상세정보"></div>
       </section>
       <section className="Checkout_Section">
         <h2>카카오페이 결제</h2>
         <div className="Final_Summary">
-          <div className="결제컨테이너">
+          <div className="Payment_Container">
             <img src="https://img.seoul.co.kr/img/upload/2022/01/04/SSI_20220104190629_O2.jpg" />
-            <ul className="결제내역">
+            <ul className="Payment_History">
               <li>카드 최종 결제 금액</li>
               <li>최종 금액: {totalPrice}원</li>
               <li>
                 적립금:{" "}
-                {멤버정보값 && 멤버정보값["isSubscribe"]
+                {memberInfo && memberInfo["isSubscribe"]
                   ? itemsTotalPrice * 0.03
                   : itemsTotalPrice * 0.01}
                 원
               </li>
               <li>
-                <button className="Pay_Button" onClick={결제요청}>
+                <button className="Pay_Button" onClick={paymentRequest}>
                   결제하기
                 </button>
               </li>

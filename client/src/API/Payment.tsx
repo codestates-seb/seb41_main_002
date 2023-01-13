@@ -1,22 +1,22 @@
 import axios from "axios";
 
-interface 상품1개 {
+interface Item {
   itemId: number;
   itemCount: number;
   itemTotalPrice: number;
 }
 
-interface 결제타입 {
+interface PaymentType {
   memberId: number;
   isPrimary: boolean;
   addressId: number;
-  itemList: 상품1개[];
+  itemList: Item[];
   itemsTotalPrice: number;
   totalPrice: number;
   usedReserve: number;
 }
 
-interface 주소타입 {
+interface AddressType {
   memberId: number;
   isPrimary: boolean;
   addressTitle: string;
@@ -24,7 +24,7 @@ interface 주소타입 {
   address: string;
 }
 
-interface 주문서타입 {
+interface OrderSheetType {
   memberId: number;
   isPrimary: any;
   addressId: number;
@@ -38,26 +38,26 @@ interface 주문서타입 {
   usedReserve: number;
 }
 
-export const 멤버정보 = async (memberId: number) => {
+export const memberData = async (memberId: number) => {
   try {
-    let 멤버데이터 = {};
+    let MemberData = {};
 
     await axios
       .get(`http://localhost:8080/api/v1/members/${memberId}/payment`)
       .then((res) => {
-        멤버데이터 = { ...res.data };
+        MemberData = { ...res.data };
       });
 
-    return 멤버데이터;
+    return MemberData;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const 결제완료 = async (주문: 결제타입) => {
+export const completePayment = async (order: PaymentType) => {
   try {
     await axios
-      .post("http://localhost:8080/api/v1/orders", 주문)
+      .post("http://localhost:8080/api/v1/orders", order)
       .then((res) => {
         console.log("API 서버 저장 완료");
       });
@@ -66,45 +66,42 @@ export const 결제완료 = async (주문: 결제타입) => {
   }
 };
 
-export const 주소입력 = async (주소: 주소타입) => {
+export const addAddress = async (addresses: AddressType) => {
   try {
-    let 입력한주소 = {};
-
     await axios
-      .post("http://localhost:8080/api/v1/addresses", 주소)
+      .post("http://localhost:8080/api/v1/addresses", addresses)
       .then((res) => {
-        입력한주소 = { ...res.data };
         console.log(res.data);
-        //리프레쉬 토큰 재갱신
       });
-
-    return 입력한주소;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const 카카오결제요청 = async (주문서: 주문서타입, 첫상품명: string) => {
+export const kakaoPaymentRequest = async (
+  orderSheet: OrderSheetType,
+  firstItem: string
+) => {
   try {
-    let 결제URL = "";
+    let paymentURL = "";
     let tid = "";
-    let 상품명 =
-      주문서.itemList.length > 1
-        ? `${첫상품명}+ 외 ${주문서.itemList.length - 1}`
-        : 첫상품명;
-    let 총금액 = 주문서.totalPrice + 주문서.usedReserve
+    let itemName =
+      orderSheet.itemList.length > 1
+        ? `${firstItem}+ 외 ${orderSheet.itemList.length - 1}`
+        : firstItem;
+    let totalAmount = orderSheet.totalPrice + orderSheet.usedReserve;
     const params = {
-      cid: "TC0ONETIME", //테스트를 위한 가맹점 코드 [테스트시 고정]
-      partner_order_id: "850625", //결제건에 대한 가맹점의 주문번허 [아무거나 입력해도 될듯]
-      partner_user_id: "850625", //가맹점에서 사용자를 구분할 수 있는 ID
-      item_name: 상품명, //상품 이름, 복수 구매시 [상품명 외 3개] 형식으로 입력
-      quantity: 주문서.itemList.length, //실험 해볼것
-      total_amount: 총금액, //토탈 금액
-      vat_amount: 0, //상품 부가세 금액
-      tax_free_amount: 0, //상품 비과세 금액
-      approval_url: `http://localhost:3000/payment/complete`, //결제 성공시 redirect url
-      fail_url: "http://localhost:3000/checkout", //결제 취소 시 redirect url
-      cancel_url: "http://localhost:3000/checkout", //결제 실패 시 redirect url
+      cid: "TC0ONETIME",
+      partner_order_id: "850625",
+      partner_user_id: "850625",
+      item_name: itemName,
+      quantity: orderSheet.itemList.length,
+      total_amount: totalAmount,
+      vat_amount: 0,
+      tax_free_amount: 0,
+      approval_url: `http://localhost:3000/payment/complete`,
+      fail_url: "http://localhost:3000/checkout",
+      cancel_url: "http://localhost:3000/checkout",
     };
 
     await axios({
@@ -118,10 +115,10 @@ export const 카카오결제요청 = async (주문서: 주문서타입, 첫상�
     }).then((res) => {
       console.log(res.data.tid);
       tid = res.data.tid;
-      결제URL = res.data.next_redirect_pc_url;
+      paymentURL = res.data.next_redirect_pc_url;
     });
 
-    return {결제URL, tid};
+    return { paymentURL, tid };
   } catch (error) {
     console.error(error);
   }

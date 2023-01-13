@@ -18,8 +18,7 @@
   padding: 20px;
 }
 
-.멤버정보 {
-  /* 스타일 컴포넌트 사용 */
+.Member_Info {
   display: flex;
   height: 50px;
   align-items: center;
@@ -31,30 +30,26 @@
   font-size: 17px;
 }
 
-.멤버적립금 {
+.Member_Reserve {
   margin-right: 17px;
 }
 
-.멤버구독 {
-}
-
-.상품리스트 {
+.Item_List {
   margin: 20px 20px 0 20px;
 }
 
-.적립금사용 {
+.Reserve_Container {
   display: flex;
   justify-content: end;
   margin: 20px;
 }
 
-.적립금사용 label {
+.Reserve_Container label {
   padding: 8px 9px;
   font-size: 19px;
 }
 
-.금액계산 {
-  /* 스타일 컴포넌트 사용 */
+.Calculate_Container {
   display: flex;
   width: 100%;
   height: 50px;
@@ -67,97 +62,48 @@
   font-size: 17px;
 }
 
-/* ----------------------------------------------- */
-.배송지선택 {
+.Shipping_Address_Check {
   display: flex;
   margin-top: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid var(--lightgray);
 }
 
-.배송지박스 {
+.Shipping_Address_Container {
   display: flex;
   align-items: center;
   margin-left: 20px;
   margin-bottom: 10px;
 }
 
-.배송지박스 label {
+.Shipping_Address_Container label {
   margin-left: 7px;
 }
 
-.결제컨테이너 {
+.Payment_Container {
   width: 100%;
   display: flex;
   justify-content: space-around;
   padding-top: 20px;
 }
 
-.결제컨테이너 img {
+.Payment_Container img {
   border-radius: 20px;
 }
 
-.결제내역 {
+.Payment_History {
   font-size: 19px;
 }
 
-.결제내역 li {
+.Payment_History li {
   width: 200px;
   padding-bottom: 19px;
-}
-
-.Summary_List_Item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 75px;
-}
-
-.List_Item_Reserve {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  height: 75px;
-}
-
-.List_Item_Reserve input[type="text"] {
-  height: 50px;
-  width: 50%;
-}
-
-.List_Item_Title {
-  width: 33%;
-  border-right: solid 1px rgba(255, 255, 255, 0.5);
-}
-
-.List_Item_Content {
-  width: 67%;
-}
-
-.List_Item_Select {
-  width: 67%;
-  height: 50px;
-  padding: 0 2%;
-  text-align: center;
-  font-size: 17px;
-  color: seagreen;
-}
-
-.Payment_Selection {
-  height: 100px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .Final_Summary {
   display: flex;
   justify-content: space-evenly;
   height: 200px;
-}
-
-.Payment_Item {
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: column;
 }
 
 .Pay_Button {

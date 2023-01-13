@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 const AddressContainer = styled.div`
@@ -10,7 +9,7 @@ const AddressContainer = styled.div`
   }
 `;
 
-interface 주소타입 {
+interface AddressType {
   address: string;
   addressId: number;
   addressTitle: string;
@@ -18,7 +17,7 @@ interface 주소타입 {
   zipcode: string;
 }
 
-const ShippingAddress = ({ address, 주소체크 }: any) => {
+const ShippingAddress = ({ address, addressCheck }: any) => {
   return (
     <AddressContainer>
       <input
@@ -26,7 +25,7 @@ const ShippingAddress = ({ address, 주소체크 }: any) => {
         type="radio"
         name="address"
         onChange={() => {
-          주소체크(address);
+          addressCheck(address);
         }}
       />
       <label htmlFor={`${address.zipcode}${address.addressId}`}>
