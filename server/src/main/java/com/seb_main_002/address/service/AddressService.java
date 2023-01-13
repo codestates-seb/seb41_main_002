@@ -19,11 +19,7 @@ public class AddressService {
     public void createAddress(Address address) {
         verifyDuplicateAddress(address.getZipcode());
 
-        if(address.getIsPrimary()) {
-            addressRepository.findAll().forEach(existsAddress -> {
-                existsAddress.setIsPrimary(false);
-            });
-        }
+        if(address.getIsPrimary()) primaryStateChange();
 
         addressRepository.save(address);
     }
@@ -31,6 +27,20 @@ public class AddressService {
     public void updateAddress(Address address){
         Address verifiedAddress = verifyExistAddress(address.getAddressId());
 
+        if(address.getIsPrimary()) primaryStateChange();
+
+        Optional.ofNullable(address.getAddressTitle()).ifPresent(addressTitle -> verifiedAddress.setAddressTitle(addressTitle));
+        Optional.ofNullable(address.getAddress()).ifPresent(addressContent -> verifiedAddress.setAddress(addressContent));
+        Optional.ofNullable(address.getIsPrimary()).ifPresent(isPrimary -> verifiedAddress.setIsPrimary(isPrimary));
+        Optional.ofNullable(address.getZipcode()).ifPresent(zipcode -> verifiedAddress.setZipcode(zipcode));
+
+        addressRepository.save(verifiedAddress);
+    }
+
+    private void primaryStateChange() {
+        addressRepository.findAll().forEach(existsAddress -> {
+            existsAddress.setIsPrimary(false);
+        });
     }
 
     private Address verifyExistAddress(Long addressId) {
