@@ -1,5 +1,5 @@
 import OrderedListItem from "../Components/Commons/OrderedListItem";
-import { 멤버정보, 결제, 주소입력, 카카오결제 } from "../API/Payment";
+import { 멤버정보, 결제, 주소입력, 카카오결제요청 } from "../API/Payment";
 import { 상품계산, 상품정리 } from "../Function/payment";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -105,7 +105,7 @@ export default function Checkout() {
     }
   };
 
-  const 결제하기 = () => {
+  const 결제요청 = () => {
     const itemList = 상품정리();
     const 주문서: 주문서타입 = {
       memberId: memberId, //연동 이후 변경
@@ -116,11 +116,11 @@ export default function Checkout() {
       totalPrice: totalPrice,
       usedReserve: (사용할적립금 !== undefined ? Number(사용할적립금) : 0),
     };
-    console.log(주문서)
+    
     결제(주문서).then((res) => {
       console.log("결제가 완료되었습니다.");
     });
-    카카오결제(주문서, 상품필터[0].name).then((res:string | URL | undefined) => {
+    카카오결제요청(주문서, 상품필터[0].name).then((res:string | URL | undefined) => {
       if(typeof res !== 'undefined'){
         window.location.replace(res);
       }
@@ -268,7 +268,7 @@ export default function Checkout() {
             <div>
               <img src="https://picsum.photos/75?random=3" alt="sample image" />
             </div>
-            <button className="Pay_Button" onClick={결제하기}>
+            <button className="Pay_Button" onClick={결제요청}>
               결제하기
             </button>
           </div>

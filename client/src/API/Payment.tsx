@@ -84,7 +84,7 @@ export const 주소입력 = async (주소1개: 주소타입) => {
   }
 };
 
-export const 카카오결제 = async (주문서: 주문서타입, 첫상품명: string) => {
+export const 카카오결제요청 = async (주문서: 주문서타입, 첫상품명: string) => {
   try {
     let 결제URL = "";
     let 상품명 =
@@ -101,9 +101,9 @@ export const 카카오결제 = async (주문서: 주문서타입, 첫상품명: 
       total_amount: 총금액, //토탈 금액
       vat_amount: 0, //상품 부가세 금액
       tax_free_amount: 0, //상품 비과세 금액
-      approval_url: "http://localhost:3000/", //결제 성공시 redirect url
-      fail_url: "http://localhost:3000/", //결제 취소 시 redirect url
-      cancel_url: "http://localhost:3000/", //결제 실패 시 redirect url
+      approval_url: "http://localhost:3000/checkout", //결제 성공시 redirect url
+      fail_url: "http://localhost:3000/checkout", //결제 취소 시 redirect url
+      cancel_url: "http://localhost:3000/checkout", //결제 실패 시 redirect url
     };
 
     await axios({

@@ -23,7 +23,6 @@ const ShippingAddress = ({address}: any) => {
     <AddressContainer>
       <input id={`${address.zipcode}${address.addressId}`} type="radio" name="address"/>
       <label htmlFor={`${address.zipcode}${address.addressId}`}>{address["addressTitle"]}</label>
-      <span>X</span>
     </AddressContainer>
   );
 };
