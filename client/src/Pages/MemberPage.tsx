@@ -1,4 +1,5 @@
 import React from "react";
+import dummyData from "./../data/MemberPageData.json";
 import "./Style/memberPage.css";
 import styled from "styled-components";
 
@@ -17,36 +18,37 @@ const InfoText = styled.div<{ width: string }>`
 `;
 
 const MemberPage = () => {
+  console.log(dummyData);
   return (
     <div className="MemberPage_Container">
       <h1>내 정보</h1>
       <ul>
         <MemberTextBox>
           <InfoText width="33%">이름</InfoText>
-          <InfoText width="67%">홍길동</InfoText>
+          <InfoText width="67%">{dummyData.memberName}</InfoText>
         </MemberTextBox>
         <MemberTextBox>
           <InfoText width="33%">생년월일</InfoText>
-          <InfoText width="67%">2000.08.15</InfoText>
+          <InfoText width="67%">{dummyData.birthdate}</InfoText>
         </MemberTextBox>
         <MemberTextBox>
           <InfoText width="33%">이메일</InfoText>
-          <InfoText width="67%">samplemail@gmail.com</InfoText>
+          <InfoText width="67%">{dummyData.email}</InfoText>
         </MemberTextBox>
         <MemberTextBox>
           <InfoText width="33%">연락처</InfoText>
-          <InfoText width="67%">010-1234-5678</InfoText>
+          <InfoText width="67%">{dummyData.phoneNumber}</InfoText>
         </MemberTextBox>
         <MemberTextBox>
           <InfoText width="100%">대표 주소</InfoText>
         </MemberTextBox>
         <MemberTextBox>
-          <InfoText width="100%">
-            서울특별시 서초구 서초대로 396 20층, 06619 (집)
-          </InfoText>
+          <InfoText width="100%">{dummyData.address}</InfoText>
         </MemberTextBox>
         <MemberTextBox>
-          <InfoText width="100%">구독 중</InfoText>
+          <InfoText width="100%">
+            {dummyData.isSubscribed ? "현재 구독 중" : "구독 중이 아닙니다."}
+          </InfoText>
         </MemberTextBox>
       </ul>
       <div className="MemberPage_Tags">{/* 나의 태그 */}</div>
