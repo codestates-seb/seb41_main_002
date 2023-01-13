@@ -12,6 +12,7 @@ public class MemberResponseDto {
     private String accountId;
     private String email;
     private String birthdate;
+    private String phoneNumber;
     private String memberName;
     private String zipcode;
     private String address;

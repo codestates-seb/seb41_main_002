@@ -58,6 +58,7 @@ public interface MemberMapper {
                 .accountId(member.getAccountId())
                 .email(member.getEmail())
                 .birthdate(member.getBirthdate())
+                .phoneNumber(member.getPhoneNumber())
                 .memberName(member.getName())
                 .zipcode(zipcode)
                 .address(address)
@@ -129,6 +130,8 @@ public interface MemberMapper {
                 .collect(Collectors.toList());
 
         return MemberBeforeOrderResponseDto.builder()
+                .memberName(member.getName())
+                .phoneNumber(member.getPhoneNumber())
                 .isSubscribed(member.getSubscribe().getIsSubscribed())
                 .memberReserve(member.getMemberReserve())
                 .addressList(addresses)
