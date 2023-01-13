@@ -28,7 +28,7 @@ public class AddressService {
 
     private void verifyExistAddress(String zipcode) {
         addressRepository.findAll().forEach(address -> {
-            if(address.getZipcode().equals(zipcode)) throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
+            if(address.getZipcode().equals(zipcode)) throw new BusinessLogicException(ExceptionCode.ADDRESS_EXISTS);
         });
     }
 }
