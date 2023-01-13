@@ -1,5 +1,6 @@
 package com.seb_main_002.address.mapper;
 
+import com.seb_main_002.address.dto.AddressPatchDto;
 import com.seb_main_002.address.dto.AddressPostDto;
 import com.seb_main_002.address.entity.Address;
 import com.seb_main_002.member.entity.Member;
@@ -20,4 +21,6 @@ public interface AddressMapper {
 
         return address;
     }
+
+    Address addressPatchDtoToAddress(AddressPatchDto addressPatchDto);
 }
