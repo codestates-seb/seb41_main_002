@@ -15,20 +15,34 @@ public class AddressService {
     }
 
     public void createAddress(Address address) {
-        verifyExistAddress(address.getZipcode());
+        verifyDuplicateAddress(address);
 
         if(address.getIsPrimary()) {
-            addressRepository.findAll().forEach(existsAddress -> {
-                existsAddress.setIsPrimary(false);
-            });
+            changePrimaryAddress(address.getMember().getMemberId());
         }
 
         addressRepository.save(address);
     }
 
-    private void verifyExistAddress(String zipcode) {
-        addressRepository.findAll().forEach(address -> {
-            if(address.getZipcode().equals(zipcode)) throw new BusinessLogicException(ExceptionCode.ADDRESS_EXISTS);
+    private void changePrimaryAddress(Long memberId) {
+            addressRepository.findAll().forEach(addressInfo -> {
+                if(addressInfo.getMember().getMemberId().equals(memberId)) {
+                    addressInfo.setIsPrimary(false);
+                }
         });
     }
+
+    private void verifyDuplicateAddress(Address address) {
+        Long memberId = address.getMember().getMemberId();
+
+        addressRepository.findAll().forEach(addressInfo -> {
+            if(addressInfo.getMember().getMemberId().equals(memberId)) {
+                boolean addressCheck = addressInfo.getAddress().equals(address.getAddress());
+                boolean zipcodeCheck = addressInfo.getZipcode().equals(address.getZipcode());
+
+                if(addressCheck && zipcodeCheck) throw new BusinessLogicException(ExceptionCode.ADDRESS_EXISTS);
+            }
+        });
+    }
+
 }
