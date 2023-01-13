@@ -2,6 +2,8 @@ import React from "react";
 import dummyData from "./../data/MemberPageData.json";
 import "./Style/memberPage.css";
 import styled from "styled-components";
+import CustomButton from "../Components/Commons/Buttons";
+import { Link } from "react-router-dom";
 
 const MemberTextBox = styled.li`
   display: flex;
@@ -20,8 +22,17 @@ const InfoText = styled.div<{ width: string }>`
 const MemberPage = () => {
   console.log(dummyData);
   return (
-    <div className="MemberPage_Container">
+    <div className="Profile_Container">
       <h1>내 정보</h1>
+      <Link to="/member/edit" className="Profile_Edit_Link">
+        <CustomButton
+          bgColor="white"
+          content="수정하기"
+          fontColor="black"
+          padding="10px"
+          width="100px"
+        />
+      </Link>
       <ul>
         <MemberTextBox>
           <InfoText width="33%">이름</InfoText>
@@ -51,8 +62,8 @@ const MemberPage = () => {
           </InfoText>
         </MemberTextBox>
       </ul>
-      <div className="MemberPage_Tags">{/* 나의 태그 */}</div>
-      <div className="MemberPage_Reviews">
+      <div className="Profile_Tags">{/* 나의 태그 */}</div>
+      <div className="Profile_Reviews">
         <ul>
           <li>주문 내역</li>
           <li>내 리뷰</li>

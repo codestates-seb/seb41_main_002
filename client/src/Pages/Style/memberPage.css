@@ -1,4 +1,4 @@
-.MemberPage_Container {
+.Profile_Container {
   font-size: 21px;
   display: flex;
   flex-direction: column;
@@ -7,21 +7,25 @@
   gap: 30px;
 }
 
-.MemberPage_Tags {
+.Profile_Edit_Link {
+  text-align: right;
+}
+
+.Profile_Tags {
   background-color: blue;
   height: 300px;
 }
 
-.MemberPage_Reviews {
+.Profile_Reviews {
   grid-column-start: 1;
   grid-column-end: 3;
 }
 
-.MemberPage_Reviews ul {
+.Profile_Reviews ul {
   display: flex;
 }
 
-.MemberPage_Reviews li {
+.Profile_Reviews li {
   width: 100px;
   height: 30px;
   line-height: 30px;
@@ -31,7 +35,7 @@
   border-top-right-radius: 10px;
   text-align: center;
 }
-.MemberPage_Reviews li:last-child {
+.Profile_Reviews li:last-child {
   position: relative;
   right: 1px;
 }

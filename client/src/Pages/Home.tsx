@@ -119,9 +119,13 @@ export default function Home() {
         </button>
       </div>
       <div className="Top_Sales_Banner">
-        {dummyData.topRankBanners.map((a) => {
+        {dummyData.topRankBanners.map((a, idx) => {
           return (
-            <Link to="/items-top-list" className="Top_Sales">
+            <Link
+              to="/items-top-list"
+              className="Top_Sales"
+              key={`topSales${idx}`}
+            >
               <TopSalesContent bgUrl={a.topListURL}>
                 <p>이 달의 Top 10 {a.categoryKRName}</p>
               </TopSalesContent>
