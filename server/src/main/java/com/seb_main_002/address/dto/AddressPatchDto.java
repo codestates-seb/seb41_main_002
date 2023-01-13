@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class AddressPatchDto {
-    private Boolean idPrimary;
+    private Boolean isPrimary;
 
     private String addressTitle;
 
