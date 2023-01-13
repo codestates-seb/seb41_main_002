@@ -1,18 +1,16 @@
 package com.seb_main_002.item.controller;
 
-import com.seb_main_002.item.dto.ItemPostDto;
-import com.seb_main_002.item.dto.ItemSimpleResponseDto;
-import com.seb_main_002.item.dto.ItemTopListResponseDto;
+import com.seb_main_002.item.dto.*;
 import com.seb_main_002.item.entity.Item;
 import com.seb_main_002.item.mapper.ItemMapper;
 import com.seb_main_002.item.service.ItemService;
 import com.seb_main_002.review.entity.Review;
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -51,9 +49,9 @@ public class ItemController {
 
 
     @GetMapping("/toplist/{categoryENName}")
-    public ResponseEntity getItems(@PathVariable("categoryENName") String categoryENName){
+    public ResponseEntity getTopItems(@PathVariable("categoryENName") String categoryENName){
 
-        List<Item> items = itemService.findTopListItems(categoryENName);
+        List<Item> items = itemService.findTopListItems(categoryENName,0,10);
         List<ItemTopListResponseDto.TopItemDto> topItemDtos = items.stream()
                 .map(item -> ItemTopListResponseDto.TopItemDto.builder()
                         .itemId(item.getItemId())
@@ -74,7 +72,7 @@ public class ItemController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
-    @GetMapping("/{itemId}")
+    @GetMapping("/details/{itemId}")
     public ResponseEntity getItem(@PathVariable("itemId") Long itemId){
         Item item = itemService.findItem(itemId);
         List<Review> reivews = item.getReviews();
@@ -111,6 +109,38 @@ public class ItemController {
 
         return new ResponseEntity<>(response,HttpStatus.OK);
 
+    }
+
+
+    @GetMapping("/{categoryENName}")
+    public ResponseEntity getFilteredItems(@PathVariable("categoryENName") String categoryENName,
+                                           @RequestParam(required = false) Boolean custom,
+                                           @RequestParam(required = false) String title,
+                                           @RequestParam @Positive int page){
+        if(categoryENName.equals("all")) categoryENName = "";
+        if(custom == null) custom = false;
+        if(title == null) title = "";
+        page -= 1;
+
+        List<Item> items = itemService.findFilteredItems(categoryENName, custom, title, page);
+
+        List<ItemSearchResponseDto.SearchItemDto> searchItemDtos = items.stream()
+                .map(item -> ItemSearchResponseDto.SearchItemDto.builder()
+                        .itemId(item.getItemId())
+                        .itemTitle(item.getItemTitle())
+                        .categoryKRName(item.getCategoryKRName())
+                        .categoryENName(item.getCategoryENName())
+                        .titleImageURL(item.getTitleImageUrl())
+                        .price(item.getPrice())
+                        .tagsList(item.getTagList())
+                        .build())
+                .collect(Collectors.toList());
+
+        ItemSearchResponseDto response = ItemSearchResponseDto.builder()
+                .cosmetics(searchItemDtos)
+                .build();
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
 }
