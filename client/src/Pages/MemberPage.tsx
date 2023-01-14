@@ -89,19 +89,24 @@ const MemberPage = () => {
         <MemberTextBox>
           <InfoText width="33%">원하는 기능</InfoText>
           <InfoText width="67%" className="Profile_Type_Badges">
-            {dummyData.tagList
-              .slice(2, dummyData.tagList.length)
-              .map((a, idx) => {
-                return (
-                  <TypeBadge
-                    bgColor="beige"
-                    content={a}
-                    padding="10px"
-                    fontSize="15px"
-                    key={`item${idx + 2}`}
-                  />
-                );
-              })}
+            {dummyData.tagList.slice(2, dummyData.tagList.length).length !==
+            0 ? (
+              dummyData.tagList
+                .slice(2, dummyData.tagList.length)
+                .map((a, idx) => {
+                  return (
+                    <TypeBadge
+                      bgColor="beige"
+                      content={a}
+                      padding="10px"
+                      fontSize="15px"
+                      key={`item${idx + 2}`}
+                    />
+                  );
+                })
+            ) : (
+              <span className="No_Tags">태그 없음</span>
+            )}
           </InfoText>
         </MemberTextBox>
       </ul>

@@ -1,5 +1,6 @@
 import CustomButton from "./Buttons";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface OrderHistoryType {
   orderId: number;
@@ -42,7 +43,7 @@ const OrderHistoryItem = ({
           <span className="Order_Detail_Indicator">배송 현황</span>
           <div>{orderHistory.orderStatus}</div>
         </div>
-        <div onClick={openAccordion}>
+        <div className="Order_Detail_Button_Wrapper" onClick={openAccordion}>
           <CustomButton
             bgColor="transparent"
             content={isActive ? "접기" : "자세히"}
@@ -57,7 +58,7 @@ const OrderHistoryItem = ({
           {orderHistory.orderItems.map((item: ItemType) => {
             return (
               <div
-                className="Order_History_Item"
+                className="Order_History_Content"
                 key={`order${orderHistory.orderId}Item${item.itemId}`}
               >
                 <div>
@@ -65,7 +66,9 @@ const OrderHistoryItem = ({
                 </div>
                 <div>
                   <span className="Order_Detail_Indicator">상품명</span>
-                  <div>{item.itemTitle} </div>
+                  <Link to={`/itemDetail/${item.itemId}`}>
+                    <div>{item.itemTitle} </div>
+                  </Link>
                 </div>
                 <div>
                   <span className="Order_Detail_Indicator">상품 개수</span>
