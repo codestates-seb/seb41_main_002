@@ -6,7 +6,7 @@
   "memberName": "임경인",
   "zipcode": "04567",
   "address": "서울시 강서구 화곡동 56-536 살렘하우스 501호",
-  "isSubscribed": "true",
+  "isSubscribed": false,
   "memberReserve": 3000,
   "tagList": ["건성", "여드름 많음", "수분", "진정"],
   "ordersHistory": [

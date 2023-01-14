@@ -1,11 +1,11 @@
-import React, { useState } from "react";
 import dummyData from "./../data/MemberPageData.json";
-import "./Style/memberPage.css";
-import styled from "styled-components";
 import CustomButton from "../Components/Commons/Buttons";
-import { Link } from "react-router-dom";
 import TypeBadge from "../Components/Commons/TypeBadge";
 import OrderHistoryItem from "../Components/Commons/OrderHistoryItem";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import "./Style/memberPage.css";
 
 const MemberTextBox = styled.li`
   display: flex;
@@ -53,12 +53,27 @@ const MemberPage = () => {
         <MemberTextBox>
           <InfoText width="100%">대표 주소</InfoText>
         </MemberTextBox>
-        <MemberTextBox>
+        <MemberTextBox style={{ height: `100px` }}>
           <InfoText width="100%">{dummyData.address}</InfoText>
         </MemberTextBox>
         <MemberTextBox>
           <InfoText width="100%">
-            {dummyData.isSubscribed ? "현재 구독 중" : "구독 중이 아닙니다."}
+            {dummyData.isSubscribed ? (
+              <span className="Member_Subscribed"> 현재 구독 중 </span>
+            ) : (
+              <div className="Member_Not_Subscribed">
+                <span>구독하고 있지 않습니다.</span>
+                <Link to={`/members/:memberId/subscribe`}>
+                  <CustomButton
+                    bgColor="white"
+                    content="구독하러 가기"
+                    fontColor="black"
+                    padding="10px"
+                    width="125px"
+                  />
+                </Link>
+              </div>
+            )}
           </InfoText>
         </MemberTextBox>
       </ul>

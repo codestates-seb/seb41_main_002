@@ -12,17 +12,33 @@
   text-align: right;
 }
 
-.Profile_Tags {
-  margin: 25px 0;
+.Member_Subscribed {
+  background: linear-gradient(to right, #fcecdd, #ffc288, #fea82f, #ff6701);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.No_Tags {
-  color: white;
+.Member_Not_Subscribed {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  color: rgb(242, 137, 32);
+}
+
+.Profile_Tags {
+  margin-bottom: 25px;
 }
 
 .Profile_Type_Badges {
   color: black;
   font-weight: bold;
+}
+
+.No_Tags {
+  color: white;
 }
 
 .Profile_Reviews {
