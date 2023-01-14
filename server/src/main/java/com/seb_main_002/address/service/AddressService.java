@@ -47,6 +47,10 @@ public class AddressService {
         addressRepository.save(verifiedAddress);
     }
 
+    public void deleteAddress(Long addressId) {
+        addressRepository.deleteById(addressId);
+    }
+
     private void changePrimaryAddress(Long memberId) {
         addressRepository.findAddressesByMemberId(memberId).forEach(memberAddress -> {
             memberAddress.setIsPrimary(false);
