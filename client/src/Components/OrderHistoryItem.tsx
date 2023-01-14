@@ -1,8 +1,8 @@
-import CustomButton from "./Buttons";
+import CustomButton from "./Commons/Buttons";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-interface OrderHistoryType {
+interface OrderType {
   orderId: number;
   orderCreatedAt: string;
   orderStatus: string;
@@ -18,11 +18,7 @@ interface ItemType {
   count: number;
 }
 
-const OrderHistoryItem = ({
-  orderHistory,
-}: {
-  orderHistory: OrderHistoryType;
-}) => {
+const OrderHistoryItem = ({ order }: { order: OrderType }) => {
   const [isActive, setIsActive] = useState(false);
   const openAccordion = () => {
     setIsActive(!isActive);
@@ -33,15 +29,15 @@ const OrderHistoryItem = ({
       <div className="Order_History_Item">
         <div>
           <span className="Order_Detail_Indicator">주문 일자</span>
-          <div>{orderHistory.orderCreatedAt}</div>
+          <div>{order.orderCreatedAt}</div>
         </div>
         <div>
           <span className="Order_Detail_Indicator">주문 금액</span>
-          <div>{orderHistory.totalPrice} 원</div>
+          <div>{order.totalPrice} 원</div>
         </div>
         <div>
           <span className="Order_Detail_Indicator">배송 현황</span>
-          <div>{orderHistory.orderStatus}</div>
+          <div>{order.orderStatus}</div>
         </div>
         <div className="Order_Detail_Button_Wrapper" onClick={openAccordion}>
           <CustomButton
@@ -55,11 +51,11 @@ const OrderHistoryItem = ({
       </div>
       {isActive ? (
         <div>
-          {orderHistory.orderItems.map((item: ItemType) => {
+          {order.orderItems.map((item: ItemType) => {
             return (
               <div
                 className="Order_History_Content"
-                key={`order${orderHistory.orderId}Item${item.itemId}`}
+                key={`order${order.orderId}Item${item.itemId}`}
               >
                 <div>
                   <img src={item.itemImageURL} alt="item image" />

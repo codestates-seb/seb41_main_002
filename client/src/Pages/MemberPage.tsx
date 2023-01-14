@@ -1,10 +1,9 @@
 import dummyData from "./../data/MemberPageData.json";
 import CustomButton from "../Components/Commons/Buttons";
 import TypeBadge from "../Components/Commons/TypeBadge";
-import OrderHistoryItem from "../Components/Commons/OrderHistoryItem";
+import OrderHistoryItem from "../Components/OrderHistoryItem";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
 import "./Style/memberPage.css";
 
 const MemberTextBox = styled.li`
@@ -108,11 +107,11 @@ const MemberPage = () => {
             0 ? (
               dummyData.tagList
                 .slice(2, dummyData.tagList.length)
-                .map((a, idx) => {
+                .map((tag, idx) => {
                   return (
                     <TypeBadge
                       bgColor="beige"
-                      content={a}
+                      content={tag}
                       padding="10px"
                       fontSize="15px"
                       key={`item${idx + 2}`}
@@ -131,8 +130,8 @@ const MemberPage = () => {
           <li>내 리뷰</li>
         </ul>
         <div className="Reviews_Contents">
-          {dummyData.ordersHistory.map((a, idx) => {
-            return <OrderHistoryItem orderHistory={a} key={`order${idx}`} />;
+          {dummyData.ordersHistory.map((order, idx) => {
+            return <OrderHistoryItem order={order} key={`order${idx}`} />;
           })}
         </div>
       </div>
