@@ -13,7 +13,7 @@
     {
       "orderId": 1,
       "orderCreatedAt": "2022/01/05/14:25",
-      "orderStatus": "배송전",
+      "orderStatus": "배송 완료",
       "totalPrice": 70000,
       "orderItems": [
         {
@@ -22,6 +22,28 @@
           "itemTitle": "어머 너무 촉촉해 엠플",
           "count": 1,
           "itemTotalPrice": 10000
+        }
+      ]
+    },
+    {
+      "orderId": 2,
+      "orderCreatedAt": "2022/01/12/15:10",
+      "orderStatus": "배송 전",
+      "totalPrice": 30000,
+      "orderItems": [
+        {
+          "itemId": 1,
+          "itemImageURL": "https://picsum.photos/75?random=2",
+          "itemTitle": "어머 너무 촉촉해 엠플",
+          "count": 1,
+          "itemTotalPrice": 10000
+        },
+        {
+          "itemId": 2,
+          "itemImageURL": "https://picsum.photos/75?random=3",
+          "itemTitle": "어머 너무 부드러 엠플",
+          "count": 2,
+          "itemTotalPrice": 12000
         }
       ]
     }

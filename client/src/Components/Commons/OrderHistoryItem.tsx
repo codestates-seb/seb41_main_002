@@ -1,13 +1,26 @@
-import dummyData from "./../../data/MemberPageData.json";
 import CustomButton from "./Buttons";
 import { useState } from "react";
 
+interface OrderHistoryType {
+  orderId: number;
+  orderCreatedAt: string;
+  orderStatus: string;
+  totalPrice: number;
+  orderItems: ItemType[];
+}
+
+interface ItemType {
+  itemId: number;
+  itemImageURL: string;
+  itemTitle: string;
+  itemTotalPrice: number;
+  count: number;
+}
+
 const OrderHistoryItem = ({
-  title,
-  content,
+  orderHistory,
 }: {
-  title: string;
-  content: string;
+  orderHistory: OrderHistoryType;
 }) => {
   const [isActive, setIsActive] = useState(false);
   const openAccordion = () => {
@@ -19,15 +32,15 @@ const OrderHistoryItem = ({
       <div className="Order_History_Item">
         <div>
           <span className="Order_Detail_Indicator">주문 일자</span>
-          <div>{dummyData.ordersHistory[0].orderCreatedAt}</div>
+          <div>{orderHistory.orderCreatedAt}</div>
         </div>
         <div>
           <span className="Order_Detail_Indicator">주문 금액</span>
-          <div>{dummyData.ordersHistory[0].totalPrice} 원</div>
+          <div>{orderHistory.totalPrice} 원</div>
         </div>
         <div>
           <span className="Order_Detail_Indicator">배송 현황</span>
-          <div>{dummyData.ordersHistory[0].orderStatus}</div>
+          <div>{orderHistory.orderStatus}</div>
         </div>
         <div onClick={openAccordion}>
           <CustomButton
@@ -40,25 +53,31 @@ const OrderHistoryItem = ({
         </div>
       </div>
       {isActive ? (
-        <div className="Order_History_Item">
-          <div>
-            <img
-              src={dummyData.ordersHistory[0].orderItems[0].itemImageURL}
-              alt="item image"
-            />
-          </div>
-          <div>
-            <span className="Order_Detail_Indicator">상품명</span>
-            <div>{dummyData.ordersHistory[0].orderItems[0].itemTitle} </div>
-          </div>
-          <div>
-            <span className="Order_Detail_Indicator">상품 개수</span>
-            <div>{dummyData.ordersHistory[0].orderItems[0].count}</div>
-          </div>
-          <div>
-            <span className="Order_Detail_Indicator">가격</span>
-            <div>{dummyData.ordersHistory[0].orderItems[0].itemTotalPrice}</div>
-          </div>
+        <div>
+          {orderHistory.orderItems.map((item: ItemType) => {
+            return (
+              <div
+                className="Order_History_Item"
+                key={`order${orderHistory.orderId}Item${item.itemId}`}
+              >
+                <div>
+                  <img src={item.itemImageURL} alt="item image" />
+                </div>
+                <div>
+                  <span className="Order_Detail_Indicator">상품명</span>
+                  <div>{item.itemTitle} </div>
+                </div>
+                <div>
+                  <span className="Order_Detail_Indicator">상품 개수</span>
+                  <div>{item.count}</div>
+                </div>
+                <div>
+                  <span className="Order_Detail_Indicator">가격</span>
+                  <div>{item.itemTotalPrice}</div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       ) : null}
     </div>

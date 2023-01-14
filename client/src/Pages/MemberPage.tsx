@@ -5,7 +5,6 @@ import styled from "styled-components";
 import CustomButton from "../Components/Commons/Buttons";
 import { Link } from "react-router-dom";
 import TypeBadge from "../Components/Commons/TypeBadge";
-import OrderedListItem from "../Components/Commons/OrderedListItem";
 import OrderHistoryItem from "../Components/Commons/OrderHistoryItem";
 
 const MemberTextBox = styled.li`
@@ -112,12 +111,9 @@ const MemberPage = () => {
           <li>내 리뷰</li>
         </ul>
         <div className="Reviews_Contents">
-          {/* {dummyData.ordersHistory.map((a) => {
-            return (
-              <div></div>
-            )
-          })} */}
-          <OrderHistoryItem title="hello" content="hello" />
+          {dummyData.ordersHistory.map((a, idx) => {
+            return <OrderHistoryItem orderHistory={a} key={`order${idx}`} />;
+          })}
         </div>
       </div>
     </div>
