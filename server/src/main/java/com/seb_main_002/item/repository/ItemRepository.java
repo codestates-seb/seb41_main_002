@@ -6,23 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public interface ItemRepository extends JpaRepository<Item, Long> {
     Page<Item> findAllByCategoryENName(String categoryENName, Pageable pageable);
 
-    @Query(value = "SELECT ITEM_ID, CREATED_AT, LAST_MODIFIED_AT, CATEGORYENNAME, CATEGORYKRNAME, CONTENT, CONTENT_IMAGE_URL, ITEM_TITLE, PRICE, SALES_COUNT, RATING,TITLE_IMAGE_URL\n" +
-            "FROM ITEM LEFT JOIN ITEM_TAG_LIST ON ITEM.ITEM_ID =ITEM_TAG_LIST.ITEM_ITEM_ID\n" +
-            "WHERE TAG_LIST = :tag1 \n" +
-            "OR TAG_LIST = :tag2\n" +
-            "AND CATEGORYENNAME LIKE :categoryENName% \n" +
-            "AND ITEM_TITLE LIKE %:title% \n" +
-            "GROUP BY ITEM_ID\n" +
-            "HAVING COUNT(ITEM_ID) >1", nativeQuery = true)
-    Page<Item> findByCustomItem(String tag1, String tag2, String categoryENName, String title, Pageable pageable);
+    Page<Item> findAllByCategoryENNameStartingWithAndItemTitleContaining(String categoryENName, String title, Pageable pageable);
 
-    Page<Item> findAllByCategoryENNameContainingAndItemTitleContaining(String categoryENName, String title, Pageable pageable);
+    @Query(value = "SELECT i FROM Item i INNER JOIN i.tagList t WHERE t = :tag1 OR t = :tag2 AND i.itemTitle LIKE %:title% AND i.categoryENName LIKE :categoryENName% GROUP BY i.itemId HAVING count(i.itemId)>1")
+    Page<Item> findCustomItem(String tag1,String tag2, String title, String categoryENName, Pageable pageable);
 
 }
