@@ -35,4 +35,12 @@ public class AddressController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @DeleteMapping("/{addressId}")
+    public ResponseEntity patchAddress(@PathVariable("addressId") Long addressId) {
+        addressService.deleteAddress(addressId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
