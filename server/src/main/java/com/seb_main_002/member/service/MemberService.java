@@ -5,8 +5,10 @@ import com.seb_main_002.exception.ExceptionCode;
 import com.seb_main_002.item.repository.ItemRepository;
 import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.member.repository.MemberRepository;
+import com.seb_main_002.security.util.CustomAuthorityUtils;
 import com.seb_main_002.subscribe.entity.Subscribe;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,8 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final CustomAuthorityUtils authorityUtils;
 
     @Transactional
     public void updateSubscribe(Long memberId, Boolean isSubScribed) {
@@ -91,6 +95,13 @@ public class MemberService {
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
         verifyExistsAccountId(member.getAccountId());
+        //암호 인코딩 후 저장
+        String encryptedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encryptedPassword);
+        //role 생성 후 저장
+        List<String> roles = authorityUtils.createRoles(member.getEmail());
+        member.setRoles(roles);
+
         memberRepository.save(member);
         return member;
     }
