@@ -33,8 +33,6 @@ export default function Product(props: Props) {
   
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log(isLoading)
-
   const [_, setRef] = useIntersect((entry: any, observer: any) => {
     props.onLastItemVisiable();
     observer.unobserve(entry.target);

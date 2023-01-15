@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import CustomButton from "../Commons/Buttons";
 import "./Style/categoryTab.css";
 
@@ -6,7 +7,13 @@ interface Category {
   categoryKRName: string;
 }
 
-export const ShoppingCategoryTab: Function = () => {
+interface Props {
+  setCategoryParams(category:string): React.SetStateAction<string>
+}
+
+export const ShoppingCategoryTab: Function = (
+  props:Props
+) => {
   const categoryTitle: Array<Category> = [
     {
       categoryKRName: "전체",
@@ -36,7 +43,10 @@ export const ShoppingCategoryTab: Function = () => {
 
   return categoryTitle.map((category) => {
     return (
-      <li key={category.categoryENName} onClick={() => category.categoryENName}>
+      <li
+        key={category.categoryENName}
+        onClick={() => props.setCategoryParams(category.categoryENName)}
+      >
         <CustomButton
           fontColor="white"
           bgColor="gray"

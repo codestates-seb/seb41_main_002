@@ -16,20 +16,26 @@ import { useEffect, useRef, useState } from "react";
 // 그 외 참고 사항
 // 페이지 크기는 16개
 
-
 export default function ShoppingList() {
   const [productData, setProductData] = useState<ProductData[]>([]);
   const [page, setPage] = useState(1);
+  const [categoryParam, setCategoryParams] = useState("all");
+  const [iscustom, setIsCustom] = useState(false);
+  const [serchWord, setSerchWord] = useState("");
   const productList = async () => {
-    const result = await getProductList({ categoryENName: "toner", page });
+    const result = await getProductList({
+      categoryENName: categoryParam,
+      page: page,
+      custom: iscustom,
+      keyword: serchWord,
+    });
     setProductData(productData.concat(result));
   };
-  
-  useEffect(() => {
-    productList()
-  },[page]);
 
-  console.log(productData)
+  useEffect(() => {
+    productList();
+  }, [page, categoryParam, iscustom]);
+
   return (
     <div className="Shopping_List_Container">
       <div className="Shopping_List_Search">
@@ -37,11 +43,19 @@ export default function ShoppingList() {
           type="text"
           placeholder="검색하세요"
           className="Search_Bar"
-        ></input>
+          defaultValue={serchWord}
+          onChange={(e) => setSerchWord(e.target.value)}
+          onKeyUp={() => {
+            if (serchWord.length < 1) {
+            } else {
+              alert("검색어를 입력해주세요!");
+            }
+          }}
+        />
       </div>
       <div className="Tab_Container">
         <ul className="Tab_List">
-          <ShoppingCategoryTab />
+          <ShoppingCategoryTab setCategoryParams={setCategoryParams} />
         </ul>
       </div>
       <div className="Product_List_Container">
@@ -49,8 +63,8 @@ export default function ShoppingList() {
           <Product
             products={productData}
             onLastItemVisiable={() => {
-              console.log('setPage');
-              setPage(page + 1)
+              console.log("setPage");
+              setPage(page + 1);
             }}
           />
         </ul>
