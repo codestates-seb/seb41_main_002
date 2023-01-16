@@ -8,12 +8,12 @@ interface Category {
 }
 
 interface Props {
-  setCategoryParams(category:string): React.SetStateAction<string>
+  setCategoryParams(category: string): React.SetStateAction<string>;
+  setIsCustom(custom: boolean): React.SetStateAction<boolean>;
+  isCustom: boolean;
 }
 
-export const ShoppingCategoryTab: Function = (
-  props:Props
-) => {
+export const ShoppingCategoryTab: Function = (props: Props) => {
   const categoryTitle: Array<Category> = [
     {
       categoryKRName: "전체",
@@ -41,20 +41,32 @@ export const ShoppingCategoryTab: Function = (
     },
   ];
 
-  return categoryTitle.map((category) => {
-    return (
-      <li
-        key={category.categoryENName}
-        onClick={() => props.setCategoryParams(category.categoryENName)}
-      >
+  return (
+    <>
+      {categoryTitle.map((category) => {
+        return (
+          <li key={category.categoryENName}>
+            <CustomButton
+              fontColor="white"
+              bgColor="gray"
+              width="100px"
+              padding="5px"
+              content={`${category.categoryKRName}`}
+              onClick={() => props.setCategoryParams(category.categoryENName)}
+            />
+          </li>
+        );
+      })}
+      <li>
         <CustomButton
           fontColor="white"
           bgColor="gray"
           width="100px"
           padding="5px"
-          content={`${category.categoryKRName}`}
+          content={"커스텀"}
+          onClick={() => props.setIsCustom(!props.isCustom)}
         />
       </li>
-    );
-  });
+    </>
+  );
 };

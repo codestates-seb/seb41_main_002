@@ -4,7 +4,7 @@ import { getProductList } from "../API/ShoppingList/getShoppingList";
 import { ProductData } from "../API/ShoppingList/getShoppingList";
 import { Link } from "react-router-dom";
 import "./Style/shoppingList.css";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 // ShoppingList에 무한스크롤
 
@@ -20,21 +20,30 @@ export default function ShoppingList() {
   const [productData, setProductData] = useState<ProductData[]>([]);
   const [page, setPage] = useState(1);
   const [categoryParam, setCategoryParams] = useState("all");
-  const [iscustom, setIsCustom] = useState(false);
+  const [isCustom, setIsCustom] = useState(false);
   const [serchWord, setSerchWord] = useState("");
   const productList = async () => {
     const result = await getProductList({
       categoryENName: categoryParam,
       page: page,
-      custom: iscustom,
+      custom: isCustom,
       keyword: serchWord,
     });
     setProductData(productData.concat(result));
   };
 
+  const serchSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if(e.key === 'Enter'){
+      productList()
+    }
+  }
+
+  console.log(serchWord)
+  
+
   useEffect(() => {
     productList();
-  }, [page, categoryParam, iscustom]);
+  }, [page, categoryParam, isCustom]);
 
   return (
     <div className="Shopping_List_Container">
@@ -45,8 +54,9 @@ export default function ShoppingList() {
           className="Search_Bar"
           defaultValue={serchWord}
           onChange={(e) => setSerchWord(e.target.value)}
-          onKeyUp={() => {
-            if (serchWord.length < 1) {
+          onKeyUp={(e) => {
+            if (serchWord.length !== 0) {
+              serchSubmit(e)
             } else {
               alert("검색어를 입력해주세요!");
             }
@@ -55,7 +65,11 @@ export default function ShoppingList() {
       </div>
       <div className="Tab_Container">
         <ul className="Tab_List">
-          <ShoppingCategoryTab setCategoryParams={setCategoryParams} />
+          <ShoppingCategoryTab
+            setCategoryParams={setCategoryParams}
+            setIsCustom={setIsCustom}
+            isCustom={isCustom}
+          />
         </ul>
       </div>
       <div className="Product_List_Container">
