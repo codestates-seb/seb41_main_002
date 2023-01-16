@@ -1,144 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { TopProductData } from "../API/ItemTopList/getTopList";
+import { getTopList } from "../API/ItemTopList/getTopList";
+import TopListCategoryTab from "../Components/ItemTopList/TopListCategoryTab";
+import TopProductList from "../Components/ItemTopList/TopProductList";
 import "./Style/itemsTopList.css";
 
 export default function ItemsTopList() {
-  // 해당 상태의 기본값은 이전 페이지에서 이동할 때 전달받는 방식을 채택 예정
-  // 현재는 첫 번째 카테고리인 "토너"를 기본값을 설정
-  const [category, setCategory] = useState<string>("토너");
-  const changeCategory = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    const filterButton: HTMLButtonElement = event.currentTarget;
-    setCategory(filterButton.name);
+  const [category, setCategory] = useState<string>("전체");
+  const [categoryENName, setCategoryENName] = useState("");
+  const [topProductData, setTopProductData] = useState<TopProductData[]>([]);
+
+  const topProductList = async () => {
+    const result = await getTopList(categoryENName);
+    setTopProductData(result);
   };
+
+  useEffect(() => {
+    topProductList();
+  }, [categoryENName]);
+
+    // 더미 session
+    const session = {
+      memberId: 1,
+      accountId: "abc",
+    };
+
   return (
     <div>
       <h2 className="Top_List_Title">이 달의 Top 10 {category}</h2>
-      <ul className="Filter_Options">
-        <li>
-          <button
-            className="Filter_Button"
-            onClick={changeCategory}
-            name="스킨/토너"
-          >
-            스킨/토너
-          </button>
-        </li>
-        <li>
-          <button
-            className="Filter_Button"
-            onClick={changeCategory}
-            name="크림"
-          >
-            크림
-          </button>
-        </li>
-        <li>
-          <button
-            className="Filter_Button"
-            onClick={changeCategory}
-            name="로션"
-          >
-            로션
-          </button>
-        </li>
-        <li>
-          <button
-            className="Filter_Button"
-            onClick={changeCategory}
-            name="클렌징"
-          >
-            클렌징
-          </button>
-        </li>
-        <li>
-          <button
-            className="Filter_Button"
-            onClick={changeCategory}
-            name="선크림"
-          >
-            선크림
-          </button>
-        </li>
-        <li>
-          <button
-            className="Filter_Button"
-            onClick={changeCategory}
-            name="내 맞춤"
-          >
-            내 맞춤
-          </button>
-        </li>
-      </ul>
-      <div className="Products_Gallery">
-        {/* 아래 상품들은 이후 데이터를 활용한 .map 방식으로 구성할 예정 */}
-        <ul className="Products_Row">
-          <li className="Product_Detail">
-            <img
-              src="https://picsum.photos/200?random=1"
-              alt="sample image"
-            ></img>
-            <p>상품명</p>
-            <p>가격</p>
-          </li>
-          <li className="Product_Detail">
-            <img
-              src="https://picsum.photos/200?random=2"
-              alt="sample image"
-            ></img>
-            <p>상품명</p>
-            <p>가격</p>
-          </li>
-          <li className="Product_Detail">
-            <img
-              src="https://picsum.photos/200?random=3"
-              alt="sample image"
-            ></img>
-            <p>상품명</p>
-            <p>가격</p>
-          </li>
-          <li className="Product_Detail">
-            <img
-              src="https://picsum.photos/200?random=4"
-              alt="sample image"
-            ></img>
-            <p>상품명</p>
-            <p>가격</p>
-          </li>
+      <div className="Tab_Container">
+        <ul className="Filter_Options">
+          <TopListCategoryTab
+            setCategory={setCategory}
+            setCategoryENName={setCategoryENName}
+            session={session}
+          />
         </ul>
+      </div>
+      <div className="Products_Gallery">
         <ul className="Products_Row">
-          <li className="Product_Detail">
-            <img
-              src="https://picsum.photos/200?random=5"
-              alt="sample image"
-            ></img>
-            <p>상품명</p>
-            <p>가격</p>
-          </li>
-          <li className="Product_Detail">
-            <img
-              src="https://picsum.photos/200?random=6"
-              alt="sample image"
-            ></img>
-            <p>상품명</p>
-            <p>가격</p>
-          </li>
-          <li className="Product_Detail">
-            <img
-              src="https://picsum.photos/200?random=7"
-              alt="sample image"
-            ></img>
-            <p>상품명</p>
-            <p>가격</p>
-          </li>
-          <li className="Product_Detail">
-            <img
-              src="https://picsum.photos/200?random=8"
-              alt="sample image"
-            ></img>
-            <p>상품명</p>
-            <p>가격</p>
-          </li>
+          <TopProductList topProductData={topProductData} />
         </ul>
       </div>
     </div>

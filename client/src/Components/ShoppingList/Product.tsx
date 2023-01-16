@@ -4,7 +4,7 @@ import { ProductData } from "../../API/ShoppingList/getShoppingList";
 import { useEffect, useRef, useCallback, useState } from "react";
 import useIntersect from "../../Hooks/useIntersect";
 
-const ProductImage = styled.img`
+export const ProductImage = styled.img`
   width: 200px;
   height: 200px;
 `;
