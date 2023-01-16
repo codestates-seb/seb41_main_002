@@ -25,11 +25,15 @@ const SignUp = () => {
   const [passwordCheck, setPasswordCheck] = useState<string>();
   const [signUpPermission, setSignUpPermission] = useState<boolean>(false);
   const [modalState, setModalState] = useState<boolean>(false);
-  const [문자, set문자] = useState("");
+  const [문자, set문자] = useState<string>("");
 
   const onMemberTextHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
+    if (name === "accountID") {
+      setSignUpPermission(false);
+    }
     setMember({ ...Member, [name]: value });
+    console.log(signUpPermission);
   };
 
   const onPasswordCheckHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,31 +41,54 @@ const SignUp = () => {
   };
 
   const idDoubleCheck = () => {
-    doubleCheck(Member.accountID).then((res) => {
-      if (res === 0) {
-        set문자("아이디를 입력하세요.");
-        setModalState(!modalState);
-      } else if (res) {
-        //중복일 경우
-        set문자("아이디가 중복입니다.");
-        setModalState(!modalState);
-        setSignUpPermission(!res);
-      } else {
-        //중복이 아닐 경우
-        console.log("중복이 아니라네");
-        setSignUpPermission(!res);
-      }
-    });
+    //중복체크
+    if (Member.accountID === "") {
+      set문자("아이디를 입력하세요.");
+      setModalState(!modalState);
+    } else {
+      doubleCheck(Member.accountID).then((res) => {
+        if (res) {
+          //중복이 아닐 경우
+          setSignUpPermission(true);
+          set문자("사용 가능한 아이디입니다.");
+          setModalState(!modalState);
+        } else {
+          //중복일 경우
+          set문자("아이디가 중복입니다.");
+          setModalState(!modalState);
+          setSignUpPermission(false);
+        }
+      });
+    }
+  };
+
+  const inputValidation = () => { //빈 곳 처리
+    if (Member.accountID === "") {
+      set문자("아이디를 입력하세요.");
+    } else if (Member.password === "") {
+      set문자("비밀번호를 입력하세요.");
+    } else if (Member.birthDate === "") {
+      set문자("생년월일을 입력하세요.");
+    } else if (Member.email === "") {
+      set문자("이메일을 입력하세요.");
+    } else if (Member.phoneNumber === "") {
+      set문자("핸드폰 번호를 입력하세요.");
+    } else if(Member.password !== passwordCheck){
+      set문자("비밀번호가 다릅니다.");
+    } else {
+      set문자("아이디 중복확인을 해주세요");
+    }
+    setModalState(!modalState);
   };
 
   const memberSignUp = () => {
+    //회원가입
+    inputValidation();
     if (signUpPermission) {
       signUp(Member).then((res) => {
         console.log("회원가입 성공");
       });
-    } else {
-      console.log("중복체크 제대로 하슈");
-    }
+    } 
   };
 
   return (
