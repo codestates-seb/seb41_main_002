@@ -2,7 +2,10 @@ import dummyData from "./../data/MemberPageData.json";
 import CustomButton from "../Components/Commons/Buttons";
 import TypeBadge from "../Components/Commons/TypeBadge";
 import styled from "styled-components";
-import { OrderHistoryTab, MyReviewsTab } from "../Components/MyPageTabs";
+import {
+  OrderHistoryTab,
+  MyReviewsTab,
+} from "../Components/MyPageComponent/MyPageTabs";
 import { Link } from "react-router-dom";
 import "./Style/memberPage.css";
 import { useState } from "react";

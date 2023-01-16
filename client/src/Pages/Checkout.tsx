@@ -15,8 +15,10 @@ const MemberSubscribe = styled.span<{ subscribeCheck: boolean }>`
 
 export default function Checkout() {
   interface ItemType {
-    name: string;
-    price: number;
+    itemId: number;
+    itemImageURL: string;
+    itemTitle: string;
+    itemTotalPrice: number;
     count: number;
   }
 
@@ -42,8 +44,8 @@ export default function Checkout() {
     addressId: number | undefined;
     itemList: {
       itemId: number;
-      itemCount: number;
       itemTotalPrice: number;
+      count: number;
     }[];
     itemsTotalPrice: number;
     totalPrice: number;
@@ -53,47 +55,11 @@ export default function Checkout() {
   const [memberInfo, setMemberInfo] = useState<GetMemberDataType | undefined>();
   const [useReserve, setUseReserve] = useState<number | undefined | string>(0);
   const [checkedList, setCheckedList] = useState<AddressType>();
-  const { itemsTotalPrice, totalPrice, excludingPoints, itemsFilter } =
+  const { itemsTotalPrice, totalPrice, excludingPoints, itemListArray } =
     itemsCalculation(useReserve, memberInfo && memberInfo["isSubscribe"]);
 
-  // 더미 데이터 연동 후 지울 예정---------------------------
-  interface LocalType {
-    itemId: number;
-    itemTitle: string;
-    titleImageURL: string;
-    itemCount: number;
-    itemTotalPrice: number;
-  }
-
-  const arr: LocalType[] = [
-    {
-      itemId: 1,
-      itemTitle: "상품이름1",
-      titleImageURL: "https://picsum.photos/75?random=1",
-      itemCount: 3,
-      itemTotalPrice: 30000,
-    },
-    {
-      itemId: 2,
-      itemTitle: "상품이름2",
-      titleImageURL: "https://picsum.photos/75?random=2",
-      itemCount: 2,
-      itemTotalPrice: 20000,
-    },
-    {
-      itemId: 3,
-      itemTitle: "상품이름3",
-      titleImageURL: "https://picsum.photos/75?random=3",
-      itemCount: 6,
-      itemTotalPrice: 60000,
-    },
-  ];
-
-  const arrString = JSON.stringify(arr);
-  window.localStorage.setItem("itemList", arrString);
-
+  // 더미 데이터
   const memberId: number = 1;
-  //----------------------------------------------------------
 
   const reserveInput = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
@@ -124,7 +90,7 @@ export default function Checkout() {
 
     window.localStorage.setItem("orderSheet", JSON.stringify(orderSheet));
 
-    kakaoPaymentRequest(orderSheet, itemsFilter[0].name).then(
+    kakaoPaymentRequest(orderSheet, itemListArray[0].itemTitle).then(
       (res: { paymentURL: string; tid: string } | undefined) => {
         if (typeof res !== "undefined") {
           window.localStorage.setItem("tid", res.tid);
@@ -165,13 +131,9 @@ export default function Checkout() {
           )}
         </div>
         <div className="Item_List">
-          {itemsFilter.map((item: ItemType, idx: number) => {
+          {itemListArray.map((item: ItemType, idx: number) => {
             return (
-              <OrderedListItem
-                item={item}
-                idx={idx}
-                key={`OrderListItem${idx}`}
-              />
+              <OrderedListItem item={item} key={`OrderedListItem${idx}`} />
             );
           })}
         </div>

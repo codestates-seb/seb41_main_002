@@ -1,4 +1,4 @@
-import dummyData from "../data/MemberPageData.json";
+import dummyData from "../../data/MemberPageData.json";
 import OrderHistoryItem from "./OrderHistoryItem";
 import ReviewsItem from "./ReviewsItem";
 

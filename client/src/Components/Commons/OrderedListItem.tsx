@@ -17,7 +17,6 @@ const OrderedListItem = ({ item }: { item: ItemInterface }) => {
       <Link to={`/itemDetail/${item.itemId}`}>
         <span className="Ordered_List_Item_Title">{item.itemTitle} </span>
       </Link>
-
       <span>수량: {item.count}개 </span>
       <span>가격: {item.itemTotalPrice}원 </span>
     </div>

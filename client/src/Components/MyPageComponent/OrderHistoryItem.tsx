@@ -1,4 +1,4 @@
-import CustomButton from "./Commons/Buttons";
+import CustomButton from "../Commons/Buttons";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 

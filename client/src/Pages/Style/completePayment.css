@@ -1,4 +1,4 @@
-.Complete_Container{
+.Complete_Container {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -6,12 +6,12 @@
   height: 500px;
 }
 
-h1{
+.Complete_Message {
   text-align: center;
   margin-bottom: 400px;
 }
 
-button{
+button {
   padding: 9px 19px;
   border: 1px solid var(--lightgray);
   border-radius: 10px;

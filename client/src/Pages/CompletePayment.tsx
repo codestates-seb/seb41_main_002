@@ -39,23 +39,24 @@ const CompletePayment = () => {
         "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
       },
       params,
-    }).then((res) => {
-      const localOrder = localStorage.getItem("orderSheet")
-      let orderSheet:OrderSheetType= localOrder&&JSON.parse(localOrder)
-      completePayment(orderSheet).then((res) => {
-        console.log("결제가 완료되었습니다.");
+    })
+      .then((res) => {
+        const localOrder = localStorage.getItem("orderSheet");
+        let orderSheet: OrderSheetType = localOrder && JSON.parse(localOrder);
+        completePayment(orderSheet).then((res) => {
+          console.log("결제가 완료되었습니다.");
+        });
+        window.localStorage.removeItem("tid");
+        window.localStorage.removeItem("orderSheet");
+      })
+      .catch((err) => {
+        console.error(err);
       });
-      window.localStorage.removeItem("tid");
-      window.localStorage.removeItem("orderSheet");
-    }).catch(err => {
-      console.error(err);
-    });
   }, []);
 
-  
   return (
     <div className="Complete_Container">
-      <h1>상품 결제 완료</h1>
+      <h1 className="Complete_Message">상품 결제 완료</h1>
       <button>
         <Link to="/checkout">돌아가기</Link>
       </button>
