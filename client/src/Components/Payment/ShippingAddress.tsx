@@ -1,3 +1,4 @@
+import { FunctionComponent } from "react";
 import styled from "styled-components";
 
 const AddressContainer = styled.div`
@@ -16,20 +17,23 @@ interface AddressType {
   isPrimary: boolean;
   zipcode: string;
 }
-
-const ShippingAddress = ({ address, addressCheck }: any) => {
+interface ShippingPropsType {
+  address : AddressType;
+  addressCheck(address:AddressType): void;
+}
+const ShippingAddress: FunctionComponent<ShippingPropsType> = (pros) => {
   return (
     <AddressContainer>
       <input
-        id={`${address.zipcode}${address.addressId}`}
+        id={`${pros.address.zipcode}${pros.address.addressId}`}
         type="radio"
         name="address"
         onChange={() => {
-          addressCheck(address);
+          pros.addressCheck(pros.address);
         }}
       />
-      <label htmlFor={`${address.zipcode}${address.addressId}`}>
-        {address["addressTitle"]}
+      <label htmlFor={`${pros.address.zipcode}${pros.address.addressId}`}>
+        {pros.address["addressTitle"]}
       </label>
     </AddressContainer>
   );

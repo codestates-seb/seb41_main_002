@@ -5,6 +5,20 @@ import { Link } from "react-router-dom";
 import "./Style/completePayment.css";
 
 const CompletePayment = () => {
+  interface OrderSheetType {
+    memberId: number;
+    isPrimary: boolean | undefined;
+    addressId: number | undefined;
+    itemList: {
+      itemId: number;
+      itemCount: number;
+      itemTotalPrice: number;
+    }[];
+    itemsTotalPrice: number;
+    totalPrice: number;
+    usedReserve: number;
+  }
+
   const urlParams = new URL(window.location.href).searchParams;
   const pg_token = urlParams.get("pg_token");
   const tid = window.localStorage.getItem("tid");
@@ -26,8 +40,8 @@ const CompletePayment = () => {
       },
       params,
     }).then((res) => {
-      const localOrder:any = window.localStorage.getItem("orderSheet")
-      let orderSheet= JSON.parse(localOrder)
+      const localOrder = localStorage.getItem("orderSheet")
+      let orderSheet:OrderSheetType= localOrder&&JSON.parse(localOrder)
       completePayment(orderSheet).then((res) => {
         console.log("결제가 완료되었습니다.");
       });

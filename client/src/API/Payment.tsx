@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 interface Item {
   itemId: number;
@@ -8,8 +8,8 @@ interface Item {
 
 interface PaymentType {
   memberId: number;
-  isPrimary: boolean;
-  addressId: number;
+  isPrimary: boolean | undefined;
+  addressId: number | undefined;
   itemList: Item[];
   itemsTotalPrice: number;
   totalPrice: number;
@@ -26,8 +26,8 @@ interface AddressType {
 
 interface OrderSheetType {
   memberId: number;
-  isPrimary: any;
-  addressId: number;
+  isPrimary: boolean | undefined;
+  addressId: number | undefined;
   itemList: {
     itemId: number;
     itemCount: number;
@@ -38,17 +38,29 @@ interface OrderSheetType {
   usedReserve: number;
 }
 
+interface GetAddressType {
+  address: string;
+  addressId: number;
+  addressTitle: string;
+  isPrimary: boolean;
+  zipcode: string;
+}
+
+interface GetMemberDataType {
+  phoneNumber: string;
+  memberName: string;
+  isSubscribe: boolean;
+  memberReserve: number;
+  addressList: GetAddressType[];
+}
+
 export const memberData = async (memberId: number) => {
   try {
-    let getMemberData = {};
+    const response = await axios.get<GetMemberDataType>(
+      `http://localhost:8080/api/v1/members/${memberId}/payment`
+    );
 
-    await axios
-      .get(`http://localhost:8080/api/v1/members/${memberId}/payment`)
-      .then((res) => {
-        getMemberData = { ...res.data };
-      });
-
-    return getMemberData;
+    return response.data;
   } catch (error) {
     console.error(error);
   }

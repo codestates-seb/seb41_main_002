@@ -20,14 +20,6 @@ export default function Checkout() {
     count: number;
   }
 
-  interface Local {
-    itemId: number;
-    itemTitle: string;
-    titleImageURL: string;
-    itemCount: number;
-    itemTotalPrice: number;
-  }
-
   interface AddressType {
     address: string;
     addressId: number;
@@ -36,10 +28,18 @@ export default function Checkout() {
     zipcode: string;
   }
 
+  interface GetMemberDataType {
+    phoneNumber: string;
+    memberName: string;
+    isSubscribe: boolean;
+    memberReserve: number;
+    addressList: AddressType[];
+  }
+
   interface OrderSheetType {
     memberId: number;
-    isPrimary: any;
-    addressId: number;
+    isPrimary: boolean | undefined;
+    addressId: number | undefined;
     itemList: {
       itemId: number;
       itemCount: number;
@@ -50,14 +50,22 @@ export default function Checkout() {
     usedReserve: number;
   }
 
-  const [memberInfo, setmemberInfo] = useState<any>();
+  const [memberInfo, setMemberInfo] = useState<GetMemberDataType | undefined>();
   const [useReserve, setUseReserve] = useState<number | undefined | string>(0);
-  const [checkedList, setCheckedList] = useState<any>({});
+  const [checkedList, setCheckedList] = useState<AddressType>();
   const { itemsTotalPrice, totalPrice, excludingPoints, itemsFilter } =
     itemsCalculation(useReserve, memberInfo && memberInfo["isSubscribe"]);
 
   // 더미 데이터 연동 후 지울 예정---------------------------
-  const arr = [
+  interface LocalType {
+    itemId: number;
+    itemTitle: string;
+    titleImageURL: string;
+    itemCount: number;
+    itemTotalPrice: number;
+  }
+
+  const arr: LocalType[] = [
     {
       itemId: 1,
       itemTitle: "상품이름1",
@@ -106,8 +114,8 @@ export default function Checkout() {
     const itemList = itemsOrganize();
     const orderSheet: OrderSheetType = {
       memberId: memberId, //연동 이후 변경
-      isPrimary: checkedList.isPrimary,
-      addressId: checkedList.addressId,
+      isPrimary: checkedList && checkedList.isPrimary,
+      addressId: checkedList && checkedList.addressId,
       itemList: itemList,
       itemsTotalPrice: itemsTotalPrice,
       totalPrice: totalPrice,
@@ -127,18 +135,18 @@ export default function Checkout() {
     );
   };
 
-  const addressCheck = (address: any) => {
+  const addressCheck = (address: AddressType) => {
     setCheckedList(address);
   };
 
   useEffect(() => {
-    memberData(memberId)
-      .then((res) => {
-        setmemberInfo(res);
-      })
-      .catch((err) => {
-        console.error(err);
+    try {
+      memberData(memberId).then((res) => {
+        setMemberInfo(res);
       });
+    } catch (err) {
+      console.error(err);
+    }
   }, []);
 
   return (
@@ -149,12 +157,12 @@ export default function Checkout() {
           <span className="Member_Reserve">
             내 적립금 : {memberInfo && memberInfo["memberReserve"]}원
           </span>
-          <MemberSubscribe
-            subscribeCheck={memberInfo && memberInfo["isSubscribe"]}
-          >
-            프리미엄 구독{" "}
-            {memberInfo && memberInfo["isSubscribe"] ? "사용" : "미사용"}
-          </MemberSubscribe>
+          {memberInfo && (
+            <MemberSubscribe subscribeCheck={memberInfo["isSubscribe"]}>
+              프리미엄 구독{" "}
+              {memberInfo && memberInfo["isSubscribe"] ? "사용" : "미사용"}
+            </MemberSubscribe>
+          )}
         </div>
         <div className="Item_List">
           {itemsFilter.map((item: ItemType, idx: number) => {
@@ -203,7 +211,13 @@ export default function Checkout() {
                 name="address"
                 defaultChecked
                 onChange={() => {
-                  addressCheck({ addressId: 0 });
+                  addressCheck({
+                    addressId: 0,
+                    address: "",
+                    addressTitle: "",
+                    isPrimary: false,
+                    zipcode: "",
+                  });
                 }}
               />
               <label htmlFor="newAddress">신규배송지</label>
@@ -225,13 +239,15 @@ export default function Checkout() {
             </div>
           </div>
         </div>
-        {checkedList?.addressId > 0 ? (
-          <AddressDetail
-            memberName={memberInfo.memberName}
-            phoneNumber={memberInfo.phoneNumber}
-            zipcode={checkedList.zipcode}
-            address={checkedList.address}
-          />
+        {checkedList && checkedList?.addressId > 0 ? (
+          memberInfo && (
+            <AddressDetail
+              memberName={memberInfo.memberName}
+              phoneNumber={memberInfo.phoneNumber}
+              zipcode={checkedList.zipcode}
+              address={checkedList.address}
+            />
+          )
         ) : (
           <NewAddress />
         )}
