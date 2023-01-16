@@ -10,7 +10,7 @@ interface MemberType {
 }
 
 //중복체크
-export const DoubleCheck = async (accountID: string) => {
+export const doubleCheck = async (accountID: string) => {
   try {
     const response = await axios.get(
       `http://localhost:8080/api/v1/idcheck/${accountID}`

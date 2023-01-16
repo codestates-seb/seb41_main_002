@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { createInputFiles } from "typescript";
+import { doubleCheck, signUp } from "../API/SignUp";
 import "./Style/memberAccess.css";
 
 const SignUp = () => {
@@ -22,19 +22,36 @@ const SignUp = () => {
     phoneNumber: "",
   });
   const [passwordCheck, setPasswordCheck] = useState<string>();
+  const [signUpPermission, setSignUpPermission] = useState<boolean>(false);
 
   const onMemberTextHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setMember({ ...Member, [name]: value });
-
-    if (name === "birthDate") {
-      let dateChange = value.replace(/\-/gi, "/");
-    }
   };
 
   const onPasswordCheckHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordCheck(e.target.value);
   };
+
+  const idDoubleCheck = () => {
+    doubleCheck(Member.accountID).then(res => {
+      if(res){
+        //중복일 경우
+        console.log("중복이라는데?")
+        setSignUpPermission(!res);
+      } else {
+        //중복이 아닐 경우
+        console.log("중복이 아니라네");
+        setSignUpPermission(!res);
+      }
+      console.log(res);
+    })
+  }
+
+  const emberSignUp = () => {
+    console.log(signUpPermission);
+  }
+
   return (
     <div className="Member_Access_Container">
       <ul className="Member_Access_Menu">
@@ -58,7 +75,7 @@ const SignUp = () => {
             value={Member.accountID}
             onChange={onMemberTextHandler}
           />
-          <button id="Double_Check_Btn">중복확인</button>
+          <button id="Double_Check_Btn" onClick={idDoubleCheck}>중복확인</button>
         </li>
         <li>
           <label htmlFor="SignUp_Pw">PW</label>
@@ -120,7 +137,7 @@ const SignUp = () => {
           />
         </li>
         <li>
-          <button>확인</button>
+          <button onClick={emberSignUp}>확인</button>
         </li>
       </ul>
     </div>
