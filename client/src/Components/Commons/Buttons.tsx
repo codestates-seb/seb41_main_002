@@ -5,13 +5,14 @@ const StyledButton = styled.button<{
   fontColor: string;
   width: string;
   padding: string;
+  fontsize?: string
 }>`
   width: ${(props) => props.width};
   color: ${(props) => props.fontColor};
   background-color: ${(props) => props.bgColor};
   padding: ${(props) => props.padding};
   border-radius: 5px;
-  font-size: 17px;
+  font-size: ${(props)=> props.fontsize ? props.fontsize : "17px"};
 `;
 
 interface ButtonType {
@@ -20,10 +21,12 @@ interface ButtonType {
   content: string;
   width: string;
   padding: string;
+  fontsize?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default function CustomButton({
+  fontsize,
   fontColor,
   bgColor,
   content,
@@ -33,6 +36,7 @@ export default function CustomButton({
 }: ButtonType) {
   return (
     <StyledButton
+      fontsize={fontsize}
       bgColor={bgColor}
       fontColor={fontColor}
       width={width}

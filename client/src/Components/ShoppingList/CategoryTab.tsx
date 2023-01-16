@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import CustomButton from "../Commons/Buttons";
 import "./Style/categoryTab.css";
@@ -19,6 +20,8 @@ interface Props {
 }
 
 export const ShoppingCategoryTab: Function = (props: Props) => {
+  const [activateTag, setActivateTage] = useState(0);
+  
   const categoryTitle: Array<Category> = [
     {
       categoryKRName: "전체",
@@ -48,16 +51,20 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
 
   return (
     <>
-      {categoryTitle.map((category) => {
+      {categoryTitle.map((category, index) => {
         return (
           <li key={category.categoryENName}>
             <CustomButton
-              fontColor="white"
-              bgColor="gray"
+              fontColor={activateTag === index ? "black" : "white"}
+              fontsize={activateTag === index ? "21px" : "17px"}
+              bgColor={activateTag === index ? "var(--gray)": "var(--lightgray)"}
               width="100px"
               padding="5px"
               content={`${category.categoryKRName}`}
-              onClick={() => props.setCategoryParams(category.categoryENName)}
+              onClick={() => {
+                setActivateTage(index);
+                props.setCategoryParams(category.categoryENName);
+              }}
             />
           </li>
         );
@@ -66,19 +73,22 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
         props.userTagInfo && props.userTagInfo.length !== 0 ? (
           <li>
             <CustomButton
-              fontColor="white"
-              bgColor="gray"
+              fontColor={props.isCustom ? "black" : "white"}
+              bgColor={props.isCustom ? "var(--gray)": "var(--lightgray)"}
+              fontsize={props.isCustom ? "21px" : "17px"}
               width="100px"
               padding="5px"
               content={"커스텀"}
-              onClick={() => props.setIsCustom(!props.isCustom)}
+              onClick={() => {
+                props.setIsCustom(!props.isCustom);
+              }}
             />
           </li>
         ) : (
           <a href="/">
             <CustomButton
               fontColor="white"
-              bgColor="gray"
+              bgColor="var(--lightgray)"
               width="100px"
               padding="5px"
               content={"커스텀"}
@@ -89,7 +99,7 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
         <a href="/login">
           <CustomButton
             fontColor="white"
-            bgColor="gray"
+            bgColor="var(--lightgray)"
             width="100px"
             padding="5px"
             content={"커스텀"}
