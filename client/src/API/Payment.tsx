@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios from "axios";
 
 interface Item {
   itemId: number;
