@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { doubleCheck, signUp } from "../API/SignUp";
+import Modal from "../Components/Commons/Modal";
 import "./Style/memberAccess.css";
 
 const SignUp = () => {
@@ -23,6 +24,8 @@ const SignUp = () => {
   });
   const [passwordCheck, setPasswordCheck] = useState<string>();
   const [signUpPermission, setSignUpPermission] = useState<boolean>(false);
+  const [modalState, setModalState] = useState<boolean>(false);
+  const [문자, set문자] = useState("");
 
   const onMemberTextHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -34,33 +37,42 @@ const SignUp = () => {
   };
 
   const idDoubleCheck = () => {
-    doubleCheck(Member.accountID).then(res => {
-      if(res){
+    doubleCheck(Member.accountID).then((res) => {
+      if (res === 0) {
+        set문자("아이디를 입력하세요.");
+        setModalState(!modalState);
+      } else if (res) {
         //중복일 경우
-        console.log("중복이라는데?")
+        set문자("아이디가 중복입니다.");
+        setModalState(!modalState);
         setSignUpPermission(!res);
       } else {
         //중복이 아닐 경우
         console.log("중복이 아니라네");
         setSignUpPermission(!res);
       }
-      console.log(res);
-    })
-  }
+    });
+  };
 
   const memberSignUp = () => {
-    console.log(signUpPermission);
-    if(signUpPermission){
-      signUp(Member).then(res => {
-        console.log('회원가입 성공');
-      })
+    if (signUpPermission) {
+      signUp(Member).then((res) => {
+        console.log("회원가입 성공");
+      });
     } else {
       console.log("중복체크 제대로 하슈");
     }
-  }
+  };
 
   return (
     <div className="Member_Access_Container">
+      {modalState ? (
+        <Modal
+          modalState={modalState}
+          setModalState={setModalState}
+          element={<div className="Modal_Text">{문자}</div>}
+        />
+      ) : null}
       <ul className="Member_Access_Menu">
         <li>
           <Link to={"/signUp"}>회원가입</Link>
@@ -82,7 +94,9 @@ const SignUp = () => {
             value={Member.accountID}
             onChange={onMemberTextHandler}
           />
-          <button id="Double_Check_Btn" onClick={idDoubleCheck}>중복확인</button>
+          <button id="Double_Check_Btn" onClick={idDoubleCheck}>
+            중복확인
+          </button>
         </li>
         <li>
           <label htmlFor="SignUp_Pw">PW</label>

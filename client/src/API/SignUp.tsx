@@ -18,7 +18,7 @@ export const doubleCheck = async (accountID: string) => {
     //중복 [리턴 true], 중복 아니면 flase
     return response.data;
   } catch (error) {
-    console.error(error);
+    return 0;
   }
 };
 
