@@ -36,7 +36,10 @@ public interface MemberMapper {
 
         //ReviewResponseDto
         List<MemberResponseDto.ReviewResponseDto> reviews = member.getReviews().stream().map(review -> MemberResponseDto.ReviewResponseDto.builder()
-                .reviewId(review.getReviewId()).itemId(review.getItem().getItemId())
+                .reviewId(review.getReviewId())
+                .itemId(review.getItem().getItemId())
+                .itemImagaeURL(review.getItem().getTitleImageUrl())
+                .itemTitle(review.getReviewTitle())
                 .reviewTitle(review.getReviewTitle())
                 .createdAt(review.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")))
                 .modifiedAt(review.getModifiedAt().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")))
