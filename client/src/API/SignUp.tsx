@@ -33,9 +33,6 @@ export const signUp = async (memberData: MemberType) => {
     }
     await axios
       .post("http://localhost:8080/api/v1/signup", setMemberData)
-      .then((res) => {
-        console.log("회원가입 완료");
-      });
   } catch (error) {
     console.error(error);
   }

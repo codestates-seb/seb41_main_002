@@ -48,8 +48,15 @@ const SignUp = () => {
     })
   }
 
-  const emberSignUp = () => {
+  const memberSignUp = () => {
     console.log(signUpPermission);
+    if(signUpPermission){
+      signUp(Member).then(res => {
+        console.log('회원가입 성공');
+      })
+    } else {
+      console.log("중복체크 제대로 하슈");
+    }
   }
 
   return (
@@ -137,7 +144,7 @@ const SignUp = () => {
           />
         </li>
         <li>
-          <button onClick={emberSignUp}>확인</button>
+          <button onClick={memberSignUp}>확인</button>
         </li>
       </ul>
     </div>
