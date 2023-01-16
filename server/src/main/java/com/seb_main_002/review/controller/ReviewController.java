@@ -2,6 +2,7 @@ package com.seb_main_002.review.controller;
 
 import com.seb_main_002.review.dto.ReviewPatchDto;
 import com.seb_main_002.review.dto.ReviewPostDto;
+import com.seb_main_002.review.dto.ReviewResponseDto;
 import com.seb_main_002.review.entity.Review;
 import com.seb_main_002.review.mapper.ReviewMapper;
 import com.seb_main_002.review.service.ReviewService;
@@ -43,6 +44,14 @@ public class ReviewController {
         Review review = reviewService.findReview(reviewId);
 
         return new ResponseEntity<> (mapper.reviewToReviewResponseDto(review), HttpStatus.OK);
+    }
+
+    @GetMapping("-item/{itemId}")
+    public ResponseEntity getReviewItem(@PathVariable Long itemId) {
+        // memberId는 stub으로 고정, 추후 tokent에서 memberId를 꺼낼 수 있게 되면 해당 기능 구현 예정
+        ReviewResponseDto.ReviewItemDto reviewItem = reviewService.findReviewItem(itemId, (long) 1);
+
+        return new ResponseEntity<> (reviewItem, HttpStatus.OK);
     }
 
     @DeleteMapping("/{reviewId}")
