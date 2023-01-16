@@ -74,14 +74,12 @@ public class ItemService {
 
     public List<Item> findFilteredItems(String categoryENName, Boolean custom, String title, int page){
 
-
         Page<Item> findItems;
         if(custom == false){
-            findItems = itemRepository.findAllByCategoryENNameContainingAndItemTitleContaining(categoryENName,title, PageRequest.of(page,18));
+            findItems = itemRepository.findAllByCategoryENNameStartingWithAndItemTitleContaining(categoryENName,title, PageRequest.of(page,18));
         }
         else{
             List<String> membertags = memberRepository.findById(1L).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)).getTagList();
-            //List<String> membertags = List.of("건성","일반피부");
             String tag1="", tag2="";
             if     (membertags.contains("건성")){ tag1 = "건성";}
             else if(membertags.contains("지성")){ tag1 = "지성";}
@@ -90,11 +88,9 @@ public class ItemService {
             if     (membertags.contains("일반피부")){ tag2 = "일반피부";}
             else if(membertags.contains("여드름성 피부")){ tag2 = "여드름성 피부";}
 
-            //tag stub 넣어서확인
-            tag1 = "건성";
-            tag2 = "일반피부";
-            findItems = itemRepository.findByCustomItem(tag1, tag2, categoryENName,title,PageRequest.of(page,18));
+                findItems = itemRepository.findCustomItem(tag1, tag2, title,categoryENName, PageRequest.of(page,18));
         }
+
         return findItems.getContent();
     }
     public Item findVerifiedItem(Long itemId){

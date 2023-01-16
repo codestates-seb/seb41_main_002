@@ -1,14 +1,13 @@
 package com.seb_main_002.address.controller;
 
+import com.seb_main_002.address.dto.AddressPatchDto;
 import com.seb_main_002.address.dto.AddressPostDto;
+import com.seb_main_002.address.entity.Address;
 import com.seb_main_002.address.mapper.AddressMapper;
 import com.seb_main_002.address.service.AddressService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/addresses")
@@ -26,4 +25,22 @@ public class AddressController {
         addressService.createAddress(mapper.addressPostDtoToAddress(addressPostDto));
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PatchMapping("/{addressId}")
+    public ResponseEntity patchAddress(@PathVariable("addressId") Long addressId,
+                                       @RequestBody AddressPatchDto addressPatchDto) {
+        Address address = mapper.addressPatchDtoToAddress(addressPatchDto);
+        address.setAddressId(addressId);
+        addressService.updateAddress(address);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{addressId}")
+    public ResponseEntity deleteAddress(@PathVariable("addressId") Long addressId) {
+        addressService.deleteAddress(addressId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

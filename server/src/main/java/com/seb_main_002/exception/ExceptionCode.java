@@ -15,7 +15,11 @@ public enum ExceptionCode {
     EMAIL_EXISTS(409, "Email exists"),
     BANNER_IMAGE_NOT_FOUND(404, "BannerImage not found"),
     ACCOUNTID_EXISTS(409,"AccountId exists"),
-    ADDRESS_EXISTS(409,"Address exists");
+    ADDRESS_EXISTS(409,"Address exists"),
+    ADDRESS_NOT_FOUND(404,"Address not found"),
+    REVIEW_NOT_FOUND(404,"Review not found"),
+    CANNOT_MODIFY_REVIEW(403,"No permission to modify Review");
+
 
     @Getter
     private int status;

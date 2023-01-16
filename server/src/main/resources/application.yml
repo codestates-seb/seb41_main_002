@@ -20,6 +20,7 @@ spring:
         format_sql: true  # (3) SQL pretty print
   sql:
     init:
+      data-locations: classpath*:db/h2/import.sql
   servlet:
     multipart:
       max-file-size: 100MB
@@ -39,8 +40,8 @@ server:
 cloud:
   aws:
     credentials:
-      accessKey : 12341234 #${{ secrets.AWS_ACCESS_KEY }} #AWS IAM AccessKey in github secret #${AWS_ACCESS_KEY_ID}
-      secretKey : 12341234 #${{ secrets.AWS_SECRET_ACCESS_KEY }} #AWS IAM SecretKey in github secret #${AWS_SECRET_ACCESS_KEY}
+      accessKey : 123412341234 #${{ secrets.AWS_ACCESS_KEY }} #AWS IAM AccessKey in github secret #${AWS_ACCESS_KEY_ID}
+      secretKey : 123412341234 #${{ secrets.AWS_SECRET_ACCESS_KEY }} #AWS IAM SecretKey in github secret #${AWS_SECRET_ACCESS_KEY}
     s3:
       bucket: "jbawsbucket1"
       dir : "/itemImg"
