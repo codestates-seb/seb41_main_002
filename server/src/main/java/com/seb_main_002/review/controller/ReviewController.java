@@ -46,7 +46,7 @@ public class ReviewController {
         return new ResponseEntity<> (mapper.reviewToReviewResponseDto(review), HttpStatus.OK);
     }
 
-    @GetMapping("-item/{itemId}")
+    @GetMapping("/item/{itemId}")
     public ResponseEntity getReviewItem(@PathVariable Long itemId) {
         // memberId는 stub으로 고정, 추후 tokent에서 memberId를 꺼낼 수 있게 되면 해당 기능 구현 예정
         ReviewResponseDto.ReviewItemDto reviewItem = reviewService.findReviewItem(itemId, (long) 1);
