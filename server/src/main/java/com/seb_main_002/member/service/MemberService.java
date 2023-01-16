@@ -101,7 +101,11 @@ public class MemberService {
         //role 생성 후 저장
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
-
+        // 구독 생성 후 저장
+        Subscribe subscribe = new Subscribe();
+        subscribe.setIsSubscribed(false);
+        subscribe.setSampleCount(0);
+        member.setSubscribe(subscribe);
         memberRepository.save(member);
         return member;
     }

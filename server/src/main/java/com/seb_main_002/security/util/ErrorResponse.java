@@ -1,4 +1,4 @@
-package com.seb_main_002.security.handler;
+package com.seb_main_002.security.util;
 
 import com.seb_main_002.exception.ExceptionCode;
 import lombok.Getter;

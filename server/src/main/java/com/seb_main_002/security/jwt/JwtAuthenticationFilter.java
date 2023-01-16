@@ -5,6 +5,7 @@ import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.security.dto.LoginDto;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,6 +13,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -53,7 +55,22 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String refreshToken = delegateRefreshToken(member);
 
         response.setHeader("Authorization", "Bearer " + accessToken);
-        response.setHeader("Refresh", refreshToken);
+        response.setHeader("Refresh",refreshToken);
+
+//        Cookie cookie = new Cookie("Authorization", accessToken);
+//        Cookie cookie_2 = new Cookie("Refresh", refreshToken);
+//
+//        cookie.setPath("/");
+//        cookie.setMaxAge(1000 * 60 * 60*6);
+//        cookie.setHttpOnly(true);
+//        response.addCookie(cookie);
+//
+//        cookie_2.setPath("/");
+//        cookie_2.setMaxAge(1000 * 60 * 60*24);
+//        cookie_2.setHttpOnly(true);
+//
+//        response.addCookie(cookie_2);
+//        response.setStatus(200);
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
@@ -62,7 +79,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Map<String, Object> claims = new HashMap<>();
         claims.put("memberId", member.getMemberId());
         claims.put("accountId", member.getAccountId());
-
+        claims.put("roles",member.getRoles());
         String subject = member.getAccountId();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
 

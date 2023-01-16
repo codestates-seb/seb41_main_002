@@ -6,6 +6,8 @@ import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.member.mapper.MemberMapper;
 import com.seb_main_002.member.repository.MemberRepository;
 import com.seb_main_002.member.service.MemberService;
+import com.seb_main_002.security.jwt.JwtAuthenticationFilter;
+import com.seb_main_002.security.jwt.JwtVerificationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,9 @@ public class MemberController {
     private final MemberRepository memberRepository;
     private final MemberService memberService;
     private final MemberMapper mapper;
+    private JwtVerificationFilter jwtVerificationFilter;
+
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @PatchMapping("/members/{memberId}/subscribe")
     public ResponseEntity subscribe(@PathVariable("memberId") Long memberId,

@@ -1,6 +1,7 @@
 package com.seb_main_002.security.handler;
 
 import com.google.gson.Gson;
+import com.seb_main_002.security.util.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
