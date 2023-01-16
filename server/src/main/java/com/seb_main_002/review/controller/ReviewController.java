@@ -1,6 +1,7 @@
 package com.seb_main_002.review.controller;
 
 import com.seb_main_002.review.dto.ReviewPatchDto;
+import com.seb_main_002.review.dto.ReviewPostDto;
 import com.seb_main_002.review.entity.Review;
 import com.seb_main_002.review.mapper.ReviewMapper;
 import com.seb_main_002.review.service.ReviewService;
@@ -17,6 +18,13 @@ public class ReviewController {
     public ReviewController(ReviewMapper mapper, ReviewService reviewService) {
         this.mapper = mapper;
         this.reviewService = reviewService;
+    }
+
+    @PostMapping
+    public ResponseEntity postReview(@RequestBody ReviewPostDto reviewPostDto) {
+        reviewService.createReview(mapper.reviewPostDtoToReview(reviewPostDto));
+
+        return new ResponseEntity<> (HttpStatus.OK);
     }
 
     @PatchMapping("/{reviewId}")
