@@ -1,10 +1,11 @@
 import dummyData from "./../data/MemberPageData.json";
 import CustomButton from "../Components/Commons/Buttons";
 import TypeBadge from "../Components/Commons/TypeBadge";
-import OrderHistoryItem from "../Components/OrderHistoryItem";
 import styled from "styled-components";
+import { OrderHistoryTab, MyReviewsTab } from "../Components/MyPageTabs";
 import { Link } from "react-router-dom";
 import "./Style/memberPage.css";
+import { useState } from "react";
 
 const MemberTextBox = styled.li`
   display: flex;
@@ -20,6 +21,8 @@ const InfoText = styled.div<{ width: string }>`
 `;
 
 const MemberPage = () => {
+  const [currentTab, setCurrentTab] = useState(1);
+
   return (
     <div className="Profile_Container">
       <h1>내 정보</h1>
@@ -77,63 +80,79 @@ const MemberPage = () => {
         </MemberTextBox>
       </ul>
       <h2>내 태그 정보</h2>
-      <ul className="Profile_Tags">
-        <MemberTextBox>
-          <InfoText width="33%">내 피부 타입</InfoText>
-          <InfoText width="67%" className="Profile_Type_Badges">
-            <TypeBadge
-              bgColor="beige"
-              content={dummyData.tagList[0]}
+      {dummyData.tagList.length !== 0 ? (
+        <ul className="Profile_Tags">
+          <MemberTextBox>
+            <InfoText width="33%">내 피부 타입</InfoText>
+            <InfoText width="67%" className="Profile_Type_Badges">
+              <TypeBadge
+                bgColor="beige"
+                content={dummyData.tagList[0]}
+                padding="10px"
+                fontSize="15px"
+              />
+            </InfoText>
+          </MemberTextBox>
+          <MemberTextBox>
+            <InfoText width="33%">여드름성 피부 여부</InfoText>
+            <InfoText width="67%" className="Profile_Type_Badges">
+              <TypeBadge
+                bgColor="beige"
+                content={dummyData.tagList[1]}
+                padding="10px"
+                fontSize="15px"
+              />
+            </InfoText>
+          </MemberTextBox>
+          <MemberTextBox>
+            <InfoText width="33%">원하는 기능</InfoText>
+            <InfoText width="67%" className="Profile_Type_Badges">
+              {dummyData.tagList.slice(2, dummyData.tagList.length).length !==
+              0 ? (
+                dummyData.tagList
+                  .slice(2, dummyData.tagList.length)
+                  .map((tag, idx) => {
+                    return (
+                      <TypeBadge
+                        bgColor="beige"
+                        content={tag}
+                        padding="10px"
+                        fontSize="15px"
+                        key={`item${idx + 2}`}
+                      />
+                    );
+                  })
+              ) : (
+                <span className="No_Tags">추가 태그 없음</span>
+              )}
+            </InfoText>
+          </MemberTextBox>
+        </ul>
+      ) : (
+        <div className="Member_Not_Subscribed">
+          <span>피부 타입 검사를 하지 않았습니다.</span>
+          <Link to={`/members/:memberId/subscribe`}>
+            <CustomButton
+              bgColor="white"
+              content="검사 받으러 가기"
+              fontColor="black"
               padding="10px"
-              fontSize="15px"
+              width="150px"
             />
-          </InfoText>
-        </MemberTextBox>
-        <MemberTextBox>
-          <InfoText width="33%">여드름성 피부 여부</InfoText>
-          <InfoText width="67%" className="Profile_Type_Badges">
-            <TypeBadge
-              bgColor="beige"
-              content={dummyData.tagList[1]}
-              padding="10px"
-              fontSize="15px"
-            />
-          </InfoText>
-        </MemberTextBox>
-        <MemberTextBox>
-          <InfoText width="33%">원하는 기능</InfoText>
-          <InfoText width="67%" className="Profile_Type_Badges">
-            {dummyData.tagList.slice(2, dummyData.tagList.length).length !==
-            0 ? (
-              dummyData.tagList
-                .slice(2, dummyData.tagList.length)
-                .map((tag, idx) => {
-                  return (
-                    <TypeBadge
-                      bgColor="beige"
-                      content={tag}
-                      padding="10px"
-                      fontSize="15px"
-                      key={`item${idx + 2}`}
-                    />
-                  );
-                })
-            ) : (
-              <span className="No_Tags">태그 없음</span>
-            )}
-          </InfoText>
-        </MemberTextBox>
-      </ul>
+          </Link>
+        </div>
+      )}
       <div className="Profile_Reviews">
         <ul>
-          <li>주문 내역</li>
-          <li>내 리뷰</li>
+          <li className="Profile_Tabs" onClick={() => setCurrentTab(1)}>
+            주문 내역
+          </li>
+          <li className="Profile_Tabs" onClick={() => setCurrentTab(2)}>
+            내 리뷰
+          </li>
         </ul>
-        <div className="Reviews_Contents">
-          {dummyData.ordersHistory.map((order, idx) => {
-            return <OrderHistoryItem order={order} key={`order${idx}`} />;
-          })}
-        </div>
+        {currentTab === 1 ? <OrderHistoryTab /> : null}
+        {currentTab === 2 ? <MyReviewsTab /> : null}
       </div>
     </div>
   );

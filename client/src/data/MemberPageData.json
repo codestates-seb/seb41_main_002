@@ -52,7 +52,9 @@
     {
       "reviewId": 1,
       "itemId": 1,
-      "reviewTitle": "제목",
+      "itemImageURL": "https://picsum.photos/75?random=2",
+      "itemTitle": "어머 너무 촉촉해 엠플",
+      "reviewTitle": "너무 촉촉해요",
       "createdAt": "2022/01/05/14:25",
       "modifiedAt": "2022/01/05/14:26",
       "reviewRating": 3.5
