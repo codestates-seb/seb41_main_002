@@ -2,10 +2,12 @@ package com.seb_main_002.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seb_main_002.member.entity.Member;
+import com.seb_main_002.security.CustomUserDetailsService;
 import com.seb_main_002.security.dto.LoginDto;
+import com.seb_main_002.security.redis.JwtRefreshToken;
+import com.seb_main_002.security.redis.JwtRefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,7 +15,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -26,7 +27,7 @@ import java.util.Map;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
-
+    private final JwtRefreshTokenRepository refreshTokenRepository;
 
     // (3) 인증 시도 로직 username,password -> LoginDto -> authenticationToken -> authenticationManager에게 인증 위임
     @SneakyThrows
@@ -75,7 +76,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
 
-    private String delegateAccessToken(Member member) {
+    public String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("memberId", member.getMemberId());
         claims.put("accountId", member.getAccountId());
@@ -96,8 +97,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
-        String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
-
+        String refreshToken = jwtTokenizer.generateRefreshToken(subject,expiration, base64EncodedSecretKey);
+        JwtRefreshToken jwtRefreshToken = new JwtRefreshToken(refreshToken, subject);
+        //refreshTokenRepository.save(jwtRefreshToken); 로그아웃 및 재발급 위해 필요한 코드 서버배포 테스트를 위해 일단 주석처리
         return refreshToken;
     }
+
 }

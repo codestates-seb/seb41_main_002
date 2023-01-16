@@ -1,4 +1,10 @@
 spring:
+  redis:
+    host: localhost
+    port: 6379
+    password: 'sebbe41main02fightingsebbe41main02fightingsebbe41main02fighting'
+
+
   h2:
     console:
       enabled: true

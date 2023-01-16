@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -18,8 +19,10 @@ import java.io.IOException;
 import java.security.SignatureException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 // JWT 검증을 위한 필터
+@Component
 @RequiredArgsConstructor
 public class JwtVerificationFilter extends OncePerRequestFilter {
     private final JwtTokenizer jwtTokenizer;
@@ -28,16 +31,18 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     // 예외 처리 로직 -> 예외 발생시 SecurityContext에 Authentication 저장X
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        try {
-            Map<String, Object> claims = verifyJws(request);
-            setAuthenticationToContext(claims);
-        } catch (ExpiredJwtException ee) {
-            request.setAttribute("exception", ee);
-        } catch (Exception e) {
-            request.setAttribute("exception", e);
+        String authorization = request.getHeader("Authorization");
+        if (!Objects.isNull(authorization)) {
+            try {
+                Map<String, Object> claims = verifyJws(request);
+                setAuthenticationToContext(claims);
+            } catch (ExpiredJwtException ee) {
+                request.setAttribute("exception", ee);
+            } catch (Exception e) {
+                request.setAttribute("exception", e);
+            }
+            filterChain.doFilter(request, response);
         }
-
-        filterChain.doFilter(request, response);
     }
 
 
@@ -45,7 +50,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String authorization = request.getHeader("Authorization");
-
+        String[] urls = new String[] {"/api/v1/user/refresh-token", "/api/v1/user/login", "/h2.*"};
         return authorization == null || !authorization.startsWith("Bearer");
     }
 

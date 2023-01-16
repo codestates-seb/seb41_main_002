@@ -1,5 +1,7 @@
 package com.seb_main_002.security.jwt;
 
+import com.seb_main_002.member.repository.MemberRepository;
+import com.seb_main_002.security.redis.JwtRefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -7,6 +9,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +20,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Component
+@RequiredArgsConstructor
 public class JwtTokenizer {
     @Getter
     @Value("${jwt.key}")

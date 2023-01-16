@@ -7,6 +7,7 @@ import com.seb_main_002.security.handler.MemberAuthenticationSuccessHandler;
 import com.seb_main_002.security.jwt.JwtAuthenticationFilter;
 import com.seb_main_002.security.jwt.JwtTokenizer;
 import com.seb_main_002.security.jwt.JwtVerificationFilter;
+import com.seb_main_002.security.redis.JwtRefreshTokenRepository;
 import com.seb_main_002.security.util.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +16,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -28,10 +33,13 @@ import java.util.Arrays;
 
 @Configuration
 @RequiredArgsConstructor
+@EnableWebSecurity(debug = true)
 public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
+
+    private final JwtRefreshTokenRepository jwtRefreshTokenRepository;
 
     // HTTP 요청에 대한 보안 설정 구성
     @Bean
@@ -54,12 +62,14 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         //.antMatchers(HttpMethod.PATCH,"/api/v1/home").hasRole("ADMIN")
                         //.antMatchers(HttpMethod.DELETE,"/api/v1/home").hasRole("ADMIN")
-                        .antMatchers("/api/v1/signup", "/api/v1/login", "/api/v1/home").permitAll() //회원가입, 로그인, 홈 누구나 가능
+                        .antMatchers("/api/v1/signup", "/api/v1/login", "/api/v1/home", "/api/v1/idcheck/**").permitAll() //회원가입, 로그인, 홈 누구나 가능
                         .antMatchers("/api/v1/orders/**").hasRole("USER") // 주문은 유저만 가능
                         .antMatchers("/api/v1/members/**").hasAnyRole("ADMIN","USER") // 멤버정보는 유저, 어드민 가능
                         .antMatchers(HttpMethod.GET, "/api/v1/reviews/**").permitAll() // 리뷰 읽기 누구나 가능
                         .antMatchers(HttpMethod.GET, "/api/v1/items/**").permitAll() // 아이템 정보 읽기 누구나 가능
+                        //.antMatchers(HttpMethod.POST, "/api/v1/user/refresh-token").permitAll() // 리프레시 토큰을 이용한 엑세스토큰 재발급
                         .antMatchers("/h2/**").permitAll()
+                        .antMatchers("/api/v1/user/**").hasRole("USER")
                         .anyRequest().hasAnyRole("ADMIN", "USER")); // 그 외 기능들 ADMIN, USER만 가능
         //.anyRequest().hasAnyRole("USER","ADMIN"));
 
@@ -76,7 +86,6 @@ public class SecurityConfiguration {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -87,7 +96,7 @@ public class SecurityConfiguration {
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer, jwtRefreshTokenRepository);
             jwtAuthenticationFilter.setFilterProcessesUrl("/api/v1/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
@@ -98,6 +107,5 @@ public class SecurityConfiguration {
                     .addFilter(jwtAuthenticationFilter)
                     .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
-
     }
 }
