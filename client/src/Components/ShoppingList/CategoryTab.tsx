@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import CustomButton from "../Commons/Buttons";
 import "./Style/categoryTab.css";
 
@@ -21,7 +20,7 @@ interface Props {
 
 export const ShoppingCategoryTab: Function = (props: Props) => {
   const [activateTag, setActivateTage] = useState(0);
-  
+
   const categoryTitle: Array<Category> = [
     {
       categoryKRName: "전체",
