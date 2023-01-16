@@ -37,7 +37,7 @@ public class AddressController {
     }
 
     @DeleteMapping("/{addressId}")
-    public ResponseEntity patchAddress(@PathVariable("addressId") Long addressId) {
+    public ResponseEntity deleteAddress(@PathVariable("addressId") Long addressId) {
         addressService.deleteAddress(addressId);
 
         return new ResponseEntity<>(HttpStatus.OK);
