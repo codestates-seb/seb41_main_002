@@ -2,6 +2,7 @@ package com.seb_main_002.review.mapper;
 
 import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.review.dto.ReviewPatchDto;
+import com.seb_main_002.review.dto.ReviewResponseDto;
 import com.seb_main_002.review.entity.Review;
 import org.mapstruct.Mapper;
 
@@ -17,5 +18,12 @@ public interface ReviewMapper {
         review.setReviewContent(reviewPatchDto.getReviewContent());
 
         return review;
+    }
+
+    default ReviewResponseDto.ReviewDto reviewToReviewResponseDto(Review review) {
+        return ReviewResponseDto.ReviewDto.builder()
+                .reviewTitle(review.getReviewTitle())
+                .reviewContent(review.getReviewContent())
+                .build();
     }
 }
