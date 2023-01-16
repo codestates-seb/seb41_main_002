@@ -4,6 +4,7 @@ import com.seb_main_002.item.dto.*;
 import com.seb_main_002.item.entity.Item;
 import com.seb_main_002.item.mapper.ItemMapper;
 import com.seb_main_002.item.service.ItemService;
+import com.seb_main_002.member.service.MemberService;
 import com.seb_main_002.review.entity.Review;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,10 +23,12 @@ import java.util.stream.Collectors;
 public class ItemController {
 
     private final ItemService itemService;
+    private final MemberService memberService;
     private final ItemMapper mapper;
 
-    public ItemController(ItemService itemService, ItemMapper mapper) {
+    public ItemController(ItemService itemService, MemberService memberService, ItemMapper mapper) {
         this.itemService = itemService;
+        this.memberService = memberService;
         this.mapper = mapper;
     }
 
@@ -122,6 +126,25 @@ public class ItemController {
         if(title == null) title = "";
         page -= 1;
 
+//--------------------membertaglist 를 위해 추가된 로직
+        //Boolean isLogin = Boolean memberSerivce.isLogin();
+        boolean isLogin = true;
+        ItemSearchResponseDto.MemberTagInfo memberTaginfo;
+        //로그인 되있을때 멤버태그리스트 로직
+        if(isLogin){
+            //List<String> memberTagsList = memberService.getLoginUserWithToken().getTagList();
+            List<String> memberTagsList = new ArrayList<>();
+            memberTaginfo = ItemSearchResponseDto.MemberTagInfo.builder()
+                    .memberTagsList(memberTagsList)
+                    .build();
+        }
+        //로그인 안되있을때 멤버태그리스트 로직.
+        else{
+            memberTaginfo = ItemSearchResponseDto.MemberTagInfo.builder()
+                    .build();
+        }
+//--------------------membertaglist 를 위해 추가된 로직
+
         List<Item> items = itemService.findFilteredItems(categoryENName, custom, title, page);
 
         List<ItemSearchResponseDto.SearchItemDto> searchItemDtos = items.stream()
@@ -138,7 +161,9 @@ public class ItemController {
 
         ItemSearchResponseDto response = ItemSearchResponseDto.builder()
                 .cosmetics(searchItemDtos)
+                .member(memberTaginfo)
                 .build();
+
 
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
