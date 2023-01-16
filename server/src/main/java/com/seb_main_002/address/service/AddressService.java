@@ -48,6 +48,7 @@ public class AddressService {
     }
 
     public void deleteAddress(Long addressId) {
+        verifyExistAddress(addressId);
         addressRepository.deleteById(addressId);
     }
 
