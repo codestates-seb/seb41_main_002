@@ -4,7 +4,6 @@ const DetailContainer = styled.ul`
   padding-top: 20px;
   li {
     width: 500px;
-    display: flex;
     line-height: 30px;
     font-size: 15px;
     margin-bottom: 10px;

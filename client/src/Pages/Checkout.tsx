@@ -14,7 +14,7 @@ const MemberSubscribe = styled.span<{ subscribeCheck: boolean }>`
 `;
 
 export default function Checkout() {
-  interface ItemInterface {
+  interface ItemType {
     name: string;
     price: number;
     count: number;
@@ -157,7 +157,7 @@ export default function Checkout() {
           </MemberSubscribe>
         </div>
         <div className="Item_List">
-          {itemsFilter.map((item: ItemInterface, idx: number) => {
+          {itemsFilter.map((item: ItemType, idx: number) => {
             return (
               <OrderedListItem
                 item={item}
@@ -209,7 +209,7 @@ export default function Checkout() {
               <label htmlFor="newAddress">신규배송지</label>
             </div>
             <div className="Shipping_Address_Container">
-              최근 :
+              배송지 :
               {memberInfo &&
                 memberInfo["addressList"].map(
                   (address: AddressType, index: number) => {

@@ -99,7 +99,7 @@ const NewAddress = () => {
         <Input
           type="text"
           className="textBox"
-          width={"75%"}
+          width={"375px"}
           value={address}
           onChange={onChangeAddress}
           onClick={() => {

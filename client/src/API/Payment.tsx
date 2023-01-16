@@ -40,15 +40,15 @@ interface OrderSheetType {
 
 export const memberData = async (memberId: number) => {
   try {
-    let MemberData = {};
+    let getMemberData = {};
 
     await axios
       .get(`http://localhost:8080/api/v1/members/${memberId}/payment`)
       .then((res) => {
-        MemberData = { ...res.data };
+        getMemberData = { ...res.data };
       });
 
-    return MemberData;
+    return getMemberData;
   } catch (error) {
     console.error(error);
   }
