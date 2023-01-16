@@ -1,21 +1,24 @@
-import axios from "axios"
-import productData from "../../data/shoppingList.json"
+import axios from "axios";
+import productData from "../../data/shoppingList.json";
 
 interface ParamsType {
-  categoryENName: string
-  custom?: boolean
-  keyword?: string
-  page?: number
+  categoryENName: string;
+  custom?: boolean;
+  keyword?: string;
+  page?: number;
 }
 
 export interface ProductData {
-  itemId: number
-  itemTitle: string
-  categoryKRName: string
-  categoryENName: string
-  titleImageURL: string
-  price: number
-  tagsList: string[]
+  member: {
+    memberTagsList: string[];
+  };
+  itemId: number;
+  itemTitle: string;
+  categoryKRName: string;
+  categoryENName: string;
+  titleImageURL: string;
+  price: number;
+  tagsList: string[];
 }
 
 export const getProductList = (
@@ -29,6 +32,9 @@ export const getProductList = (
 
       for (let i = 0; i < 16; i++) {
         result.push({
+          member: {
+            memberTagsList: ["tagElement", "tagElement2"],
+          },
           itemId: 2,
           itemTitle: "제품명2",
           categoryKRName: "크림",

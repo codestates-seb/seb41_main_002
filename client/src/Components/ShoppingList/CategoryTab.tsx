@@ -11,6 +11,11 @@ interface Props {
   setCategoryParams(category: string): React.SetStateAction<string>;
   setIsCustom(custom: boolean): React.SetStateAction<boolean>;
   isCustom: boolean;
+  session: {
+    memberId: number;
+    accountId: string;
+  };
+  userTagInfo: string[];
 }
 
 export const ShoppingCategoryTab: Function = (props: Props) => {
@@ -57,16 +62,40 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
           </li>
         );
       })}
-      <li>
-        <CustomButton
-          fontColor="white"
-          bgColor="gray"
-          width="100px"
-          padding="5px"
-          content={"커스텀"}
-          onClick={() => props.setIsCustom(!props.isCustom)}
-        />
-      </li>
+      {props.session && props.session ? (
+        props.userTagInfo && props.userTagInfo.length !== 0 ? (
+          <li>
+            <CustomButton
+              fontColor="white"
+              bgColor="gray"
+              width="100px"
+              padding="5px"
+              content={"커스텀"}
+              onClick={() => props.setIsCustom(!props.isCustom)}
+            />
+          </li>
+        ) : (
+          <a href="/">
+            <CustomButton
+              fontColor="white"
+              bgColor="gray"
+              width="100px"
+              padding="5px"
+              content={"커스텀"}
+            />
+          </a>
+        )
+      ) : (
+        <a href="/login">
+          <CustomButton
+            fontColor="white"
+            bgColor="gray"
+            width="100px"
+            padding="5px"
+            content={"커스텀"}
+          />
+        </a>
+      )}
     </>
   );
 };

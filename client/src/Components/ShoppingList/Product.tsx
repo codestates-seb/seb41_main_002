@@ -30,7 +30,7 @@ export default function Product(props: Props) {
   //     }
   //   }
   // }, []);
-  
+
   const [isLoading, setIsLoading] = useState(true);
 
   const [_, setRef] = useIntersect((entry: any, observer: any) => {
@@ -45,23 +45,27 @@ export default function Product(props: Props) {
         if (index === props.products.length - 1) {
           return (
             <li key={index}>
-              <div className="Product_Info">
-                {/* ref={setLastItemRef} */}
-                <ProductImage src="" />
-                <h3> {item.itemTitle} </h3>
-                <p>가격: {item.price}</p>
-              </div>
-              {isLoading && <p ref={setRef}>Loading...</p>}
+              <a href={`/itemDetail/${item.itemId}`}>
+                <div className="Product_Info">
+                  {/* ref={setLastItemRef} */}
+                  <ProductImage src="" />
+                  <h3> {item.itemTitle} </h3>
+                  <p>가격: {item.price}</p>
+                </div>
+                {isLoading && <p ref={setRef}>Loading...</p>}
+              </a>
             </li>
           );
         } else {
           return (
             <li key={index}>
-              <div key={index} className="Product_Info">
-                <ProductImage src="" />
-                <h3> {item.itemTitle} </h3>
-                <p>가격: {item.price}</p>
-              </div>
+              <a href={`/itemDetail/${item.itemId}`}>
+                <div key={index} className="Product_Info">
+                  <ProductImage src="" />
+                  <h3> {item.itemTitle} </h3>
+                  <p>가격: {item.price}</p>
+                </div>
+              </a>
             </li>
           );
         }

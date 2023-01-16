@@ -1,4 +1,7 @@
 {
+  "member": {
+    "memberTagsList" : ["tagElement", "tagElement2"]
+  },
   "cosmetics": [
     {
       "itemId": 1,

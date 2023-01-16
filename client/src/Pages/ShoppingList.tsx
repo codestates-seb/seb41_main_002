@@ -33,17 +33,21 @@ export default function ShoppingList() {
   };
 
   const serchSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if(e.key === 'Enter'){
-      productList()
+    if (e.key === "Enter") {
+      productList();
     }
-  }
-
-  console.log(serchWord)
-  
+  };
 
   useEffect(() => {
     productList();
   }, [page, categoryParam, isCustom]);
+
+  const session = {
+    memberId: 1,
+    accountId: "abc",
+  };
+  // 추후 확인필요
+  const userTagInfo = productData[0] && productData[0].member.memberTagsList;
 
   return (
     <div className="Shopping_List_Container">
@@ -56,7 +60,7 @@ export default function ShoppingList() {
           onChange={(e) => setSerchWord(e.target.value)}
           onKeyUp={(e) => {
             if (serchWord.length !== 0) {
-              serchSubmit(e)
+              serchSubmit(e);
             } else {
               alert("검색어를 입력해주세요!");
             }
@@ -69,6 +73,8 @@ export default function ShoppingList() {
             setCategoryParams={setCategoryParams}
             setIsCustom={setIsCustom}
             isCustom={isCustom}
+            session={session}
+            userTagInfo={userTagInfo}
           />
         </ul>
       </div>
