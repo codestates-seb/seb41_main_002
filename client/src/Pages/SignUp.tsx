@@ -1,12 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Style/memberAccess.css";
 
 const SignUp = () => {
   return (
     <div className="Member_Access_Container">
       <ul className="Member_Access_Menu">
-        <li>회원가입</li>
-        <li>로그인</li>
+        <li>
+          <Link to={"/signUp"}>회원가입</Link>
+        </li>
+        <li>
+          <Link to={"/login"}>로그인</Link>
+        </li>
         <li>아이디 찾기</li>
         <li>비밀번호 찾기</li>
       </ul>
@@ -15,7 +20,7 @@ const SignUp = () => {
         <li>
           <label htmlFor="SignUp_Id">ID</label>
           <input id="SignUp_Id" type="text" />
-          <button>중복확인</button>
+          <button id="Double_Check_Btn">중복확인</button>
         </li>
         <li>
           <label htmlFor="SignUp_Pw">PW</label>
