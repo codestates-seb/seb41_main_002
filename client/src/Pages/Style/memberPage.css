@@ -94,9 +94,24 @@
   border-bottom: solid 1px rgba(255, 255, 255, 0.4);
 }
 
+.History_Product_Info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Review_Item_Title {
+  margin-top: 10px;
+}
+
+.History_Product_Info img {
+  margin-top: 10px;
+}
+
 .History_Detail_Indicator {
   font-size: 17px;
   color: wheat;
+  margin-bottom: 10px;
 }
 
 .History_Rating_Wrapper {

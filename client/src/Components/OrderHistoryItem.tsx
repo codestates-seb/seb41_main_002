@@ -27,15 +27,15 @@ const OrderHistoryItem = ({ order }: { order: OrderType }) => {
   return (
     <div>
       <div className="Profile_History_Item">
-        <div>
+        <div className="History_Product_Info">
           <span className="History_Detail_Indicator">주문 일자</span>
           <div>{order.orderCreatedAt}</div>
         </div>
-        <div>
+        <div className="History_Product_Info">
           <span className="History_Detail_Indicator">주문 금액</span>
           <div>{order.totalPrice} 원</div>
         </div>
-        <div>
+        <div className="History_Product_Info">
           <span className="History_Detail_Indicator">배송 현황</span>
           <div>{order.orderStatus}</div>
         </div>
@@ -60,17 +60,17 @@ const OrderHistoryItem = ({ order }: { order: OrderType }) => {
                 <div>
                   <img src={item.itemImageURL} alt="item image" />
                 </div>
-                <div>
+                <div className="History_Product_Info">
                   <span className="History_Detail_Indicator">상품명</span>
                   <Link to={`/itemDetail/${item.itemId}`}>
                     <div>{item.itemTitle} </div>
                   </Link>
                 </div>
-                <div>
+                <div className="History_Product_Info">
                   <span className="History_Detail_Indicator">상품 개수</span>
                   <div>{item.count}</div>
                 </div>
-                <div>
+                <div className="History_Product_Info">
                   <span className="History_Detail_Indicator">가격</span>
                   <div>{item.itemTotalPrice}</div>
                 </div>
