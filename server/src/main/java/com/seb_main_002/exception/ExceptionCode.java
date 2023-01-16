@@ -16,6 +16,10 @@ public enum ExceptionCode {
     BANNER_IMAGE_NOT_FOUND(404, "BannerImage not found"),
     ACCOUNTID_EXISTS(409,"AccountId exists"),
     ADDRESS_EXISTS(409,"Address exists");
+    ACCOUNTID_EXISTS(409,"AccountId exists"),
+    ADDRESS_EXISTS(409,"Address exists"),
+    ADDRESS_NOT_FOUND(404,"Address not found");
+
 
     @Getter
     private int status;
