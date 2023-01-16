@@ -9,12 +9,14 @@ import ShoppingList from "./Pages/ShoppingList";
 import ItemsTopList from "./Pages/ItemsTopList";
 import ShoppingCart from "./Pages/ShoppingCart";
 import MemberPageEdit from "./Pages/MemberPageEdit";
+import CompletePayment from "./Pages/CompletePayment";
 import SubscriptionPage from "./Pages/SubscriptionPage";
 import Footer from "./Components/Commons/Footer";
 import EventDetail from "./Pages/EventDetail";
 import Header from "./Components/Commons/Header";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
+
 
 function App() {
   return (
@@ -24,7 +26,7 @@ function App() {
           <BrowserRouter>
             <Header />
             <Routes>
-              <Route />
+              <Route path="/payment/complete" element={<CompletePayment/>}/>
               <Route path="/signUp" element={<SignUp />} />
               <Route path="/login" element={<Login />} />
               <Route path="/memberPage/:memberId" element={<MemberPage />} />

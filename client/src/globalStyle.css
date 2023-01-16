@@ -19,14 +19,13 @@ html {
   width: 100%;
   font-size: 13px;
   color: var(--white);
-  background-color: var(--lightgray);
+  background-color: var(--dark);
 }
 
 .Browser_Container {
   width: 100%;
   margin: 0 auto;
   max-width: 1600px;
-  background-color: pink;
   height: 100%;
 }
 
@@ -34,7 +33,6 @@ html {
   width: 100%;
   margin: 0 auto;
   max-width: 1400px;
-  background-color: black;
   height: 100%;
 }
 
