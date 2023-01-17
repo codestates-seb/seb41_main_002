@@ -36,6 +36,12 @@ public class ReviewService {
         return verifyExistsReview(reviewId);
     }
 
+    public void deleteReview(Long reviewId) {
+        verifyExistsReview(reviewId);
+
+        reviewRepository.deleteById(reviewId);
+    }
+
     private Review verifyExistsReview(Long reviewId) {
         Optional<Review> optionalReview = reviewRepository.findById(reviewId);
         return optionalReview.orElseThrow(() -> new BusinessLogicException(ExceptionCode.REVIEW_NOT_FOUND));
