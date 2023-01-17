@@ -1,6 +1,6 @@
 import axios from "axios";
 
-interface ItemDetailData {
+export interface ItemDetailData {
   itemInfo: {
     itemId: number;
     itemTitle: string;
@@ -26,7 +26,7 @@ interface ItemDetailData {
   ];
 }
 
-export default function getItemDetail(itemId: number): Promise<ItemDetailData> {
+export default function getItemDetail(itemId: string | undefined): Promise<ItemDetailData> {
   // Promise를 Retrun 한다 [ 타입은 ItemDetailData 로]
   return new Promise((resolve) => {
     const result: ItemDetailData = {
@@ -38,7 +38,7 @@ export default function getItemDetail(itemId: number): Promise<ItemDetailData> {
         contentImageURL: "이미지URL", 
         content: "내용", 
         price: 100, 
-        tagList: ["string"], 
+        tagList: ["건성","여드름성","지성", "복합성"], 
         rating: 3.5, 
       },
       reviews: [

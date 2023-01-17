@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import TypeBadge from "../Components/Commons/TypeBadge";
+import getItemDetail from "../API/ItemDetail/getItemDetail";
+import ProductInfo from "../Components/ItemDetail/productInfo";
+import { ItemDetailData } from "../API/ItemDetail/getItemDetail";
+import { useParams } from "react-router-dom";
 import "./Style/itemDetail.css";
 
-interface ProductProps {
-  height?: string;
-}
-
-const ProductList = styled.li<ProductProps>`
+const ProductList = styled.li<{ height?: string }>`
   display: flex;
   width: 100%;
   height: ${(props) => (props.height ? props.height : "11%")};
@@ -15,8 +14,20 @@ const ProductList = styled.li<ProductProps>`
 `;
 
 const ItemDetail = () => {
-  const [detailPageData, setDetailPageData] = useState({})
+  let { itemId } = useParams();
+
+  const productDetailData = async () => {
+    const result = await getItemDetail(itemId);
+    setDetailPageData(result);
+  };
+
+  const [detailPageData, setDetailPageData] = useState<ItemDetailData | null>(
+    null
+  );
   
+  useEffect(() => {
+    productDetailData();
+  }, []);
 
   return (
     <div className="Detail_Container">
@@ -25,15 +36,7 @@ const ItemDetail = () => {
           className="Item_Img"
           src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202112/16/4ab8f74f-79e5-4c14-bdbe-efe62f05b6ee.jpg"
         />
-        <ul className="Item_Described">
-          <ProductList></ProductList>
-          <ProductList></ProductList>
-          <ProductList></ProductList>
-          <ProductList></ProductList>
-          <ProductList></ProductList>
-          <ProductList></ProductList>
-          <ProductList></ProductList>
-        </ul>
+        <ProductInfo productInfo={detailPageData?.itemInfo}/>
       </div>
       <div className="Item_Contents"></div>
       <div className="Item_Submit">
