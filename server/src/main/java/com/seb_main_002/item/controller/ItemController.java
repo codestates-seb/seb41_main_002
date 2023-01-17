@@ -102,7 +102,7 @@ public class ItemController {
                 .collect(Collectors.toList());
 
         ItemSimpleResponseDto response = ItemSimpleResponseDto.builder()
-                .iteminfo(itemInfo)
+                .itemInfo(itemInfo)
                 .reviews(responseReviews)
                 .build();
 
