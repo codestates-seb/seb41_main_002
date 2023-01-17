@@ -1,55 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
+import styled from "styled-components";
 import TypeBadge from "../Components/Commons/TypeBadge";
 import "./Style/itemDetail.css";
 
+interface ProductProps {
+  height?: string;
+}
+
+const ProductList = styled.li<ProductProps>`
+  display: flex;
+  width: 100%;
+  height: ${(props) => (props.height ? props.height : "11%")};
+  border-bottom: 1px solid black;
+`;
+
 const ItemDetail = () => {
+  const [detailPageData, setDetailPageData] = useState({})
+  
+
   return (
     <div className="Detail_Container">
       <div className="Item_Container">
-        <div className="Item_Img">
-          <img src="https://cdn.pixabay.com/photo/2019/04/06/19/22/glass-4108085_960_720.jpg 1x, https://cdn.pixabay.com/photo/2019/04/06/19/22/glass-4108085_1280.jpg" />
-        </div>
+        <img
+          className="Item_Img"
+          src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202112/16/4ab8f74f-79e5-4c14-bdbe-efe62f05b6ee.jpg"
+        />
         <ul className="Item_Described">
-          <li>
-            <span>제품명</span>
-            <p>어머 너무 이뻐요 로션</p>
-          </li>
-          <li>
-            <span>가격</span>
-            <p>40,000원</p>
-          </li>
-          <li>
-            <span>카테고리</span>
-            <p>로션</p>
-          </li>
-          <li>
-            <span>태그</span>
-            <p>
-              <TypeBadge
-                content="건성"
-                bgColor="#FDA769"
-                padding="5px"
-                fontSize="15px"
-              />
-              <TypeBadge
-                content="여드름 개선"
-                bgColor="#473C33"
-                padding="7.5px 10px"
-                fontSize="15px"
-              />
-            </p>
-          </li>
-          <li>
-            <span>구매수량</span>
-            <p>1</p>
-          </li>
-          <li>
-            <span>별점</span>
-            <p>★★★★★</p>
-          </li>
-          <li>
-            <p>본문</p>
-          </li>
+          <ProductList></ProductList>
+          <ProductList></ProductList>
+          <ProductList></ProductList>
+          <ProductList></ProductList>
+          <ProductList></ProductList>
+          <ProductList></ProductList>
+          <ProductList></ProductList>
         </ul>
       </div>
       <div className="Item_Contents"></div>
