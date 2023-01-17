@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 @Getter
 public class ItemSimpleResponseDto {
-    ItemInfo iteminfo;
+    ItemInfo itemInfo;
 
     List<ItemReviewResponseDto> reviews;
 
