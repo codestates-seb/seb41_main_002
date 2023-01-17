@@ -9,7 +9,6 @@
   width: 100%;
   max-width: 1024px;
   margin: 0 auto;
-  background-color: lightcoral;
 }
 
 .Item_Described {
@@ -29,9 +28,13 @@
 .Item_Contents {
   width: 100%;
   max-width: 1024px;
-  height: 500px;
+  height: 100%;
   margin: 0 auto;
   background-color: lightgray;
+}
+
+.Item_Contents > img{
+  width: 100%;
 }
 
 .Item_Submit {

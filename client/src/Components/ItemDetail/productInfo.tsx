@@ -90,7 +90,7 @@ export default function ProductInfo(props: Props) {
           <ContentsContainer>
             {props.productInfo &&
               props.productInfo?.tagList.map((tags) => {
-                return <>{SkinTag(tags)}</>;
+                return <div key={tags}>{SkinTag(tags)}</div>;
               })}
           </ContentsContainer>
         </ProductList>

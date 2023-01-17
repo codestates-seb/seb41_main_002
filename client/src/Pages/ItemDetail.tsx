@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import getItemDetail from "../API/ItemDetail/getItemDetail";
 import ProductInfo from "../Components/ItemDetail/productInfo";
@@ -24,6 +24,8 @@ const ItemDetail = () => {
   const [detailPageData, setDetailPageData] = useState<ItemDetailData | null>(
     null
   );
+
+  console.log(detailPageData?.itemInfo)
   
   useEffect(() => {
     productDetailData();
@@ -34,11 +36,13 @@ const ItemDetail = () => {
       <div className="Item_Container">
         <img
           className="Item_Img"
-          src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202112/16/4ab8f74f-79e5-4c14-bdbe-efe62f05b6ee.jpg"
+          src={`${detailPageData?.itemInfo.titleImageURL}`}
         />
         <ProductInfo productInfo={detailPageData?.itemInfo}/>
       </div>
-      <div className="Item_Contents"></div>
+      <div className="Item_Contents">
+        <img  src={`${detailPageData?.itemInfo.contentImageURL}`}/>
+      </div>
       <div className="Item_Submit">
         <button>장바구니에 추가</button>
         <button>바로 구매</button>
