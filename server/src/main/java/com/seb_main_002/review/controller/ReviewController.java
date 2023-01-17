@@ -29,4 +29,11 @@ public class ReviewController {
 
         return new ResponseEntity<> (HttpStatus.OK);
     }
+
+    @GetMapping("/{reviewId}")
+    public ResponseEntity getReview(@PathVariable Long reviewId) {
+        Review review = reviewService.findReview(reviewId);
+
+        return new ResponseEntity<> (mapper.reviewToReviewResponseDto(review), HttpStatus.OK);
+    }
 }

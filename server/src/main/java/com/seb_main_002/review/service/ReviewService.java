@@ -31,6 +31,11 @@ public class ReviewService {
         }
     }
 
+    public Review findReview(Long reviewId) {
+
+        return verifyExistsReview(reviewId);
+    }
+
     private Review verifyExistsReview(Long reviewId) {
         Optional<Review> optionalReview = reviewRepository.findById(reviewId);
         return optionalReview.orElseThrow(() -> new BusinessLogicException(ExceptionCode.REVIEW_NOT_FOUND));
