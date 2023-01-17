@@ -1,4 +1,7 @@
+import { useState } from "react";
 import styled from "styled-components";
+import AddressPopup from "../Components/AddressPopup";
+import Modal from "../Components/Commons/Modal";
 import "./Style/memberPageEdit.css";
 
 const MemberInfoContent = styled.li`
@@ -48,6 +51,11 @@ const AddressEditContainer = styled.div`
 `;
 
 export default function MemberPageEdit() {
+  const [modalState, setModalState] = useState(false);
+  const openModal = () => {
+    setModalState(true);
+  };
+
   return (
     // 추후 데이터 수정 예정
     <div className="Edit_Page_Container">
@@ -150,8 +158,17 @@ export default function MemberPageEdit() {
           </AddressEditContainer>
         </MemberInfoContent>
         <MemberInfoContent>
-          <button className="Address_Add_Button">주소 추가하기</button>
+          <button className="Address_Add_Button" onClick={openModal}>
+            주소 추가하기
+          </button>
         </MemberInfoContent>
+        {modalState ? (
+          <Modal
+            modalState={modalState}
+            setModalState={setModalState}
+            element={<AddressPopup />}
+          />
+        ) : null}
         <div>
           <div className="Edit_Type_Container">
             <InfoTitle>
