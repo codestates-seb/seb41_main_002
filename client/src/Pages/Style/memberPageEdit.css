@@ -55,7 +55,7 @@
   display: flex;
 }
 
-.Address_Contents{
+.Address_Contents {
   display: flex;
 }
 
@@ -64,3 +64,51 @@
   justify-content: flex-end;
 }
 
+.Address_Modal {
+  width: 600px;
+  height: 450px;
+  padding: 0 5px;
+  text-align: center;
+}
+
+.Address_Header {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.Modal_Field {
+  height: 75px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 19px;
+}
+
+.Modal_Field label {
+  width: 100px;
+}
+
+.Address_Input {
+  height: 40px;
+  border-radius: 0px;
+  background-color: white;
+  color: black;
+}
+
+.Address_Search_Bar {
+  width: 65%;
+  margin-right: 10px;
+}
+
+.Address_Type_Field {
+  width: 85%;
+}
+
+.Submit_Button {
+  background-color: white;
+  color: black;
+  padding: 10px;
+  font-size: 17px;
+  width: 100px;
+  margin: 0 auto;
+}
