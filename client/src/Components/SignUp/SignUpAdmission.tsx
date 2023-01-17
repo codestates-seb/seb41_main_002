@@ -1,6 +1,7 @@
 import { signUp } from "../../API/SignUp";
 import { Dispatch, SetStateAction } from "react";
 import "../Style/signUp.css";
+import { useNavigate } from "react-router-dom";
 
 interface MemberType {
   accountID: string;
@@ -18,10 +19,11 @@ const SignUpAdmission = ({
   Member: MemberType;
   setSignUpModalState: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const navigate = useNavigate();
   const memberSignUp = () => {
     signUp(Member).then((res) => {
-      console.log("회원가입 성공");
       setSignUpModalState(false);
+      navigate('/');
     });
   };
 

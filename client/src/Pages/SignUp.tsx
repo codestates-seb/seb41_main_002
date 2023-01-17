@@ -41,7 +41,6 @@ const SignUp = () => {
   const [message, setMessage] = useState<string>("");
   //input 입력 핸들러
   const onMemberTextHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("입력중");
     const { value, name } = e.target;
     if (name === "accountID") {
       setIdCheck(false);
