@@ -1,14 +1,14 @@
 import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 
-interface SettingType {
+export interface SettingType {
   ratingEdit: boolean;
   ratingSize: number;
 }
 
 interface RatingProps {
   starRating: number;
-  setStarRating: Dispatch<SetStateAction<number>>;
+  setStarRating? : Dispatch<SetStateAction<number>>;
   ratingSetting: SettingType;
 }
 
@@ -39,11 +39,7 @@ const RatingBox = styled.div<RatingStyleType>`
   }
 `;
 
-  // 부모 필수 상태값
-  // type settingType = {
-  //   ratingEdit: boolean;
-  //   ratingSize: number;
-  // };
+  // 부모 상태값
   // const ratingSetting: settingType = {
   //   ratingEdit: true, 별점 수정 가능 여부
   //   ratingSize: 30, 별점 사이즈
@@ -60,7 +56,7 @@ const RatingBox = styled.div<RatingStyleType>`
 const Rating = (props: RatingProps) => {
   const ratingClickEdit = (rating: number) => {
     if (props.ratingSetting.ratingEdit) {
-      props.setStarRating(rating);
+      props.setStarRating?.(rating)
     }
   };
 

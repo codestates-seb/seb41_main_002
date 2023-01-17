@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import TypeBadge from "../Commons/TypeBadge";
+import Rating from "../Commons/Rating";
+import { SkinTag } from "../Commons/TypeBadge";
+import "./Style/productInfo.css"
 
 const ProductList = styled.li<{ height?: string }>`
   display: flex;
@@ -27,6 +29,8 @@ const ContentsContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 80%;
+  height: 100%;
+  align-items: center;
 
   & > span {
     font-size: 19px;
@@ -46,79 +50,12 @@ interface ItemType {
 }
 
 interface Props {
-  productInfo: ItemType | undefined;
+  productInfo?: ItemType;
 }
 
 export default function ProductInfo(props: Props) {
+  const ratingCount = props.productInfo?.rating as number
   console.log(props.productInfo);
-
-  const tagList = (tags: string) => {
-    switch (tags) {
-      case "지성":
-        return (
-          <TypeBadge
-            bgColor="black"
-            padding="5px"
-            fontSize="11px"
-            content={`${tags}`}
-          />
-        );
-      case "건성":
-        return (
-          <TypeBadge
-            bgColor="gray"
-            padding="5px"
-            fontSize="11px"
-            content={`${tags}`}
-          />
-        );
-      case "복합성":
-        return (
-          <TypeBadge
-            bgColor="Pink"
-            padding="5px"
-            fontSize="11px"
-            content={`${tags}`}
-          />
-        );
-      case "미백":
-        return (
-          <TypeBadge
-            bgColor="red"
-            padding="5px"
-            fontSize="11px"
-            content={`${tags}`}
-          />
-        );
-      case "주름":
-        return (
-          <TypeBadge
-            bgColor="blue"
-            padding="5px"
-            fontSize="11px"
-            content={`${tags}`}
-          />
-        );
-      case "여드름성":
-        return (
-          <TypeBadge
-            bgColor="gold"
-            padding="5px"
-            fontSize="11px"
-            content={`${tags}`}
-          />
-        );
-      case "일반피부":
-        return (
-          <TypeBadge
-            bgColor="yellow"
-            padding="5px"
-            fontSize="11px"
-            content={`${tags}`}
-          />
-        );
-    }
-  };
   return (
     <>
       <ul className="Item_Described">
@@ -153,7 +90,7 @@ export default function ProductInfo(props: Props) {
           <ContentsContainer>
             {props.productInfo &&
               props.productInfo?.tagList.map((tags) => {
-                return <>{tagList(tags)}</>;
+                return <>{SkinTag(tags)}</>;
               })}
           </ContentsContainer>
         </ProductList>
@@ -169,7 +106,14 @@ export default function ProductInfo(props: Props) {
           <TitleContainer>
             <span>별점</span>
           </TitleContainer>
-          <ContentsContainer>{/* rating 컴포넌트 */}</ContentsContainer>
+          <ContentsContainer>
+            <div className="Rating_Container">
+              <Rating
+                starRating={ratingCount}
+                ratingSetting={{ ratingEdit: false, ratingSize: 30 }}
+              />
+            </div>
+          </ContentsContainer>
         </ProductList>
         <ProductList height="34%">
           <TitleContainer>
