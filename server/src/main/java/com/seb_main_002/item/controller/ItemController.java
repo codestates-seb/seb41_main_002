@@ -53,9 +53,16 @@ public class ItemController {
 
 
     @GetMapping("/toplist/{categoryENName}")
-    public ResponseEntity getTopItems(@PathVariable("categoryENName") String categoryENName){
+    public ResponseEntity getTopItems(@PathVariable("categoryENName") String categoryENName,
+                                      @RequestParam(required = false) Boolean custom){
+        if(custom == null) custom = false;
 
-        List<Item> items = itemService.findTopListItems(categoryENName,0,10);
+        List<String> memberTagsList = new ArrayList<>(List.of("건성", "일반피부"));
+        //List<String> memberTagsList = memberService.getLoginUserWithToken().getTagList() == null?null:memberService.getLoginUserWithToken().getTagList();
+        //위에서 호출하는곳에서 로그인안되있을때 null 반납하게해야함. 이곳에 코드가 길어질예정
+
+        List<Item> items = itemService.findTopListItems(categoryENName,custom,memberTagsList);
+
         List<ItemTopListResponseDto.TopItemDto> topItemDtos = items.stream()
                 .map(item -> ItemTopListResponseDto.TopItemDto.builder()
                         .itemId(item.getItemId())
@@ -69,8 +76,13 @@ public class ItemController {
                         .build())
                 .collect(Collectors.toList());
 
+        ItemSearchResponseDto.MemberTagInfo memberTagInfo = ItemSearchResponseDto.MemberTagInfo.builder()
+                .memberTagsList(memberTagsList)
+                .build();
+
         ItemTopListResponseDto response = ItemTopListResponseDto.builder()
                 .topList(topItemDtos)
+                .member(memberTagInfo)
                 .build();
 
         return new ResponseEntity<>(response,HttpStatus.OK);
@@ -126,26 +138,12 @@ public class ItemController {
         if(title == null) title = "";
         page -= 1;
 
-//--------------------membertaglist 를 위해 추가된 로직
-        //Boolean isLogin = Boolean memberSerivce.isLogin();
-        boolean isLogin = true;
-        ItemSearchResponseDto.MemberTagInfo memberTaginfo;
-        //로그인 되있을때 멤버태그리스트 로직
-        if(isLogin){
-            //List<String> memberTagsList = memberService.getLoginUserWithToken().getTagList();
-            List<String> memberTagsList = new ArrayList<>();
-            memberTaginfo = ItemSearchResponseDto.MemberTagInfo.builder()
-                    .memberTagsList(memberTagsList)
-                    .build();
-        }
-        //로그인 안되있을때 멤버태그리스트 로직.
-        else{
-            memberTaginfo = ItemSearchResponseDto.MemberTagInfo.builder()
-                    .build();
-        }
-//--------------------membertaglist 를 위해 추가된 로직
 
-        List<Item> items = itemService.findFilteredItems(categoryENName, custom, title, page);
+        List<String> memberTagsList = new ArrayList<>(List.of("건성", "일반피부"));
+        //List<String> memberTagsList = memberService.getLoginUserWithToken().getTagList() == null?null:memberService.getLoginUserWithToken().getTagList();
+        //위에서 호출하는곳에서 로그인안되있을때 null 반납하게해야함. 이곳에 코드가 길어질예정
+
+        List<Item> items = itemService.findFilteredItems(categoryENName, custom, title, page, memberTagsList);
 
         List<ItemSearchResponseDto.SearchItemDto> searchItemDtos = items.stream()
                 .map(item -> ItemSearchResponseDto.SearchItemDto.builder()
@@ -159,9 +157,13 @@ public class ItemController {
                         .build())
                 .collect(Collectors.toList());
 
+        ItemSearchResponseDto.MemberTagInfo memberTagInfo = ItemSearchResponseDto.MemberTagInfo.builder()
+                .memberTagsList(memberTagsList)
+                .build();
+
         ItemSearchResponseDto response = ItemSearchResponseDto.builder()
                 .cosmetics(searchItemDtos)
-                .member(memberTaginfo)
+                .member(memberTagInfo)
                 .build();
 
 
