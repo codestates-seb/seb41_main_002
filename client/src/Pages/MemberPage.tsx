@@ -1,62 +1,161 @@
-import React from "react";
-import "./Style/memberPage.css";
+import dummyData from "./../data/MemberPageData.json";
+import CustomButton from "../Components/Commons/Buttons";
+import TypeBadge from "../Components/Commons/TypeBadge";
 import styled from "styled-components";
+import {
+  OrderHistoryTab,
+  MyReviewsTab,
+} from "../Components/MyPageComponent/MyPageTabs";
+import { Link } from "react-router-dom";
+import "./Style/memberPage.css";
+import { useState } from "react";
 
 const MemberTextBox = styled.li`
   display: flex;
+  align-items: center;
   width: 100%;
-  height: 40px;
+  height: 50px;
   background-color: var(--dark3);
   border: 1px solid var(--lightgray);
 `;
 
 const InfoText = styled.div<{ width: string }>`
   width: ${(props) => props.width};
-  text-align: center;
-  line-height: 40px;
 `;
 
 const MemberPage = () => {
+  const [currentTab, setCurrentTab] = useState(1);
+
   return (
-    <div className="MemberPage_Container">
+    <div className="Profile_Container">
+      <h1>내 정보</h1>
+      <Link to="/member/edit" className="Profile_Edit_Link">
+        <CustomButton
+          bgColor="white"
+          content="수정하기"
+          fontColor="black"
+          padding="10px"
+          width="100px"
+        />
+      </Link>
       <ul>
         <MemberTextBox>
           <InfoText width="33%">이름</InfoText>
-          <InfoText width="67%">홍길동</InfoText>
+          <InfoText width="67%">{dummyData.memberName}</InfoText>
         </MemberTextBox>
         <MemberTextBox>
           <InfoText width="33%">생년월일</InfoText>
-          <InfoText width="67%">2000.08.15</InfoText>
+          <InfoText width="67%">{dummyData.birthdate}</InfoText>
         </MemberTextBox>
         <MemberTextBox>
           <InfoText width="33%">이메일</InfoText>
-          <InfoText width="67%">samplemail@gmail.com</InfoText>
+          <InfoText width="67%">{dummyData.email}</InfoText>
         </MemberTextBox>
         <MemberTextBox>
           <InfoText width="33%">연락처</InfoText>
-          <InfoText width="67%">010-1234-5678</InfoText>
+          <InfoText width="67%">{dummyData.phoneNumber}</InfoText>
         </MemberTextBox>
         <MemberTextBox>
           <InfoText width="100%">대표 주소</InfoText>
         </MemberTextBox>
-        <MemberTextBox>
-          <InfoText width="100%">서울특별시 서초구 서초대로 396 20층, 06619 (집)</InfoText>
+        <MemberTextBox style={{ height: `100px` }}>
+          <InfoText width="100%">{dummyData.address}</InfoText>
         </MemberTextBox>
         <MemberTextBox>
-          <InfoText width="100%">구독 중</InfoText>
+          <InfoText width="100%">
+            {dummyData.isSubscribed ? (
+              <span className="Member_Subscribed"> 현재 구독 중 </span>
+            ) : (
+              <div className="Member_Not_Subscribed">
+                <span>구독하고 있지 않습니다.</span>
+                <Link to={`/members/:memberId/subscribe`}>
+                  <CustomButton
+                    bgColor="white"
+                    content="구독하러 가기"
+                    fontColor="black"
+                    padding="10px"
+                    width="125px"
+                  />
+                </Link>
+              </div>
+            )}
+          </InfoText>
         </MemberTextBox>
       </ul>
-      <div className="MemberPage_Tags">
-        {/* 나의 태그 */}
-      </div>
-      <div className="MemberPage_Reviews">
-        <ul>
-          <li>주문 내역</li>
-          <li>내 리뷰</li>
+      <h2>내 태그 정보</h2>
+      {dummyData.tagList.length !== 0 ? (
+        <ul className="Profile_Tags">
+          <MemberTextBox>
+            <InfoText width="33%">내 피부 타입</InfoText>
+            <InfoText width="67%" className="Profile_Type_Badges">
+              <TypeBadge
+                bgColor="beige"
+                content={dummyData.tagList[0]}
+                padding="10px"
+                fontSize="15px"
+              />
+            </InfoText>
+          </MemberTextBox>
+          <MemberTextBox>
+            <InfoText width="33%">여드름성 피부 여부</InfoText>
+            <InfoText width="67%" className="Profile_Type_Badges">
+              <TypeBadge
+                bgColor="beige"
+                content={dummyData.tagList[1]}
+                padding="10px"
+                fontSize="15px"
+              />
+            </InfoText>
+          </MemberTextBox>
+          <MemberTextBox>
+            <InfoText width="33%">원하는 기능</InfoText>
+            <InfoText width="67%" className="Profile_Type_Badges">
+              {dummyData.tagList.slice(2, dummyData.tagList.length).length !==
+              0 ? (
+                dummyData.tagList
+                  .slice(2, dummyData.tagList.length)
+                  .map((tag, idx) => {
+                    return (
+                      <TypeBadge
+                        bgColor="beige"
+                        content={tag}
+                        padding="10px"
+                        fontSize="15px"
+                        key={`item${idx + 2}`}
+                      />
+                    );
+                  })
+              ) : (
+                <span className="No_Tags">추가 태그 없음</span>
+              )}
+            </InfoText>
+          </MemberTextBox>
         </ul>
-        <div className="Reviews_Contents">
-          {/* 컴포넌트 사용 */}
+      ) : (
+        <div className="Member_Not_Subscribed">
+          <span>피부 타입 검사를 하지 않았습니다.</span>
+          <Link to={`/members/:memberId/subscribe`}>
+            <CustomButton
+              bgColor="white"
+              content="검사 받으러 가기"
+              fontColor="black"
+              padding="10px"
+              width="150px"
+            />
+          </Link>
         </div>
+      )}
+      <div className="Profile_Reviews">
+        <ul>
+          <li className="Profile_Tabs" onClick={() => setCurrentTab(1)}>
+            주문 내역
+          </li>
+          <li className="Profile_Tabs" onClick={() => setCurrentTab(2)}>
+            내 리뷰
+          </li>
+        </ul>
+        {currentTab === 1 ? <OrderHistoryTab /> : null}
+        {currentTab === 2 ? <MyReviewsTab /> : null}
       </div>
     </div>
   );

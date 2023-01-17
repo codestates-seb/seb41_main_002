@@ -1,0 +1,63 @@
+{
+  "accountId": "아이디",
+  "email": "eee@naver.com",
+  "birthdate": "2022/01/05",
+  "phoneNumber": "010-1234-5678",
+  "memberName": "임경인",
+  "zipcode": "04567",
+  "address": "서울시 강서구 화곡동 56-536 살렘하우스 501호",
+  "isSubscribed": false,
+  "memberReserve": 3000,
+  "tagList": ["건성", "여드름 많음", "수분", "진정"],
+  "ordersHistory": [
+    {
+      "orderId": 1,
+      "orderCreatedAt": "2022/01/05/14:25",
+      "orderStatus": "배송 완료",
+      "totalPrice": 70000,
+      "orderItems": [
+        {
+          "itemId": 1,
+          "itemImageURL": "https://picsum.photos/75?random=1",
+          "itemTitle": "어머 너무 촉촉해 엠플",
+          "count": 1,
+          "itemTotalPrice": 10000
+        }
+      ]
+    },
+    {
+      "orderId": 2,
+      "orderCreatedAt": "2022/01/12/15:10",
+      "orderStatus": "배송 전",
+      "totalPrice": 30000,
+      "orderItems": [
+        {
+          "itemId": 1,
+          "itemImageURL": "https://picsum.photos/75?random=2",
+          "itemTitle": "어머 너무 촉촉해 엠플",
+          "count": 1,
+          "itemTotalPrice": 10000
+        },
+        {
+          "itemId": 2,
+          "itemImageURL": "https://picsum.photos/75?random=3",
+          "itemTitle": "어머 너무 부드러 엠플",
+          "count": 2,
+          "itemTotalPrice": 12000
+        }
+      ]
+    }
+  ],
+  "reviews": [
+    {
+      "reviewId": 1,
+      "itemId": 1,
+      "itemImageURL": "https://picsum.photos/100",
+      "itemTitle": "어머 너무 촉촉해 엠플",
+      "reviewTitle": "너무 촉촉해요",
+      "createdAt": "2022/01/05/14:25",
+      "modifiedAt": "2022/01/05/14:26",
+      "reviewRating": 3.5
+    }
+  ]
+}
