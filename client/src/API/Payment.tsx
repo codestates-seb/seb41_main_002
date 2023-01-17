@@ -30,8 +30,8 @@ interface OrderSheetType {
   addressId: number | undefined;
   itemList: {
     itemId: number;
-    itemCount: number;
     itemTotalPrice: number;
+    count: number;
   }[];
   itemsTotalPrice: number;
   totalPrice: number;

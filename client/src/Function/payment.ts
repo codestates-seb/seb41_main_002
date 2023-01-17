@@ -1,20 +1,46 @@
+// 더미 데이터 연동 후 지울 예정---------------------------
 interface LocalType {
-  itemId : number;
-  itemTitle : string;
-  titleImageURL :string;
-  itemCount :number;
-  itemTotalPrice : number;
+  itemId: number;
+  itemTitle: string;
+  itemImageURL: string;
+  itemTotalPrice: number;
+  count: number;
 }
+
+const arr: LocalType[] = [
+  {
+    itemId: 1,
+    itemTitle: "상품이름1",
+    itemImageURL: "https://picsum.photos/75?random=1",
+    itemTotalPrice: 30000,
+    count: 3,
+  },
+  {
+    itemId: 2,
+    itemTitle: "상품이름2",
+    itemImageURL: "https://picsum.photos/75?random=2",
+    itemTotalPrice: 20000,
+    count: 2,
+  },
+  {
+    itemId: 3,
+    itemTitle: "상품이름3",
+    itemImageURL: "https://picsum.photos/75?random=3",
+    itemTotalPrice: 60000,
+    count: 6,
+  },
+];
+
+const arrString = JSON.stringify(arr);
+window.localStorage.setItem("itemList", arrString);
+
+//----------------------------------------------------------
+
+
 
 const getItemList = localStorage.getItem("itemList");
 const itemListArray:LocalType[] = getItemList && JSON.parse(getItemList);
-const itemsFilter = itemListArray.map((data: LocalType) => {
-  return {
-    name: data.itemTitle,
-    price: data.itemTotalPrice/data.itemCount,
-    count: data.itemCount,
-  };
-});
+
 
 export const itemsCalculation = (useReserve: string | number | undefined, subscribeCheck: boolean | undefined) => {
   let totalPrice = 0;
@@ -26,14 +52,14 @@ export const itemsCalculation = (useReserve: string | number | undefined, subscr
   } else {
     totalPrice = itemsTotalPrice + deliveryFee - Number(useReserve);
   }
-  return {itemsTotalPrice, totalPrice, excludingPoints, itemsFilter}
+  return {itemsTotalPrice, totalPrice, excludingPoints, itemListArray}
 };
 
 export const itemsOrganize = () => {
   let itemList = itemListArray.map((item:LocalType) => {
     return{
       itemId: item.itemId,
-      itemCount: item.itemCount,
+      count: item.count,
       itemTotalPrice: item.itemTotalPrice,
     }
   })

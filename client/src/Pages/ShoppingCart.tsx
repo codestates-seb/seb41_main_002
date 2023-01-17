@@ -12,15 +12,30 @@ export default function ShoppingCart() {
   // 데이터가 잘 들어가는지 확인하기 위한 더미데이터 => 추후 삭제 예정입니다.
   // 데이터의 내용은 Checkout.tsx의 items와 동일합니다.
   interface ItemInterface {
-    name: string;
-    price: number;
+    itemId: number;
+    itemImageURL: string;
+    itemTitle: string;
+    itemTotalPrice: number;
     count: number;
   }
 
   const items: ItemInterface[] = [
-    { name: "어머 너무 이뻐요 앰플", price: 30000, count: 1 },
-    { name: "어머 너무 촉촉해요 앰플", price: 20000, count: 2 },
+    {
+      itemId: 1,
+      itemImageURL: "https://picsum.photos/75?random=1",
+      itemTitle: "어머 너무 이뻐요 앰플",
+      itemTotalPrice: 30000,
+      count: 1,
+    },
+    {
+      itemId: 2,
+      itemImageURL: "https://picsum.photos/75?random=2",
+      itemTitle: "어머 너무 촉촉해요 앰플",
+      itemTotalPrice: 20000,
+      count: 2,
+    },
   ];
+
   return (
     <div className="Shopping_Cart_Container">
       <div className="Member_Benefits_Info">
@@ -69,7 +84,7 @@ export default function ShoppingCart() {
             </div>
             <div className="Product_Container">
               <div className="Product_Container">
-                <OrderedListItem item={items[1]} idx={1} />
+                <OrderedListItem item={items[1]} />
               </div>
             </div>
             <div className="Product_Delete">
