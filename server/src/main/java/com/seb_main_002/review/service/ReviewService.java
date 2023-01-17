@@ -16,6 +16,10 @@ public class ReviewService {
         this.reviewRepository = reviewRepository;
     }
 
+    public void createReview(Review review) {
+        reviewRepository.save(review);
+    }
+
     public void updateReview(Review review) {
         Review verifiedReview = verifyExistsReview(review.getReviewId());
         Long savedReviewMemberId = verifiedReview.getMember().getMemberId();
