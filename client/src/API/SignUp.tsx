@@ -27,7 +27,6 @@ export const doubleCheck = async (accountID: string) => {
 export const signUp = async (memberData: MemberType) => {
   try {
     let dateChange = memberData.birthDate.replace(/\-/gi, "/");
-    console.log(memberData);
     const setMemberData = {
       ...memberData,
       birthDate: dateChange,

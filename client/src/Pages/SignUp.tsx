@@ -88,8 +88,6 @@ const SignUp = () => {
     );
     const emailCheck = onEmailRegex(Member.email);
     const allCheck = idCheck && emailCheck && nullCheck && pwCheck;
-    console.log(idCheck);
-    console.log(allCheck);
     if (!idCheck) {
       setMessage("아이디 중복확인을 해주세요.");
       setModalState(true);
