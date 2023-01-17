@@ -95,3 +95,11 @@
   padding: 20px;
   font-size: 20px;
 }
+
+input{
+  border-radius: 0px;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 10px var(--dark3) inset;
+}
