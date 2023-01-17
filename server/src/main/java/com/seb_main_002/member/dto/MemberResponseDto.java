@@ -46,6 +46,8 @@ public class MemberResponseDto {
     public static class ReviewResponseDto {
         private Long reviewId;
         private Long itemId;
+        private String itemImagaeURL;
+        private String itemTitle;
         private String reviewTitle;
         private String createdAt;
         private String modifiedAt;

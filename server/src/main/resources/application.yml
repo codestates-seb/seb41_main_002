@@ -1,4 +1,10 @@
 spring:
+  redis:
+    host: localhost
+    port: 6379
+    password: 'sebbe41main02fightingsebbe41main02fightingsebbe41main02fighting'
+
+
   h2:
     console:
       enabled: true
@@ -43,3 +49,10 @@ cloud:
       static: ap-northeast-2
     stack:
       auto : false
+mail:
+  address:
+    admin: "admin@gmail.com"
+jwt:
+  key: sdfkjsakldfjskldfjaskldfjasklfjaskldfj
+  access-token-expiration-minutes: 20
+  refresh-token-expiration-minutes: 420
