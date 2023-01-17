@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { doubleCheck, signUp } from "../API/SignUp";
 import Modal from "../Components/Commons/Modal";
+import SignUpAdmission from "../Components/SignUp/SignUpAdmission";
+import {
+  onEmailRegex,
+  onInputNullCheck,
+  onIdDoubleCheck,
+  onPasswordConfirm,
+} from "../Function/signUp";
 import "./Style/memberAccess.css";
 
 const SignUp = () => {
@@ -14,6 +20,7 @@ const SignUp = () => {
     phoneNumber: string;
   }
 
+  //회원가입 정보
   const [Member, setMember] = useState<MemberType>({
     accountID: "",
     password: "",
@@ -22,82 +29,95 @@ const SignUp = () => {
     email: "",
     phoneNumber: "",
   });
-  const [passwordCheck, setPasswordCheck] = useState<string>();
-  const [signUpPermission, setSignUpPermission] = useState<boolean>(false);
+  //비밀번호 체크 input 내용
+  const [passwordCheck, setPasswordCheck] = useState<string>("");
+  //회원가입 승락
+  const [idCheck, setIdCheck] = useState<boolean>(false);
+  //일반 모달창
   const [modalState, setModalState] = useState<boolean>(false);
-  const [문자, set문자] = useState<string>("");
-
+  //회원가입 확인 모달창
+  const [signUpModalState, setSignUpModalState] = useState<boolean>(false);
+  //일반 모달 내용
+  const [message, setMessage] = useState<string>("");
+  //input 입력 핸들러
   const onMemberTextHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("입력중");
     const { value, name } = e.target;
     if (name === "accountID") {
-      setSignUpPermission(false);
+      setIdCheck(false);
     }
-    setMember({ ...Member, [name]: value });
-    console.log(signUpPermission);
+    if (name === "phoneNumber") {
+      //전화번호 - 추가
+      setMember({
+        ...Member,
+        [name]: value
+          .replace(/[^0-9]/g, "")
+          .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
+          .replace(/(\-{1,2})$/g, ""),
+      });
+    } else if (name === "memberName") {
+      //특수문자, 숫자 제거
+      setMember({
+        ...Member,
+        [name]: value
+          .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/ ]/gim, "")
+          .replace(/[0-9 ]/gim, ""),
+      });
+    } else {
+      setMember({ ...Member, [name]: value });
+    }
   };
-
+  //pw확인 input 입력 핸들러
   const onPasswordCheckHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordCheck(e.target.value);
   };
-
-  const idDoubleCheck = () => {
-    //중복체크
-    if (Member.accountID === "") {
-      set문자("아이디를 입력하세요.");
-      setModalState(!modalState);
-    } else {
-      doubleCheck(Member.accountID).then((res) => {
-        if (res) {
-          //중복이 아닐 경우
-          setSignUpPermission(true);
-          set문자("사용 가능한 아이디입니다.");
-          setModalState(!modalState);
-        } else {
-          //중복일 경우
-          set문자("아이디가 중복입니다.");
-          setModalState(!modalState);
-          setSignUpPermission(false);
-        }
-      });
-    }
+  //중복 체크 확인
+  const idDoubleCheck = async () => {
+    await onIdDoubleCheck(Member, setMessage, setModalState).then((res) => {
+      setIdCheck(res);
+    });
   };
 
-  const inputValidation = () => { //빈 곳 처리
-    if (Member.accountID === "") {
-      set문자("아이디를 입력하세요.");
-    } else if (Member.password === "") {
-      set문자("비밀번호를 입력하세요.");
-    } else if (Member.birthDate === "") {
-      set문자("생년월일을 입력하세요.");
-    } else if (Member.email === "") {
-      set문자("이메일을 입력하세요.");
-    } else if (Member.phoneNumber === "") {
-      set문자("핸드폰 번호를 입력하세요.");
-    } else if(Member.password !== passwordCheck){
-      set문자("비밀번호가 다릅니다.");
-    } else {
-      set문자("아이디 중복확인을 해주세요");
-    }
-    setModalState(!modalState);
-  };
-
-  const memberSignUp = () => {
+  const memberSignUpAdmission = () => {
     //회원가입
-    inputValidation();
-    if (signUpPermission) {
-      signUp(Member).then((res) => {
-        console.log("회원가입 성공");
-      });
-    } 
+    const nullCheck = onInputNullCheck(Member, setMessage, setModalState);
+    const pwCheck = onPasswordConfirm(
+      Member.password,
+      passwordCheck,
+      setMessage,
+      setModalState
+    );
+    const emailCheck = onEmailRegex(Member.email);
+    const allCheck = idCheck && emailCheck && nullCheck && pwCheck;
+    console.log(idCheck);
+    console.log(allCheck);
+    if (!idCheck) {
+      setMessage("아이디 중복확인을 해주세요.");
+      setModalState(true);
+    } else if (allCheck) {
+      setSignUpModalState(true);
+    }
   };
 
   return (
     <div className="Member_Access_Container">
+      {signUpModalState ? (
+        <Modal
+          modalState={signUpModalState}
+          setModalState={setSignUpModalState}
+          element={
+            <SignUpAdmission
+              Member={Member}
+              setSignUpModalState={setSignUpModalState}
+            />
+          }
+        />
+      ) : null}
       {modalState ? (
         <Modal
           modalState={modalState}
           setModalState={setModalState}
-          element={<div className="Modal_Text">{문자}</div>}
+          element={<div className="Modal_Text">{message}</div>}
         />
       ) : null}
       <ul className="Member_Access_Menu">
@@ -182,10 +202,11 @@ const SignUp = () => {
             name="phoneNumber"
             value={Member.phoneNumber}
             onChange={onMemberTextHandler}
+            maxLength={13}
           />
         </li>
         <li>
-          <button onClick={memberSignUp}>확인</button>
+          <button onClick={memberSignUpAdmission}>확인</button>
         </li>
       </ul>
     </div>
