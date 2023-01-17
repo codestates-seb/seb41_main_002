@@ -5,15 +5,17 @@ import { Link } from "react-router-dom";
 import "./Style/completePayment.css";
 
 const CompletePayment = () => {
+  interface ItemType {
+    itemId: number;
+    count: number;
+    itemTotalPrice: number;
+  }
+
   interface OrderSheetType {
     memberId: number;
-    isPrimary: boolean | undefined;
-    addressId: number | undefined;
-    itemList: {
-      itemId: number;
-      itemCount: number;
-      itemTotalPrice: number;
-    }[];
+    isPrimary?: boolean;
+    addressId?: number;
+    itemList: ItemType[];
     itemsTotalPrice: number;
     totalPrice: number;
     usedReserve: number;

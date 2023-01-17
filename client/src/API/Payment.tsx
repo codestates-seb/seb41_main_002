@@ -1,16 +1,16 @@
 import axios from "axios";
 
-interface Item {
+interface ItemType {
   itemId: number;
-  itemCount: number;
+  count: number;
   itemTotalPrice: number;
 }
 
 interface PaymentType {
   memberId: number;
-  isPrimary: boolean | undefined;
-  addressId: number | undefined;
-  itemList: Item[];
+  isPrimary?: boolean;
+  addressId?: number;
+  itemList: ItemType[];
   itemsTotalPrice: number;
   totalPrice: number;
   usedReserve: number;
@@ -26,13 +26,9 @@ interface AddressType {
 
 interface OrderSheetType {
   memberId: number;
-  isPrimary: boolean | undefined;
-  addressId: number | undefined;
-  itemList: {
-    itemId: number;
-    itemTotalPrice: number;
-    count: number;
-  }[];
+  isPrimary?: boolean;
+  addressId?: number;
+  itemList: ItemType[];
   itemsTotalPrice: number;
   totalPrice: number;
   usedReserve: number;
@@ -54,10 +50,12 @@ interface GetMemberDataType {
   addressList: GetAddressType[];
 }
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export const memberData = async (memberId: number) => {
   try {
     const response = await axios.get<GetMemberDataType>(
-      `http://localhost:8080/api/v1/members/${memberId}/payment`
+      `${BASE_URL}/members/${memberId}/payment`
     );
 
     return response.data;
@@ -69,7 +67,7 @@ export const memberData = async (memberId: number) => {
 export const completePayment = async (order: PaymentType) => {
   try {
     await axios
-      .post("http://localhost:8080/api/v1/orders", order)
+      .post(`${BASE_URL}/orders`, order)
       .then((res) => {
         console.log("API 서버 저장 완료");
       });
@@ -81,7 +79,7 @@ export const completePayment = async (order: PaymentType) => {
 export const addAddress = async (addresses: AddressType) => {
   try {
     await axios
-      .post("http://localhost:8080/api/v1/addresses", addresses)
+      .post(`${BASE_URL}/addresses`, addresses)
       .then((res) => {
         console.log(res.data);
       });
