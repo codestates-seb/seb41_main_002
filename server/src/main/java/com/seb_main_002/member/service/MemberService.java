@@ -1,5 +1,6 @@
 package com.seb_main_002.member.service;
 
+import com.seb_main_002.cart.entity.Cart;
 import com.seb_main_002.exception.BusinessLogicException;
 import com.seb_main_002.exception.ExceptionCode;
 import com.seb_main_002.item.repository.ItemRepository;
@@ -107,6 +108,9 @@ public class MemberService {
         subscribe.setIsSubscribed(false);
         subscribe.setSampleCount(0);
         member.setSubscribe(subscribe);
+        //카트 생성 후 저장
+        Cart cart = new Cart();
+        member.setCart(cart);
         memberRepository.save(member);
         return member;
     }
