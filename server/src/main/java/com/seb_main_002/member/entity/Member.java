@@ -8,10 +8,15 @@ import com.seb_main_002.review.entity.Review;
 import com.seb_main_002.subscribe.entity.Subscribe;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -57,6 +62,14 @@ public class Member extends Auditable {
 
     @OneToMany(mappedBy = "member", cascade = {CascadeType.ALL})
     private List<Order> orders = new ArrayList<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
+    public enum memberRole{
+        ROLE_USER,
+        ROLE_ADMIN
+    }
 
     public void setReviews(Review review) {
         this.reviews.add(review);
