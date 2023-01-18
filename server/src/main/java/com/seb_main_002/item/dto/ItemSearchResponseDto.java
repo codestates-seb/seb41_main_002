@@ -8,6 +8,9 @@ import java.util.List;
 @Builder
 @Getter
 public class ItemSearchResponseDto {
+
+    MemberTagInfo member;
+
     List<SearchItemDto> cosmetics;
 
     @Builder
@@ -20,6 +23,12 @@ public class ItemSearchResponseDto {
         private String titleImageURL;
         private Integer price;
         private List<String> tagsList;
+    }
+
+    @Builder
+    @Getter
+    public static class MemberTagInfo{
+        private List<String> memberTagsList = null;
     }
 
 }

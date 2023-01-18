@@ -4,6 +4,7 @@ import com.seb_main_002.item.dto.*;
 import com.seb_main_002.item.entity.Item;
 import com.seb_main_002.item.mapper.ItemMapper;
 import com.seb_main_002.item.service.ItemService;
+import com.seb_main_002.member.service.MemberService;
 import com.seb_main_002.review.entity.Review;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,10 +23,12 @@ import java.util.stream.Collectors;
 public class ItemController {
 
     private final ItemService itemService;
+    private final MemberService memberService;
     private final ItemMapper mapper;
 
-    public ItemController(ItemService itemService, ItemMapper mapper) {
+    public ItemController(ItemService itemService, MemberService memberService, ItemMapper mapper) {
         this.itemService = itemService;
+        this.memberService = memberService;
         this.mapper = mapper;
     }
 
@@ -49,9 +53,16 @@ public class ItemController {
 
 
     @GetMapping("/toplist/{categoryENName}")
-    public ResponseEntity getTopItems(@PathVariable("categoryENName") String categoryENName){
+    public ResponseEntity getTopItems(@PathVariable("categoryENName") String categoryENName,
+                                      @RequestParam(required = false) Boolean custom){
+        if(custom == null) custom = false;
 
-        List<Item> items = itemService.findTopListItems(categoryENName,0,10);
+        List<String> memberTagsList = new ArrayList<>(List.of("건성", "일반피부"));
+        //List<String> memberTagsList = memberService.getLoginUserWithToken().getTagList() == null?null:memberService.getLoginUserWithToken().getTagList();
+        //위에서 호출하는곳에서 로그인안되있을때 null 반납하게해야함. 이곳에 코드가 길어질예정
+
+        List<Item> items = itemService.findTopListItems(categoryENName,custom,memberTagsList);
+
         List<ItemTopListResponseDto.TopItemDto> topItemDtos = items.stream()
                 .map(item -> ItemTopListResponseDto.TopItemDto.builder()
                         .itemId(item.getItemId())
@@ -65,8 +76,13 @@ public class ItemController {
                         .build())
                 .collect(Collectors.toList());
 
+        ItemSearchResponseDto.MemberTagInfo memberTagInfo = ItemSearchResponseDto.MemberTagInfo.builder()
+                .memberTagsList(memberTagsList)
+                .build();
+
         ItemTopListResponseDto response = ItemTopListResponseDto.builder()
                 .topList(topItemDtos)
+                .member(memberTagInfo)
                 .build();
 
         return new ResponseEntity<>(response,HttpStatus.OK);
@@ -123,7 +139,12 @@ public class ItemController {
         if(title == null) title = "";
         page -= 1;
 
-        List<Item> items = itemService.findFilteredItems(categoryENName, custom, title, page);
+
+        List<String> memberTagsList = new ArrayList<>(List.of("건성", "일반피부"));
+        //List<String> memberTagsList = memberService.getLoginUserWithToken().getTagList() == null?null:memberService.getLoginUserWithToken().getTagList();
+        //위에서 호출하는곳에서 로그인안되있을때 null 반납하게해야함. 이곳에 코드가 길어질예정
+
+        List<Item> items = itemService.findFilteredItems(categoryENName, custom, title, page, memberTagsList);
 
         List<ItemSearchResponseDto.SearchItemDto> searchItemDtos = items.stream()
                 .map(item -> ItemSearchResponseDto.SearchItemDto.builder()
@@ -137,9 +158,15 @@ public class ItemController {
                         .build())
                 .collect(Collectors.toList());
 
+        ItemSearchResponseDto.MemberTagInfo memberTagInfo = ItemSearchResponseDto.MemberTagInfo.builder()
+                .memberTagsList(memberTagsList)
+                .build();
+
         ItemSearchResponseDto response = ItemSearchResponseDto.builder()
                 .cosmetics(searchItemDtos)
+                .member(memberTagInfo)
                 .build();
+
 
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
