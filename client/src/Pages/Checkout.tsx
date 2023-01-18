@@ -59,7 +59,7 @@ export default function Checkout() {
   const [checkedList, setCheckedList] = useState<AddressType>();
   const { itemsTotalPrice, totalPrice, excludingPoints, itemListArray } =
     itemsCalculation(useReserve, memberInfo && memberInfo["isSubscribe"]);
-  const addressChoice = checkedList && checkedList?.addressId > 0
+  const isAdressEmpty = checkedList && checkedList?.addressId > 0
   // 더미 데이터
   const memberId: number = 1;
 
@@ -203,7 +203,7 @@ export default function Checkout() {
             </div>
           </div>
         </div>
-        {addressChoice ? (
+        {isAdressEmpty ? (
           memberInfo && (
             <AddressDetail
               memberName={memberInfo.memberName}

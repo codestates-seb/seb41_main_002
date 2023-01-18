@@ -39,7 +39,7 @@ const Input = styled.input<{ width: string }>`
 `;
 
 const NewAddress = () => {
-  const [addressAll, setAddressAll] = useState({
+  const [addressInfo, setAddressInfo] = useState({
     shippingAddress: "",
     zipcode: "",
     address: ""
@@ -49,9 +49,9 @@ const NewAddress = () => {
     const addressSheet = {
       memberId: 1,
       isPrimary: false,
-      addressTitle: addressAll.shippingAddress,
-      zipcode: addressAll.zipcode,
-      address: addressAll.address,
+      addressTitle: addressInfo.shippingAddress,
+      zipcode: addressInfo.zipcode,
+      address: addressInfo.address,
     };
     addAddress(addressSheet).then((res) => {
       console.log(res);
@@ -60,7 +60,7 @@ const NewAddress = () => {
 
   const onChangeAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
-    setAddressAll({ ...addressAll, [name]: value });
+    setAddressInfo({ ...addressInfo, [name]: value });
   };
 
   return (
@@ -71,7 +71,7 @@ const NewAddress = () => {
           type="text"
           className="textBox"
           name="shippingAddress"
-          value={addressAll.shippingAddress}
+          value={addressInfo.shippingAddress}
           onChange={onChangeAddress}
           placeholder="배송지명을 입력하세요"
         />
@@ -83,7 +83,7 @@ const NewAddress = () => {
           className="textBox"
           width={"130px"}
           name="zipcode"
-          value={addressAll.zipcode}
+          value={addressInfo.zipcode}
           onChange={onChangeAddress}
           onClick={() => {
             console.log("주소 입력");
@@ -99,7 +99,7 @@ const NewAddress = () => {
           className="textBox"
           width={"375px"}
           name="address"
-          value={addressAll.address}
+          value={addressInfo.address}
           onChange={onChangeAddress}
           onClick={() => {
             console.log("주소 입력");
