@@ -3,7 +3,7 @@ import axios from "axios";
 // 로그인 연동이 안 되어 있기 때문에 현재 수동으로 입력
 // 이후 로그인 연동 이후 해당 데이터 삭제
 const accessToken =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50SWQiOiJzaGltNTUwNSIsInJvbGVzIjpbIlVTRVIiXSwibWVtYmVySWQiOjEsInN1YiI6InNoaW01NTA1IiwiaWF0IjoxNjc0MDU1Mjk3LCJleHAiOjE2NzQwNTY0OTd9.zvN0y40ddFP5FuxDBBgUTAJgdUC0pLmuSnSay_AAuUM";
+  "eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50SWQiOiJzaGltNTUwNSIsInJvbGVzIjpbIlVTRVIiXSwibWVtYmVySWQiOjEsInN1YiI6InNoaW01NTA1IiwiaWF0IjoxNjc0MDYxODkxLCJleHAiOjE2NzQwNjMwOTF9.5Rb5W8AAYEOKRZ_QLJJCp4kJyC8IiulmnZEm52IeO7s";
 
 export interface AddressType {
   addressId: number;

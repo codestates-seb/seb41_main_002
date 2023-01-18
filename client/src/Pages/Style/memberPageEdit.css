@@ -5,24 +5,29 @@
   flex-direction: column;
 }
 
+.Edit_Page_Title {
+  margin: 20px 0 30px 0;
+}
+
 .Member_Infomation_Contents {
-  border: 1px solid blue;
   height: 100%;
-  width: 900px;
+  width: 700px;
+  font-size: 19px;
+}
+
+.Info_Wrapper {
+  width: 40%;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .Info_Title {
-  position: absolute;
-  left: 340px;
+  width: 17.5%;
+  margin-left: 200px;
 }
 
 .Info_Content {
-  display: flex;
-  justify-content: center;
-}
-
-.Address_Add_Button {
-  color: blue;
+  width: 40%;
 }
 
 .Edit_Type_Container {
@@ -41,9 +46,8 @@
 
 .Subscribe_Edit_Container {
   margin-top: 30px;
-  width: 900px;
+  width: 700px;
   height: 100%;
-  background-color: rgb(38, 104, 162);
 }
 
 .Subscribe_Start_Date {
@@ -55,7 +59,7 @@
   display: flex;
 }
 
-.Address_Contents{
+.Address_Contents {
   display: flex;
 }
 
@@ -63,4 +67,3 @@
   display: flex;
   justify-content: flex-end;
 }
-
