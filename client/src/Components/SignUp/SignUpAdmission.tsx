@@ -2,15 +2,9 @@ import { signUp } from "../../API/SignUp";
 import { Dispatch, SetStateAction } from "react";
 import "../Style/signUp.css";
 import { useNavigate } from "react-router-dom";
+import { MemberType } from "../../API/SignUp";
 
-interface MemberType {
-  accountID: string;
-  password: string;
-  memberName: string;
-  birthDate: string;
-  email: string;
-  phoneNumber: string;
-}
+
 
 const SignUpAdmission = ({
   Member,

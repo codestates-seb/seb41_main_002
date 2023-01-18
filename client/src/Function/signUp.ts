@@ -1,14 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { doubleCheck } from "../API/SignUp";
-
-interface MemberType {
-  accountID: string;
-  password: string;
-  memberName: string;
-  birthDate: string;
-  email: string;
-  phoneNumber: string;
-}
+import { MemberType } from "../API/SignUp";
 
 export const onEmailRegex = (email: string) => {
   //이메일 정규식

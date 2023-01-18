@@ -8,18 +8,10 @@ import {
   onIdDoubleCheck,
   onPasswordConfirm,
 } from "../Function/signUp";
+import { MemberType } from "../API/SignUp";
 import "./Style/memberAccess.css";
 
 const SignUp = () => {
-  interface MemberType {
-    accountID: string;
-    password: string;
-    memberName: string;
-    birthDate: string;
-    email: string;
-    phoneNumber: string;
-  }
-
   //회원가입 정보
   const [Member, setMember] = useState<MemberType>({
     accountID: "",

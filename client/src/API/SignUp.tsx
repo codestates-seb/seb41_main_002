@@ -1,6 +1,6 @@
 import axios from "axios";
 
-interface MemberType {
+export interface MemberType {
   accountID: string;
   password: string;
   memberName: string;
