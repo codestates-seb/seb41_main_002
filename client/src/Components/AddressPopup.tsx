@@ -14,13 +14,10 @@ export default function AddressPopup() {
     phoneNumber: "",
   });
   const [isPrimary, setIsPrimary] = useState(false);
-  const [recipient, setRecipient] = useState("");
   const [address, setAddress] = useState("");
+  const [zipcode, setZipcode] = useState("");
   const [detailedAddress, setDetailedAddress] = useState("");
   const [combinedAddress, setCombinedAddres] = useState("");
-  const [addressTitle, setAddressTitle] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
 
   useEffect(() => {
     const wholeAddress = address + detailedAddress;
@@ -53,10 +50,9 @@ export default function AddressPopup() {
     data.preventDefault();
   };
 
-  const handleAddressTitle: React.ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
-    setAddressTitle(event.target.value);
+  const userAddressHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    setUserAddress({ ...userAddress, [name]: value });
   };
 
   const handleDetailedAddress: React.ChangeEventHandler<HTMLInputElement> = (
@@ -65,27 +61,15 @@ export default function AddressPopup() {
     setDetailedAddress(event.target.value);
   };
 
-  const handleRecipient: React.ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
-    setRecipient(event.target.value);
-  };
-
-  const handlePhoneNumber: React.ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
-    setPhoneNumber(event.target.value);
-  };
-
   const handleSubmit = (event: { preventDefault: () => void }) => {
     const newAddressInfo = {
       addressId: 1,
       isPrimary: isPrimary,
-      recipient: recipient,
-      addressTitle: addressTitle,
+      recipient: userAddress.recipient,
+      addressTitle: userAddress.addressTitle,
       zipcode: zipcode,
       address: combinedAddress,
-      phoneNumber: phoneNumber,
+      phoneNumber: userAddress.phoneNumber,
     };
     console.log(newAddressInfo);
     event.preventDefault();
@@ -101,18 +85,20 @@ export default function AddressPopup() {
             <label htmlFor="">배송지명 </label>
             <input
               type="text"
-              value={addressTitle}
+              value={userAddress.addressTitle}
+              name="addressTitle"
               className="Form_Input Address_Type_Field"
-              onChange={handleAddressTitle}
+              onChange={userAddressHandler}
             />
           </div>
           <div className="Modal_Field">
             <label htmlFor="">수령인 </label>
             <input
               type="text"
-              value={recipient}
+              value={userAddress.recipient}
+              name="recipient"
               className="Form_Input Address_Type_Field"
-              onChange={handleRecipient}
+              onChange={userAddressHandler}
             />
           </div>
           <div className="Modal_Field">
@@ -156,12 +142,13 @@ export default function AddressPopup() {
             <input
               type="text"
               maxLength={13}
-              value={phoneNumber
+              value={userAddress.phoneNumber
                 .replace(/[^0-9]/g, "")
                 .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
                 .replace(/(\-{1,2})$/g, "")}
+              name="phoneNumber"
               className="Form_Input Address_Type_Field"
-              onChange={handlePhoneNumber}
+              onChange={userAddressHandler}
             />
           </div>
           <div className="Modal_Form_Buttons">
@@ -175,7 +162,11 @@ export default function AddressPopup() {
               />
               <label htmlFor="setPrimary">대표 주소로 설정</label>
             </div>
-            <input type="submit" className="Submit_Button" />
+            <input
+              type="submit"
+              className="Submit_Button"
+              onClick={handleSubmit}
+            />
           </div>
         </div>
       )}
