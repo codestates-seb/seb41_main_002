@@ -1,6 +1,6 @@
 import axios from "axios";
 
-interface MemberType {
+export interface MemberType {
   accountID: string;
   password: string;
   memberName: string;
@@ -16,14 +16,12 @@ export const doubleCheck = async (accountID: string) => {
   try {
     const response = await axios.get(
       `${BASE_URL}/idcheck/${accountID}`
-    ).then(() => {
-      //중복이 아님
-      return true;
+    ).then((res) => {
+      return res;
     })
     return response
   } catch (error) {
-    //중복임
-    return false;
+    console.error(error)
   }
 };
 
@@ -31,7 +29,6 @@ export const doubleCheck = async (accountID: string) => {
 export const signUp = async (memberData: MemberType) => {
   try {
     let dateChange = memberData.birthDate.replace(/\-/gi, "/");
-    console.log(dateChange);
     const setMemberData = {
       ...memberData,
       birthDate: dateChange,
