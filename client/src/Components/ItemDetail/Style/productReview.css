@@ -1,0 +1,51 @@
+.Item_Reviews {
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+  height: 980px;
+  background-color: var(--gray);
+  border: 1px solid black;
+}
+
+.Review_Section_Title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid black;
+  height: 60px;
+}
+
+.Review_User_Info{
+  display: flex;
+  justify-content: space-between;
+}
+
+.Review_User_Info > span{
+  margin-right: 8px;
+}
+
+.Review_Title_Content{
+  display: flex;
+}
+
+.Review_Title_Content > span{
+  margin-right: 10px;
+}
+
+.Review_Main_Text{
+  margin-top: 10px;
+}
+
+.Review_Container > li {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  height: 50px;
+  border-bottom: 1px solid black;
+  font-size: 21px;
+}
+
+.Title_Content{
+  cursor: pointer;
+}

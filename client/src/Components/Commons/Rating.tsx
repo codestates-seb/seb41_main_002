@@ -53,7 +53,7 @@ const RatingBox = styled.div<RatingStyleType>`
   //   ratingSetting={ratingSetting}
   // />
 
-const Rating = (props: RatingProps) => {
+export const Rating = (props: RatingProps) => {
   const ratingClickEdit = (rating: number) => {
     if (props.ratingSetting.ratingEdit) {
       props.setStarRating?.(rating)
@@ -102,5 +102,3 @@ const Rating = (props: RatingProps) => {
     </RatingBox>
   );
 };
-
-export default Rating;

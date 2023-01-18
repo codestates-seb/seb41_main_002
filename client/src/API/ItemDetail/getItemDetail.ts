@@ -1,29 +1,31 @@
 import axios from "axios";
 
+interface ItemType {
+  itemId: number;
+  itemTitle: string;
+  categoryKRName: string;
+  titleImageURL: string;
+  contentImageURL: string;
+  content: string;
+  price: number;
+  tagList: string[];
+  rating: number;
+}
+
+export interface ReviewType {
+  memberId: number;
+  accountId: string;
+  reviewId: number;
+  reviewTitle: string;
+  reviewContent: string;
+  createdAt: string;
+  modifiedAt: string;
+  reviewRating: number;
+}
+
 export interface ItemDetailData {
-  itemInfo: {
-    itemId: number;
-    itemTitle: string;
-    categoryKRName: string;
-    titleImageURL: string;
-    contentImageURL: string;
-    content: string;
-    price: number;
-    tagList: string[];
-    rating: number;
-  };
-  reviews: [
-    {
-      memberId: number;
-      accountId: string;
-      reviewId: number;
-      reviewTitle: string;
-      reviewContent: string;
-      createdAt: string;
-      modifiedAt: string;
-      reviewRating: number;
-    }
-  ];
+  itemInfo: ItemType
+  reviews?: ReviewType[];
 }
 
 export default function getItemDetail(

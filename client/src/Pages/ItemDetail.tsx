@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import EmptyReviewContainer from "../Components/ItemDetail/EmptyReviewContainer";
 import getItemDetail from "../API/ItemDetail/getItemDetail";
 import ProductInfo from "../Components/ItemDetail/productInfo";
 import { ItemDetailData } from "../API/ItemDetail/getItemDetail";
 import { useParams } from "react-router-dom";
+import ProductReview from "../Components/ItemDetail/ProductReview";
 import "./Style/itemDetail.css";
-
-const ProductList = styled.li<{ height?: string }>`
-  display: flex;
-  width: 100%;
-  height: ${(props) => (props.height ? props.height : "11%")};
-  border-bottom: 1px solid black;
-`;
 
 const ItemDetail = () => {
   let { itemId } = useParams();
@@ -25,11 +19,10 @@ const ItemDetail = () => {
     null
   );
 
-  console.log(detailPageData?.itemInfo)
-  
   useEffect(() => {
     productDetailData();
   }, []);
+
 
   return (
     <div className="Detail_Container">
@@ -47,11 +40,7 @@ const ItemDetail = () => {
         <button>장바구니에 추가</button>
         <button>바로 구매</button>
       </div>
-      <div className="Item_Reviews">
-        <ul>
-          <li>리뷰1</li>
-        </ul>
-      </div>
+      {detailPageData?.reviews&&detailPageData.reviews.length !==0 ?<ProductReview reviewsInfo={detailPageData?.reviews}/> :<EmptyReviewContainer/>}
     </div>
   );
 };

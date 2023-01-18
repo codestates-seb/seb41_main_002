@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
+  margin-top: 30px;
 }
 
 .Item_Container {
@@ -52,5 +53,15 @@
   width: 100%;
   max-width: 1024px;
   margin: 0 auto;
-  background-color: lightgreen;
+  height: 980px;
+  background-color: var(--gray);
+  border: 1px solid black;
+}
+
+.Review_Section_Title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid black;
+  height: 60px;
 }

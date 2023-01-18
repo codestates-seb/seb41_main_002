@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Rating from "../Commons/Rating";
+import { Rating } from "../Commons/Rating";
 import { SkinTag } from "../Commons/TypeBadge";
-import "./Style/productInfo.css"
+import "./Style/productInfo.css";
 
 const ProductList = styled.li<{ height?: string }>`
   display: flex;
@@ -54,8 +54,7 @@ interface Props {
 }
 
 export default function ProductInfo(props: Props) {
-  const ratingCount = props.productInfo?.rating as number
-  console.log(props.productInfo);
+  const ratingCount = props.productInfo?.rating as number;
   return (
     <>
       <ul className="Item_Described">
