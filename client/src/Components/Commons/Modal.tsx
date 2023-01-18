@@ -63,7 +63,7 @@ interface ModalProps {
 //const [modalState, setModalState] = useState(false);
 //모달 컴포넌트 사용
 //{modalState ? <Modal modalState={modalState} setModalState={setModalState} element={<모달 안에 들어갈 컴포넌트/>}/> : null}
-//클릭시 modalState를 true로 변경하는건 각자 만들어야합니다. 
+//클릭시 modalState를 true로 변경하는건 각자 만들어야합니다.
 
 const Modal = (props: ModalProps) => {
   const modalClose = () => {

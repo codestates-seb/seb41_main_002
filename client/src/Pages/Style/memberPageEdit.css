@@ -66,7 +66,6 @@
 
 .Address_Modal {
   width: 600px;
-  height: 450px;
   padding: 0 5px;
   text-align: center;
 }
@@ -80,6 +79,7 @@
   height: 75px;
   width: 100%;
   display: flex;
+  justify-content: space-evenly;
   align-items: center;
   font-size: 19px;
 }
@@ -88,16 +88,22 @@
   width: 100px;
 }
 
-.Address_Input {
+.Form_Input {
   height: 40px;
   border-radius: 0px;
   background-color: white;
   color: black;
+  font-size: 17px;
+}
+
+.Address_Zipcode {
+  width: 25%;
+  text-align: center;
 }
 
 .Address_Search_Bar {
   width: 65%;
-  margin-right: 10px;
+  text-align: center;
 }
 
 .Address_Type_Field {
@@ -110,5 +116,15 @@
   padding: 10px;
   font-size: 17px;
   width: 100px;
-  margin: 0 auto;
+}
+
+.Modal_Form_Buttons {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 19px;
+}
+
+.Modal_Form_Buttons input[type="checkbox"] {
+  margin-right: 5px;
 }

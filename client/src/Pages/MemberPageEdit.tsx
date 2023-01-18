@@ -52,6 +52,7 @@ const AddressEditContainer = styled.div`
 
 export default function MemberPageEdit() {
   const [modalState, setModalState] = useState(false);
+
   const openModal = () => {
     setModalState(true);
   };
