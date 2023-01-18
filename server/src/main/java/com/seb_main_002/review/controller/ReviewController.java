@@ -6,19 +6,27 @@ import com.seb_main_002.review.dto.ReviewResponseDto;
 import com.seb_main_002.review.entity.Review;
 import com.seb_main_002.review.mapper.ReviewMapper;
 import com.seb_main_002.review.service.ReviewService;
+import com.seb_main_002.security.jwt.JwtVerificationFilter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/reviews")
 public class ReviewController {
     private final ReviewMapper mapper;
     private final ReviewService reviewService;
+    private final JwtVerificationFilter jwtVerificationFilter;
 
-    public ReviewController(ReviewMapper mapper, ReviewService reviewService) {
+    public ReviewController(ReviewMapper mapper,
+                            ReviewService reviewService,
+                            JwtVerificationFilter jwtVerificationFilter) {
         this.mapper = mapper;
         this.reviewService = reviewService;
+        this.jwtVerificationFilter = jwtVerificationFilter;
     }
 
     @PostMapping
@@ -47,9 +55,12 @@ public class ReviewController {
     }
 
     @GetMapping("/item/{itemId}")
-    public ResponseEntity getReviewItem(@PathVariable Long itemId) {
-        // memberId는 stub으로 고정, 추후 tokent에서 memberId를 꺼낼 수 있게 되면 해당 기능 구현 예정
-        ReviewResponseDto.ReviewItemDto reviewItem = reviewService.findReviewItem(itemId, (long) 1);
+    public ResponseEntity getReviewItem(@PathVariable Long itemId,
+                                        HttpServletRequest request) {
+        Map<String, Object>  response = jwtVerificationFilter.verifyJws(request);
+        Long memberId = ((Number)response.get("memberId")).longValue();
+
+        ReviewResponseDto.ReviewItemDto reviewItem = reviewService.findReviewItem(itemId, memberId);
 
         return new ResponseEntity<> (reviewItem, HttpStatus.OK);
     }
