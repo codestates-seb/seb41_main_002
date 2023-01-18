@@ -119,6 +119,8 @@ public class MemberService {
         Subscribe subscribe = new Subscribe();
         subscribe.setIsSubscribed(false);
         subscribe.setSampleCount(0);
+        subscribe.setReserveProfit(0);
+        subscribe.setTotalDeliveryDiscount(0);
         member.setSubscribe(subscribe);
         //카트 생성 후 저장
         Cart cart = new Cart();
@@ -126,22 +128,8 @@ public class MemberService {
         memberRepository.save(member);
         return member;
     }
+
     @Transactional
-    public String delegateAccessToken(Member member) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("memberId", member.getMemberId());
-        claims.put("accountId", member.getAccountId());
-        claims.put("roles",member.getRoles());
-        String subject = member.getAccountId();
-        Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
-
-        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-
-        String accessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
-
-        return accessToken;
-    }
-
     public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String refreshToken = request.getHeader("Refresh");
 
@@ -150,7 +138,7 @@ public class MemberService {
         }
         // redis에서 refreshToken 삭제
         redisService.deleteRefreshToken(refreshToken);
-        String accessToken = request.getHeader("Authorization");
+        String accessToken = request.getHeader("Authorization").replace("Bearer ", "");
         if (!StringUtils.hasText(accessToken)) {
             ErrorResponder.sendErrorResponse(response, HttpStatus.BAD_REQUEST);
         }

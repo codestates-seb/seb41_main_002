@@ -1,14 +1,20 @@
 package com.seb_main_002.security.jwt;
 
+import com.seb_main_002.exception.BusinessLogicException;
+import com.seb_main_002.exception.ExceptionCode;
 import com.seb_main_002.member.repository.MemberRepository;
+import com.seb_main_002.security.redis.RedisService;
 import com.seb_main_002.security.util.CustomAuthorityUtils;
+import com.seb_main_002.security.util.ErrorResponder;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -27,7 +33,7 @@ import java.util.Objects;
 public class JwtVerificationFilter extends OncePerRequestFilter {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
-
+    private final RedisService redisService;
     // 예외 처리 로직 -> 예외 발생시 SecurityContext에 Authentication 저장X
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -46,7 +52,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     }
 
 
-    // 특정 조건에 부합하면(true이면) 해당 Filter의 동작을 수행하지 않고 다음 Filter로 건너뛰도록
+    // 특정 조건에 부합하면(true이면) 해당 Filter의 동작을 수행하지 않고 다음 Filter로 건너뛰도록 -> accessToken이 없다면 필터를 넘긴다.
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String authorization = request.getHeader("Authorization");
@@ -57,6 +63,10 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     // Header에 있는 jwt 중 claims를 얻음
     public Map<String, Object> verifyJws(HttpServletRequest request) {
         String jws = request.getHeader("Authorization").replace("Bearer ", "");
+        // 만약 블랙리스트로 등록되어있다면 에러발생
+        if (StringUtils.hasText(redisService.getAccessToken(jws))) {
+            throw new BusinessLogicException(ExceptionCode.NOT_IMPLEMENTATION);
+        }
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
         Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody();
 
