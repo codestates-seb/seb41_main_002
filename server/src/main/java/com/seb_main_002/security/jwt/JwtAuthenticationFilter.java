@@ -1,13 +1,14 @@
 package com.seb_main_002.security.jwt;
 
+import antlr.Token;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seb_main_002.member.entity.Member;
-import com.seb_main_002.security.CustomUserDetailsService;
 import com.seb_main_002.security.dto.LoginDto;
-import com.seb_main_002.security.redis.JwtRefreshToken;
-import com.seb_main_002.security.redis.JwtRefreshTokenRepository;
+import com.seb_main_002.security.redis.RedisService;
+import com.seb_main_002.security.util.ErrorResponder;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,7 +28,8 @@ import java.util.Map;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
-    private final JwtRefreshTokenRepository refreshTokenRepository;
+
+    private final RedisService redisService;
 
     // (3) 인증 시도 로직 username,password -> LoginDto -> authenticationToken -> authenticationManager에게 인증 위임
     @SneakyThrows
@@ -36,7 +38,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         ObjectMapper objectMapper = new ObjectMapper();
         LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
-
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getAccountId(), loginDto.getPassword());
@@ -58,22 +59,22 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh",refreshToken);
 
-//        Cookie cookie = new Cookie("Authorization", accessToken);
-//        Cookie cookie_2 = new Cookie("Refresh", refreshToken);
-//
-//        cookie.setPath("/");
-//        cookie.setMaxAge(1000 * 60 * 60*6);
-//        cookie.setHttpOnly(true);
-//        response.addCookie(cookie);
-//
-//        cookie_2.setPath("/");
-//        cookie_2.setMaxAge(1000 * 60 * 60*24);
-//        cookie_2.setHttpOnly(true);
-//
-//        response.addCookie(cookie_2);
-//        response.setStatus(200);
+        // redis에 refreshToken저장
+        if (redisService.getRefreshToken(refreshToken) == null) {
+            redisService.setRefreshToken(refreshToken, member.getAccountId(),jwtTokenizer.getRefreshTokenExpirationMinutes());
+        }
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+
+        TokenInfo tokenInfo = TokenInfo.builder()
+                .accessToken("Bearer " + accessToken)
+                .refreshToken(refreshToken)
+                .build();
+        ObjectMapper objectMapper = new ObjectMapper();
+        response.getWriter().write(objectMapper.writeValueAsString(tokenInfo));
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
+
     }
 
     public String delegateAccessToken(Member member) {
@@ -98,8 +99,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
         String refreshToken = jwtTokenizer.generateRefreshToken(subject,expiration, base64EncodedSecretKey);
-        JwtRefreshToken jwtRefreshToken = new JwtRefreshToken(refreshToken, subject);
-        //refreshTokenRepository.save(jwtRefreshToken); 로그아웃 및 재발급 위해 필요한 코드 서버배포 테스트를 위해 일단 주석처리
         return refreshToken;
     }
 

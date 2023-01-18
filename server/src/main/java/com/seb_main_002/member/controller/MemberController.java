@@ -8,10 +8,7 @@ import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.member.mapper.MemberMapper;
 import com.seb_main_002.member.repository.MemberRepository;
 import com.seb_main_002.member.service.MemberService;
-import com.seb_main_002.security.jwt.JwtTokenizer;
 import com.seb_main_002.security.jwt.JwtVerificationFilter;
-import com.seb_main_002.security.redis.JwtRefreshToken;
-import com.seb_main_002.security.redis.JwtRefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -32,7 +29,6 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberMapper mapper;
     private final JwtVerificationFilter jwtVerificationFilter;
-    private final JwtRefreshTokenRepository jwtRefreshTokenRepository;
 
     @PatchMapping("/members/{memberId}/subscribe")
     public ResponseEntity subscribe(@PathVariable("memberId") Long memberId,
@@ -86,12 +82,14 @@ public class MemberController {
     @GetMapping("/user/access-token")
     public ResponseEntity accessToken(HttpServletRequest request) {
         String accessToken = "";
-
         accessToken = request.getHeader("Authorization");
         if ((!accessToken.equals(""))) {
             try {
-                response = jwtVerificationFilter.verifyJws(request);
-                return new ResponseEntity(response, HttpStatus.OK);
+                Map<String, Object> claims = jwtVerificationFilter.verifyJws(request);
+                Map<String, Object> response = new HashMap<>();
+                response.put("accountId",claims.get("accountId"));
+                response.put("memberId",claims.get("memberId"));
+                return new ResponseEntity(response,HttpStatus.OK);
 
             } catch (Exception e) {
                 return new ResponseEntity(HttpStatus.UNAUTHORIZED);
@@ -100,31 +98,15 @@ public class MemberController {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
     }
-//    @PostMapping("/user/refresh-token")
-//    public ResponseEntity refreshToken(HttpServletRequest request,HttpServletResponse response) {
-//        String refreshToken = "";
-//        refreshToken = request.getHeader("Authorization");
-//        if ((!refreshToken.equals(""))) {
-//            try {
-//                JwtRefreshToken jwtRefreshToken = jwtRefreshTokenRepository.findById(refreshToken)
-//                        .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_IMPLEMENTATION));
-//                String accountId = jwtRefreshToken.getAccountId();
-//                Member member = memberRepository.findByAccountId(accountId).get();
-//                String accessToken = memberService.delegateAccessToken(member);
-//                response.setHeader("Authorization", "Bearer " + accessToken);
-//                return new ResponseEntity(response, HttpStatus.OK);
-//
-//            } catch (Exception e) {
-//                return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-//            }
-//        } else {
-//            return new ResponseEntity(HttpStatus.FORBIDDEN);
-//        }
-//    }
     @GetMapping("/idcheck/{accountId}")
     public ResponseEntity accountIdCheck(@PathVariable("accountId") String accountId) {
-       memberService.verifyExistsAccountId(accountId);
-        return new ResponseEntity(HttpStatus.OK);
+        Boolean aBoolean = memberService.verifyExistsAccountId(accountId);
+        return new ResponseEntity(aBoolean,HttpStatus.OK);
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+       memberService.logout(request,response);
+       return new ResponseEntity(HttpStatus.OK);
+    }
 }

@@ -25,10 +25,10 @@ public class CartItem extends Auditable {
     private Item item;
 
     @Column(nullable = false)
-    private Integer itemCount;
+    private Integer itemCount = 1;
 
     @Column(nullable = false)
-    private Integer itemTotalPrice;
+    private Integer itemTotalPrice = 0;
 
 
 }

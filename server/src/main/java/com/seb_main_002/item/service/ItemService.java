@@ -61,25 +61,41 @@ public class ItemService {
 
 
     //상위 10개만 출력
-    public List<Item> findTopListItems(String categoryENName,int page,int size){
+    public List<Item> findTopListItems(String categoryENName, Boolean custom, List<String> memberTagsList){
+        if(categoryENName.equals("all")) categoryENName = "";
         Page<Item> findItems;
-        if(categoryENName.equals("all")) {
-            findItems = itemRepository.findAll(PageRequest.of(page, size, Sort.by("salesCount").descending()));
+        if(custom == false) {
+            findItems = itemRepository.findAllByCategoryENNameStartingWith(categoryENName, PageRequest.of(0, 10, Sort.by("salesCount").descending()));
         }
         else {
-            findItems = itemRepository.findAllByCategoryENName(categoryENName, PageRequest.of(0, 10, Sort.by("salesCount").descending()));
+            List<String> membertags = memberTagsList;
+            if(membertags == null || membertags.size() == 0)
+                throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED); //이게 응답까지 안날라고 내부적으로 발생한뒤 500쏨. 추후 문제해결할것.
+
+            String tag1="", tag2="";
+            if     (membertags.contains("건성")){ tag1 = "건성";}
+            else if(membertags.contains("지성")){ tag1 = "지성";}
+            else if(membertags.contains("복합성")){ tag1 = "복합성";}
+
+            if     (membertags.contains("일반피부")){ tag2 = "일반피부";}
+            else if(membertags.contains("여드름성 피부")){ tag2 = "여드름성 피부";}
+
+            findItems = itemRepository.findCustomTopListItem(tag1,tag2,categoryENName,PageRequest.of(0, 10, Sort.by("salesCount").descending()));
         }
         return findItems.getContent();
     }
 
-    public List<Item> findFilteredItems(String categoryENName, Boolean custom, String title, int page){
+    public List<Item> findFilteredItems(String categoryENName, Boolean custom, String title, int page, List<String> memberTagsList){
 
         Page<Item> findItems;
         if(custom == false){
             findItems = itemRepository.findAllByCategoryENNameStartingWithAndItemTitleContaining(categoryENName,title, PageRequest.of(page,18));
         }
         else{
-            List<String> membertags = memberRepository.findById(1L).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)).getTagList();
+            List<String> membertags = memberTagsList;
+            if(membertags == null || membertags.size() == 0)
+                throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED); //이게 응답까지 안날라고 내부적으로 발생한뒤 500쏨. 추후 문제해결할것.
+
             String tag1="", tag2="";
             if     (membertags.contains("건성")){ tag1 = "건성";}
             else if(membertags.contains("지성")){ tag1 = "지성";}

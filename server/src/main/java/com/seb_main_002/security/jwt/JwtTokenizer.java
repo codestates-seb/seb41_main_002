@@ -1,7 +1,5 @@
 package com.seb_main_002.security.jwt;
 
-import com.seb_main_002.member.repository.MemberRepository;
-import com.seb_main_002.security.redis.JwtRefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;

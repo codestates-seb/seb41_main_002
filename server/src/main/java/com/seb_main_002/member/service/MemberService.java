@@ -1,18 +1,26 @@
 package com.seb_main_002.member.service;
 
+import com.seb_main_002.cart.entity.Cart;
 import com.seb_main_002.exception.BusinessLogicException;
 import com.seb_main_002.exception.ExceptionCode;
 import com.seb_main_002.item.repository.ItemRepository;
 import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.member.repository.MemberRepository;
 import com.seb_main_002.security.jwt.JwtTokenizer;
+import com.seb_main_002.security.redis.RedisService;
 import com.seb_main_002.security.util.CustomAuthorityUtils;
+import com.seb_main_002.security.util.ErrorResponder;
 import com.seb_main_002.subscribe.entity.Subscribe;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -26,6 +34,7 @@ public class MemberService {
     private final CustomAuthorityUtils authorityUtils;
     private final JwtTokenizer jwtTokenizer;
 
+    private final RedisService redisService;
     @Transactional
     public void updateSubscribe(Long memberId, Boolean isSubScribed) {
         Member member = verifyMember(memberId);
@@ -66,11 +75,12 @@ public class MemberService {
             throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
         }
     }
-    public void verifyExistsAccountId(String accountId) {
+    public Boolean verifyExistsAccountId(String accountId) {
         Optional<Member> optionalMember = memberRepository.findByAccountId(accountId);
         if(optionalMember.isPresent()) {
-            throw new BusinessLogicException(ExceptionCode.ACCOUNTID_EXISTS);
+            return false;
         }
+        return true;
     }
 
     public Member findMember(Long memberId) {
@@ -95,7 +105,10 @@ public class MemberService {
     @Transactional
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
-        verifyExistsAccountId(member.getAccountId());
+        Boolean aBoolean = verifyExistsAccountId(member.getAccountId());
+        if(aBoolean == false) {
+            throw new BusinessLogicException(ExceptionCode.ACCOUNTID_EXISTS);
+        }
         //암호 인코딩 후 저장
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encryptedPassword);
@@ -106,23 +119,30 @@ public class MemberService {
         Subscribe subscribe = new Subscribe();
         subscribe.setIsSubscribed(false);
         subscribe.setSampleCount(0);
+        subscribe.setReserveProfit(0);
+        subscribe.setTotalDeliveryDiscount(0);
         member.setSubscribe(subscribe);
+        //카트 생성 후 저장
+        Cart cart = new Cart();
+        member.setCart(cart);
         memberRepository.save(member);
         return member;
     }
+
     @Transactional
-    public String delegateAccessToken(Member member) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("memberId", member.getMemberId());
-        claims.put("accountId", member.getAccountId());
-        claims.put("roles",member.getRoles());
-        String subject = member.getAccountId();
-        Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
+    public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String refreshToken = request.getHeader("Refresh");
 
-        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-
-        String accessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
-
-        return accessToken;
+        if (!StringUtils.hasText(refreshToken)) {
+            ErrorResponder.sendErrorResponse(response, HttpStatus.BAD_REQUEST);
+        }
+        // redis에서 refreshToken 삭제
+        redisService.deleteRefreshToken(refreshToken);
+        String accessToken = request.getHeader("Authorization").replace("Bearer ", "");
+        if (!StringUtils.hasText(accessToken)) {
+            ErrorResponder.sendErrorResponse(response, HttpStatus.BAD_REQUEST);
+        }
+        // redis에 accesstoken blackList로 등록
+        redisService.setAccessTokenLogout(accessToken, jwtTokenizer.getAccessTokenExpirationMinutes());
     }
 }

@@ -7,7 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
-    Page<Item> findAllByCategoryENName(String categoryENName, Pageable pageable);
+    Page<Item> findAllByCategoryENNameStartingWith(String categoryENName, Pageable pageable);
+
+    @Query(value = "SELECT i FROM Item i INNER JOIN i.tagList t WHERE t = :tag1 OR t = :tag2 AND i.categoryENName LIKE :categoryENName% GROUP BY i.itemId HAVING count(i.itemId)>1")
+    Page<Item> findCustomTopListItem(String tag1,String tag2, String categoryENName, Pageable pageable);
 
     Page<Item> findAllByCategoryENNameStartingWithAndItemTitleContaining(String categoryENName, String title, Pageable pageable);
 
