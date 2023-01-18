@@ -85,8 +85,11 @@ public class MemberController {
         accessToken = request.getHeader("Authorization");
         if ((!accessToken.equals(""))) {
             try {
-                response = jwtVerificationFilter.verifyJws(request);
-                return new ResponseEntity(response, HttpStatus.OK);
+                Map<String, Object> claims = jwtVerificationFilter.verifyJws(request);
+                Map<String, Object> response = new HashMap<>();
+                response.put("accountId",claims.get("accountId"));
+                response.put("memberId",claims.get("memberId"));
+                return new ResponseEntity(response,HttpStatus.OK);
 
             } catch (Exception e) {
                 return new ResponseEntity(HttpStatus.UNAUTHORIZED);
