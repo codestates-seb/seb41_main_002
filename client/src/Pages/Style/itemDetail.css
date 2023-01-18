@@ -40,8 +40,7 @@
 
 .Item_Submit {
   width: 100%;
-  max-width: 1024px;
-  margin: 0 auto;
+  display: flex;
 }
 
 .Item_Submit button {

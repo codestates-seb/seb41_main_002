@@ -49,3 +49,10 @@
 .Title_Content{
   cursor: pointer;
 }
+
+.Count_Handle_Container{
+  display: flex;
+  flex-direction: column;
+  margin-right: 15px;
+  cursor: pointer;
+}

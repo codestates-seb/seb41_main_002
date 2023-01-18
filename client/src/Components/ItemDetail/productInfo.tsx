@@ -51,6 +51,8 @@ interface ItemType {
 
 interface Props {
   productInfo?: ItemType;
+  productCount: number;
+  setProductCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function ProductInfo(props: Props) {
@@ -98,7 +100,23 @@ export default function ProductInfo(props: Props) {
             <span>구매 수량</span>
           </TitleContainer>
           <ContentsContainer>
-            <span>1개</span>
+            <div className="Count_Handle_Container">
+              <span
+                onClick={() => props.setProductCount(props.productCount + 1)}
+              >
+                🔼
+              </span>
+              {props.productCount === 0 ? (
+                <span>🔽</span>
+              ) : (
+                <span
+                  onClick={() => props.setProductCount(props.productCount - 1)}
+                >
+                  🔽
+                </span>
+              )}
+            </div>
+            <span>{props.productCount} 개</span>
           </ContentsContainer>
         </ProductList>
         <ProductList>
