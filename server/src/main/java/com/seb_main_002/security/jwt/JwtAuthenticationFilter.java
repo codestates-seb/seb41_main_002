@@ -1,5 +1,6 @@
 package com.seb_main_002.security.jwt;
 
+import antlr.Token;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.security.dto.LoginDto;
@@ -62,8 +63,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         if (redisService.getRefreshToken(refreshToken) == null) {
             redisService.setRefreshToken(refreshToken, member.getAccountId(),jwtTokenizer.getRefreshTokenExpirationMinutes());
         }
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+
+        TokenInfo tokenInfo = TokenInfo.builder()
+                .accessToken("Bearer " + accessToken)
+                .refreshToken(refreshToken)
+                .build();
+        ObjectMapper objectMapper = new ObjectMapper();
+        response.getWriter().write(objectMapper.writeValueAsString(tokenInfo));
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
+
     }
 
     public String delegateAccessToken(Member member) {
