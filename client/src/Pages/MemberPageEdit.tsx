@@ -1,6 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getMemberAddressData } from "../API/MemberPageEditAPI";
+import {
+  getMemberAddressData,
+  MemberPageDataType,
+} from "../API/MemberPageEditAPI";
 import "./Style/memberPageEdit.css";
 
 const MemberInfoContent = styled.li`
@@ -57,15 +60,19 @@ const session = {
 };
 
 export default function MemberPageEdit() {
-  // useEffect(() => {
-  //   try {
-  //     getMemberAddressData(session.memberId).then((res) => {
-  //       console.log(res);
-  //     });
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }, []);
+  const [memberAddressData, setMemberAddressData] = useState<
+    MemberPageDataType | undefined
+  >();
+
+  useEffect(() => {
+    try {
+      getMemberAddressData(session.memberId).then((res) => {
+        setMemberAddressData(res);
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
 
   return (
     // 추후 데이터 수정 예정
