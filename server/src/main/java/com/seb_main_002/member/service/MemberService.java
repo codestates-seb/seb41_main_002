@@ -104,7 +104,10 @@ public class MemberService {
     @Transactional
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
-        verifyExistsAccountId(member.getAccountId());
+        Boolean aBoolean = verifyExistsAccountId(member.getAccountId());
+        if(aBoolean == false) {
+            throw new BusinessLogicException(ExceptionCode.ACCOUNTID_EXISTS);
+        }
         //암호 인코딩 후 저장
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encryptedPassword);
