@@ -1,4 +1,4 @@
-package com.seb_main_002.errorHandler;
+package com.seb_main_002.error_handler;
 
 import com.seb_main_002.exception.BusinessLogicException;
 import org.springframework.http.HttpStatus;
