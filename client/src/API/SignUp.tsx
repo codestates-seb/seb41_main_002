@@ -14,12 +14,12 @@ export const doubleCheck = async (accountID: string) => {
   try {
     const response = await axios.get(
       `http://localhost:8080/api/v1/idcheck/${accountID}`
-    ).then(() => {
-      return true;
+    ).then((res) => {
+      return res;
     })
     return response
   } catch (error) {
-    return false;
+    console.error(error)
   }
 };
 
