@@ -44,7 +44,7 @@ export default function Header() {
           <Link to="/members/:memberId/carts">
             <CartIcon name="Header_Icon" />
           </Link>
-          <Link to="/memberPage/:memberId">
+          <Link to="/login">
             <UserIcon name="Header_Icon" />
           </Link>
         </div>
