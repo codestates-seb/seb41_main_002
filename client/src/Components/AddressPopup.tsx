@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import CustomButton from "./Commons/Buttons";
 import DaumPostcode from "react-daum-postcode";
 
@@ -46,8 +46,6 @@ export default function AddressPopup() {
     setIsSearchOn(!isSearchOn);
     setZipcode(data.zonecode);
     setAddress(fullAddress);
-
-    data.preventDefault();
   };
 
   const userAddressHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +59,9 @@ export default function AddressPopup() {
     setDetailedAddress(event.target.value);
   };
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     const newAddressInfo = {
       addressId: 1,
       isPrimary: isPrimary,
@@ -72,13 +72,14 @@ export default function AddressPopup() {
       phoneNumber: userAddress.phoneNumber,
     };
     console.log(newAddressInfo);
-    event.preventDefault();
   };
 
   return (
     <form className="Address_Modal" onSubmit={handleSubmit}>
       <h1 className="Address_Header"> 주소를 입력해주세요 </h1>
-      {isSearchOn ? <DaumPostcode onComplete={handleComplete} /> : null}
+      {isSearchOn ? (
+        <DaumPostcode onComplete={handleComplete} autoClose={false} />
+      ) : null}
       {isSearchOn ? null : (
         <div>
           <div className="Modal_Field">
@@ -162,11 +163,7 @@ export default function AddressPopup() {
               />
               <label htmlFor="setPrimary">대표 주소로 설정</label>
             </div>
-            <input
-              type="submit"
-              className="Submit_Button"
-              onClick={handleSubmit}
-            />
+            <input type="submit" className="Submit_Button" />
           </div>
         </div>
       )}
