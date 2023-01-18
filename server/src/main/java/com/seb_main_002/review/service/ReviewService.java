@@ -34,8 +34,15 @@ public class ReviewService {
     }
 
     public void createReview(Review review) {
-        verifyMembersOrder(review.getMember().getMemberId(), review.getItem().getItemId());
+        Long memberId = review.getMember().getMemberId();
+        Long itemId = review.getItem().getItemId();
 
+        verifyMembersOrder(memberId, itemId);
+
+        Item item = verifyExistsItem(itemId);
+        item.setRating((item.getRating() + review.getReviewRating()) / item.getSalesCount());
+
+        itemRepository.save(item);
         reviewRepository.save(review);
     }
 
