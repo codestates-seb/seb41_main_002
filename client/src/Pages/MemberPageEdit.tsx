@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import styled from "styled-components";
+import { getMemberAddressData } from "../API/MemberPageEditAPI";
 import "./Style/memberPageEdit.css";
 
 const MemberInfoContent = styled.li`
@@ -47,7 +49,24 @@ const AddressEditContainer = styled.div`
   }
 `;
 
+// 로그인 연동이 안 되어 있기 때문에 현재 수동으로 입력
+// 이후 로그인 연동 이후 해당 데이터 삭제
+const session = {
+  accountId: "shim5505",
+  memberId: 1,
+};
+
 export default function MemberPageEdit() {
+  // useEffect(() => {
+  //   try {
+  //     getMemberAddressData(session.memberId).then((res) => {
+  //       console.log(res);
+  //     });
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }, []);
+
   return (
     // 추후 데이터 수정 예정
     <div className="Edit_Page_Container">
