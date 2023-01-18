@@ -110,6 +110,7 @@ public class ItemController {
                         .memberId(review.getMember().getMemberId())
                         .accountId(review.getMember().getAccountId())
                         .reviewId(review.getReviewId())
+                        .reviewTitle(review.getReviewTitle())
                         .reviewContent(review.getReviewContent())
                         .createdAt(review.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy/MM/dd/HH:mm")))
                         .modifiedAt(review.getModifiedAt().format(DateTimeFormatter.ofPattern("yyyy/MM/dd/HH:mm")))
