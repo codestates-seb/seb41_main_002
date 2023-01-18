@@ -1,19 +1,17 @@
-import "./Style/productReview.css";
 import { ReviewType } from "../../API/ItemDetail/getItemDetail";
 import { Rating } from "../Commons/Rating";
 import Modal from "../Commons/Modal";
 import { useState } from "react";
+import "./Style/productReview.css";
 
 interface Props {
   reviewsInfo?: ReviewType[];
 }
 
 export default function ProductReview(props: Props) {
-  //부모 필수 설정
   const [isModalActivate, setIsModalActivate] = useState(false);
-  //모달 컴포넌트 사용
-  //클릭시 modalState를 true로 변경하는건 각자 만들어야합니다.
-  console.log(props.reviewsInfo);
+  //임시데이터
+  const session = { memberId: 1, accountId: "kmklhy" };
   return (
     <div className="Item_Reviews">
       {isModalActivate ? (
@@ -47,6 +45,11 @@ export default function ProductReview(props: Props) {
                   <div className="Review_User_Info">
                     <span>{review.accountId}</span>
                     <span>{review.createdAt}</span>
+                    {session && session.memberId === review.memberId ? (
+                      <a href={`/reviews/${review.reviewId}`}>
+                        <span>✍🏻</span>
+                      </a>
+                    ) : null}
                   </div>
                 </div>
               </li>

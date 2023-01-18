@@ -23,7 +23,6 @@ const ItemDetail = () => {
     productDetailData();
   }, []);
 
-
   return (
     <div className="Detail_Container">
       <div className="Item_Container">
@@ -31,16 +30,20 @@ const ItemDetail = () => {
           className="Item_Img"
           src={`${detailPageData?.itemInfo.titleImageURL}`}
         />
-        <ProductInfo productInfo={detailPageData?.itemInfo}/>
+        <ProductInfo productInfo={detailPageData?.itemInfo} />
       </div>
       <div className="Item_Contents">
-        <img  src={`${detailPageData?.itemInfo.contentImageURL}`}/>
+        <img src={`${detailPageData?.itemInfo.contentImageURL}`} />
       </div>
       <div className="Item_Submit">
         <button>장바구니에 추가</button>
         <button>바로 구매</button>
       </div>
-      {detailPageData?.reviews&&detailPageData.reviews.length !==0 ?<ProductReview reviewsInfo={detailPageData?.reviews}/> :<EmptyReviewContainer/>}
+      {detailPageData?.reviews && detailPageData.reviews.length !== 0 ? (
+        <ProductReview reviewsInfo={detailPageData?.reviews} />
+      ) : (
+        <EmptyReviewContainer />
+      )}
     </div>
   );
 };
