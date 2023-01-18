@@ -100,6 +100,7 @@ public class MemberController {
         Boolean aBoolean = memberService.verifyExistsAccountId(accountId);
         return new ResponseEntity(aBoolean,HttpStatus.OK);
     }
+
     @PostMapping("/logout")
     public ResponseEntity logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
        memberService.logout(request,response);

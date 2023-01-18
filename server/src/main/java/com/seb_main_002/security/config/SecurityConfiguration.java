@@ -1,13 +1,10 @@
 package com.seb_main_002.security.config;
 
-import com.seb_main_002.security.handler.MemberAccessDeniedHandler;
-import com.seb_main_002.security.handler.MemberAuthenticationEntryPoint;
-import com.seb_main_002.security.handler.MemberAuthenticationFailureHandler;
-import com.seb_main_002.security.handler.MemberAuthenticationSuccessHandler;
+import com.seb_main_002.security.handler.*;
 import com.seb_main_002.security.jwt.JwtAuthenticationFilter;
 import com.seb_main_002.security.jwt.JwtTokenizer;
 import com.seb_main_002.security.jwt.JwtVerificationFilter;
-import com.seb_main_002.security.redis.JwtRefreshTokenRepository;
+import com.seb_main_002.security.redis.RedisService;
 import com.seb_main_002.security.util.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,11 +14,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -39,7 +33,8 @@ public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
 
-    private final JwtRefreshTokenRepository jwtRefreshTokenRepository;
+    private final RedisService redisService;
+
 
     // HTTP 요청에 대한 보안 설정 구성
     @Bean
@@ -96,12 +91,12 @@ public class SecurityConfiguration {
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer, jwtRefreshTokenRepository);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer, redisService);
             jwtAuthenticationFilter.setFilterProcessesUrl("/api/v1/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils, redisService);
 
             builder
                     .addFilter(jwtAuthenticationFilter)
