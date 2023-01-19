@@ -1,7 +1,10 @@
 package com.seb_main_002.security.config;
 
+import com.seb_main_002.member.repository.MemberRepository;
+import com.seb_main_002.security.CustomUserDetailsService;
 import com.seb_main_002.security.handler.*;
 import com.seb_main_002.security.jwt.JwtAuthenticationFilter;
+import com.seb_main_002.security.jwt.JwtReIssueFilter;
 import com.seb_main_002.security.jwt.JwtTokenizer;
 import com.seb_main_002.security.jwt.JwtVerificationFilter;
 import com.seb_main_002.security.redis.RedisService;
@@ -34,6 +37,8 @@ public class SecurityConfiguration {
     private final CustomAuthorityUtils authorityUtils;
 
     private final RedisService redisService;
+
+    private final MemberRepository memberRepository;
 
 
     // HTTP 요청에 대한 보안 설정 구성
@@ -75,7 +80,7 @@ public class SecurityConfiguration {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         //configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // 프론트엔드 쪽 서버 주소 -> 추후 aws주소 추가하기
+        configuration.setAllowedOrigins(Arrays.asList("http://seb41team02.s3-website.ap-northeast-2.amazonaws.com","http://localhost:3000")); // 프론트엔드 쪽 서버 주소 -> 추후 aws주소 추가하기
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
         configuration.setAllowCredentials(true);       // 내 서버가 응답할 때 json을 JS에서 처리할 수 있게 설정
         configuration.addAllowedHeader("*");           // 모든 header에 응답 허용
@@ -100,10 +105,12 @@ public class SecurityConfiguration {
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils, redisService);
-
+            JwtReIssueFilter jwtReIssueFilter = new JwtReIssueFilter(redisService, jwtTokenizer, new CustomUserDetailsService(memberRepository, authorityUtils));
             builder
                     .addFilter(jwtAuthenticationFilter)
-                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
+                    .addFilterAfter(jwtReIssueFilter, JwtAuthenticationFilter.class)
+                    .addFilterAfter(jwtVerificationFilter, JwtReIssueFilter.class);
+
         }
     }
 }

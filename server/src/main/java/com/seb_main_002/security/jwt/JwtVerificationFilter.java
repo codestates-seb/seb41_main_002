@@ -65,7 +65,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
         String jws = request.getHeader("Authorization").replace("Bearer ", "");
         // 만약 블랙리스트로 등록되어있다면 에러발생
         if (StringUtils.hasText(redisService.getAccessToken(jws))) {
-            throw new BusinessLogicException(ExceptionCode.NOT_IMPLEMENTATION);
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
         }
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
         Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody();

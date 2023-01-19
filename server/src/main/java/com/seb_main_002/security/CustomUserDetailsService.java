@@ -33,8 +33,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new MemberDetails(member);
     }
 
-        private final class MemberDetails extends Member implements UserDetails {
-            // (1)
+        public final class MemberDetails extends Member implements UserDetails {
+
             MemberDetails(Member member) {
                 setMemberId(member.getMemberId());
                 setAccountId(member.getAccountId());
