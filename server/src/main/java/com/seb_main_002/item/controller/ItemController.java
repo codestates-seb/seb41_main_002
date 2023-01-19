@@ -6,16 +6,19 @@ import com.seb_main_002.item.mapper.ItemMapper;
 import com.seb_main_002.item.service.ItemService;
 import com.seb_main_002.member.service.MemberService;
 import com.seb_main_002.review.entity.Review;
+import com.seb_main_002.security.jwt.JwtVerificationFilter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -26,10 +29,13 @@ public class ItemController {
     private final MemberService memberService;
     private final ItemMapper mapper;
 
-    public ItemController(ItemService itemService, MemberService memberService, ItemMapper mapper) {
+    private final JwtVerificationFilter jwtVerificationFilter;
+
+    public ItemController(ItemService itemService, MemberService memberService, ItemMapper mapper, JwtVerificationFilter jwtVerificationFilter) {
         this.itemService = itemService;
         this.memberService = memberService;
         this.mapper = mapper;
+        this.jwtVerificationFilter = jwtVerificationFilter;
     }
 
     @PostMapping
@@ -133,12 +139,16 @@ public class ItemController {
     public ResponseEntity getFilteredItems(@PathVariable("categoryENName") String categoryENName,
                                            @RequestParam(required = false) Boolean custom,
                                            @RequestParam(required = false) String title,
-                                           @RequestParam @Positive int page){
+                                           @RequestParam @Positive int page,
+                                           HttpServletRequest request){
         if(categoryENName.equals("all")) categoryENName = "";
         if(custom == null) custom = false;
         if(title == null) title = "";
         page -= 1;
 
+
+//        Map<String, Object> response = jwtVerificationFilter.verifyJws(request);
+  //      Long memberId = ((Number)response.get("memberId")).longValue();
 
         List<String> memberTagsList = new ArrayList<>(List.of("건성", "일반피부"));
         //List<String> memberTagsList = memberService.getLoginUserWithToken().getTagList() == null?null:memberService.getLoginUserWithToken().getTagList();
