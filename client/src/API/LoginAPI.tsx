@@ -14,8 +14,10 @@ export const onLogin = async (MemberInput: MemberInputType) => {
       .then((res) => {
         onLoginSuccess(res.data);
       });
+    return true;
   } catch (err) {
     console.error(err);
+    return false;
   }
 };
 
