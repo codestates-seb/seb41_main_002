@@ -3,7 +3,7 @@ import EmptyReviewContainer from "../Components/ItemDetail/EmptyReviewContainer"
 import getItemDetail from "../API/ItemDetail/getItemDetail";
 import ProductInfo from "../Components/ItemDetail/productInfo";
 import { ItemDetailData } from "../API/ItemDetail/getItemDetail";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ProductReview from "../Components/ItemDetail/ProductReview";
 import CustomButton from "../Components/Commons/Buttons";
 import "./Style/itemDetail.css";
@@ -21,32 +21,20 @@ const ItemDetail = () => {
   );
   const [productCount, setProductCount] = useState(1);
 
-  // const arr: LocalType[] = [
-  //   {
-  //     itemId: 1,
-  //     itemTitle: "상품이름1",
-  //     itemImageURL: "https://picsum.photos/75?random=1",
-  //     itemTotalPrice: 30000,
-  //     count: 3,
-  //   },
-  //   {
-  //     itemId: 2,
-  //     itemTitle: "상품이름2",
-  //     itemImageURL: "https://picsum.photos/75?random=2",
-  //     itemTotalPrice: 20000,
-  //     count: 2,
-  //   },
-  //   {
-  //     itemId: 3,
-  //     itemTitle: "상품이름3",
-  //     itemImageURL: "https://picsum.photos/75?random=3",
-  //     itemTotalPrice: 60000,
-  //     count: 6,
-  //   },
-  // ];
-
-  // const arrString = JSON.stringify(arr);
-  // window.localStorage.setItem("itemList", arrString);
+  const navigate = useNavigate();
+  const sendProductSaleInfo = () => {
+    const productSaleInfo = [
+      {
+        itemId: detailPageData && detailPageData?.itemInfo.itemId,
+        itemTitle: detailPageData && detailPageData.itemInfo.itemTitle,
+        itemImageURL: detailPageData && detailPageData.itemInfo.titleImageURL,
+        itemTotalPrice: detailPageData && detailPageData.itemInfo.price,
+        count: productCount,
+      },
+    ];
+    const result = JSON.stringify(productSaleInfo);
+    return window.localStorage.setItem("itemList", result);
+  };
 
   useEffect(() => {
     productDetailData();
@@ -82,6 +70,10 @@ const ItemDetail = () => {
           bgColor="var(--gray)"
           padding="5px"
           content="바로 구매"
+          onClick={() => {
+            sendProductSaleInfo();
+            navigate(`/checkout`);
+          }}
         />
       </div>
       {detailPageData?.reviews && detailPageData.reviews.length !== 0 ? (
