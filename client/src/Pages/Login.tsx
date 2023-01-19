@@ -16,8 +16,8 @@ const Login = () => {
   }
 
   const memberLogin = () => {
-    // navigate('/');
     onLogin(MemberInput);
+    navigate('/');
   }
 
   return (
