@@ -2,9 +2,9 @@ import axios from "axios";
 
 interface ProductData {
   memberId: number;
-  itemId: number;
+  itemId: number | undefined;
   itemCount: number;
-  itemTotalPrice: number;
+  itemTotalPrice: number | null;
 }
 
 export const addCartItem = (cartItem: ProductData) => {
@@ -21,5 +21,11 @@ export const addCartItem = (cartItem: ProductData) => {
     if(res.data.code === 200){
       alert("장바구니에 추가 되었습니다 🐰")
     }
+  }).catch((err)=>{
+    //추후 에러코드 확인 후 변경예정
+    if(err.response.status === 400){
+      alert("수량을 확인해주세요!")
+    }
+    console.error(err)
   });
 };

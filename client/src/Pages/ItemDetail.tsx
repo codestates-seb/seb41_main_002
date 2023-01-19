@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import EmptyReviewContainer from "../Components/ItemDetail/EmptyReviewContainer";
 import getItemDetail from "../API/ItemDetail/getItemDetail";
 import ProductInfo from "../Components/ItemDetail/productInfo";
+import { addCartItem } from "../API/ItemDetail/addCartItem";
 import { ItemDetailData } from "../API/ItemDetail/getItemDetail";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductReview from "../Components/ItemDetail/ProductReview";
@@ -19,7 +20,20 @@ const ItemDetail = () => {
   const [detailPageData, setDetailPageData] = useState<ItemDetailData | null>(
     null
   );
-  const [productCount, setProductCount] = useState(1);
+  //추후 count 로직 리팩토링 예정
+  const [productCount, setProductCount] = useState(0);
+  const [productTotalPrice, setProductTotalPrice] = useState(0);
+
+  const calculateTotalPrice = () => {
+    //추후 타입 리팩토링 예정
+    const result: any =
+      detailPageData && detailPageData?.itemInfo.price * productCount;
+       setProductTotalPrice(result);
+  };
+
+  useEffect(() => {
+    calculateTotalPrice();
+  }, [productCount]);
 
   const navigate = useNavigate();
   const sendProductSaleInfo = () => {
@@ -38,6 +52,8 @@ const ItemDetail = () => {
 
   //추후 session으로 변경예정
   const session = { memberId: 1, accountId: "kmklhy" };
+
+  console.log(productTotalPrice)
 
   useEffect(() => {
     productDetailData();
@@ -68,8 +84,13 @@ const ItemDetail = () => {
               bgColor="var(--gray)"
               padding="5px"
               content="장바구니에 추가"
-              onClick={()=>{
-                
+              onClick={() => {
+                addCartItem({
+                  itemId: detailPageData?.itemInfo.itemId,
+                  memberId: session && session.memberId,
+                  itemCount: productCount,
+                  itemTotalPrice: productTotalPrice,
+                });
               }}
             />
             <CustomButton
