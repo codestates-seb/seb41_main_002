@@ -6,11 +6,13 @@ const StyledButton = styled.button<{
   width: string;
   padding: string;
   fontsize?: string;
+  border?: string;
 }>`
   width: ${(props) => props.width};
   color: ${(props) => props.fontColor};
   background-color: ${(props) => props.bgColor};
   padding: ${(props) => props.padding};
+  border: ${(props) => props.border};
   border-radius: 5px;
   font-size: ${(props) => (props.fontsize ? props.fontsize : "17px")};
 `;
@@ -24,6 +26,7 @@ interface ButtonType {
   type?: "button" | "submit" | "reset";
   fontsize?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  border?: string;
 }
 
 export default function CustomButton({
@@ -35,6 +38,7 @@ export default function CustomButton({
   padding,
   onClick,
   type,
+  border,
 }: ButtonType) {
   return (
     <StyledButton
@@ -45,6 +49,7 @@ export default function CustomButton({
       padding={padding}
       onClick={onClick}
       type={type}
+      border={border}
     >
       {content}
     </StyledButton>

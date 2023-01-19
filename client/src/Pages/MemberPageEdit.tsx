@@ -11,7 +11,7 @@ import "./Style/memberPageEdit.css";
 
 const MemberInfoContent = styled.li`
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   height: 75px;
   background-color: var(--dark3);
@@ -170,18 +170,18 @@ export default function MemberPageEdit() {
               })}
           </div>
         </MemberInfoContent>
-
         <MemberInfoContent>
-          <CustomButton
-            bgColor="gray"
-            content="배송지 추가"
-            fontColor="white"
-            padding="10px"
-            width="125px"
-          />
           <div className="Info_Title">
             <MemberInfoText>
-              <button>대표주소 설정</button>
+              <CustomButton
+                bgColor="transparent"
+                content="대표주소 설정"
+                fontColor="white"
+                padding="5px"
+                width="100%"
+                border="none"
+                onClick={openModal}
+              />
             </MemberInfoText>
           </div>
           <div>
@@ -189,31 +189,22 @@ export default function MemberPageEdit() {
               주소Title1: 서울특별시 강서구 화곡동 56-536 501호
             </MemberInfoText>
           </div>
-          <AddressEditContainer>
-            <button>수정</button>
-            <button>삭제</button>
-          </AddressEditContainer>
+          <div>
+            <AddressEditContainer>
+              <button>수정</button>
+              <button>삭제</button>
+            </AddressEditContainer>
+          </div>
         </MemberInfoContent>
         <MemberInfoContent>
-          <div className="Info_Title">
-            <MemberInfoText>
-              <button>대표주소 설정</button>
-            </MemberInfoText>
-          </div>
-          <div className="Address_Contents">
-            <MemberInfoText>
-              주소Title1: 서울특별시 강서구 화곡동 56-536 501호
-            </MemberInfoText>
-          </div>
-          <AddressEditContainer>
-            <button>수정</button>
-            <button>삭제</button>
-          </AddressEditContainer>
-        </MemberInfoContent>
-        <MemberInfoContent>
-          <button className="Address_Add_Button" onClick={openModal}>
-            주소 추가하기
-          </button>
+          <CustomButton
+            bgColor="gray"
+            content="배송지 추가"
+            fontColor="white"
+            padding="10px"
+            width="125px"
+            onClick={openModal}
+          />
         </MemberInfoContent>
         {modalState ? (
           <Modal

@@ -11,7 +11,7 @@
 
 .Member_Information_Contents {
   height: 100%;
-  width: 700px;
+  width: 900px;
   font-size: 19px;
 }
 
@@ -23,7 +23,6 @@
 
 .Info_Title {
   width: 17.5%;
-  margin-left: 200px;
 }
 
 .Info_Content {
@@ -62,7 +61,7 @@
 
 .Subscribe_Edit_Container {
   margin-top: 30px;
-  width: 700px;
+  width: 900px;
   height: 100%;
 }
 
