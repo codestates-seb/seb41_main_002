@@ -5,6 +5,7 @@ import com.seb_main_002.address.repository.AddressRepository;
 import com.seb_main_002.delivery.entity.Delivery;
 import com.seb_main_002.exception.BusinessLogicException;
 import com.seb_main_002.exception.ExceptionCode;
+import com.seb_main_002.item.entity.Item;
 import com.seb_main_002.item.repository.ItemRepository;
 import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.member.repository.MemberRepository;
@@ -22,13 +23,16 @@ public class OrderService {
     private OrderRepository orderRepository;
     private MemberRepository memberRepository;
     private AddressRepository addressRepository;
+    private ItemRepository itemRepository;
 
     public OrderService(OrderRepository orderRepository,
                         MemberRepository memberRepository,
-                        AddressRepository addressRepository) {
+                        AddressRepository addressRepository,
+                        ItemRepository itemRepository) {
         this.orderRepository = orderRepository;
         this.memberRepository = memberRepository;
         this.addressRepository = addressRepository;
+        this.itemRepository = itemRepository;
     }
 
     public void createOrder(Order order, OrderInfo orderInfo) {
@@ -72,6 +76,13 @@ public class OrderService {
             });
         }
 
+        // 상품 판매량 변경
+        order.getOrderItems().forEach(orderItem -> {
+            Item item = verifyExistItem(orderItem.getItem().getItemId());
+            item.setSalesCount(item.getSalesCount() + orderItem.getItemCount());
+            itemRepository.save(item);
+        });
+
         // 수정된 member 정보 저장
         memberRepository.save(member);
         // order 저장
@@ -88,5 +99,10 @@ public class OrderService {
     private Address verifyExistAddress(Long addressId) {
         Optional<Address> optionalAddress = addressRepository.findById(addressId);
         return optionalAddress.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ADDRESS_NOT_FOUND));
+    }
+
+    private Item verifyExistItem(Long itemId) {
+        Optional<Item> optionalItem = itemRepository.findById(itemId);
+        return optionalItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
     }
 }
