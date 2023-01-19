@@ -38,46 +38,6 @@ public class OrderController {
 
         orderService.createOrder(order, orderInfo);
 
-
-
-        // ----- ----- ----- ----- -----
-        Order order = new Order();
-
-        // Order 기본 column 설정
-        orderService.reserveUsableCheck(orderPostDto.getMemberId(), orderPostDto.getUsedReserve());
-        order.setTotalPrice(orderPostDto.getTotalPrice());
-        order.setReserve(orderService.calculateReserve(orderPostDto.getMemberId(), orderPostDto.getItemsTotalPrice()));
-        orderService.saveMemberReserve(orderPostDto.getMemberId(), order.getReserve());
-        orderService.saveTotalDeliveryDiscount(orderPostDto.getMemberId());
-        orderService.setReserveProfit(orderPostDto.getMemberId(), order.getReserve());
-
-        // Order 연관관계 table 설정
-        Member member = new Member();
-        member.setMemberId(orderPostDto.getMemberId());
-        order.setMember(member);
-
-        List<OrderItem> orderItems = orderPostDto.getItemList().stream()
-                .map(itemInfo -> {
-                    OrderItem orderItem = new OrderItem();
-                    Item item = new Item();
-                    item.setItemId(itemInfo.getItemId());
-                    orderItem.setItem(item);
-                    orderItem.setOrder(order);
-                    orderItem.setItemCount(itemInfo.getItemCount());
-                    orderItem.setItemTotalPrice(itemInfo.getItemTotalPrice());
-                    return orderItem;
-                }).collect(Collectors.toList());
-
-        order.setOrderItems(orderItems);
-
-        // delivery 설정하기
-        Delivery delivery = orderService.setDeliveryAddress(member.getMemberId(), orderPostDto.getAddressId(), orderPostDto.getIsPrimary());
-        order.setDelivery(delivery);
-
-        orderService.createOrder(order);
-
-        // ----- ----- ----- ----- -----
-
         return new ResponseEntity<> (HttpStatus.OK);
     }
 }
