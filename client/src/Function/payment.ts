@@ -42,7 +42,7 @@ const getItemList = localStorage.getItem("itemList");
 const itemListArray:LocalType[] = getItemList && JSON.parse(getItemList);
 
 
-export const itemsCalculation = (useReserve: string | number | undefined, subscribeCheck: boolean | undefined) => {
+export const itemsCalculation = (useReserve?: string | number , subscribeCheck?: boolean) => {
   let totalPrice = 0;
   let itemsTotalPrice = itemListArray.reduce((sum: number, value: LocalType) => sum + value.itemTotalPrice, 0);
   let deliveryFee = subscribeCheck ? 2000 : 3000;

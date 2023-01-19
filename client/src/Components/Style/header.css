@@ -21,13 +21,16 @@
   font-size: 20px;
 }
 
+.Nav_Dropdown button {
+  height: 100px;
+}
+
 .Nav_Dropdown_Button {
   border: none;
   outline: none;
   background-color: transparent;
   color: white;
   font-size: 20px;
-  margin-bottom: 10px;
 }
 
 .Nav_Dropdown_Button:hover,
@@ -41,7 +44,9 @@
   flex-direction: column;
   color: white;
   background-color: rgba(54, 57, 63, 0.7);
-  min-width: 160px;
+  min-width: 300px;
+  left: 275px;
+  text-align: center;
   z-index: 1;
 }
 
@@ -62,4 +67,5 @@
 
 .Header_Icon {
   width: 25px;
+  height: 100%;
 }
