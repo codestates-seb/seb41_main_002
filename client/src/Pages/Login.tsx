@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link ,useNavigate} from "react-router-dom";
-import { logIn } from "../API/LoginAPI";
+import { onLogin } from "../API/LoginAPI";
 import "./Style/memberAccess.css";
 
 const Login = () => {
@@ -17,7 +17,7 @@ const Login = () => {
 
   const memberLogin = () => {
     // navigate('/');
-    logIn(MemberInput);
+    onLogin(MemberInput);
   }
 
   return (

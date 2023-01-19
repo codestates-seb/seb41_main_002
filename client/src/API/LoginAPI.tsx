@@ -1,53 +1,46 @@
 import axios from "axios";
-import jwt_decode from "jwt-decode";
 
 interface MemberInputType {
   accountId: string;
   password: string;
 }
 
-interface AccessTokenType {
-  accountId: string;
-  exp: number;
-  iat: number;
-  memberId: number;
-  roles: string[];
-  sub: string;
-}
+const JWT_EXPIRY_TIME = 1200 * 1000;
 
-axios.interceptors.request.use(function (config) {
-  const today = Math.floor(new Date().getTime() / 1000);
-  const accessToken = localStorage.getItem("accessToken");
-  const refreshToken = localStorage.getItem("refreshToken");
-  const decodeToken = accessToken && jwt_decode(accessToken) as AccessTokenType;
-  const expDate = decodeToken && decodeToken.exp;
-  if(expDate){
-    if(expDate < today){
-      console.log('토큰 유효기간이 지났어');
-      axios.post("http://13.209.97.3:8080/api/v1/user/refresh-token",null,{
-        headers: {
-          "Refresh": refreshToken
-        }
-      }).then(res => {
-        const accessToken = res.data;
-        localStorage.setItem("accessToken", accessToken);
-      })
-    } else {
-      console.log('시간 널널해');
-    }
-  }
-  return config;
-});
-
-export const logIn = async (MemberInput: MemberInputType) => {
+export const onLogin = async (MemberInput: MemberInputType) => {
   try {
     await axios
       .post("http://13.209.97.3:8080/api/v1/login", JSON.stringify(MemberInput))
       .then((res) => {
-        const { accessToken, refreshToken } = res.data;
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
+        onLoginSuccess(res.data);
       });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const onSilentRefresh = (refreshToken: string) => {
+  try {
+    axios.defaults.headers.common["Authorization"] = `${refreshToken}`;
+    axios
+      .get("http://13.209.97.3:8080/api/v1/user/access-token")
+      .then((res) => {
+        onLoginSuccess(res.data);
+      });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const onLoginSuccess = (response: {
+  accessToken: string;
+  refreshToken: string;
+}) => {
+  try {
+    const { accessToken, refreshToken } = response;
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    sessionStorage.setItem("accessToken", accessToken);
+    setTimeout(() => onSilentRefresh(refreshToken), JWT_EXPIRY_TIME - 60000);
   } catch (err) {
     console.error(err);
   }
