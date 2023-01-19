@@ -29,6 +29,8 @@ jobs:
       - name: Build
         run: yarn run build
         working-directory: ./client
+        env:
+          CI: ""
 
       - name: Transfer to S3 for serving static
         uses: jakejarvis/s3-sync-action@master
