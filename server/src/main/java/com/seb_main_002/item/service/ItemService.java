@@ -64,13 +64,9 @@ public class ItemService {
     public List<Item> findTopListItems(String categoryENName, Boolean custom, List<String> memberTagsList){
         if(categoryENName.equals("all")) categoryENName = "";
         Page<Item> findItems;
-        if(custom == false) {
-            findItems = itemRepository.findAllByCategoryENNameStartingWith(categoryENName, PageRequest.of(0, 10, Sort.by("salesCount").descending()));
-        }
-        else {
+
+        if(custom == true && memberTagsList.size() != 0){
             List<String> membertags = memberTagsList;
-            if(membertags == null || membertags.size() == 0)
-                throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED); //이게 응답까지 안날라고 내부적으로 발생한뒤 500쏨. 추후 문제해결할것.
 
             String tag1="", tag2="";
             if     (membertags.contains("건성")){ tag1 = "건성";}
@@ -82,19 +78,19 @@ public class ItemService {
 
             findItems = itemRepository.findCustomTopListItem(tag1,tag2,categoryENName,PageRequest.of(0, 10, Sort.by("salesCount").descending()));
         }
+        else{
+            findItems = itemRepository.findAllByCategoryENNameStartingWith(categoryENName, PageRequest.of(0, 10, Sort.by("salesCount").descending()));
+        }
+
         return findItems.getContent();
     }
 
     public List<Item> findFilteredItems(String categoryENName, Boolean custom, String title, int page, List<String> memberTagsList){
 
         Page<Item> findItems;
-        if(custom == false){
-            findItems = itemRepository.findAllByCategoryENNameStartingWithAndItemTitleContaining(categoryENName,title, PageRequest.of(page,18));
-        }
-        else{
+
+        if(custom == true && memberTagsList.size() != 0){
             List<String> membertags = memberTagsList;
-            if(membertags == null || membertags.size() == 0)
-                throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED); //이게 응답까지 안날라고 내부적으로 발생한뒤 500쏨. 추후 문제해결할것.
 
             String tag1="", tag2="";
             if     (membertags.contains("건성")){ tag1 = "건성";}
@@ -105,6 +101,9 @@ public class ItemService {
             else if(membertags.contains("여드름성 피부")){ tag2 = "여드름성 피부";}
 
                 findItems = itemRepository.findCustomItem(tag1, tag2, title,categoryENName, PageRequest.of(page,18));
+        }
+        else{
+            findItems = itemRepository.findAllByCategoryENNameStartingWithAndItemTitleContaining(categoryENName,title, PageRequest.of(page,18));
         }
 
         return findItems.getContent();
