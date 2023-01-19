@@ -34,7 +34,7 @@ const onSilentRefresh = (refreshToken: string) => {
   try {
     axios.defaults.headers.common["Authorization"] = `${refreshToken}`;
     axios
-      .get("http://13.209.97.3:8080/api/v1/user/access-token")
+      .get("http://13.209.97.3:8080/api/v1/user/refresh-token")
       .then((res) => {
         onLoginSuccess(res.data);
       });
