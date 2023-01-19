@@ -1,10 +1,16 @@
+<<<<<<< HEAD
 import CustomButton from "../Components/Commons/Buttons";
 import {
   getMemberAddressData,
   MemberPageDataType,
 } from "../API/MemberPageEditAPI";
 import { useEffect, useState } from "react";
+=======
+import { useState } from "react";
+>>>>>>> c6c96ae3161544ba1821e5b6afab577fecea5cff
 import styled from "styled-components";
+import AddressPopup from "../Components/AddressPopup";
+import Modal from "../Components/Commons/Modal";
 import "./Style/memberPageEdit.css";
 
 const MemberInfoContent = styled.li`
@@ -75,6 +81,11 @@ export default function MemberPageEdit() {
       console.error(err);
     }
   }, []);
+  const [modalState, setModalState] = useState(false);
+
+  const openModal = () => {
+    setModalState(true);
+  };
 
   return (
     // 추후 데이터 수정 예정
@@ -172,7 +183,49 @@ export default function MemberPageEdit() {
             padding="10px"
             width="125px"
           />
+          <div className="Info_Title">
+            <MemberInfoText>
+              <button>대표주소 설정</button>
+            </MemberInfoText>
+          </div>
+          <div>
+            <MemberInfoText>
+              주소Title1: 서울특별시 강서구 화곡동 56-536 501호
+            </MemberInfoText>
+          </div>
+          <AddressEditContainer>
+            <button>수정</button>
+            <button>삭제</button>
+          </AddressEditContainer>
         </MemberInfoContent>
+        <MemberInfoContent>
+          <div className="Info_Title">
+            <MemberInfoText>
+              <button>대표주소 설정</button>
+            </MemberInfoText>
+          </div>
+          <div className="Address_Contents">
+            <MemberInfoText>
+              주소Title1: 서울특별시 강서구 화곡동 56-536 501호
+            </MemberInfoText>
+          </div>
+          <AddressEditContainer>
+            <button>수정</button>
+            <button>삭제</button>
+          </AddressEditContainer>
+        </MemberInfoContent>
+        <MemberInfoContent>
+          <button className="Address_Add_Button" onClick={openModal}>
+            주소 추가하기
+          </button>
+        </MemberInfoContent>
+        {modalState ? (
+          <Modal
+            modalState={modalState}
+            setModalState={setModalState}
+            element={<AddressPopup />}
+          />
+        ) : null}
         <div>
           <div className="Edit_Type_Container">
             <InfoTitle>
