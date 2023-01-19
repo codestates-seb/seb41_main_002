@@ -36,6 +36,9 @@ const ItemDetail = () => {
     return window.localStorage.setItem("itemList", result);
   };
 
+  //추후 session으로 변경예정
+  const session = { memberId: 1, accountId: "kmklhy" };
+
   useEffect(() => {
     productDetailData();
   }, []);
@@ -57,24 +60,54 @@ const ItemDetail = () => {
         <img src={`${detailPageData?.itemInfo.contentImageURL}`} />
       </div>
       <div className="Item_Submit">
-        <CustomButton
-          fontColor="white"
-          width="130px"
-          bgColor="var(--gray)"
-          padding="5px"
-          content="장바구니에 추가"
-        />
-        <CustomButton
-          fontColor="white"
-          width="130px"
-          bgColor="var(--gray)"
-          padding="5px"
-          content="바로 구매"
-          onClick={() => {
-            sendProductSaleInfo();
-            navigate(`/checkout`);
-          }}
-        />
+        {session && session ? (
+          <>
+            <CustomButton
+              fontColor="white"
+              width="130px"
+              bgColor="var(--gray)"
+              padding="5px"
+              content="장바구니에 추가"
+              onClick={()=>{
+                
+              }}
+            />
+            <CustomButton
+              fontColor="white"
+              width="130px"
+              bgColor="var(--gray)"
+              padding="5px"
+              content="바로 구매"
+              onClick={() => {
+                sendProductSaleInfo();
+                navigate(`/checkout`);
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <CustomButton
+              fontColor="white"
+              width="130px"
+              bgColor="var(--gray)"
+              padding="5px"
+              content="장바구니에 추가"
+              onClick={() => {
+                navigate(`/login`);
+              }}
+            />
+            <CustomButton
+              fontColor="white"
+              width="130px"
+              bgColor="var(--gray)"
+              padding="5px"
+              content="바로 구매"
+              onClick={() => {
+                navigate(`/login`);
+              }}
+            />
+          </>
+        )}
       </div>
       {detailPageData?.reviews && detailPageData.reviews.length !== 0 ? (
         <ProductReview reviewsInfo={detailPageData?.reviews} />
