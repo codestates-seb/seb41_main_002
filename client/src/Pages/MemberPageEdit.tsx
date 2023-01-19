@@ -1,13 +1,9 @@
-<<<<<<< HEAD
 import CustomButton from "../Components/Commons/Buttons";
 import {
   getMemberAddressData,
   MemberPageDataType,
 } from "../API/MemberPageEditAPI";
 import { useEffect, useState } from "react";
-=======
-import { useState } from "react";
->>>>>>> c6c96ae3161544ba1821e5b6afab577fecea5cff
 import styled from "styled-components";
 import AddressPopup from "../Components/AddressPopup";
 import Modal from "../Components/Commons/Modal";
