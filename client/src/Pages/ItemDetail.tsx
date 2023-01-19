@@ -1,5 +1,4 @@
 import React from "react";
-import TypeBadge from "../Components/Commons/TypeBadge";
 import "./Style/itemDetail.css";
 
 const ItemDetail = () => {
@@ -24,20 +23,7 @@ const ItemDetail = () => {
           </li>
           <li>
             <span>태그</span>
-            <p>
-              <TypeBadge
-                content="건성"
-                bgColor="#FDA769"
-                padding="5px"
-                fontSize="15px"
-              />
-              <TypeBadge
-                content="여드름 개선"
-                bgColor="#473C33"
-                padding="7.5px 10px"
-                fontSize="15px"
-              />
-            </p>
+            <p></p>
           </li>
           <li>
             <span>구매수량</span>
