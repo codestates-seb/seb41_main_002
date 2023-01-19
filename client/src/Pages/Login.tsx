@@ -22,6 +22,7 @@ const Login = () => {
     onLogin(MemberInput).then((res) => {
       if (res) {
         navigate("/");
+        window.location.reload();
       } else {
         setModalState(true);
       }

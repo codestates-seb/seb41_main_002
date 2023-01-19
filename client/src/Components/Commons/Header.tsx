@@ -3,9 +3,14 @@ import UserIcon from "../../Icons/UserIcon";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./../Style/header.css";
+import jwt_decode from "jwt-decode";
+import { sessionType } from "../../API/LoginAPI";
 
 export default function Header() {
   const [isDropdownClicked, setIsDropdownClicked] = useState(false);
+  const getToken = sessionStorage.getItem("accessToken");
+  const decodeToken = getToken && (jwt_decode(getToken) as sessionType);
+  const memberId = decodeToken && decodeToken.memberId;
 
   const toggleDropdown = () => {
     setIsDropdownClicked(!isDropdownClicked);
@@ -44,9 +49,15 @@ export default function Header() {
           <Link to="/members/:memberId/carts">
             <CartIcon name="Header_Icon" />
           </Link>
-          <Link to="/login">
-            <UserIcon name="Header_Icon" />
-          </Link>
+          {memberId === null ? (
+            <Link to="/login">
+              <UserIcon name="Header_Icon" />
+            </Link>
+          ) : (
+            <Link to={`/memberPage/${memberId}`}>
+              <UserIcon name="Header_Icon" />
+            </Link>
+          )}
         </div>
       </nav>
     </header>

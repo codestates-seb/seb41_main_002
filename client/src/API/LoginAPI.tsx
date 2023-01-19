@@ -5,6 +5,15 @@ interface MemberInputType {
   password: string;
 }
 
+export interface sessionType {
+  accountId: string;
+  exp: number;
+  iat: number;
+  memberId: number;
+  roles: string[];
+  sub: string;
+}
+
 const JWT_EXPIRY_TIME = 1200 * 1000;
 
 export const onLogin = async (MemberInput: MemberInputType) => {
