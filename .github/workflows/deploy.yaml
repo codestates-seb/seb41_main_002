@@ -41,4 +41,4 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.FE_AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.FE_AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.FE_AWS_BUCKET_REGION }}
-          SOURCE_DIR: "dist"
+          SOURCE_DIR: "./client"
