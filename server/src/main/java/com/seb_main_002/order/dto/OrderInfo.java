@@ -12,6 +12,8 @@ import lombok.Setter;
 public class OrderInfo {
     private Boolean isPrimary;
 
+    private Long addressId;
+
     private Integer itemsTotalPrice;
 
     private Integer usedReserve;
