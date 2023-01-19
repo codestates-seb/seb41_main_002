@@ -18,7 +18,7 @@ public interface OrderMapper {
         Order order = new Order();
 
         // order.setReserve(); 구독 여부를 확인하여 적립률을 달리함으로 service 계층에서 구현
-        order.setTotalPrice(order.getTotalPrice()); // 최종 결제 가격
+        order.setTotalPrice(orderPostDto.getTotalPrice()); // 최종 결제 가격
 
         Member member = new Member();
         member.setMemberId(orderPostDto.getMemberId());
