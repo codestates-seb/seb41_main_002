@@ -23,14 +23,14 @@ export interface ReviewType {
   reviewRating: number;
 }
 
-export interface ItemDetailData {
+export interface ItemDetailDataType {
   itemInfo: ItemType
   reviews?: ReviewType[];
 }
 
 export default function getItemDetail(
   itemId: string | undefined
-): Promise<ItemDetailData> {
+): Promise<ItemDetailDataType> {
   return new Promise(async (resolve) => {
     let result: any;
     try {

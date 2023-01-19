@@ -1,6 +1,6 @@
 import dummyData from "./../data/MemberPageData.json";
 import CustomButton from "../Components/Commons/Buttons";
-import TypeBadge from "../Components/Commons/TypeBadge";
+import { SkinTag } from "../Components/Commons/TypeBadge";
 import styled from "styled-components";
 import {
   OrderHistoryTab,
@@ -88,23 +88,13 @@ const MemberPage = () => {
           <MemberTextBox>
             <InfoText width="33%">내 피부 타입</InfoText>
             <InfoText width="67%" className="Profile_Type_Badges">
-              <TypeBadge
-                bgColor="beige"
-                content={dummyData.tagList[0]}
-                padding="10px"
-                fontSize="15px"
-              />
+              {SkinTag(dummyData.tagList[0])}
             </InfoText>
           </MemberTextBox>
           <MemberTextBox>
             <InfoText width="33%">여드름성 피부 여부</InfoText>
             <InfoText width="67%" className="Profile_Type_Badges">
-              <TypeBadge
-                bgColor="beige"
-                content={dummyData.tagList[1]}
-                padding="10px"
-                fontSize="15px"
-              />
+              {SkinTag(dummyData.tagList[1])}
             </InfoText>
           </MemberTextBox>
           <MemberTextBox>
@@ -115,15 +105,7 @@ const MemberPage = () => {
                 dummyData.tagList
                   .slice(2, dummyData.tagList.length)
                   .map((tag, idx) => {
-                    return (
-                      <TypeBadge
-                        bgColor="beige"
-                        content={tag}
-                        padding="10px"
-                        fontSize="15px"
-                        key={`item${idx + 2}`}
-                      />
-                    );
+                    return <> {SkinTag(tag)}</>;
                   })
               ) : (
                 <span className="No_Tags">추가 태그 없음</span>

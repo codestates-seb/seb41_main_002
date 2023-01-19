@@ -3,7 +3,7 @@ import EmptyReviewContainer from "../Components/ItemDetail/EmptyReviewContainer"
 import getItemDetail from "../API/ItemDetail/getItemDetail";
 import ProductInfo from "../Components/ItemDetail/productInfo";
 import { addCartItem } from "../API/ItemDetail/addCartItem";
-import { ItemDetailData } from "../API/ItemDetail/getItemDetail";
+import { ItemDetailDataType } from "../API/ItemDetail/getItemDetail";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductReview from "../Components/ItemDetail/ProductReview";
 import CustomButton from "../Components/Commons/Buttons";
@@ -17,7 +17,7 @@ const ItemDetail = () => {
     setDetailPageData(result);
   };
 
-  const [detailPageData, setDetailPageData] = useState<ItemDetailData | null>(
+  const [detailPageData, setDetailPageData] = useState<ItemDetailDataType | null>(
     null
   );
   //추후 count 로직 리팩토링 예정
