@@ -35,6 +35,7 @@ public interface OrderMapper {
             orderItem.setItem(item);
             orderItem.setItemCount(itemInfo.getItemCount());
             orderItem.setItemTotalPrice(itemInfo.getItemTotalPrice());
+            orderItem.setOrder(order);
 
             return orderItem;
         }).collect(Collectors.toList());
