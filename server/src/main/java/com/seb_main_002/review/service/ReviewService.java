@@ -36,11 +36,12 @@ public class ReviewService {
     public void createReview(Review review) {
         Long memberId = review.getMember().getMemberId();
         Long itemId = review.getItem().getItemId();
+        long itemReviewCount = reviewRepository.findReviewsByItemId(itemId).size();
 
         verifyMembersOrder(memberId, itemId);
 
         Item item = verifyExistsItem(itemId);
-        item.setRating((item.getRating() + review.getReviewRating()) / item.getSalesCount());
+        item.setRating((item.getRating() + review.getReviewRating()) / (itemReviewCount + 1));
 
         itemRepository.save(item);
         reviewRepository.save(review);
