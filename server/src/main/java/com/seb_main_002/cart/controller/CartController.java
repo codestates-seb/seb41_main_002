@@ -61,7 +61,7 @@ public class CartController {
     public ResponseEntity getCart(@PathVariable("memberId") Long memberId){
 
         Member member = memberService.findMember(memberId);
-        List<CartItem> cartItems = cartService.findAllCartItems(memberId);
+        List<CartItem> cartItems = member.getCart().getCartItems();
         List<CartResponseDto.CartInfo> cartInfos = cartItems.stream()
                 .map(cartItem -> CartResponseDto.CartInfo.builder()
                         .cartItemId(cartItem.getCartItemId())
