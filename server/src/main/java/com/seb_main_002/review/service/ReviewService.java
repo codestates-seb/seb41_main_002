@@ -34,6 +34,16 @@ public class ReviewService {
     }
 
     public void createReview(Review review) {
+        Long memberId = review.getMember().getMemberId();
+        Long itemId = review.getItem().getItemId();
+        long itemReviewCount = reviewRepository.findReviewsByItemId(itemId).size();
+
+        verifyMembersOrder(memberId, itemId);
+
+        Item item = verifyExistsItem(itemId);
+        item.setRating((item.getRating() + review.getReviewRating()) / (itemReviewCount + 1));
+
+        itemRepository.save(item);
         reviewRepository.save(review);
     }
 
@@ -61,18 +71,15 @@ public class ReviewService {
         Item verifiedItem = verifyExistsItem(itemId);
         Member verifiedMember = verifyExistsMember(memberId);
 
-        List<Order> orders = orderRepository.findOrdersByMemberIdAndItemId(memberId, itemId);
-        if(orders.size() > 0) {
-            return ReviewResponseDto.ReviewItemDto.builder()
-                    .itemTitle(verifiedItem.getItemTitle())
-                    .categoryKRName(verifiedItem.getCategoryKRName())
-                    .titleImageURL(verifiedItem.getTitleImageUrl())
-                    .tagList(verifiedItem.getTagList())
-                    .memberTagsList(verifiedMember.getTagList())
-                    .build();
-        } else {
-            throw new BusinessLogicException(ExceptionCode.ORDER_NOT_FOUND);
-        }
+        verifyMembersOrder(memberId, itemId);
+
+        return ReviewResponseDto.ReviewItemDto.builder()
+                .itemTitle(verifiedItem.getItemTitle())
+                .categoryKRName(verifiedItem.getCategoryKRName())
+                .titleImageURL(verifiedItem.getTitleImageUrl())
+                .tagList(verifiedItem.getTagList())
+                .memberTagsList(verifiedMember.getTagList())
+                .build();
     }
 
     public void deleteReview(Long reviewId) {
@@ -94,5 +101,12 @@ public class ReviewService {
     private Member verifyExistsMember(Long memberId) {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         return optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    }
+
+    private void verifyMembersOrder(Long memberId, Long itemId) {
+        List<Order> orders = orderRepository.findOrdersByMemberIdAndItemId(memberId, itemId);
+        if(orders.size() < 1) {
+            throw new BusinessLogicException(ExceptionCode.ORDER_NOT_FOUND);
+        }
     }
 }
