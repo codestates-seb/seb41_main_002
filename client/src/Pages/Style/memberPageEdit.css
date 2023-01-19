@@ -9,7 +9,7 @@
   margin: 20px 0 30px 0;
 }
 
-.Member_Infomation_Contents {
+.Member_Information_Contents {
   height: 100%;
   width: 700px;
   font-size: 19px;
@@ -33,6 +33,22 @@
 .Edit_Type_Container {
   display: flex;
   height: 50px;
+}
+
+.Edit_Select_Box {
+  padding: 10px;
+  width: 125px;
+  font-size: 17px;
+}
+
+.Checkbox_Wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.Checkbox_Tag {
+  margin-right: 2.5px;
 }
 
 .Edit_Button_Wrap {

@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import styled from "styled-components";
+import CustomButton from "../Components/Commons/Buttons";
 import {
   getMemberAddressData,
   MemberPageDataType,
 } from "../API/MemberPageEditAPI";
-import CustomButton from "../Components/Commons/Buttons";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
 import "./Style/memberPageEdit.css";
 
 const MemberInfoContent = styled.li`
@@ -80,7 +80,7 @@ export default function MemberPageEdit() {
     // 추후 데이터 수정 예정
     <div className="Edit_Page_Container">
       <h1 className="Edit_Page_Title">회원정보 수정</h1>
-      <ul className="Member_Infomation_Contents">
+      <ul className="Member_Information_Contents">
         <MemberInfoContent>
           <div className="Info_Wrapper">
             <MemberInfoText>ID</MemberInfoText>
@@ -179,10 +179,32 @@ export default function MemberPageEdit() {
               <MemberInfoText>내 피부타입</MemberInfoText>
             </InfoTitle>
             <InfoContent>
-              <MemberInfoText>
-                {memberAddressData && memberAddressData.tagList[0]}
-              </MemberInfoText>
-              <select />
+              <select className="Edit_Select_Box">
+                {memberAddressData &&
+                memberAddressData.tagList[0] === "건성" ? (
+                  <option value="건성" selected>
+                    건성
+                  </option>
+                ) : (
+                  <option value="건성">건성</option>
+                )}
+                {memberAddressData &&
+                memberAddressData.tagList[0] === "건성" ? (
+                  <option value="지성" selected>
+                    지성
+                  </option>
+                ) : (
+                  <option value="지성">지성</option>
+                )}
+                {memberAddressData &&
+                memberAddressData.tagList[0] === "복합성" ? (
+                  <option value="복합성" selected>
+                    복합성
+                  </option>
+                ) : (
+                  <option value="복합성">복합성</option>
+                )}
+              </select>
             </InfoContent>
           </div>
           <div className="Edit_Type_Container">
@@ -190,10 +212,24 @@ export default function MemberPageEdit() {
               <MemberInfoText>내 피부타입</MemberInfoText>
             </InfoTitle>
             <InfoContent>
-              <MemberInfoText>
-                {memberAddressData && memberAddressData.tagList[1]}
-              </MemberInfoText>
-              <select />
+              <select className="Edit_Select_Box">
+                {memberAddressData &&
+                memberAddressData.tagList[1] === "일반 피부" ? (
+                  <option value="일반 피부" selected>
+                    일반 피부
+                  </option>
+                ) : (
+                  <option value="일반 피부">일반 피부</option>
+                )}
+                {memberAddressData &&
+                memberAddressData.tagList[1] === "여드름성 피부" ? (
+                  <option value="여드름성 피부" selected>
+                    여드름성 피부
+                  </option>
+                ) : (
+                  <option value="여드름성 피부">여드름성 피부</option>
+                )}
+              </select>
             </InfoContent>
           </div>
           <div className="Edit_Type_Container">
@@ -201,10 +237,62 @@ export default function MemberPageEdit() {
               <MemberInfoText>내 피부타입</MemberInfoText>
             </InfoTitle>
             <InfoContent>
-              <MemberInfoText>
-                {memberAddressData && memberAddressData.tagList[2]}
-              </MemberInfoText>
-              <select />
+              <div className="Checkbox_Wrapper">
+                <label>
+                  <span className="Checkbox_Tag">미백</span>
+                  {memberAddressData &&
+                  memberAddressData.tagList.includes("미백") ? (
+                    <input type="checkbox" checked />
+                  ) : (
+                    <input type="checkbox" />
+                  )}
+                </label>
+                <label>
+                  <span className="Checkbox_Tag">주름</span>
+                  {memberAddressData &&
+                  memberAddressData.tagList.includes("주름") ? (
+                    <input type="checkbox" checked />
+                  ) : (
+                    <input type="checkbox" />
+                  )}
+                </label>
+                <label>
+                  <span className="Checkbox_Tag">보습</span>
+                  {memberAddressData &&
+                  memberAddressData.tagList.includes("보습") ? (
+                    <input type="checkbox" checked />
+                  ) : (
+                    <input type="checkbox" />
+                  )}
+                </label>
+                <label>
+                  <span className="Checkbox_Tag">모공</span>
+                  {memberAddressData &&
+                  memberAddressData.tagList.includes("모공") ? (
+                    <input type="checkbox" checked />
+                  ) : (
+                    <input type="checkbox" />
+                  )}
+                </label>
+                <label>
+                  <span className="Checkbox_Tag">수분</span>
+                  {memberAddressData &&
+                  memberAddressData.tagList.includes("수분") ? (
+                    <input type="checkbox" checked />
+                  ) : (
+                    <input type="checkbox" />
+                  )}
+                </label>
+                <label>
+                  <span className="Checkbox_Tag">탄력</span>
+                  {memberAddressData &&
+                  memberAddressData.tagList.includes("탄력") ? (
+                    <input type="checkbox" checked />
+                  ) : (
+                    <input type="checkbox" />
+                  )}
+                </label>
+              </div>
             </InfoContent>
           </div>
         </div>
@@ -225,7 +313,9 @@ export default function MemberPageEdit() {
           </InfoTitle>
           <InfoContent>
             <MemberInfoText>
-              {memberAddressData && memberAddressData.subscribedDate}
+              {memberAddressData?.subscribedDate === null
+                ? "구독하고 있지 않습니다"
+                : memberAddressData?.subscribedDate}
             </MemberInfoText>
           </InfoContent>
         </div>
