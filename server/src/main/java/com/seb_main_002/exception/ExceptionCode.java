@@ -18,8 +18,8 @@ public enum ExceptionCode {
     ADDRESS_EXISTS(409,"Address exists"),
     ADDRESS_NOT_FOUND(404,"Address not found"),
     REVIEW_NOT_FOUND(404,"Review not found"),
-    CANNOT_MODIFY_REVIEW(403,"No permission to modify Review");
-
+    CANNOT_MODIFY_REVIEW(403,"No permission to modify Review"),
+    CART_ITEM_NOT_FOUND(404,"CartItem not found");
 
     @Getter
     private int status;
