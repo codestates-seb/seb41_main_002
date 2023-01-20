@@ -81,23 +81,12 @@ public class MemberController {
     Map<String, Object> response = new HashMap<>();
     @GetMapping("/user/access-token")
     public ResponseEntity accessToken(HttpServletRequest request) {
-        String accessToken = "";
-        accessToken = request.getHeader("Authorization");
-        if ((!accessToken.equals(""))) {
-            try {
                 Map<String, Object> claims = jwtVerificationFilter.verifyJws(request);
                 Map<String, Object> response = new HashMap<>();
                 response.put("accountId",claims.get("accountId"));
                 response.put("memberId",claims.get("memberId"));
                 return new ResponseEntity(response,HttpStatus.OK);
-
-            } catch (Exception e) {
-                return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-            }
-        } else {
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
-    }
     @GetMapping("/idcheck/{accountId}")
     public ResponseEntity accountIdCheck(@PathVariable("accountId") String accountId) {
         Boolean aBoolean = memberService.verifyExistsAccountId(accountId);
