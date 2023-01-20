@@ -1,121 +1,89 @@
 package com.seb_main_002.order.service;
 
 import com.seb_main_002.address.entity.Address;
-import com.seb_main_002.delivery.entity.Delivery;
+import com.seb_main_002.address.repository.AddressRepository;
 import com.seb_main_002.exception.BusinessLogicException;
 import com.seb_main_002.exception.ExceptionCode;
+import com.seb_main_002.item.entity.Item;
+import com.seb_main_002.item.repository.ItemRepository;
 import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.member.repository.MemberRepository;
+import com.seb_main_002.order.dto.OrderInfoDto;
 import com.seb_main_002.order.entity.Order;
 import com.seb_main_002.order.repository.OrderRepository;
-import com.seb_main_002.subscribe.entity.Subscribe;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
 public class OrderService {
     private OrderRepository orderRepository;
     private MemberRepository memberRepository;
+    private AddressRepository addressRepository;
+    private ItemRepository itemRepository;
 
-    public OrderService(OrderRepository orderRepository, MemberRepository memberRepository) {
+    public OrderService(OrderRepository orderRepository,
+                        MemberRepository memberRepository,
+                        AddressRepository addressRepository,
+                        ItemRepository itemRepository) {
         this.orderRepository = orderRepository;
         this.memberRepository = memberRepository;
+        this.addressRepository = addressRepository;
+        this.itemRepository = itemRepository;
     }
 
-    public void createOrder(Order order) {
-        orderRepository.save(order);
-    }
+    public void createOrder(Order order, OrderInfoDto orderInfoDto) {
+        Long memberId = order.getMember().getMemberId();
 
-    // reserveUsableCheck
-    // 사용하려는 적립금이 보유중인 적립금 범위 내인지 판단 후 계산된 값을 member의 적립금에 저장합니다.
-    public void reserveUsableCheck(Long memberId, Integer wantUseReserve) {
-        Member findMember = verifyMember(memberId);
+        Member member = verifyMember(memberId);
+        boolean isSubscribed = member.getSubscribe().getIsSubscribed();
 
-        if(findMember.getMemberReserve() >= wantUseReserve) {
-            findMember.setMemberReserve(findMember.getMemberReserve() - wantUseReserve);
-            memberRepository.save(findMember);
+        // 사용하려는 적립금과 보유한 적립금을 계산 후 적립금 차감
+        if(member.getMemberReserve() < orderInfoDto.getUsedReserve()) throw new BusinessLogicException(ExceptionCode.CANNOT_POST_ORDER);
+        member.setMemberReserve(member.getMemberReserve() - orderInfoDto.getUsedReserve());
+
+        Integer reserve;
+
+        if(isSubscribed) {
+            // 구독자: 5% 적립, 2% 추가 적립 내역 기록, 2000원 배송비 할인 내역 기록
+            reserve = (orderInfoDto.getItemsTotalPrice() / 100) * 5;
+            member.setMemberReserve(member.getMemberReserve() + reserve);
+            member.getSubscribe().setReserveProfit((orderInfoDto.getItemsTotalPrice() / 100) * 2);
+            member.getSubscribe().setTotalDeliveryDiscount(member.getSubscribe().getTotalDeliveryDiscount() + 2000);
         } else {
-            throw new BusinessLogicException(ExceptionCode.CANNOT_POST_ORDER);
+            // 비구독자: 3% 적립
+            reserve = (orderInfoDto.getItemsTotalPrice() / 100) * 3;
+            member.setMemberReserve(member.getMemberReserve() + reserve);
         }
-    }
-
-    // saveTotalDeliveryDiscount
-    // 구독중인 member가 주문할 경우 2000원의 배송 할인 내역을 subscribe에 저장합니다.
-    public void saveTotalDeliveryDiscount(Long memberId) {
-        Member findMember = verifyMember(memberId);
-
-        Subscribe subscribe = findMember.getSubscribe();
-
-        if(subscribe.getIsSubscribed()) {
-            subscribe.setTotalDeliveryDiscount(subscribe.getTotalDeliveryDiscount() + 2000);
-            findMember.setSubscribe(subscribe);
-
-            memberRepository.save(findMember);
-        }
-    }
-
-    // calculateReserve
-    // 해당 주문으로 인해 적립되는 적립금을 계산합니다.
-    public int calculateReserve(Long memberId, Integer itemsTotalPrice) {
-        Member findMember = verifyMember(memberId);
-
-        int reservePercent = findMember.getSubscribe().getIsSubscribed() ? 5 : 3;
-
-        return (itemsTotalPrice / 100) * reservePercent;
-    }
-
-    // saveMemberReserve
-    // 해당 주문으로 인해 적립되는 적립금을 member에 저장합니다.
-    public void saveMemberReserve(Long memberId, Integer reserve) {
-        Member findMember = verifyMember(memberId);
-
-        findMember.setMemberReserve(findMember.getMemberReserve() + reserve);
-
-        memberRepository.save(findMember);
-    }
-
-    // setDeliveryAddress
-    // 해당 주문의 배송지를 delivery에 저장하고 대표 배송지 변경 사항을 감지하여 address에 저장합니다.
-    public Delivery setDeliveryAddress(Long memberId, Long addressId, Boolean isPrimary) {
-        Member findMember = verifyMember(memberId);
-
-        Delivery delivery = new Delivery();
-        List<Address> addressList = findMember.getAddressList();
+        order.setReserve(reserve);
 
         // 배송지 설정
-        addressList.stream().forEach(address -> {
-            if(address.getAddressId().equals(addressId)) {
-                delivery.setAddress(address.getAddress());
-                delivery.setZipcode(address.getZipcode());
-            }
-        });
+        Address deliveryAddress = verifyExistAddress(orderInfoDto.getAddressId());
+        order.getDelivery().setAddress(deliveryAddress.getAddress());
+        order.getDelivery().setZipcode(deliveryAddress.getZipcode());
 
-        // 대표 배송지 설정
-        if(isPrimary) {
-            addressList.stream().forEach(address -> {
-                if(address.getAddressId().equals(addressId)) {
+        // 대표 배송지 변경 요청 시 변경
+        if(orderInfoDto.getIsPrimary()) {
+            addressRepository.findAddressesByMemberId(memberId).forEach(address -> {
+                if(address.getAddressId().equals(orderInfoDto.getAddressId())) {
                     address.setIsPrimary(true);
                 } else {
                     address.setIsPrimary(false);
                 }
             });
         }
-        findMember.setAddressList(addressList);
-        memberRepository.save(findMember);
 
-        return delivery;
-    }
+        // 상품 판매량 변경
+        order.getOrderItems().forEach(orderItem -> {
+            Item item = verifyExistItem(orderItem.getItem().getItemId());
+            item.setSalesCount(item.getSalesCount() + orderItem.getItemCount());
+            itemRepository.save(item);
+        });
 
-    // setReserveProfit
-    // 구독중인 member가 주문할 경우 구독자 추가 적립 내역을 subscribe에 저장합니다.
-    public void setReserveProfit(Long memberId, Integer reserve) {
-        Member findMember = verifyMember(memberId);
-        if(findMember.getSubscribe().getIsSubscribed()) {
-            findMember.getSubscribe().setReserveProfit((reserve / 5) * 2);
-            memberRepository.save(findMember);
-        }
+        // 수정된 member 정보 저장
+        memberRepository.save(member);
+        // order 저장
+        orderRepository.save(order);
     }
 
     public Member verifyMember(Long memberId) {
@@ -125,4 +93,13 @@ public class OrderService {
         return member;
     }
 
+    private Address verifyExistAddress(Long addressId) {
+        Optional<Address> optionalAddress = addressRepository.findById(addressId);
+        return optionalAddress.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ADDRESS_NOT_FOUND));
+    }
+
+    private Item verifyExistItem(Long itemId) {
+        Optional<Item> optionalItem = itemRepository.findById(itemId);
+        return optionalItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
+    }
 }
