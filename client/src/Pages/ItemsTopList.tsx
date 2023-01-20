@@ -17,8 +17,6 @@ export default function ItemsTopList() {
 
   const params = useParams()
 
-  console.log(params)
-
   const topProductList = async () => {
     const result = await getTopList(categoryENName, customCheck);
     setTopProductData(result);
