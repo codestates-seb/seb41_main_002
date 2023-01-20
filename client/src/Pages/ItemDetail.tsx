@@ -1,67 +1,140 @@
-import React from "react";
-import TypeBadge from "../Components/Commons/TypeBadge";
+import { useEffect, useState } from "react";
+import EmptyReviewContainer from "../Components/ItemDetail/EmptyReviewContainer";
+import getItemDetail from "../API/ItemDetail/getItemDetail";
+import ProductInfo from "../Components/ItemDetail/productInfo";
+import { addCartItem } from "../API/ItemDetail/addCartItem";
+import { ItemDetailDataType } from "../API/ItemDetail/getItemDetail";
+import { useNavigate, useParams } from "react-router-dom";
+import ProductReview from "../Components/ItemDetail/ProductReview";
+import CustomButton from "../Components/Commons/Buttons";
 import "./Style/itemDetail.css";
 
 const ItemDetail = () => {
+  let { itemId } = useParams();
+
+  const productDetailData = async () => {
+    const result = await getItemDetail(itemId);
+    setDetailPageData(result);
+  };
+
+  const [detailPageData, setDetailPageData] = useState<ItemDetailDataType | null>(
+    null
+  );
+  //추후 count 로직 리팩토링 예정
+  const [productCount, setProductCount] = useState(0);
+  const [productTotalPrice, setProductTotalPrice] = useState(0);
+
+  const calculateTotalPrice = () => {
+    //추후 타입 리팩토링 예정
+    const result: any =
+      detailPageData && detailPageData?.itemInfo.price * productCount;
+       setProductTotalPrice(result);
+  };
+
+  useEffect(() => {
+    calculateTotalPrice();
+  }, [productCount]);
+
+  const navigate = useNavigate();
+  const sendProductSaleInfo = () => {
+    const productSaleInfo = [
+      {
+        itemId: detailPageData && detailPageData?.itemInfo.itemId,
+        itemTitle: detailPageData && detailPageData.itemInfo.itemTitle,
+        itemImageURL: detailPageData && detailPageData.itemInfo.titleImageURL,
+        itemTotalPrice: detailPageData && detailPageData.itemInfo.price,
+        count: productCount,
+      },
+    ];
+    const result = JSON.stringify(productSaleInfo);
+    return window.localStorage.setItem("itemList", result);
+  };
+
+  //추후 session으로 변경예정
+  const session = { memberId: 1, accountId: "kmklhy" };
+
+  console.log(productTotalPrice)
+
+  useEffect(() => {
+    productDetailData();
+  }, []);
+
   return (
     <div className="Detail_Container">
       <div className="Item_Container">
-        <div className="Item_Img">
-          <img src="https://cdn.pixabay.com/photo/2019/04/06/19/22/glass-4108085_960_720.jpg 1x, https://cdn.pixabay.com/photo/2019/04/06/19/22/glass-4108085_1280.jpg" />
-        </div>
-        <ul className="Item_Described">
-          <li>
-            <span>제품명</span>
-            <p>어머 너무 이뻐요 로션</p>
-          </li>
-          <li>
-            <span>가격</span>
-            <p>40,000원</p>
-          </li>
-          <li>
-            <span>카테고리</span>
-            <p>로션</p>
-          </li>
-          <li>
-            <span>태그</span>
-            <p>
-              <TypeBadge
-                content="건성"
-                bgColor="#FDA769"
-                padding="5px"
-                fontSize="15px"
-              />
-              <TypeBadge
-                content="여드름 개선"
-                bgColor="#473C33"
-                padding="7.5px 10px"
-                fontSize="15px"
-              />
-            </p>
-          </li>
-          <li>
-            <span>구매수량</span>
-            <p>1</p>
-          </li>
-          <li>
-            <span>별점</span>
-            <p>★★★★★</p>
-          </li>
-          <li>
-            <p>본문</p>
-          </li>
-        </ul>
+        <img
+          className="Item_Img"
+          src={`${detailPageData?.itemInfo.titleImageURL}`}
+        />
+        <ProductInfo
+          productInfo={detailPageData?.itemInfo}
+          productCount={productCount}
+          setProductCount={setProductCount}
+        />
       </div>
-      <div className="Item_Contents"></div>
+      <div className="Item_Contents">
+        <img src={`${detailPageData?.itemInfo.contentImageURL}`} />
+      </div>
       <div className="Item_Submit">
-        <button>장바구니에 추가</button>
-        <button>바로 구매</button>
+        {session && session ? (
+          <>
+            <CustomButton
+              fontColor="white"
+              width="130px"
+              bgColor="var(--gray)"
+              padding="5px"
+              content="장바구니에 추가"
+              onClick={() => {
+                addCartItem({
+                  itemId: detailPageData?.itemInfo.itemId,
+                  memberId: session && session.memberId,
+                  itemCount: productCount,
+                  itemTotalPrice: productTotalPrice,
+                });
+              }}
+            />
+            <CustomButton
+              fontColor="white"
+              width="130px"
+              bgColor="var(--gray)"
+              padding="5px"
+              content="바로 구매"
+              onClick={() => {
+                sendProductSaleInfo();
+                navigate(`/checkout`);
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <CustomButton
+              fontColor="white"
+              width="130px"
+              bgColor="var(--gray)"
+              padding="5px"
+              content="장바구니에 추가"
+              onClick={() => {
+                navigate(`/login`);
+              }}
+            />
+            <CustomButton
+              fontColor="white"
+              width="130px"
+              bgColor="var(--gray)"
+              padding="5px"
+              content="바로 구매"
+              onClick={() => {
+                navigate(`/login`);
+              }}
+            />
+          </>
+        )}
       </div>
-      <div className="Item_Reviews">
-        <ul>
-          <li>리뷰1</li>
-        </ul>
-      </div>
+      {detailPageData?.reviews && detailPageData.reviews.length !== 0 ? (
+        <ProductReview reviewsInfo={detailPageData?.reviews} />
+      ) : (
+        <EmptyReviewContainer />
+      )}
     </div>
   );
 };
