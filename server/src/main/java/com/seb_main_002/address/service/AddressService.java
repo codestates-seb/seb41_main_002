@@ -6,11 +6,13 @@ import com.seb_main_002.exception.BusinessLogicException;
 import com.seb_main_002.exception.ExceptionCode;
 import com.seb_main_002.member.entity.Member;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class AddressService {
     private final AddressRepository addressRepository;
 
@@ -58,7 +60,7 @@ public class AddressService {
         });
     }
 
-    private Address verifyExistAddress(Long addressId) {
+    public Address verifyExistAddress(Long addressId) {
         Optional<Address> optionalAddress = addressRepository.findById(addressId);
         return optionalAddress.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ADDRESS_NOT_FOUND));
     }

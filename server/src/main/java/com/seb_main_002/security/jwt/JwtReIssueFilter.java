@@ -68,8 +68,10 @@ public class JwtReIssueFilter extends OncePerRequestFilter {
 
         } catch (ExpiredJwtException jwtException) {
             request.setAttribute("exception", jwtException);
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
         } catch (Exception e) {
             request.setAttribute("exception", e);
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
         }
         //filterChain.doFilter(request,response); // request 헤더에 엑세스토큰이 없기에 엑세스토큰 검증하는 필터로 보내지 않았습니다.
     }
