@@ -1,0 +1,10 @@
+.Product_Title{
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 40px;
+  align-items: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

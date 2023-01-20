@@ -1,6 +1,10 @@
 import axios from "axios";
 
-export interface TopProductData {
+interface MemberType{
+  memberTagList: string[]
+}
+
+interface TopProductList{
   itemId: number;
   itemTitle: string;
   categoryKRName: string;
@@ -11,116 +15,22 @@ export interface TopProductData {
   tagsList: string[];
 }
 
+export interface TopProductData {
+  member: {
+    memberTagList: MemberType[]
+  }
+  tagList: TopProductList[]
+}
+
 export const getTopList = (
-  categoryENName: string
+  categoryENName: string,
+  customCheck: boolean
 ): Promise<Array<TopProductData>> => {
-  return new Promise((resolve) => {
-    const result: Array<TopProductData> = [];
+  return new Promise(async (resolve) => {
+    let result: any
     try {
-      // const responseData = await axios.get(`api/v1/items/toplist/${categoryENName}`)
-      // result.push(responseData.data)
-      result.push(
-        {
-          itemId: 1,
-          itemTitle: "제품명2",
-          categoryKRName: "크림",
-          categoryENName: "cream",
-          titleImageURL: "이미지의URL",
-          price: 200,
-          salesCount: 100,
-          tagsList: ["건성", "일반피부"],
-        },
-        {
-          itemId: 2,
-          itemTitle: "제품명2",
-          categoryKRName: "크림",
-          categoryENName: "cream",
-          titleImageURL: "이미지의URL",
-          price: 200,
-          salesCount: 100,
-          tagsList: ["건성", "일반피부"],
-        },
-        {
-          itemId: 3,
-          itemTitle: "제품명2",
-          categoryKRName: "크림",
-          categoryENName: "cream",
-          titleImageURL: "이미지의URL",
-          price: 200,
-          salesCount: 100,
-          tagsList: ["건성", "일반피부"],
-        },
-        {
-          itemId: 4,
-          itemTitle: "제품명2",
-          categoryKRName: "크림",
-          categoryENName: "cream",
-          titleImageURL: "이미지의URL",
-          price: 200,
-          salesCount: 100,
-          tagsList: ["건성", "일반피부"],
-        },
-        {
-          itemId: 5,
-          itemTitle: "제품명2",
-          categoryKRName: "크림",
-          categoryENName: "cream",
-          titleImageURL: "이미지의URL",
-          price: 200,
-          salesCount: 100,
-          tagsList: ["건성", "일반피부"],
-        },
-        {
-          itemId: 6,
-          itemTitle: "제품명2",
-          categoryKRName: "크림",
-          categoryENName: "cream",
-          titleImageURL: "이미지의URL",
-          price: 200,
-          salesCount: 100,
-          tagsList: ["건성", "일반피부"],
-        },
-        {
-          itemId: 7,
-          itemTitle: "제품명2",
-          categoryKRName: "크림",
-          categoryENName: "cream",
-          titleImageURL: "이미지의URL",
-          price: 200,
-          salesCount: 100,
-          tagsList: ["건성", "일반피부"],
-        },
-        {
-          itemId: 8,
-          itemTitle: "제품명2",
-          categoryKRName: "크림",
-          categoryENName: "cream",
-          titleImageURL: "이미지의URL",
-          price: 200,
-          salesCount: 100,
-          tagsList: ["건성", "일반피부"],
-        },
-        {
-          itemId: 9,
-          itemTitle: "제품명2",
-          categoryKRName: "크림",
-          categoryENName: "cream",
-          titleImageURL: "이미지의URL",
-          price: 200,
-          salesCount: 100,
-          tagsList: ["건성", "일반피부"],
-        },
-        {
-          itemId: 10,
-          itemTitle: "제품명2",
-          categoryKRName: "크림",
-          categoryENName: "cream",
-          titleImageURL: "이미지의URL",
-          price: 200,
-          salesCount: 100,
-          tagsList: ["건성", "일반피부"],
-        }
-      );
+      const responseData = await axios.get(`http://13.209.97.3:8080/api/v1/items/toplist/${categoryENName}?custom=${customCheck}`)
+      result = responseData.data
     } catch (error) {
       console.error(error);
     }
