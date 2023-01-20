@@ -46,6 +46,7 @@ export default function ItemsTopList() {
             customCheck={customCheck}
             setCustomCheck={setCustomCheck}
             params={params}
+            userCustomInfo={topProductData.member}
           />
         </ul>
       </div>

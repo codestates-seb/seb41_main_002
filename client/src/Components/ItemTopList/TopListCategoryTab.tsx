@@ -1,6 +1,11 @@
 import React from "react";
 import { useState } from "react";
-import { NavigateFunction, Params, useParams } from "react-router-dom";
+import {
+  NavigateFunction,
+  Params,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import CustomButton from "../Commons/Buttons";
 
 interface Props {
@@ -10,19 +15,21 @@ interface Props {
     memberId: number;
     accountId: string;
   };
-  navigate: NavigateFunction
-  customCheck: boolean
-  setCustomCheck: React.Dispatch<React.SetStateAction<boolean>>
-  params: Readonly<Params<string>>
+  navigate: NavigateFunction;
+  customCheck: boolean;
+  setCustomCheck: React.Dispatch<React.SetStateAction<boolean>>;
+  params: Readonly<Params<string>>;
+  userCustomInfo: any;
 }
 
 export default function TopListCategoryTab(props: Props) {
+  console.log(props.userCustomInfo && props.userCustomInfo.memberTagsList);
   const [activateTag, setActivateTage] = useState(0);
   interface Category {
     categoryENName: string;
     categoryKRName: string;
   }
-console.log(props.params)
+  console.log(props.params);
   const categoryTitle: Array<Category> = [
     {
       categoryKRName: "전체",
@@ -68,27 +75,64 @@ console.log(props.params)
                 props.setCategory(category.categoryKRName);
                 props.setCategoryENName(category.categoryENName);
                 setActivateTage(index);
-                props.navigate(`/items-top-list/${category.categoryENName}?custom=${props.customCheck}`)
+                props.navigate(
+                  `/items-top-list/${category.categoryENName}?custom=${props.customCheck}`
+                );
               }}
             />
           </li>
         );
       })}
-      {/* 추후 session 여부와 user Tag정보로 조건부 랜더링 진행할 예정 */}
-      <li>
-        <CustomButton
-          fontColor={props.customCheck ? "black" : "white"}
-          fontsize={props.customCheck ? "21px" : "17px"}
-          bgColor={props.customCheck ? "var(--gray)" : "var(--lightgray)"}
-          width="100px"
-          padding="5px"
-          content="커스텀"
-          onClick={() => {
-            props.navigate(`/items-top-list/${props.params.categoryENName}?custom=${props.customCheck&&props.customCheck}`)
-            props.setCustomCheck(!props.customCheck);
-          }}
-        />
-      </li>
+      {props.session && props.session ? (
+        props.userCustomInfo && props.userCustomInfo.memberTagsList.length !== 0 ? (
+          <li>
+            <CustomButton
+              fontColor={props.customCheck ? "black" : "white"}
+              fontsize={props.customCheck ? "21px" : "17px"}
+              bgColor={props.customCheck ? "var(--gray)" : "var(--lightgray)"}
+              width="100px"
+              padding="5px"
+              content="커스텀"
+              onClick={() => {
+                props.navigate(
+                  `/items-top-list/${props.params.categoryENName}?custom=${
+                    props.customCheck && props.customCheck
+                  }`
+                );
+                props.setCustomCheck(!props.customCheck);
+              }}
+            />
+          </li>
+        ) : (
+          <li>
+            <CustomButton
+              fontColor={props.customCheck ? "black" : "white"}
+              fontsize={props.customCheck ? "21px" : "17px"}
+              bgColor={props.customCheck ? "var(--gray)" : "var(--lightgray)"}
+              width="100px"
+              padding="5px"
+              content="커스텀"
+              onClick={() => {
+                props.navigate("/");
+              }}
+            />
+          </li>
+        )
+      ) : (
+        <li>
+          <CustomButton
+            fontColor={props.customCheck ? "black" : "white"}
+            fontsize={props.customCheck ? "21px" : "17px"}
+            bgColor={props.customCheck ? "var(--gray)" : "var(--lightgray)"}
+            width="100px"
+            padding="5px"
+            content="커스텀"
+            onClick={() => {
+              props.navigate("/login");
+            }}
+          />
+        </li>
+      )}
     </>
   );
 }
