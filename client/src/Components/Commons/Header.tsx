@@ -3,13 +3,20 @@ import UserIcon from "../../Icons/UserIcon";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./../Style/header.css";
+import jwt_decode from "jwt-decode";
+import { sessionType } from "../../API/LoginAPI";
+import CustomButton from "./Buttons";
 
 export default function Header() {
   const [isDropdownClicked, setIsDropdownClicked] = useState(false);
+  const getToken = sessionStorage.getItem("accessToken");
+  const decodeToken = getToken && (jwt_decode(getToken) as sessionType);
+  const memberId = decodeToken && decodeToken.memberId;
 
   const toggleDropdown = () => {
     setIsDropdownClicked(!isDropdownClicked);
   };
+
   return (
     <header>
       <nav className="Header_Nav">
@@ -17,7 +24,7 @@ export default function Header() {
           <div className="Header_Logo">L'acier</div>
         </Link>
         <ul className="Nav_List">
-          <li>
+          <li className="Nav_Dropdown">
             <button className="Nav_Dropdown_Button" onClick={toggleDropdown}>
               제품
             </button>
@@ -25,11 +32,21 @@ export default function Header() {
               <div className="Nav_Dropdown_Content">
                 {/* 이후에 선택된 카테고리에 따라 링크 설정 변경이 필요할 예정
                 i.e. 스킨/토너 선택 => 상품 페이지 스킨/토너 선택 */}
-                <Link to="/items-list">스킨/토너</Link>
-                <Link to="/items-list">크림</Link>
-                <Link to="/items-list">로션</Link>
-                <Link to="/items-list">클렌징</Link>
-                <Link to="/items-list">선크림</Link>
+                <Link to="/items-list" onClick={toggleDropdown}>
+                  스킨/토너
+                </Link>
+                <Link to="/items-list" onClick={toggleDropdown}>
+                  크림
+                </Link>
+                <Link to="/items-list" onClick={toggleDropdown}>
+                  로션
+                </Link>
+                <Link to="/items-list" onClick={toggleDropdown}>
+                  클렌징
+                </Link>
+                <Link to="/items-list" onClick={toggleDropdown}>
+                  선크림
+                </Link>
               </div>
             ) : null}
           </li>
@@ -44,9 +61,15 @@ export default function Header() {
           <Link to="/members/:memberId/carts">
             <CartIcon name="Header_Icon" />
           </Link>
-          <Link to="/login">
-            <UserIcon name="Header_Icon" />
-          </Link>
+          {memberId === null ? (
+            <Link to="/login">
+              <UserIcon name="Header_Icon" />
+            </Link>
+          ) : (
+            <Link to={`/memberPage/${memberId}`}>
+              <UserIcon name="Header_Icon" />
+            </Link>
+          )}
         </div>
       </nav>
     </header>

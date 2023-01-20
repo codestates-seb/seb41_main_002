@@ -9,11 +9,13 @@ export interface MemberType {
   phoneNumber: string;
 }
 
+const BASE_URL = process.env.REACT_APP_BASE_URL
+
 //중복체크
 export const doubleCheck = async (accountID: string) => {
   try {
     const response = await axios.get(
-      `http://localhost:8080/api/v1/idcheck/${accountID}`
+      `${BASE_URL}/idcheck/${accountID}`
     ).then((res) => {
       return res;
     })
@@ -31,7 +33,7 @@ export const signUp = async (memberData: MemberType) => {
       ...memberData,
       birthDate: dateChange,
     };
-    await axios.post("http://localhost:8080/api/v1/signup", setMemberData);
+    await axios.post(`${BASE_URL}/signup`, setMemberData);
   } catch (error) {
     console.error(error);
   }
