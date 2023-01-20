@@ -1,9 +1,7 @@
 import axios from "axios";
 
-// 로그인 연동이 안 되어 있기 때문에 현재 수동으로 입력
-// 이후 로그인 연동 이후 해당 데이터 삭제
-const accessToken =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50SWQiOiJzaGltNTUwNSIsInJvbGVzIjpbIlVTRVIiXSwibWVtYmVySWQiOjEsInN1YiI6InNoaW01NTA1IiwiaWF0IjoxNjc0MDk2MDAxLCJleHAiOjE2NzQwOTcyMDF9.QfxpKrTR_lZVU-6qlJorTfG2wD_iIlEZtDEMbMKAOGI";
+// 로그인 기능 일부 미구현으로 이후 기능 완료 시 해당 데이터 삭제
+const accessToken = sessionStorage.getItem("accessToken");
 
 export interface AddressType {
   addressId: number;
