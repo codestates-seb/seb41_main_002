@@ -65,7 +65,7 @@ public class SecurityConfiguration {
                         .antMatchers("/api/v1/signup", "/api/v1/login", "/api/v1/home", "/api/v1/idcheck/**").permitAll() // aws 추가
                         .antMatchers("/api/v1/orders/**").hasRole("USER") // 주문은 유저만 가능
                         .antMatchers("/api/v1/members/**").hasAnyRole("ADMIN","USER") // 멤버정보는 유저, 어드민 가능
-                        .antMatchers(HttpMethod.GET, "/api/v1/reviews/**").permitAll() // 리뷰 읽기 누구나 가능
+                        //.antMatchers(HttpMethod.GET, "/api/v1/reviews/**").permitAll() // 리뷰 읽기 누구나 가능 -> 생각해보니 review get은 리뷰작성을 위해 쓰는 api
                         .antMatchers(HttpMethod.GET, "/api/v1/items/**").permitAll() // 아이템 정보 읽기 누구나 가능
                         //.antMatchers(HttpMethod.POST, "/api/v1/user/refresh-token").permitAll() // 리프레시 토큰을 이용한 엑세스토큰 재발급
                         .antMatchers("/h2/**").permitAll()
