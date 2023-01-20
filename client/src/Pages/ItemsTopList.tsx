@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+// 추후 변수명 변경 및 타입변경 예정
 import { TopProductData } from "../API/ItemTopList/getTopList";
 import { getTopList } from "../API/ItemTopList/getTopList";
 import TopListCategoryTab from "../Components/ItemTopList/TopListCategoryTab";

@@ -3,8 +3,6 @@ import { useState } from "react";
 import {
   NavigateFunction,
   Params,
-  useNavigate,
-  useParams,
 } from "react-router-dom";
 import CustomButton from "../Commons/Buttons";
 
@@ -19,6 +17,7 @@ interface Props {
   customCheck: boolean;
   setCustomCheck: React.Dispatch<React.SetStateAction<boolean>>;
   params: Readonly<Params<string>>;
+  //추후 리팩토링 예정
   userCustomInfo: any;
 }
 
