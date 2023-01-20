@@ -23,47 +23,10 @@ const InfoWrapper = styled.div`
   }
 `;
 
-const div = styled.span`
-  display: flex;
-  width: 50%;
-`;
-
-const InfoTitle = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 40%;
-  align-items: center;
-  background-color: var(--dark3);
-  border-bottom: 1px solid white;
-`;
-
-const InfoContent = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 60%;
-  align-items: center;
-  background-color: var(--dark3);
-  border-bottom: 1px solid white;
-`;
-
-const SubscribeBenefit = styled(InfoContent)`
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const AddressEditContainer = styled.div`
-  position: absolute;
-  right: 298px;
-  button {
-    margin-left: 10px;
-  }
-`;
-
 // 이후 리덕스를 활용한 전역 상태 활용 시 삭제
 const session = {
   accountId: "shim5505",
-  memberId: 1,
+  memberId: 7,
 };
 
 export default function MemberPageEdit() {
@@ -99,7 +62,7 @@ export default function MemberPageEdit() {
       ) : null}
       <section className="Edit_Page_Container">
         <h1 className="Edit_Page_Title">회원정보 수정</h1>
-        <div className="Member_Information_Contents">
+        <div className="Member_Information_Wrapper">
           <InfoWrapper>
             <div className="Info_Label">ID</div>
             <div className="Info_Content">
@@ -134,13 +97,15 @@ export default function MemberPageEdit() {
               {memberAddressData && memberAddressData.phoneNumber}
             </div>
           </InfoWrapper>
-          <ul className="Edit_Page_Addresses">
+          <ul className="Member_Information_Addresses">
             <h2 className="Info_Title">내 배송지</h2>
+
             {memberAddressData &&
             memberAddressData?.addressList.length === 0 ? (
               <div className="No_Addresses"> 배송지 없음 </div>
             ) : (
               <div className="Addresses_Container">
+                {/* Address_List_Address, Address_List_Button은 현재 적용되는 CSS가 없지만 이후 디자인이 바뀔 가능성이 있어 class명을 사용해 분류 */}
                 {memberAddressData &&
                   memberAddressData.addressList.map((address) => {
                     return (
@@ -154,6 +119,7 @@ export default function MemberPageEdit() {
                           border="none"
                           onClick={openModal}
                         />
+
                         <div className="Address_List_Address">
                           <div>
                             {address.isPrimary ? "대표 주소: " : "주소: "}
@@ -184,40 +150,6 @@ export default function MemberPageEdit() {
               </div>
             )}
 
-            {/* 더미데이터 */}
-            {/* <li className="Address_List_Item">
-              <CustomButton
-                bgColor="transparent"
-                content="대표주소 설정"
-                fontColor="skyblue"
-                padding="5px"
-                width="150px"
-                border="none"
-                onClick={openModal}
-              />
-              <div className="Address_List_Address">
-                <div> 주소: 서울특별시 강서구 화곡동 56-536 501호</div>
-              </div>
-              <div className="Address_List_Button">
-                <CustomButton
-                  bgColor="transparent"
-                  content="수정"
-                  fontColor="skyblue"
-                  padding="5px"
-                  border="none"
-                  width="75px"
-                />
-                <CustomButton
-                  bgColor="transparent"
-                  content="삭제"
-                  fontColor="skyblue"
-                  padding="5px"
-                  border="none"
-                  width="75px"
-                />
-              </div>
-            </li> */}
-
             <CustomButton
               bgColor="transparent"
               content="배송지 추가"
@@ -234,7 +166,7 @@ export default function MemberPageEdit() {
             <InfoWrapper>
               <div className="Info_Label">피지 타입</div>
               <div className="Info_Content">
-                <select className="Edit_Select_Box">
+                <select className="Type_Dropdown">
                   {memberAddressData &&
                   memberAddressData.tagList[0] === "건성" ? (
                     <option value="건성" selected>
@@ -265,7 +197,7 @@ export default function MemberPageEdit() {
             <InfoWrapper>
               <div className="Info_Label">피부 타입</div>
               <div className="Info_Content">
-                <select className="Edit_Select_Box">
+                <select className="Type_Dropdown">
                   {memberAddressData &&
                   memberAddressData.tagList[1] === "일반 피부" ? (
                     <option value="일반 피부" selected>
@@ -285,11 +217,12 @@ export default function MemberPageEdit() {
                 </select>
               </div>
             </InfoWrapper>
+            {/* Checkbox_List_Item은 현재 적용되는 CSS가 없지만 이후 디자인이 바뀔 가능성이 있어 class명을 사용해 분류 */}
             <InfoWrapper>
               <div className="Info_Label">관심 분야</div>
               <div className="Info_Content">
-                <div className="Checkbox_Wrapper">
-                  <label>
+                <ul className="Checkbox_Wrapper">
+                  <li className="Checkbox_List_Item">
                     <span className="Checkbox_Tag">미백</span>
                     {memberAddressData &&
                     memberAddressData.tagList.includes("미백") ? (
@@ -297,8 +230,8 @@ export default function MemberPageEdit() {
                     ) : (
                       <input type="checkbox" />
                     )}
-                  </label>
-                  <label>
+                  </li>
+                  <li className="Checkbox_List_Item">
                     <span className="Checkbox_Tag">주름</span>
                     {memberAddressData &&
                     memberAddressData.tagList.includes("주름") ? (
@@ -306,8 +239,8 @@ export default function MemberPageEdit() {
                     ) : (
                       <input type="checkbox" />
                     )}
-                  </label>
-                  <label>
+                  </li>
+                  <li className="Checkbox_List_Item">
                     <span className="Checkbox_Tag">보습</span>
                     {memberAddressData &&
                     memberAddressData.tagList.includes("보습") ? (
@@ -315,8 +248,8 @@ export default function MemberPageEdit() {
                     ) : (
                       <input type="checkbox" />
                     )}
-                  </label>
-                  <label>
+                  </li>
+                  <li className="Checkbox_List_Item">
                     <span className="Checkbox_Tag">모공</span>
                     {memberAddressData &&
                     memberAddressData.tagList.includes("모공") ? (
@@ -324,8 +257,8 @@ export default function MemberPageEdit() {
                     ) : (
                       <input type="checkbox" />
                     )}
-                  </label>
-                  <label>
+                  </li>
+                  <li className="Checkbox_List_Item">
                     <span className="Checkbox_Tag">수분</span>
                     {memberAddressData &&
                     memberAddressData.tagList.includes("수분") ? (
@@ -333,8 +266,8 @@ export default function MemberPageEdit() {
                     ) : (
                       <input type="checkbox" />
                     )}
-                  </label>
-                  <label>
+                  </li>
+                  <li className="Checkbox_List_Item">
                     <span className="Checkbox_Tag">탄력</span>
                     {memberAddressData &&
                     memberAddressData.tagList.includes("탄력") ? (
@@ -342,8 +275,8 @@ export default function MemberPageEdit() {
                     ) : (
                       <input type="checkbox" />
                     )}
-                  </label>
-                </div>
+                  </li>
+                </ul>
               </div>
             </InfoWrapper>
           </div>
@@ -360,7 +293,6 @@ export default function MemberPageEdit() {
         </div>
         <div className="Subscribe_Edit_Container">
           <h2 className="Info_Title">구독 여부</h2>
-
           {memberAddressData?.subscribedDate === null ? (
             <div>
               <div className="No_Subscription">구독하고 있지 않습니다.</div>
