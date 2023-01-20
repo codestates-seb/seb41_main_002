@@ -3,7 +3,7 @@ package com.seb_main_002.order.mapper;
 import com.seb_main_002.delivery.entity.Delivery;
 import com.seb_main_002.item.entity.Item;
 import com.seb_main_002.member.entity.Member;
-import com.seb_main_002.order.dto.OrderInfo;
+import com.seb_main_002.order.dto.OrderInfoDto;
 import com.seb_main_002.order.dto.OrderPostDto;
 import com.seb_main_002.order.entity.Order;
 import com.seb_main_002.order.entity.OrderItem;
@@ -44,5 +44,5 @@ public interface OrderMapper {
         return order;
     }
 
-    OrderInfo orderPostDtoToOrderInfo(OrderPostDto orderPostDto);
+    OrderInfoDto orderPostDtoToOrderInfo(OrderPostDto orderPostDto);
 }

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderInfo {
+public class OrderInfoDto {
     private Boolean isPrimary;
 
     private Long addressId;
