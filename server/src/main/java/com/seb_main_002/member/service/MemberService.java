@@ -77,10 +77,12 @@ public class MemberService {
     }
     public Boolean verifyExistsAccountId(String accountId) {
         Optional<Member> optionalMember = memberRepository.findByAccountId(accountId);
+        Boolean isExisted = false;
         if(optionalMember.isPresent()) {
-            return false;
+            isExisted = true;
+            return isExisted; // 중복이면 true
         }
-        return true;
+        return isExisted; // 중복 아니면 false
     }
 
     public Member findMember(Long memberId) {
@@ -105,8 +107,8 @@ public class MemberService {
     @Transactional
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
-        Boolean aBoolean = verifyExistsAccountId(member.getAccountId());
-        if(aBoolean == false) {
+        Boolean isExisted = verifyExistsAccountId(member.getAccountId());
+        if(isExisted == true) {
             throw new BusinessLogicException(ExceptionCode.ACCOUNTID_EXISTS);
         }
         //암호 인코딩 후 저장
