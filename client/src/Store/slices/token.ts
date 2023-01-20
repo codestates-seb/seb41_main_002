@@ -19,7 +19,7 @@ const tokenSlice = createSlice({
       state.refreshToken = action.payload;
     },
     getAccessToken: (state) => {
-      //필요없을듯...
+      
     }
   }
 });
