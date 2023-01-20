@@ -1,7 +1,10 @@
 package com.seb_main_002.security.config;
 
+import com.seb_main_002.member.repository.MemberRepository;
+import com.seb_main_002.security.CustomUserDetailsService;
 import com.seb_main_002.security.handler.*;
 import com.seb_main_002.security.jwt.JwtAuthenticationFilter;
+import com.seb_main_002.security.jwt.JwtReIssueFilter;
 import com.seb_main_002.security.jwt.JwtTokenizer;
 import com.seb_main_002.security.jwt.JwtVerificationFilter;
 import com.seb_main_002.security.redis.RedisService;
@@ -35,6 +38,8 @@ public class SecurityConfiguration {
 
     private final RedisService redisService;
 
+    private final MemberRepository memberRepository;
+
 
     // HTTP 요청에 대한 보안 설정 구성
     @Bean
@@ -57,7 +62,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         //.antMatchers(HttpMethod.PATCH,"/api/v1/home").hasRole("ADMIN")
                         //.antMatchers(HttpMethod.DELETE,"/api/v1/home").hasRole("ADMIN")
-                        .antMatchers("/api/v1/signup", "/api/v1/login", "/api/v1/home", "/api/v1/idcheck/**").permitAll() //회원가입, 로그인, 홈 누구나 가능
+                        .antMatchers("/api/v1/signup", "/api/v1/login", "/api/v1/home", "/api/v1/idcheck/**").permitAll() // aws 추가
                         .antMatchers("/api/v1/orders/**").hasRole("USER") // 주문은 유저만 가능
                         .antMatchers("/api/v1/members/**").hasAnyRole("ADMIN","USER") // 멤버정보는 유저, 어드민 가능
                         .antMatchers(HttpMethod.GET, "/api/v1/reviews/**").permitAll() // 리뷰 읽기 누구나 가능
@@ -75,7 +80,7 @@ public class SecurityConfiguration {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         //configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedOrigins(Arrays.asList("http://seb41team02.s3-website.ap-northeast-2.amazonaws.com/","http://localhost:3000")); // 프론트엔드 쪽 서버 주소 
+        configuration.setAllowedOrigins(Arrays.asList("http://seb41team02.s3-website.ap-northeast-2.amazonaws.com","http://localhost:3000")); // aws 추가
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
         configuration.setAllowCredentials(true);       // 내 서버가 응답할 때 json을 JS에서 처리할 수 있게 설정
         configuration.addAllowedHeader("*");           // 모든 header에 응답 허용
@@ -100,10 +105,12 @@ public class SecurityConfiguration {
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils, redisService);
-
+            JwtReIssueFilter jwtReIssueFilter = new JwtReIssueFilter(redisService, jwtTokenizer, new CustomUserDetailsService(memberRepository, authorityUtils));
             builder
                     .addFilter(jwtAuthenticationFilter)
-                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
+                    .addFilterAfter(jwtReIssueFilter, JwtAuthenticationFilter.class)
+                    .addFilterAfter(jwtVerificationFilter, JwtReIssueFilter.class);
+
         }
     }
 }
