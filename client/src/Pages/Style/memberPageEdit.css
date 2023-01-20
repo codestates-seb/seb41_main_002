@@ -5,29 +5,49 @@
   flex-direction: column;
 }
 
-.Member_Infomation_Contents {
-  border: 1px solid blue;
+.Edit_Page_Title {
+  margin: 20px 0 30px 0;
+}
+
+.Member_Information_Contents {
   height: 100%;
   width: 900px;
+  font-size: 19px;
+}
+
+.Info_Wrapper {
+  width: 40%;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .Info_Title {
-  position: absolute;
-  left: 340px;
+  width: 17.5%;
 }
 
 .Info_Content {
-  display: flex;
-  justify-content: center;
-}
-
-.Address_Add_Button {
-  color: blue;
+  width: 40%;
 }
 
 .Edit_Type_Container {
   display: flex;
   height: 50px;
+}
+
+.Edit_Select_Box {
+  padding: 10px;
+  width: 125px;
+  font-size: 17px;
+}
+
+.Checkbox_Wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.Checkbox_Tag {
+  margin-right: 2.5px;
 }
 
 .Edit_Button_Wrap {
@@ -43,7 +63,6 @@
   margin-top: 30px;
   width: 900px;
   height: 100%;
-  background-color: rgb(38, 104, 162);
 }
 
 .Subscribe_Start_Date {

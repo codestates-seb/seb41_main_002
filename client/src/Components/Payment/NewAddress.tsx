@@ -39,34 +39,30 @@ const Input = styled.input<{ width: string }>`
 `;
 
 const NewAddress = () => {
-  const [shippingAddress, setShippingAddress] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [address, setAddress] = useState("");
+  const [addressInfo, setAddressInfo] = useState({
+    shippingAddress: "",
+    zipcode: "",
+    address: ""
+  })
 
   const saveAddress = () => {
     const addressSheet = {
       memberId: 1,
       isPrimary: false,
-      addressTitle: shippingAddress,
-      zipcode: zipcode,
-      address: address,
+      addressTitle: addressInfo.shippingAddress,
+      zipcode: addressInfo.zipcode,
+      address: addressInfo.address,
     };
     addAddress(addressSheet).then((res) => {
       console.log(res);
     });
   };
 
-  const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setShippingAddress(e.target.value);
-  };
-
-  const onChangeZipCode = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setZipcode(e.target.value);
-  };
-
   const onChangeAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAddress(e.target.value);
+    const { value, name } = e.target;
+    setAddressInfo({ ...addressInfo, [name]: value });
   };
+
   return (
     <AddressInput>
       <li>
@@ -74,8 +70,9 @@ const NewAddress = () => {
         <input
           type="text"
           className="textBox"
-          value={shippingAddress}
-          onChange={onChangeName}
+          name="shippingAddress"
+          value={addressInfo.shippingAddress}
+          onChange={onChangeAddress}
           placeholder="배송지명을 입력하세요"
         />
       </li>
@@ -85,8 +82,9 @@ const NewAddress = () => {
           type="text"
           className="textBox"
           width={"130px"}
-          value={zipcode}
-          onChange={onChangeZipCode}
+          name="zipcode"
+          value={addressInfo.zipcode}
+          onChange={onChangeAddress}
           onClick={() => {
             console.log("주소 입력");
           }}
@@ -100,7 +98,8 @@ const NewAddress = () => {
           type="text"
           className="textBox"
           width={"375px"}
-          value={address}
+          name="address"
+          value={addressInfo.address}
           onChange={onChangeAddress}
           onClick={() => {
             console.log("주소 입력");

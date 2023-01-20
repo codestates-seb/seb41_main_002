@@ -38,15 +38,17 @@ export default function Checkout() {
     addressList: AddressType[];
   }
 
+  interface ItemListType {
+    itemId: number;
+    count: number;
+    itemTotalPrice: number;
+  }
+
   interface OrderSheetType {
     memberId: number;
-    isPrimary: boolean | undefined;
-    addressId: number | undefined;
-    itemList: {
-      itemId: number;
-      itemTotalPrice: number;
-      count: number;
-    }[];
+    isPrimary?: boolean;
+    addressId?: number;
+    itemList: ItemListType[];
     itemsTotalPrice: number;
     totalPrice: number;
     usedReserve: number;
@@ -57,7 +59,7 @@ export default function Checkout() {
   const [checkedList, setCheckedList] = useState<AddressType>();
   const { itemsTotalPrice, totalPrice, excludingPoints, itemListArray } =
     itemsCalculation(useReserve, memberInfo && memberInfo["isSubscribe"]);
-
+  const isAdressEmpty = checkedList && checkedList?.addressId > 0
   // 더미 데이터
   const memberId: number = 1;
 
@@ -201,7 +203,7 @@ export default function Checkout() {
             </div>
           </div>
         </div>
-        {checkedList && checkedList?.addressId > 0 ? (
+        {isAdressEmpty ? (
           memberInfo && (
             <AddressDetail
               memberName={memberInfo.memberName}
