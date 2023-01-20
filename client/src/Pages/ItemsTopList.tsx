@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+// 추후 변수명 변경 및 타입변경 예정
 import { TopProductData } from "../API/ItemTopList/getTopList";
 import { getTopList } from "../API/ItemTopList/getTopList";
 import TopListCategoryTab from "../Components/ItemTopList/TopListCategoryTab";
@@ -6,12 +8,17 @@ import TopProductList from "../Components/ItemTopList/TopProductList";
 import "./Style/itemsTopList.css";
 
 export default function ItemsTopList() {
-  const [category, setCategory] = useState<string>("전체");
-  const [categoryENName, setCategoryENName] = useState("");
-  const [topProductData, setTopProductData] = useState<TopProductData[]>([]);
+  const navigate = useNavigate()
+  const [category, setCategory] = useState("전체");
+  const [categoryENName, setCategoryENName] = useState("all");
+  // 추후 변경예정
+  const [topProductData, setTopProductData] = useState<any>([]);
+  const [customCheck, setCustomCheck] = useState(false);
+
+  const params = useParams()
 
   const topProductList = async () => {
-    const result = await getTopList(categoryENName);
+    const result = await getTopList(categoryENName, customCheck);
     setTopProductData(result);
   };
 
@@ -34,12 +41,17 @@ export default function ItemsTopList() {
             setCategory={setCategory}
             setCategoryENName={setCategoryENName}
             session={session}
+            navigate={navigate}
+            customCheck={customCheck}
+            setCustomCheck={setCustomCheck}
+            params={params}
+            userCustomInfo={topProductData.member}
           />
         </ul>
       </div>
       <div className="Products_Gallery">
         <ul className="Products_Row">
-          <TopProductList topProductData={topProductData} />
+          <TopProductList topProductData={topProductData.topList} />
         </ul>
       </div>
     </div>
