@@ -1,5 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { defaultInstance } from "../../API/Core";
+
 import jwtDecode from "jwt-decode";
 
 interface MemberInputType {
@@ -16,7 +18,7 @@ interface UserType {
   userLogin: number;
 }
 
-interface decodeType {
+export interface decodeType {
   accountId: string;
   exp: number;
   iat: number;
@@ -29,8 +31,8 @@ interface decodeType {
 const asyncLogin = createAsyncThunk(
   "userSlice/asyncLogin",
   async (MemberInput: MemberInputType) => {
-    const login = await axios.post(
-      "http://13.209.97.3:8080/api/v1/login",
+    const login = await defaultInstance.post(
+      "/login",
       JSON.stringify(MemberInput)
     );
     return login.data;
@@ -41,8 +43,6 @@ const asyncLogin = createAsyncThunk(
 const asyncSilentRefresh = createAsyncThunk(
   "userSlice/asyncSilentRefresh",
   async (refreshToken: string) => {
-    console.log("리프레쉬 돌아라!");
-    console.log(refreshToken);
     const tokenChange = await axios.get(
       "http://13.209.97.3:8080/api/v1/user/refresh-token",
       {
@@ -76,6 +76,10 @@ const userSlice = createSlice({
 
       const decode: decodeType = jwtDecode(state.accessToken);
       state.memberId = decode.memberId;
+
+      sessionStorage.setItem("memberId", String(decode.memberId));
+      sessionStorage.setItem("accessToken", action.payload.accessToken);
+      sessionStorage.setItem("refreshToken", action.payload.refreshToken);
     });
 
     builder.addCase(asyncLogin.rejected, (state) => {
@@ -85,5 +89,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-// export const { setToken } = userSlice.actions;
 export { asyncLogin, asyncSilentRefresh };

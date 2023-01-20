@@ -1,21 +1,15 @@
 import CartIcon from "../../Icons/CartIcon";
 import UserIcon from "../../Icons/UserIcon";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./../Style/header.css";
 import CustomButton from "./Buttons";
-import { useAppSelector } from "../../Store/hooks";
 
 export default function Header() {
   const [isDropdownClicked, setIsDropdownClicked] = useState(false);
-  
-  const memberId = useAppSelector((state) => {
-    return state.user.memberId
-  })
 
-  useEffect(() => {
-    console.log(memberId);
-  }, [memberId])
+  const memberId = sessionStorage.getItem("memberId");
+
   const toggleDropdown = () => {
     setIsDropdownClicked(!isDropdownClicked);
   };
@@ -64,7 +58,7 @@ export default function Header() {
           <Link to="/members/:memberId/carts">
             <CartIcon name="Header_Icon" />
           </Link>
-          {memberId === 0 ? (
+          {memberId === null ? (
             <Link to="/login">
               <UserIcon name="Header_Icon" />
             </Link>

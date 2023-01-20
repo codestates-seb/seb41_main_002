@@ -2,7 +2,7 @@ import Modal from "../Components/Commons/Modal";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../Store/hooks";
-import { asyncLogin, asyncSilentRefresh } from "../Store/slices/userSlice";
+import { asyncLogin } from "../Store/slices/userSlice";
 import "./Style/memberAccess.css";
 
 const Login = () => {
@@ -24,26 +24,14 @@ const Login = () => {
     return state.user.userLogin;
   });
 
-  const refreshToken = useAppSelector((state) => {
-    return state.user.refreshToken;
-  });
-
   useEffect(() => {
     if (userLogin === 1) {
       navigate("/");
-      // window.location.reload();
+      window.location.reload();
     } else if (userLogin === 2) {
       setModalState(true);
     }
   }, [userLogin]);
-
-  useEffect(() => {
-    if (userLogin === 1) {
-      setInterval(async () => {
-        dispatch(asyncSilentRefresh(refreshToken));
-      }, 1140000);
-    }
-  }, [refreshToken])
 
   const memberLogin = async () => {
     dispatch(asyncLogin(MemberInput));
