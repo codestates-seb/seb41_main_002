@@ -63,6 +63,3 @@ jwt:
   key: sdfkjsakldfjskldfjaskldfjasklfjaskldfj
   access-token-expiration-minutes: 20
   refresh-token-expiration-minutes: 420
-
-config:
-   domain: http://seb41team02.s3-website.ap-northeast-2.amazonaws.com #CORS 설정을 위해 통신할 클라이언트의 도메인입력이 필요.
