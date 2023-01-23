@@ -13,11 +13,9 @@ spring:
   datasource:
     url: jdbc:mysql://jb-database-instance1.cwxmdz6g5fnu.ap-northeast-2.rds.amazonaws.com:13306/jbdatabase1?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
     username: admin
-    password: ${{secrets.BE_DATABASE_PASSWORD}}
+    password: '!rmsfhrkaehr2rhkJB!'
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-  config:
-    domain: http://seb41team02.s3-website.ap-northeast-2.amazonaws.com #CORS 설정을 위해 통신할 클라이언트의 도메인입력이 필요.
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -65,3 +63,6 @@ jwt:
   key: sdfkjsakldfjskldfjaskldfjasklfjaskldfj
   access-token-expiration-minutes: 20
   refresh-token-expiration-minutes: 420
+
+config:
+   domain: http://seb41team02.s3-website.ap-northeast-2.amazonaws.com #CORS 설정을 위해 통신할 클라이언트의 도메인입력이 필요.
