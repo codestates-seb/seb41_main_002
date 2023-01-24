@@ -1,15 +1,15 @@
 import CustomButton from "../Components/Commons/Buttons";
+import AddressPopup from "../Components/AddressPopup";
+import Modal from "../Components/Commons/Modal";
 import {
   getMemberAddressData,
   MemberPageDataType,
   updateMemberAddressData,
 } from "../API/MemberPageEdit/MemberPageEditAPI";
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import AddressPopup from "../Components/AddressPopup";
-import Modal from "../Components/Commons/Modal";
 import "./Style/memberPageEdit.css";
-import { Link } from "react-router-dom";
 
 const InfoWrapper = styled.div`
   display: flex;
@@ -32,24 +32,12 @@ const session = {
 
 export default function MemberPageEdit() {
   const [modalState, setModalState] = useState(false);
+  const navigate = useNavigate();
 
-  const [memberAddressData, setMemberAddressData] = useState<
-    MemberPageDataType | undefined
-  >({
-    accountId: "",
-    memberName: "",
-    birthdate: "",
-    email: "",
-    phoneNumber: "",
-    addressList: [],
-    tagList: [],
-    isSubscribed: false,
-    subscribedDate: "",
-    nowDate: "",
-    sampleCount: 0,
-    totalDeliveryDiscount: 0,
-    reserveProfit: 0,
-  });
+  const [memberAddressData, setMemberAddressData] =
+    useState<MemberPageDataType>();
+
+  // 각 인풋 태그의 필드값 => 객체 상태에서 값을 불러올 시 문제가 발생하여 patch 메서드 사용 및 Input값 onChange 이벤트 핸들링을 위해 각 상태를 선언, 할당해 사용
   const [memberName, setMemberName] = useState<string | undefined>("");
   const [birthdate, setBirthDate] = useState<string | undefined>("");
   const [email, setEmail] = useState<string | undefined>("");
@@ -57,18 +45,19 @@ export default function MemberPageEdit() {
   const [tagList, setTagList] = useState<string[] | undefined>([]);
   const [isSubscribed, setIsSubscribed] = useState<boolean | undefined>(true);
 
+  // 이후 주소 추가 기능 구현 시 사용될 예정 => 사용안될 시 페이지 리팩토링 단계에서 삭제
   const [newAddressId, setNewAddressId] = useState(0);
 
   useEffect(() => {
     try {
       getMemberAddressData(session.memberId).then((res) => {
-        // console.log(res);
-        setMemberAddressData(res);
+        // console.log(res); => 해당 코드는 데이터 값의 주기적인 확인을 위해 사용하므로 페이지 구현 완료 시 리팩토링 진행하며 삭제
         setMemberName(res?.memberName);
         setBirthDate(res?.birthdate);
         setEmail(res?.email);
         setPhoneNumber(res?.phoneNumber);
         setTagList(res?.tagList);
+        setMemberAddressData(res);
       });
     } catch (err) {
       console.error(err);
@@ -115,7 +104,6 @@ export default function MemberPageEdit() {
   };
 
   const editSkinTag: React.MouseEventHandler<HTMLInputElement> = (e) => {
-    const tagType = ["미백", "주름", "보습", "모공", "수분", "탄력"];
     const currentTag = e.currentTarget.name;
 
     if (tagList && tagList.includes(currentTag) === false) {
@@ -135,7 +123,11 @@ export default function MemberPageEdit() {
       phoneNumber: phoneNumber as string,
       tagList: tagList as string[],
     };
-    updateMemberAddressData(session.memberId, reqBody);
+    if (window.confirm("수정하시겠습니까?")) {
+      updateMemberAddressData(session.memberId, reqBody);
+      alert("수정 완료");
+      navigate("/memberPage/edit");
+    }
   };
 
   const cancelSubscription = () => {
