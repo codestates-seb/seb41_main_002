@@ -20,7 +20,20 @@
 }
 
 .Info_Content {
+  height: 80%;
   width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Info_Input {
+  height: 50%;
+  width: 50%;
+  text-align: center;
+  font-size: 17px;
+  border: none;
+  border-bottom: 1px solid rgba(249, 216, 170, 0.8);
 }
 
 .Member_Information_Addresses {

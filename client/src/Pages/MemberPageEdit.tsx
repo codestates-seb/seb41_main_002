@@ -2,7 +2,7 @@ import CustomButton from "../Components/Commons/Buttons";
 import {
   getMemberAddressData,
   MemberPageDataType,
-} from "../API/MemberPageEditAPI";
+} from "../API/MemberPageEdit/MemberPageEditAPI";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import AddressPopup from "../Components/AddressPopup";
@@ -30,24 +30,64 @@ const session = {
 };
 
 export default function MemberPageEdit() {
+  const [modalState, setModalState] = useState(false);
+
   const [memberAddressData, setMemberAddressData] = useState<
     MemberPageDataType | undefined
-  >();
+  >({
+    accountId: "",
+    memberName: "",
+    birthdate: "",
+    email: "",
+    phoneNumber: "",
+    addressList: [],
+    tagList: [],
+    isSubscribed: true,
+    subscribedDate: "2020/01/01",
+    nowDate: "2020/01/01",
+    sampleCount: 0,
+    totalDeliveryDiscount: 0,
+    reserveProfit: 0,
+  });
+
+  const [memberName, setMemberName] = useState<string | undefined>("");
+  const [birthdate, setBirthDate] = useState<string | undefined>("");
+  const [email, setEmail] = useState<string | undefined>("");
+  const [phoneNumber, setPhoneNumber] = useState<string | undefined>("");
 
   useEffect(() => {
     try {
       getMemberAddressData(session.memberId).then((res) => {
-        setMemberAddressData(res);
         console.log(res);
+        setMemberAddressData(res);
+        setMemberName(res?.memberName);
+        setBirthDate(res?.birthdate);
+        setEmail(res?.email);
+        setPhoneNumber(res?.phoneNumber);
       });
     } catch (err) {
       console.error(err);
     }
   }, []);
-  const [modalState, setModalState] = useState(false);
 
   const openModal = () => {
     setModalState(true);
+  };
+
+  const handleMemberName: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setMemberName(e.target.value);
+  };
+
+  const handleBirthDate: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setBirthDate(e.target.value);
+  };
+
+  const handleEmail: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePhoneNumber: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setPhoneNumber(e.target.value);
   };
 
   return (
@@ -75,26 +115,49 @@ export default function MemberPageEdit() {
           </InfoWrapper>
           <InfoWrapper>
             <div className="Info_Label">이름</div>
-            <div className="Info_Content">
+            {/* <div className="Info_Content">
               {memberAddressData && memberAddressData.memberName}
+            </div> */}
+            <div className="Info_Content">
+              <input
+                className="Info_Input"
+                type="text"
+                value={memberName}
+                onChange={handleMemberName}
+              />
             </div>
           </InfoWrapper>
           <InfoWrapper>
             <div className="Info_Label">생년월일</div>
             <div className="Info_Content">
-              {memberAddressData && memberAddressData.birthdate}
+              <input
+                className="Info_Input"
+                type="text"
+                value={birthdate}
+                onChange={handleBirthDate}
+              />
             </div>
           </InfoWrapper>
           <InfoWrapper>
             <div className="Info_Label">이메일</div>
             <div className="Info_Content">
-              {memberAddressData && memberAddressData.email}
+              <input
+                className="Info_Input"
+                type="text"
+                value={email}
+                onChange={handleEmail}
+              />
             </div>
           </InfoWrapper>
           <InfoWrapper>
             <div className="Info_Label">핸드폰 번호</div>
             <div className="Info_Content">
-              {memberAddressData && memberAddressData.phoneNumber}
+              <input
+                className="Info_Input"
+                type="text"
+                value={phoneNumber}
+                onChange={handlePhoneNumber}
+              />
             </div>
           </InfoWrapper>
           <ul className="Member_Information_Addresses">
@@ -161,125 +224,143 @@ export default function MemberPageEdit() {
             />
           </ul>
 
-          <div className="My_Type_Wrapper">
-            <h2 className="Info_Title">내 맞춤 설정</h2>
+          {memberAddressData && memberAddressData.tagList.length === 0 ? (
             <InfoWrapper>
-              <div className="Info_Label">피지 타입</div>
+              <div className="Info_Label">피부 타입 검사가 필요합니다.</div>
               <div className="Info_Content">
-                <select className="Type_Dropdown">
-                  {memberAddressData &&
-                  memberAddressData.tagList[0] === "건성" ? (
-                    <option value="건성" selected>
-                      건성
-                    </option>
-                  ) : (
-                    <option value="건성">건성</option>
-                  )}
-                  {memberAddressData &&
-                  memberAddressData.tagList[0] === "건성" ? (
-                    <option value="지성" selected>
-                      지성
-                    </option>
-                  ) : (
-                    <option value="지성">지성</option>
-                  )}
-                  {memberAddressData &&
-                  memberAddressData.tagList[0] === "복합성" ? (
-                    <option value="복합성" selected>
-                      복합성
-                    </option>
-                  ) : (
-                    <option value="복합성">복합성</option>
-                  )}
-                </select>
+                <Link to="/members/:memberId/subscribe">
+                  <CustomButton
+                    bgColor="transparent"
+                    content="나의 피부타입은?"
+                    fontColor="skyblue"
+                    padding="15px"
+                    fontsize="19px"
+                    width="200px"
+                  />
+                </Link>
               </div>
             </InfoWrapper>
-            <InfoWrapper>
-              <div className="Info_Label">피부 타입</div>
-              <div className="Info_Content">
-                <select className="Type_Dropdown">
-                  {memberAddressData &&
-                  memberAddressData.tagList[1] === "일반 피부" ? (
-                    <option value="일반 피부" selected>
-                      일반 피부
-                    </option>
-                  ) : (
-                    <option value="일반 피부">일반 피부</option>
-                  )}
-                  {memberAddressData &&
-                  memberAddressData.tagList[1] === "여드름성 피부" ? (
-                    <option value="여드름성 피부" selected>
-                      여드름성 피부
-                    </option>
-                  ) : (
-                    <option value="여드름성 피부">여드름성 피부</option>
-                  )}
-                </select>
-              </div>
-            </InfoWrapper>
-            {/* Checkbox_List_Item은 현재 적용되는 CSS가 없지만 이후 디자인이 바뀔 가능성이 있어 class명을 사용해 분류 */}
-            <InfoWrapper>
-              <div className="Info_Label">관심 분야</div>
-              <div className="Info_Content">
-                <ul className="Checkbox_Wrapper">
-                  <li className="Checkbox_List_Item">
-                    <span className="Checkbox_Tag">미백</span>
+          ) : (
+            <div className="My_Type_Wrapper">
+              <h2 className="Info_Title">내 맞춤 설정</h2>
+              <InfoWrapper>
+                <div className="Info_Label">피지 타입</div>
+                <div className="Info_Content">
+                  <select className="Type_Dropdown">
                     {memberAddressData &&
-                    memberAddressData.tagList.includes("미백") ? (
-                      <input type="checkbox" checked />
+                    memberAddressData.tagList[0] === "건성" ? (
+                      <option value="건성" selected>
+                        건성
+                      </option>
                     ) : (
-                      <input type="checkbox" />
+                      <option value="건성">건성</option>
                     )}
-                  </li>
-                  <li className="Checkbox_List_Item">
-                    <span className="Checkbox_Tag">주름</span>
                     {memberAddressData &&
-                    memberAddressData.tagList.includes("주름") ? (
-                      <input type="checkbox" checked />
+                    memberAddressData.tagList[0] === "건성" ? (
+                      <option value="지성" selected>
+                        지성
+                      </option>
                     ) : (
-                      <input type="checkbox" />
+                      <option value="지성">지성</option>
                     )}
-                  </li>
-                  <li className="Checkbox_List_Item">
-                    <span className="Checkbox_Tag">보습</span>
                     {memberAddressData &&
-                    memberAddressData.tagList.includes("보습") ? (
-                      <input type="checkbox" checked />
+                    memberAddressData.tagList[0] === "복합성" ? (
+                      <option value="복합성" selected>
+                        복합성
+                      </option>
                     ) : (
-                      <input type="checkbox" />
+                      <option value="복합성">복합성</option>
                     )}
-                  </li>
-                  <li className="Checkbox_List_Item">
-                    <span className="Checkbox_Tag">모공</span>
+                  </select>
+                </div>
+              </InfoWrapper>
+              <InfoWrapper>
+                <div className="Info_Label">피부 타입</div>
+                <div className="Info_Content">
+                  <select className="Type_Dropdown">
                     {memberAddressData &&
-                    memberAddressData.tagList.includes("모공") ? (
-                      <input type="checkbox" checked />
+                    memberAddressData.tagList[1] === "일반 피부" ? (
+                      <option value="일반 피부" selected>
+                        일반 피부
+                      </option>
                     ) : (
-                      <input type="checkbox" />
+                      <option value="일반 피부">일반 피부</option>
                     )}
-                  </li>
-                  <li className="Checkbox_List_Item">
-                    <span className="Checkbox_Tag">수분</span>
                     {memberAddressData &&
-                    memberAddressData.tagList.includes("수분") ? (
-                      <input type="checkbox" checked />
+                    memberAddressData.tagList[1] === "여드름성 피부" ? (
+                      <option value="여드름성 피부" selected>
+                        여드름성 피부
+                      </option>
                     ) : (
-                      <input type="checkbox" />
+                      <option value="여드름성 피부">여드름성 피부</option>
                     )}
-                  </li>
-                  <li className="Checkbox_List_Item">
-                    <span className="Checkbox_Tag">탄력</span>
-                    {memberAddressData &&
-                    memberAddressData.tagList.includes("탄력") ? (
-                      <input type="checkbox" checked />
-                    ) : (
-                      <input type="checkbox" />
-                    )}
-                  </li>
-                </ul>
-              </div>
-            </InfoWrapper>
-          </div>
+                  </select>
+                </div>
+              </InfoWrapper>
+              {/* Checkbox_List_Item은 현재 적용되는 CSS가 없지만 이후 디자인이 바뀔 가능성이 있어 class명을 사용해 분류 */}
+              <InfoWrapper>
+                <div className="Info_Label">관심 분야</div>
+                <div className="Info_Content">
+                  <ul className="Checkbox_Wrapper">
+                    <li className="Checkbox_List_Item">
+                      <span className="Checkbox_Tag">미백</span>
+                      {memberAddressData &&
+                      memberAddressData.tagList.includes("미백") ? (
+                        <input type="checkbox" checked />
+                      ) : (
+                        <input type="checkbox" />
+                      )}
+                    </li>
+                    <li className="Checkbox_List_Item">
+                      <span className="Checkbox_Tag">주름</span>
+                      {memberAddressData &&
+                      memberAddressData.tagList.includes("주름") ? (
+                        <input type="checkbox" checked />
+                      ) : (
+                        <input type="checkbox" />
+                      )}
+                    </li>
+                    <li className="Checkbox_List_Item">
+                      <span className="Checkbox_Tag">보습</span>
+                      {memberAddressData &&
+                      memberAddressData.tagList.includes("보습") ? (
+                        <input type="checkbox" checked />
+                      ) : (
+                        <input type="checkbox" />
+                      )}
+                    </li>
+                    <li className="Checkbox_List_Item">
+                      <span className="Checkbox_Tag">모공</span>
+                      {memberAddressData &&
+                      memberAddressData.tagList.includes("모공") ? (
+                        <input type="checkbox" checked />
+                      ) : (
+                        <input type="checkbox" />
+                      )}
+                    </li>
+                    <li className="Checkbox_List_Item">
+                      <span className="Checkbox_Tag">수분</span>
+                      {memberAddressData &&
+                      memberAddressData.tagList.includes("수분") ? (
+                        <input type="checkbox" checked />
+                      ) : (
+                        <input type="checkbox" />
+                      )}
+                    </li>
+                    <li className="Checkbox_List_Item">
+                      <span className="Checkbox_Tag">탄력</span>
+                      {memberAddressData &&
+                      memberAddressData.tagList.includes("탄력") ? (
+                        <input type="checkbox" checked />
+                      ) : (
+                        <input type="checkbox" />
+                      )}
+                    </li>
+                  </ul>
+                </div>
+              </InfoWrapper>
+            </div>
+          )}
         </div>
         <div className="Edit_Button_Wrap">
           <CustomButton
