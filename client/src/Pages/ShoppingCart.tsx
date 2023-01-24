@@ -1,6 +1,9 @@
-import "./Style/shoppingCart.css";
 import styled from "styled-components";
 import OrderedListItem from "../Components/Commons/OrderedListItem";
+import { useEffect, useState } from "react";
+import { getShoppingCart } from "../API/ShoppingCart/getShoppingCart";
+import "./Style/shoppingCart.css";
+import { CartDataType } from "../API/ShoppingCart/getShoppingCart";
 
 const BenefitContents = styled.span<{ marginLeft: string }>`
   color: black;
@@ -9,6 +12,18 @@ const BenefitContents = styled.span<{ marginLeft: string }>`
 `;
 
 export default function ShoppingCart() {
+  const [cartData, setCartData] = useState<CartDataType | undefined>(undefined);
+
+  console.log(cartData?.cart)
+
+  const callCartData = async () => {
+    const result = await getShoppingCart(1);
+    setCartData(result);
+  };
+
+  useEffect(()=>{
+    callCartData()
+  },[])
   // 데이터가 잘 들어가는지 확인하기 위한 더미데이터 => 추후 삭제 예정입니다.
   // 데이터의 내용은 Checkout.tsx의 items와 동일합니다.
   interface ItemInterface {
