@@ -1,114 +1,83 @@
-import CustomButton from "../Components/Commons/Buttons";
+import { ShoppingCategoryTab } from "../Components/ShoppingList/CategoryTab";
+import Product from "../Components/ShoppingList/Product";
+import { getProductList } from "../API/ShoppingList/getShoppingList";
+import { ProductData } from "../API/ShoppingList/getShoppingList";
+import { Link } from "react-router-dom";
 import "./Style/shoppingList.css";
+import React, { useEffect, useRef, useState } from "react";
 
 export default function ShoppingList() {
+  const [productData, setProductData] = useState<ProductData[]>([]);
+  const [page, setPage] = useState(1);
+  const [categoryParam, setCategoryParams] = useState("all");
+  const [isCustom, setIsCustom] = useState(false);
+  const [serchWord, setSerchWord] = useState("");
+  const productList = async () => {
+    const result = await getProductList({
+      categoryENName: categoryParam,
+      page: page,
+      custom: isCustom,
+      keyword: serchWord,
+    });
+    setProductData(productData.concat(result));
+  };
+
+  const serchSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      productList();
+    }
+  };
+
+  useEffect(() => {
+    productList();
+  }, [page, categoryParam, isCustom]);
+
+  // 더미 session
+  const session = {
+    memberId: 1,
+    accountId: "abc",
+  };
+  // 추후 데이터 접근 확인 필요
+  const userTagInfo = productData[0] && productData[0].member.memberTagsList;
+
   return (
-    <div>
+    <div className="Shopping_List_Container">
       <div className="Shopping_List_Search">
         <input
           type="text"
           placeholder="검색하세요"
           className="Search_Bar"
-        ></input>
+          defaultValue={serchWord}
+          onChange={(e) => setSerchWord(e.target.value)}
+          onKeyUp={(e) => {
+            if (serchWord.length !== 0) {
+              serchSubmit(e);
+            } else {
+              alert("검색어를 입력해주세요!");
+            }
+          }}
+        />
       </div>
-      <ul className="Filter_Options">
-        <li>
-          <CustomButton
-            bgColor="gray"
-            fontColor="white"
-            content="샘플"
-            width="100px"
-            padding="9px 15px"
+      <div className="Tab_Container">
+        <ul className="Tab_List">
+          <ShoppingCategoryTab
+            setCategoryParams={setCategoryParams}
+            setIsCustom={setIsCustom}
+            isCustom={isCustom}
+            session={session}
+            userTagInfo={userTagInfo}
           />
-        </li>
-        <li>
-          <button className="Filter_Button">토너</button>
-        </li>
-        <li>
-          <button className="Filter_Button">크림</button>
-        </li>
-        <li>
-          <button className="Filter_Button">로션</button>
-        </li>
-        <li>
-          <button className="Filter_Button">클렌징</button>
-        </li>
-        <li>
-          <button className="Filter_Button">선크림</button>
-        </li>
-        <li>
-          <button className="Filter_Button">내 맞춤</button>
-        </li>
-      </ul>
-      <div className="Products_Gallery">
-        {/* 아래 상품들은 이후 데이터를 활용한 .map 방식으로 구성할 예정 */}
-        <ul className="Products_Row">
-          <li className="Product_Detail">
-            <img
-              src="https://picsum.photos/200?random=1"
-              alt="sample image"
-            ></img>
-            <p>상품명</p>
-            <p>가격</p>
-          </li>
-          <li className="Product_Detail">
-            <img
-              src="https://picsum.photos/200?random=2"
-              alt="sample image"
-            ></img>
-            <p>상품명</p>
-            <p>가격</p>
-          </li>
-          <li className="Product_Detail">
-            <img
-              src="https://picsum.photos/200?random=3"
-              alt="sample image"
-            ></img>
-            <p>상품명</p>
-            <p>가격</p>
-          </li>
-          <li className="Product_Detail">
-            <img
-              src="https://picsum.photos/200?random=4"
-              alt="sample image"
-            ></img>
-            <p>상품명</p>
-            <p>가격</p>
-          </li>
         </ul>
-        <ul className="Products_Row">
-          <li className="Product_Detail">
-            <img
-              src="https://picsum.photos/200?random=5"
-              alt="sample image"
-            ></img>
-            <p>상품명</p>
-            <p>가격</p>
-          </li>
-          <li className="Product_Detail">
-            <img
-              src="https://picsum.photos/200?random=6"
-              alt="sample image"
-            ></img>
-            <p>상품명</p>
-            <p>가격</p>
-          </li>
-          <li className="Product_Detail">
-            <img
-              src="https://picsum.photos/200?random=7"
-              alt="sample image"
-            ></img>
-            <p>상품명</p>
-            <p>가격</p>
-          </li>
-          <li className="Product_Detail">
-            <img
-              src="https://picsum.photos/200?random=8"
-              alt="sample image"
-            ></img>
-            <p>상품명</p>
-            <p>가격</p>
-          </li>
+      </div>
+      <div className="Product_List_Container">
+        <ul className="Product_List">
+          <Product
+            products={productData}
+            onLastItemVisiable={() => {
+              console.log("setPage");
+              setPage(page + 1);
+            }}
+          />
         </ul>
       </div>
     </div>

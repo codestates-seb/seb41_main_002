@@ -34,7 +34,7 @@ export const SkinTag = (tags: string) => {
         <TypeBadge
           bgColor="black"
           padding="5px"
-          fontSize="11px"
+          fontSize="15px"
           content={`${tags}`}
         />
       );
@@ -43,7 +43,7 @@ export const SkinTag = (tags: string) => {
         <TypeBadge
           bgColor="gray"
           padding="5px"
-          fontSize="11px"
+          fontSize="15px"
           content={`${tags}`}
         />
       );
@@ -52,7 +52,7 @@ export const SkinTag = (tags: string) => {
         <TypeBadge
           bgColor="Pink"
           padding="5px"
-          fontSize="11px"
+          fontSize="15px"
           content={`${tags}`}
         />
       );
@@ -61,7 +61,7 @@ export const SkinTag = (tags: string) => {
         <TypeBadge
           bgColor="red"
           padding="5px"
-          fontSize="11px"
+          fontSize="15px"
           content={`${tags}`}
         />
       );
@@ -70,7 +70,7 @@ export const SkinTag = (tags: string) => {
         <TypeBadge
           bgColor="blue"
           padding="5px"
-          fontSize="11px"
+          fontSize="15px"
           content={`${tags}`}
         />
       );
@@ -79,7 +79,7 @@ export const SkinTag = (tags: string) => {
         <TypeBadge
           bgColor="gold"
           padding="5px"
-          fontSize="11px"
+          fontSize="15px"
           content={`${tags}`}
         />
       );
@@ -88,7 +88,7 @@ export const SkinTag = (tags: string) => {
         <TypeBadge
           bgColor="yellow"
           padding="5px"
-          fontSize="11px"
+          fontSize="15px"
           content={`${tags}`}
         />
       );
@@ -97,7 +97,7 @@ export const SkinTag = (tags: string) => {
         <TypeBadge
           bgColor="yellow"
           padding="5px"
-          fontSize="11px"
+          fontSize="15px"
           content={`${tags}`}
         />
       );
@@ -106,7 +106,7 @@ export const SkinTag = (tags: string) => {
         <TypeBadge
           bgColor="yellow"
           padding="5px"
-          fontSize="11px"
+          fontSize="15px"
           content={`${tags}`}
         />
       );
@@ -115,7 +115,7 @@ export const SkinTag = (tags: string) => {
         <TypeBadge
           bgColor="yellow"
           padding="5px"
-          fontSize="11px"
+          fontSize="15px"
           content={`${tags}`}
         />
       );
@@ -124,7 +124,7 @@ export const SkinTag = (tags: string) => {
         <TypeBadge
           bgColor="yellow"
           padding="5px"
-          fontSize="11px"
+          fontSize="15px"
           content={`${tags}`}
         />
       );
