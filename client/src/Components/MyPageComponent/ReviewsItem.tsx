@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Rating } from "../Commons/Rating";
+import { Rating, SettingType } from "../Commons/Rating";
 
 interface ReviewType {
   reviewId: number;

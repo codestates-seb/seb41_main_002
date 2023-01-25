@@ -27,10 +27,37 @@ export interface MemberPageDataType {
   reserveProfit: number;
 }
 
+interface UpdateDataType {
+  memberName: string;
+  email: string;
+  phoneNumber: string;
+  tagList: string[];
+}
+
 export const getMemberAddressData = async (memberId: number) => {
   try {
     const response = await axios.get<MemberPageDataType>(
-      `http://13.209.97.3:8080/api/v1/members/edit/${memberId}`,
+      `http://3.39.187.178:8080/api/v1/members/edit/${memberId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const updateMemberAddressData = async (
+  memberId: number,
+  memberEditData: UpdateDataType
+) => {
+  try {
+    const response = await axios.patch(
+      `http://3.39.187.178:8080/api/v1/members/edit/${memberId}`,
+      memberEditData,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,

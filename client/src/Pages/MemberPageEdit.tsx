@@ -1,14 +1,15 @@
 import CustomButton from "../Components/Commons/Buttons";
+import AddressPopup from "../Components/AddressPopup";
+import Modal from "../Components/Commons/Modal";
 import {
   getMemberAddressData,
   MemberPageDataType,
-} from "../API/MemberPageEditAPI";
+  updateMemberAddressData,
+} from "../API/MemberPageEdit/MemberPageEditAPI";
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import AddressPopup from "../Components/AddressPopup";
-import Modal from "../Components/Commons/Modal";
 import "./Style/memberPageEdit.css";
-import { Link } from "react-router-dom";
 
 const InfoWrapper = styled.div`
   display: flex;
@@ -26,28 +27,119 @@ const InfoWrapper = styled.div`
 // 이후 리덕스를 활용한 전역 상태 활용 시 삭제
 const session = {
   accountId: "shim5505",
-  memberId: 7,
+  memberId: 1,
 };
 
 export default function MemberPageEdit() {
-  const [memberAddressData, setMemberAddressData] = useState<
-    MemberPageDataType | undefined
-  >();
+  const [modalState, setModalState] = useState(false);
+  const navigate = useNavigate();
+
+  const [memberAddressData, setMemberAddressData] =
+    useState<MemberPageDataType>();
+
+  // 각 인풋 태그의 필드값 => 객체 상태에서 값을 불러올 시 문제가 발생하여 patch 메서드 사용 및 Input값 onChange 이벤트 핸들링을 위해 각 상태를 선언, 할당해 사용
+  const [memberName, setMemberName] = useState<string | undefined>("");
+  const [birthdate, setBirthDate] = useState<string | undefined>("");
+  const [email, setEmail] = useState<string | undefined>("");
+  const [phoneNumber, setPhoneNumber] = useState<string | undefined>("");
+  const [tagList, setTagList] = useState<string[] | undefined>([]);
+  const [isSubscribed, setIsSubscribed] = useState<boolean | undefined>(true);
+
+  // 이후 주소 추가 기능 구현 시 사용될 예정 => 사용안될 시 페이지 리팩토링 단계에서 삭제
+  const [newAddressId, setNewAddressId] = useState(0);
 
   useEffect(() => {
     try {
       getMemberAddressData(session.memberId).then((res) => {
+        // console.log(res); => 해당 코드는 데이터 값의 주기적인 확인을 위해 사용하므로 페이지 구현 완료 시 리팩토링 진행하며 삭제
+        setMemberName(res?.memberName);
+        setBirthDate(res?.birthdate);
+        setEmail(res?.email);
+        setPhoneNumber(res?.phoneNumber);
+        setTagList(res?.tagList);
         setMemberAddressData(res);
-        console.log(res);
       });
     } catch (err) {
       console.error(err);
     }
   }, []);
-  const [modalState, setModalState] = useState(false);
 
   const openModal = () => {
     setModalState(true);
+  };
+
+  const handleMemberName: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setMemberName(e.target.value);
+  };
+
+  const handleBirthDate: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setBirthDate(
+      e.target.value
+        .replace(/[^0-9]/g, "")
+        .replace(/^(\d{0,4})(\d{0,2})(\d{0,2})$/g, "$1/$2/$3")
+        .replace(/(\/{1,2})$/g, "")
+    );
+  };
+
+  const handleEmail: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePhoneNumber: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setPhoneNumber(
+      e.target.value
+        .replace(/[^0-9]/g, "")
+        .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
+        .replace(/(\-{1,2})$/g, "")
+    );
+  };
+
+  const editSkinType: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
+    // 검사를 위한 값
+    const sebumType = ["건성", "복합성", "지성"];
+    const skinType = ["일반 피부", "여드름성 피부"];
+
+    // 1, 2 번째 필드값 변동시 tagList 변경
+    if (sebumType.includes(e.target.value) && tagList) {
+      tagList[0] = e.target.value;
+    }
+    if (skinType.includes(e.target.value) && tagList) {
+      tagList[1] = e.target.value;
+    }
+  };
+
+  const editSkinTag: React.MouseEventHandler<HTMLInputElement> = (e) => {
+    const currentTag = e.currentTarget.name;
+
+    if (tagList && tagList.includes(currentTag) === false) {
+      tagList.push(currentTag);
+    } else if (tagList && tagList.includes(currentTag)) {
+      const index = tagList.indexOf(currentTag);
+      if (index > -1) {
+        tagList.splice(index, 1);
+      }
+    }
+  };
+
+  const submitEdit = () => {
+    const reqBody = {
+      memberName: memberName as string,
+      email: email as string,
+      phoneNumber: phoneNumber as string,
+      tagList: tagList as string[],
+    };
+    if (window.confirm("수정하시겠습니까?")) {
+      updateMemberAddressData(session.memberId, reqBody);
+      alert("수정 완료");
+      navigate("/memberPage/edit");
+    }
+  };
+
+  const cancelSubscription = () => {
+    if (window.confirm("정말 구독을 취소하시겠습니까?")) {
+      alert("구독이 취소되었습니다.");
+      setIsSubscribed(false);
+    }
   };
 
   return (
@@ -57,7 +149,7 @@ export default function MemberPageEdit() {
         <Modal
           modalState={modalState}
           setModalState={setModalState}
-          element={<AddressPopup />}
+          element={<AddressPopup newAddressId={newAddressId} />}
         />
       ) : null}
       <section className="Edit_Page_Container">
@@ -76,25 +168,47 @@ export default function MemberPageEdit() {
           <InfoWrapper>
             <div className="Info_Label">이름</div>
             <div className="Info_Content">
-              {memberAddressData && memberAddressData.memberName}
+              <input
+                className="Info_Input"
+                type="text"
+                value={memberName}
+                onChange={handleMemberName}
+              />
             </div>
           </InfoWrapper>
           <InfoWrapper>
             <div className="Info_Label">생년월일</div>
             <div className="Info_Content">
-              {memberAddressData && memberAddressData.birthdate}
+              <input
+                className="Info_Input"
+                type="text"
+                maxLength={10}
+                value={birthdate}
+                onChange={handleBirthDate}
+              />
             </div>
           </InfoWrapper>
           <InfoWrapper>
             <div className="Info_Label">이메일</div>
             <div className="Info_Content">
-              {memberAddressData && memberAddressData.email}
+              <input
+                className="Info_Input"
+                type="text"
+                value={email}
+                onChange={handleEmail}
+              />
             </div>
           </InfoWrapper>
           <InfoWrapper>
             <div className="Info_Label">핸드폰 번호</div>
             <div className="Info_Content">
-              {memberAddressData && memberAddressData.phoneNumber}
+              <input
+                className="Info_Input"
+                type="text"
+                maxLength={13}
+                value={phoneNumber}
+                onChange={handlePhoneNumber}
+              />
             </div>
           </InfoWrapper>
           <ul className="Member_Information_Addresses">
@@ -156,130 +270,180 @@ export default function MemberPageEdit() {
               fontColor="skyblue"
               padding="10px"
               width="125px"
-              border="white 1px solid"
+              border="none"
               onClick={openModal}
             />
           </ul>
 
-          <div className="My_Type_Wrapper">
-            <h2 className="Info_Title">내 맞춤 설정</h2>
-            <InfoWrapper>
-              <div className="Info_Label">피지 타입</div>
-              <div className="Info_Content">
-                <select className="Type_Dropdown">
-                  {memberAddressData &&
-                  memberAddressData.tagList[0] === "건성" ? (
-                    <option value="건성" selected>
-                      건성
-                    </option>
-                  ) : (
+          {memberAddressData && memberAddressData.tagList.length === 0 ? (
+            <div className="My_Type_Wrapper Recommend_Survey">
+              <p>피부 타입 검사를 실행하지 않았습니다.</p>
+              <div>
+                <Link to="/">
+                  <CustomButton
+                    bgColor="transparent"
+                    content="나의 피부타입은?"
+                    fontColor="rgb(243, 194, 35)"
+                    padding="10px"
+                    fontsize="19px"
+                    border="none"
+                    width="200px"
+                  />
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <div className="My_Type_Wrapper">
+              <h2 className="Info_Title">내 맞춤 설정</h2>
+              <InfoWrapper>
+                <div className="Info_Label">피지 타입</div>
+                <div className="Info_Content">
+                  <select
+                    className="Type_Dropdown"
+                    defaultValue={
+                      memberAddressData && memberAddressData.tagList[0]
+                    }
+                    onChange={editSkinType}
+                  >
                     <option value="건성">건성</option>
-                  )}
-                  {memberAddressData &&
-                  memberAddressData.tagList[0] === "건성" ? (
-                    <option value="지성" selected>
-                      지성
-                    </option>
-                  ) : (
                     <option value="지성">지성</option>
-                  )}
-                  {memberAddressData &&
-                  memberAddressData.tagList[0] === "복합성" ? (
-                    <option value="복합성" selected>
-                      복합성
-                    </option>
-                  ) : (
                     <option value="복합성">복합성</option>
-                  )}
-                </select>
-              </div>
-            </InfoWrapper>
-            <InfoWrapper>
-              <div className="Info_Label">피부 타입</div>
-              <div className="Info_Content">
-                <select className="Type_Dropdown">
-                  {memberAddressData &&
-                  memberAddressData.tagList[1] === "일반 피부" ? (
-                    <option value="일반 피부" selected>
-                      일반 피부
-                    </option>
-                  ) : (
+                  </select>
+                </div>
+              </InfoWrapper>
+              <InfoWrapper>
+                <div className="Info_Label">피부 타입</div>
+                <div className="Info_Content">
+                  <select
+                    className="Type_Dropdown"
+                    defaultValue={
+                      memberAddressData && memberAddressData.tagList[1]
+                    }
+                    onChange={editSkinType}
+                  >
                     <option value="일반 피부">일반 피부</option>
-                  )}
-                  {memberAddressData &&
-                  memberAddressData.tagList[1] === "여드름성 피부" ? (
-                    <option value="여드름성 피부" selected>
-                      여드름성 피부
-                    </option>
-                  ) : (
                     <option value="여드름성 피부">여드름성 피부</option>
-                  )}
-                </select>
-              </div>
-            </InfoWrapper>
-            {/* Checkbox_List_Item은 현재 적용되는 CSS가 없지만 이후 디자인이 바뀔 가능성이 있어 class명을 사용해 분류 */}
-            <InfoWrapper>
-              <div className="Info_Label">관심 분야</div>
-              <div className="Info_Content">
-                <ul className="Checkbox_Wrapper">
-                  <li className="Checkbox_List_Item">
-                    <span className="Checkbox_Tag">미백</span>
-                    {memberAddressData &&
-                    memberAddressData.tagList.includes("미백") ? (
-                      <input type="checkbox" checked />
-                    ) : (
-                      <input type="checkbox" />
-                    )}
-                  </li>
-                  <li className="Checkbox_List_Item">
-                    <span className="Checkbox_Tag">주름</span>
-                    {memberAddressData &&
-                    memberAddressData.tagList.includes("주름") ? (
-                      <input type="checkbox" checked />
-                    ) : (
-                      <input type="checkbox" />
-                    )}
-                  </li>
-                  <li className="Checkbox_List_Item">
-                    <span className="Checkbox_Tag">보습</span>
-                    {memberAddressData &&
-                    memberAddressData.tagList.includes("보습") ? (
-                      <input type="checkbox" checked />
-                    ) : (
-                      <input type="checkbox" />
-                    )}
-                  </li>
-                  <li className="Checkbox_List_Item">
-                    <span className="Checkbox_Tag">모공</span>
-                    {memberAddressData &&
-                    memberAddressData.tagList.includes("모공") ? (
-                      <input type="checkbox" checked />
-                    ) : (
-                      <input type="checkbox" />
-                    )}
-                  </li>
-                  <li className="Checkbox_List_Item">
-                    <span className="Checkbox_Tag">수분</span>
-                    {memberAddressData &&
-                    memberAddressData.tagList.includes("수분") ? (
-                      <input type="checkbox" checked />
-                    ) : (
-                      <input type="checkbox" />
-                    )}
-                  </li>
-                  <li className="Checkbox_List_Item">
-                    <span className="Checkbox_Tag">탄력</span>
-                    {memberAddressData &&
-                    memberAddressData.tagList.includes("탄력") ? (
-                      <input type="checkbox" checked />
-                    ) : (
-                      <input type="checkbox" />
-                    )}
-                  </li>
-                </ul>
-              </div>
-            </InfoWrapper>
-          </div>
+                  </select>
+                </div>
+              </InfoWrapper>
+              {/* Checkbox_List_Item은 현재 적용되는 CSS가 없지만 이후 디자인이 바뀔 가능성이 있어 class명을 사용해 분류 */}
+              <InfoWrapper>
+                <div className="Info_Label">관심 분야</div>
+                <div className="Info_Content">
+                  <ul className="Checkbox_Wrapper">
+                    <li className="Checkbox_List_Item">
+                      <span className="Checkbox_Tag">미백</span>
+                      {memberAddressData &&
+                      memberAddressData.tagList.includes("미백") ? (
+                        <input
+                          type="checkbox"
+                          name="미백"
+                          onClick={editSkinTag}
+                          defaultChecked
+                        />
+                      ) : (
+                        <input
+                          type="checkbox"
+                          name="미백"
+                          onClick={editSkinTag}
+                        />
+                      )}
+                    </li>
+                    <li className="Checkbox_List_Item">
+                      <span className="Checkbox_Tag">주름</span>
+                      {memberAddressData &&
+                      memberAddressData.tagList.includes("주름") ? (
+                        <input
+                          type="checkbox"
+                          name="주름"
+                          onClick={editSkinTag}
+                          defaultChecked
+                        />
+                      ) : (
+                        <input
+                          type="checkbox"
+                          name="주름"
+                          onClick={editSkinTag}
+                        />
+                      )}
+                    </li>
+                    <li className="Checkbox_List_Item">
+                      <span className="Checkbox_Tag">보습</span>
+                      {memberAddressData &&
+                      memberAddressData.tagList.includes("보습") ? (
+                        <input
+                          type="checkbox"
+                          name="보습"
+                          onClick={editSkinTag}
+                          defaultChecked
+                        />
+                      ) : (
+                        <input
+                          type="checkbox"
+                          name="보습"
+                          onClick={editSkinTag}
+                        />
+                      )}
+                    </li>
+                    <li className="Checkbox_List_Item">
+                      <span className="Checkbox_Tag">모공</span>
+                      {memberAddressData &&
+                      memberAddressData.tagList.includes("모공") ? (
+                        <input
+                          type="checkbox"
+                          name="모공"
+                          onClick={editSkinTag}
+                          defaultChecked
+                        />
+                      ) : (
+                        <input
+                          type="checkbox"
+                          name="모공"
+                          onClick={editSkinTag}
+                        />
+                      )}
+                    </li>
+                    <li className="Checkbox_List_Item">
+                      <span className="Checkbox_Tag">수분</span>
+                      {memberAddressData &&
+                      memberAddressData.tagList.includes("수분") ? (
+                        <input
+                          type="checkbox"
+                          name="수분"
+                          onClick={editSkinTag}
+                          defaultChecked
+                        />
+                      ) : (
+                        <input
+                          type="checkbox"
+                          name="수분"
+                          onClick={editSkinTag}
+                        />
+                      )}
+                    </li>
+                    <li className="Checkbox_List_Item">
+                      <span className="Checkbox_Tag">탄력</span>
+                      {memberAddressData &&
+                      memberAddressData.tagList.includes("탄력") ? (
+                        <input
+                          type="checkbox"
+                          name="탄력"
+                          onClick={editSkinTag}
+                          defaultChecked
+                        />
+                      ) : (
+                        <input
+                          type="checkbox"
+                          name="탄력"
+                          onClick={editSkinTag}
+                        />
+                      )}
+                    </li>
+                  </ul>
+                </div>
+              </InfoWrapper>
+            </div>
+          )}
         </div>
         <div className="Edit_Button_Wrap">
           <CustomButton
@@ -289,12 +453,13 @@ export default function MemberPageEdit() {
             padding="10px"
             fontsize="19px"
             width="125px"
+            onClick={submitEdit}
           />
         </div>
         <div className="Subscribe_Edit_Container">
           <h2 className="Info_Title">구독 여부</h2>
-          {memberAddressData?.subscribedDate === null ? (
-            <div>
+          {memberAddressData?.isSubscribed === false ? (
+            <div className="Recommend_Subscription">
               <div className="No_Subscription">구독하고 있지 않습니다.</div>
               <Link to="/members/:memberId/subscribe">
                 <CustomButton
@@ -315,23 +480,26 @@ export default function MemberPageEdit() {
                   {memberAddressData?.subscribedDate}
                 </div>
               </InfoWrapper>
-              <InfoWrapper>
+              <div className="Subscription_Summary">
                 <div className="Info_Label">지금까지 받은 혜택</div>
-                <div className="Info_Content">
+                <div className="Subscription_Benefit">
                   <div>구독일로부터</div>
-                  <div>4개의 샘플</div>
-                  <div>4개의 샘플</div>
-                  <div>4개의 샘플</div>
+                  <span>개의 샘플</span>
+                  <span>4개의 샘플</span>
+                  <span>4개의 샘플</span>
+                  {/* 1. 매월 고객님의 피부타입에 맞춘 5개의 토너 및 로션 샘플과 2개의 세안샘플, 그리고 3종류의 앰플 샘플을 무작위로 받아 볼 수 있습니다. */}
                 </div>
-              </InfoWrapper>
+              </div>
               <InfoWrapper>
                 <CustomButton
                   bgColor="transparent"
                   content="구독 취소"
                   fontColor="tomato"
-                  padding="10px"
+                  padding="15px"
                   border="none"
-                  width="100px"
+                  fontsize="19px"
+                  width="125px"
+                  onClick={cancelSubscription}
                 />
               </InfoWrapper>
             </div>

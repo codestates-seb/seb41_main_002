@@ -1,11 +1,16 @@
 import { FormEvent, useEffect, useState } from "react";
 import CustomButton from "./Commons/Buttons";
 import DaumPostcode from "react-daum-postcode";
+import "./Style/addressPopup.css";
 
-export default function AddressPopup() {
+export default function AddressPopup({
+  newAddressId,
+}: {
+  newAddressId: number;
+}) {
   const [isSearchOn, setIsSearchOn] = useState(false);
   const [userAddress, setUserAddress] = useState({
-    addressId: 1,
+    addressId: newAddressId,
     isPrimary: false,
     recipient: "",
     addressTitle: "",
@@ -63,7 +68,7 @@ export default function AddressPopup() {
     event.preventDefault();
 
     const newAddressInfo = {
-      addressId: 1,
+      addressId: newAddressId,
       isPrimary: isPrimary,
       recipient: userAddress.recipient,
       addressTitle: userAddress.addressTitle,
@@ -154,13 +159,17 @@ export default function AddressPopup() {
           </div>
           <div className="Modal_Form_Buttons">
             <div>
-              <input
-                type="checkbox"
-                value="setPrimary"
-                onClick={() => {
-                  setIsPrimary(!isPrimary);
-                }}
-              />
+              {newAddressId && newAddressId === 0 ? (
+                <input type="checkbox" checked />
+              ) : (
+                <input
+                  type="checkbox"
+                  value="setPrimary"
+                  onClick={() => {
+                    setIsPrimary(!isPrimary);
+                  }}
+                />
+              )}
               <label htmlFor="setPrimary">대표 주소로 설정</label>
             </div>
             <input type="submit" className="Submit_Button" />
