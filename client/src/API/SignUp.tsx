@@ -1,4 +1,5 @@
 import axios from "axios";
+import { defaultInstance } from "./Core";
 
 export interface MemberType {
   accountID: string;
@@ -9,13 +10,11 @@ export interface MemberType {
   phoneNumber: string;
 }
 
-const BASE_URL = process.env.REACT_APP_BASE_URL
-
 //중복체크
 export const doubleCheck = async (accountID: string) => {
   try {
-    const response = await axios.get(
-      `${BASE_URL}/idcheck/${accountID}`
+    const response = await defaultInstance.get(
+      `/idcheck/${accountID}`
     ).then((res) => {
       return res;
     })
@@ -33,7 +32,7 @@ export const signUp = async (memberData: MemberType) => {
       ...memberData,
       birthDate: dateChange,
     };
-    await axios.post(`${BASE_URL}/signup`, setMemberData);
+    await defaultInstance.post(`/signup`, setMemberData);
   } catch (error) {
     console.error(error);
   }
