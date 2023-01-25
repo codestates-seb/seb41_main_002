@@ -20,7 +20,7 @@ export const onLogin = async (MemberInput: MemberInputType) => {
   try {
     await axios
       .post(
-        "http://3.39.187.178:8080/api/v1/login",
+        "http://13.125.242.34:8080/api/v1/login",
         JSON.stringify(MemberInput)
       )
       .then((res) => {
@@ -37,7 +37,7 @@ const onSilentRefresh = (refreshToken: string) => {
   try {
     axios.defaults.headers.common["Authorization"] = `${refreshToken}`;
     axios
-      .get("http://3.39.187.178:8080/api/v1/user/refresh-token")
+      .get("http://13.125.242.34:8080/api/v1/user/refresh-token")
       .then((res) => {
         onLoginSuccess(res.data);
       });

@@ -34,17 +34,26 @@ interface newAddressType {
   address: string;
 }
 
-interface UpdateDataType {
+interface UpdateAddressDataType {
+  isPrimary: boolean;
+  addressTitle: string;
+  zipcode: string;
+  address: string;
+}
+
+interface UpdateMemberDataType {
   memberName: string;
   email: string;
   phoneNumber: string;
   tagList: string[];
 }
 
+const BASE_URL = process.env.REACT_APP_BASE_URL as string;
+
 export const getMemberData = async (memberId: number) => {
   try {
     const response = await axios.get<MemberPageDataType>(
-      `http://13.125.242.34:8080/api/v1/members/edit/${memberId}`,
+      `${BASE_URL}/members/edit/${memberId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -60,7 +69,7 @@ export const getMemberData = async (memberId: number) => {
 export const addNewAddress = async (newAddressData: newAddressType) => {
   try {
     await axios
-      .post(`http://13.125.242.34:8080/api/v1/addresses`, newAddressData, {
+      .post(`${BASE_URL}/addresses`, newAddressData, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -73,21 +82,36 @@ export const addNewAddress = async (newAddressData: newAddressType) => {
   }
 };
 
-export const updateMemberData = async (
-  memberId: number,
-  memberEditData: UpdateDataType
+export const updateAddress = async (
+  addressId: number,
+  addressEditData: UpdateAddressDataType
 ) => {
   try {
     await axios
-      .patch(
-        `http://13.125.242.34:8080/api/v1/members/edit/${memberId}`,
-        memberEditData,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
+      .patch(`${BASE_URL}/addresses/${addressId}`, addressEditData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        console.log("내 정보 수정 완료");
+      });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const updateMemberData = async (
+  memberId: number,
+  memberEditData: UpdateMemberDataType
+) => {
+  try {
+    await axios
+      .patch(`${BASE_URL}/members/edit/${memberId}`, memberEditData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
       .then((res) => {
         console.log("내 정보 수정 완료");
       });

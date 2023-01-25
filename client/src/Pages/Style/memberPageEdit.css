@@ -69,6 +69,14 @@
   align-items: center;
 }
 
+.Address_List_Address {
+  width: 70%;
+}
+
+.Address_List_Button {
+  display: flex;
+}
+
 .Recommend_Survey {
   padding: 20px 0;
   height: 125px;

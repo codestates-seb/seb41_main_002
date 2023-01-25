@@ -4,6 +4,7 @@ import Modal from "../Components/Commons/Modal";
 import {
   getMemberData,
   MemberPageDataType,
+  updateAddress,
   updateMemberData,
 } from "../API/MemberPageEdit/MemberPageEditAPI";
 import { useEffect, useState } from "react";
@@ -115,6 +116,24 @@ export default function MemberPageEdit() {
       if (index > -1) {
         tagList.splice(index, 1);
       }
+    }
+  };
+
+  const setPrimaryAddress: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    const addressData = {
+      isPrimary: true,
+      addressTitle: memberAddressData?.addressList[
+        Number(e.currentTarget.id) - 1
+      ].addressTitle as string,
+      zipcode: memberAddressData?.addressList[Number(e.currentTarget.id) - 1]
+        .zipcode as string,
+      address: memberAddressData?.addressList[Number(e.currentTarget.id) - 1]
+        .address as string,
+    };
+    console.log(addressData);
+    if (window.confirm("대표 주소로 변경하시겠습니까?")) {
+      alert("대표주소로 변경 완료");
+      updateAddress(Number(e.currentTarget.id), addressData);
     }
   };
 
@@ -240,9 +259,10 @@ export default function MemberPageEdit() {
                               content="대표주소 설정"
                               fontColor="skyblue"
                               padding="5px"
-                              width="150px"
+                              width="100px"
                               border="none"
-                              onClick={openModal}
+                              buttonId={`${address.addressId}`}
+                              onClick={setPrimaryAddress}
                             />
                           )}
                           <CustomButton
