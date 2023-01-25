@@ -73,7 +73,12 @@ export default function MemberPageEdit() {
   };
 
   const handleBirthDate: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setBirthDate(e.target.value);
+    setBirthDate(
+      e.target.value
+        .replace(/[^0-9]/g, "")
+        .replace(/^(\d{0,4})(\d{0,2})(\d{0,2})$/g, "$1/$2/$3")
+        .replace(/(\/{1,2})$/g, "")
+    );
   };
 
   const handleEmail: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -180,6 +185,7 @@ export default function MemberPageEdit() {
               <input
                 className="Info_Input"
                 type="text"
+                maxLength={10}
                 value={birthdate}
                 onChange={handleBirthDate}
               />
