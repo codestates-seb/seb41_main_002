@@ -1,4 +1,3 @@
-import axios from "axios";
 import { authInstance } from "../Core";
 
 export interface CartDataType {
@@ -17,14 +16,14 @@ export interface CartDataType {
 }
 
 export const getShoppingCart = async (
-  memberId: number
+  memberId: string
 ) => {
   try {
     //추후 데이터타입 변경예정
     const result: any = await authInstance.get(
-      `/api/v1/members/${memberId}/carts`,
+      `/members/${memberId}/carts`,
     );
-    console.log(result)
+    console.log(result.data)
     return result.data;
   } catch (err) {
     console.error(err);
