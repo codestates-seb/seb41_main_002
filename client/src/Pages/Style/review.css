@@ -15,6 +15,9 @@
 }
 
 .Review_Item li{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid var(--lightgray);
   background-color: var(--dark3);
   line-height: 30px;
@@ -60,4 +63,10 @@
 
 .Review_Submit button{
   margin-right: 20px;
+}
+
+.Review_Rating{
+  display: flex;
+  width: 150px;
+  height: 40px;
 }

@@ -40,7 +40,7 @@ function App() {
                 element={<ShoppingCart />}
               />
               <Route path="/checkout" element={<Checkout />} />
-              <Route path="/reviews/:reviewId" element={<Review />} />
+              <Route path="/reviews/item/:itemId" element={<Review />} />
               <Route path="/members/:memberId/subscribe" element={<SubscriptionPage />} />
               <Route path="/events/:eventId" element={<EventDetail />} />
             </Routes>
