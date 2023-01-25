@@ -30,7 +30,7 @@ import java.util.Arrays;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
@@ -45,8 +45,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                //.headers().frameOptions().sameOrigin()
-                .headers().frameOptions().disable()//h2용
+                .headers().frameOptions().sameOrigin()
                 .and()
                 .cors(Customizer.withDefaults())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 생성 X
