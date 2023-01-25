@@ -39,11 +39,7 @@ const RatingBox = styled.div<RatingStyleType>`
   }
 `;
 
-// 부모 필수 상태값
-// type settingType = {
-//   ratingEdit: boolean;
-//   ratingSize: number;
-// };
+// 부모 상태값
 // const ratingSetting: settingType = {
 //   ratingEdit: true, 별점 수정 가능 여부
 //   ratingSize: 30, 별점 사이즈
