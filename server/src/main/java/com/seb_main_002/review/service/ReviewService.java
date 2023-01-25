@@ -7,6 +7,7 @@ import com.seb_main_002.item.repository.ItemRepository;
 import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.member.repository.MemberRepository;
 import com.seb_main_002.order.entity.Order;
+import com.seb_main_002.order.entity.OrderItem;
 import com.seb_main_002.order.repository.OrderRepository;
 import com.seb_main_002.review.dto.ReviewResponseDto;
 import com.seb_main_002.review.entity.Review;
@@ -33,8 +34,11 @@ public class ReviewService {
         this.orderRepository = orderRepository;
     }
 
-    public void createReview(Review review) {
+    public void createReview(Review review, Long orderItemId) {
+
         Long memberId = review.getMember().getMemberId();
+        verifyReviewWritePermission(memberId, orderItemId);
+
         Long itemId = review.getItem().getItemId();
         long itemReviewCount = reviewRepository.findReviewsByItemId(itemId).size();
 
@@ -108,5 +112,11 @@ public class ReviewService {
         if(orders.size() < 1) {
             throw new BusinessLogicException(ExceptionCode.ORDER_NOT_FOUND);
         }
+    }
+
+    private void verifyReviewWritePermission(Long memberId, Long orderItemId) {
+        Optional<OrderItem> optionalOrderItem = orderRepository.findOrderItemByMemberIdAndOrderItemId(memberId, orderItemId);
+        OrderItem findOrderItem = optionalOrderItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ORDER_NOT_FOUND));
+        if(findOrderItem.getIsReviewed()) new BusinessLogicException(ExceptionCode.CANNOT_POST_REVIEW);
     }
 }
