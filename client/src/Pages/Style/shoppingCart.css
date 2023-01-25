@@ -49,7 +49,7 @@
 
 .Shopping_List_Contents{
   display: flex;
-  height: 70px;
+  height: 80px;
   border-left: 1px solid black;
   border-bottom: 1px solid black;
   border-right: 1px solid black;
@@ -60,7 +60,7 @@
   align-items: center;
   justify-content: center;
   width: 10%;
-  background-color: pink;
+  background-color: var(--gray);
   height: 100%;
   border-right: 1px solid black;
 }
@@ -68,7 +68,7 @@
 .Product_Container{
   padding: 10px 10px;
   width: 90%;
-  background-color: pink;
+  background-color: var(--gray);
   height: 100%;
   display: flex;
   align-items: center;
@@ -76,13 +76,13 @@
 }
 
 .Product_Info{
+  width: 30%;
   display: flex;
-  align-items: center;
 }
 
 .Product_Delete{
   width: 10%;
-  background-color: pink;
+  background-color: var(--gray);
   height: 100%;
   border-left: 1px solid black;
   display: flex;
@@ -98,7 +98,6 @@ background-color: black;
 
 .List_Product_Name{
   font-size: 17px;
-  margin-left: 10px;
 }
 
 .Product_Count{

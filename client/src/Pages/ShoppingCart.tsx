@@ -14,16 +14,16 @@ const BenefitContents = styled.span<{ marginLeft: string }>`
 export default function ShoppingCart() {
   const [cartData, setCartData] = useState<CartDataType | undefined>(undefined);
 
-  console.log(cartData?.cart)
+  console.log(cartData?.cart);
 
   const callCartData = async () => {
     const result = await getShoppingCart(1);
     setCartData(result);
   };
 
-  useEffect(()=>{
-    callCartData()
-  },[])
+  useEffect(() => {
+    callCartData();
+  }, []);
   // 데이터가 잘 들어가는지 확인하기 위한 더미데이터 => 추후 삭제 예정입니다.
   // 데이터의 내용은 Checkout.tsx의 items와 동일합니다.
   interface ItemInterface {
@@ -45,9 +45,9 @@ export default function ShoppingCart() {
     {
       itemId: 2,
       itemImageURL: "https://picsum.photos/75?random=2",
-      itemTitle: "어머 너무 촉촉해요 앰플",
+      itemTitle: "개추어 앰플",
       itemTotalPrice: 20000,
-      count: 2,
+      count: 1,
     },
   ];
 
@@ -68,44 +68,34 @@ export default function ShoppingCart() {
           <input type={"checkbox"} />
           <span className="All_Check">전체선택</span>
         </div>
-        {/* 추후 map 예정 */}
         <ul className="Shopping_List_Container">
-          <li className="Shopping_List_Contents">
-            <div className="Product_Check">
-              <input type={"checkbox"} /> <span>선택</span>
-            </div>
-            <div className="Product_Container">
-              <div className="Product_Info">
-                <img src="" className="List_Product_Image" />
-                <a>
-                  <span className="List_Product_Name">
-                    어머 너무 이뻐요 앰플
-                  </span>
-                </a>
-              </div>
-              <div className="Product_Price_Info">
-                <span className="Product_Count">수량: 1개</span>
-                <span className="Product_Price">가격: 40,000원</span>
-              </div>
-            </div>
-            <div className="Product_Delete">
-              <button className="Cart_Delete_Button">상품 삭제</button>
-            </div>
-          </li>
-          {/* 비교를 위해 기존 li 요소를 유지한 채 새로운 li 요소를 추가했습니다. */}
-          <li className="Shopping_List_Contents">
-            <div className="Product_Check">
-              <input type={"checkbox"} /> <span>선택</span>
-            </div>
-            <div className="Product_Container">
-              <div className="Product_Container">
-                <OrderedListItem item={items[1]} />
-              </div>
-            </div>
-            <div className="Product_Delete">
-              <button className="Cart_Delete_Button">상품 삭제</button>
-            </div>
-          </li>
+          {items&&items.map((cartItem: any) => {
+            console.log(cartItem)
+            return (
+              <li key={cartItem.itemId} className="Shopping_List_Contents">
+                <div className="Product_Check">
+                  <input type={"checkbox"} /> <span>선택</span>
+                </div>
+                <div className="Product_Container">
+                  <div className="Product_Info">
+                    <img src={`${cartItem.itemImageURL}`} className="List_Product_Image" />
+                    <a>
+                      <span className="List_Product_Name">
+                        {cartItem.itemTitle}
+                      </span>
+                    </a>
+                  </div>
+                  <div className="Product_Price_Info">
+                    <span className="Product_Count">수량: {cartItem.count}개</span>
+                    <span className="Product_Price">가격: {cartItem.itemTotalPrice}원</span>
+                  </div>
+                </div>
+                <div className="Product_Delete">
+                  <button className="Cart_Delete_Button">상품 삭제</button>
+                </div>
+              </li>
+            );
+          })}
         </ul>
       </div>
       <div className="Price_Info_Container">
