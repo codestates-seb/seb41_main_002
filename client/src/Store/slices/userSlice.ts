@@ -44,7 +44,7 @@ const asyncSilentRefresh = createAsyncThunk(
   "userSlice/asyncSilentRefresh",
   async (refreshToken: string) => {
     const tokenChange = await axios.get(
-      "http://13.209.97.3:8080/api/v1/user/refresh-token",
+      "http://13.125.242.34:8080/api/v1/user/refresh-token",
       {
         headers: {
           Refresh: refreshToken,
