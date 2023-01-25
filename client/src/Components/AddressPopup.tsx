@@ -1,20 +1,16 @@
-import { FormEvent, useEffect, useState } from "react";
+import { addNewAddress } from "../API/MemberPageEdit/MemberPageEditAPI";
 import CustomButton from "./Commons/Buttons";
+import { FormEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
 import "./Style/addressPopup.css";
-import { addNewAddress } from "../API/MemberPageEdit/MemberPageEditAPI";
-import { useNavigate } from "react-router-dom";
 
 const memberId = Number(sessionStorage.getItem("memberId"));
 
 export default function AddressPopup({
   newAddressId,
-  modalState,
-  setModalState,
 }: {
   newAddressId: number;
-  modalState: boolean;
-  setModalState: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const navigate = useNavigate();
   const [isSearchOn, setIsSearchOn] = useState(false);
@@ -76,15 +72,16 @@ export default function AddressPopup({
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const newAddressInfo = {
-      addressId: newAddressId,
-      isPrimary: isPrimary,
-      recipient: userAddress.recipient,
-      addressTitle: userAddress.addressTitle,
-      zipcode: zipcode,
-      address: combinedAddress,
-      phoneNumber: userAddress.phoneNumber,
-    };
+    // 이후 api 명세 및 데이터 변경 시 해당 데이터 활용
+    // const newAddressInfo = {
+    //   addressId: newAddressId,
+    //   isPrimary: isPrimary,
+    //   recipient: userAddress.recipient,
+    //   addressTitle: userAddress.addressTitle,
+    //   zipcode: zipcode,
+    //   address: combinedAddress,
+    //   phoneNumber: userAddress.phoneNumber,
+    // };
 
     const newAddressInfo2 = {
       memberId: memberId,
@@ -95,7 +92,6 @@ export default function AddressPopup({
     };
 
     addNewAddress(newAddressInfo2);
-    navigate("/member/edit");
   };
 
   return (

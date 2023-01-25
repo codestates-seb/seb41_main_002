@@ -2,6 +2,7 @@ import CustomButton from "../Components/Commons/Buttons";
 import AddressPopup from "../Components/AddressPopup";
 import Modal from "../Components/Commons/Modal";
 import {
+  deleteAddress,
   getMemberData,
   MemberPageDataType,
   updateAddress,
@@ -119,21 +120,35 @@ export default function MemberPageEdit() {
     }
   };
 
-  const setPrimaryAddress: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  const setPrimaryAddress: React.MouseEventHandler<HTMLButtonElement> = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    // 혼란을 방지하기 위해 공용 컴포넌트에서 사용한 속성을 이름에 맞게 할당
+    const addressId = Number(e.currentTarget.name);
+    const addressListIndex = Number(e.currentTarget.id);
+
     const addressData = {
       isPrimary: true,
-      addressTitle: memberAddressData?.addressList[
-        Number(e.currentTarget.id) - 1
-      ].addressTitle as string,
-      zipcode: memberAddressData?.addressList[Number(e.currentTarget.id) - 1]
+      addressTitle: memberAddressData?.addressList[addressListIndex]
+        .addressTitle as string,
+      zipcode: memberAddressData?.addressList[addressListIndex]
         .zipcode as string,
-      address: memberAddressData?.addressList[Number(e.currentTarget.id) - 1]
+      address: memberAddressData?.addressList[addressListIndex]
         .address as string,
     };
-    console.log(addressData);
     if (window.confirm("대표 주소로 변경하시겠습니까?")) {
+      updateAddress(addressId, addressData);
       alert("대표주소로 변경 완료");
-      updateAddress(Number(e.currentTarget.id), addressData);
+    }
+  };
+
+  const removeAddress: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    // 혼란을 방지하기 위해 공용 컴포넌트에서 사용한 속성을 이름에 맞게 할당
+    const addressId = Number(e.currentTarget.name);
+
+    if (window.confirm("해당 주소지를 삭제하시겠습니까?")) {
+      deleteAddress(addressId);
+      alert("삭제가 완료되었습니다.");
     }
   };
 
@@ -165,13 +180,7 @@ export default function MemberPageEdit() {
         <Modal
           modalState={modalState}
           setModalState={setModalState}
-          element={
-            <AddressPopup
-              newAddressId={newAddressId}
-              modalState={modalState}
-              setModalState={setModalState}
-            />
-          }
+          element={<AddressPopup newAddressId={newAddressId} />}
         />
       ) : null}
       <section className="Edit_Page_Container">
@@ -243,13 +252,20 @@ export default function MemberPageEdit() {
               <div className="Addresses_Container">
                 {/* Address_List_Address, Address_List_Button은 현재 적용되는 CSS가 없지만 이후 디자인이 바뀔 가능성이 있어 class명을 사용해 분류 */}
                 {memberAddressData &&
-                  memberAddressData.addressList.map((address) => {
+                  memberAddressData.addressList.map((address, idx) => {
                     return (
-                      <li className="Address_List_Item" key={address.addressId}>
+                      <li className="Address_List_Item" key={`address${idx}`}>
                         <div className="Address_List_Address">
                           <div>
-                            {address.isPrimary ? "대표 주소: " : "주소: "}
-                            {`${address.addressTitle} ${address.address} (${address.zipcode})`}
+                            {address.isPrimary ? (
+                              <span className="Adrress_Primary">
+                                (대표주소)
+                              </span>
+                            ) : null}
+                            <span className="Address_Title">
+                              {` ${address.addressTitle}`}
+                            </span>
+                            {` : ${address.address} (${address.zipcode})`}
                           </div>
                         </div>
                         <div className="Address_List_Button">
@@ -259,9 +275,11 @@ export default function MemberPageEdit() {
                               content="대표주소 설정"
                               fontColor="skyblue"
                               padding="5px"
-                              width="100px"
+                              width="125px"
                               border="none"
-                              buttonId={`${address.addressId}`}
+                              // 커스텀 컴포넌트를 유지한 채로 커스텀 속성을 활용하기 위해 name, id 속성을 활용
+                              buttonId={idx.toString()}
+                              idx={address.addressId.toString()}
                               onClick={setPrimaryAddress}
                             />
                           )}
@@ -271,7 +289,7 @@ export default function MemberPageEdit() {
                             fontColor="skyblue"
                             padding="5px"
                             border="none"
-                            width="75px"
+                            width="50px"
                             onClick={openModal}
                           />
                           <CustomButton
@@ -280,8 +298,11 @@ export default function MemberPageEdit() {
                             fontColor="skyblue"
                             padding="5px"
                             border="none"
-                            width="75px"
-                            onClick={openModal}
+                            width="50px"
+                            // 커스텀 컴포넌트를 유지한 채로 커스텀 속성을 활용하기 위해 name, id 속성을 활용
+                            buttonId={idx.toString()}
+                            idx={address.addressId.toString()}
+                            onClick={removeAddress}
                           />
                         </div>
                       </li>

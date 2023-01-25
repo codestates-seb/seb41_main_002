@@ -28,6 +28,7 @@ interface ButtonType {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   border?: string;
   buttonId?: string;
+  idx?: string;
 }
 
 export default function CustomButton({
@@ -41,6 +42,7 @@ export default function CustomButton({
   type,
   border,
   buttonId,
+  idx,
 }: ButtonType) {
   return (
     <StyledButton
@@ -53,6 +55,7 @@ export default function CustomButton({
       type={type}
       border={border}
       id={buttonId}
+      name={idx}
     >
       {content}
     </StyledButton>

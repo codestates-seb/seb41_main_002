@@ -39,7 +39,6 @@
 .Member_Information_Addresses {
   background-color: var(--dark3);
   border-bottom: 1px solid white;
-  padding-bottom: 20px;
 }
 
 .Info_Title {
@@ -71,10 +70,19 @@
 
 .Address_List_Address {
   width: 70%;
+  font-size: 19px;
+}
+
+.Adrress_Primary {
+  color: rgb(9, 138, 45);
+}
+
+.Address_Title {
+  color: rgb(145, 189, 167);
 }
 
 .Address_List_Button {
-  display: flex;
+  width: 30%;
 }
 
 .Recommend_Survey {

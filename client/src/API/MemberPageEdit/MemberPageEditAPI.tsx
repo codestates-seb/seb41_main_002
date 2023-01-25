@@ -101,6 +101,22 @@ export const updateAddress = async (
   }
 };
 
+export const deleteAddress = async (addressId: number) => {
+  try {
+    await axios
+      .delete(`${BASE_URL}/addresses/${addressId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        console.log("해당 주소지 삭제 완료");
+      });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const updateMemberData = async (
   memberId: number,
   memberEditData: UpdateMemberDataType
