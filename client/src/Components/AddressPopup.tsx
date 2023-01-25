@@ -2,12 +2,21 @@ import { FormEvent, useEffect, useState } from "react";
 import CustomButton from "./Commons/Buttons";
 import DaumPostcode from "react-daum-postcode";
 import "./Style/addressPopup.css";
+import { addNewAddress } from "../API/MemberPageEdit/MemberPageEditAPI";
+import { useNavigate } from "react-router-dom";
+
+const memberId = Number(sessionStorage.getItem("memberId"));
 
 export default function AddressPopup({
   newAddressId,
+  modalState,
+  setModalState,
 }: {
   newAddressId: number;
+  modalState: boolean;
+  setModalState: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const navigate = useNavigate();
   const [isSearchOn, setIsSearchOn] = useState(false);
   const [userAddress, setUserAddress] = useState({
     addressId: newAddressId,
@@ -76,7 +85,17 @@ export default function AddressPopup({
       address: combinedAddress,
       phoneNumber: userAddress.phoneNumber,
     };
-    console.log(newAddressInfo);
+
+    const newAddressInfo2 = {
+      memberId: memberId,
+      isPrimary: isPrimary,
+      addressTitle: userAddress.addressTitle,
+      zipcode: zipcode,
+      address: combinedAddress,
+    };
+
+    addNewAddress(newAddressInfo2);
+    navigate("/member/edit");
   };
 
   return (

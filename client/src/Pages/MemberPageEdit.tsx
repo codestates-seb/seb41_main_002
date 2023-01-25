@@ -2,9 +2,9 @@ import CustomButton from "../Components/Commons/Buttons";
 import AddressPopup from "../Components/AddressPopup";
 import Modal from "../Components/Commons/Modal";
 import {
-  getMemberAddressData,
+  getMemberData,
   MemberPageDataType,
-  updateMemberAddressData,
+  updateMemberData,
 } from "../API/MemberPageEdit/MemberPageEditAPI";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -25,10 +25,7 @@ const InfoWrapper = styled.div`
 `;
 
 // 이후 리덕스를 활용한 전역 상태 활용 시 삭제
-const session = {
-  accountId: "shim5505",
-  memberId: 1,
-};
+const memberId = Number(sessionStorage.getItem("memberId"));
 
 export default function MemberPageEdit() {
   const [modalState, setModalState] = useState(false);
@@ -50,7 +47,7 @@ export default function MemberPageEdit() {
 
   useEffect(() => {
     try {
-      getMemberAddressData(session.memberId).then((res) => {
+      getMemberData(memberId).then((res) => {
         // console.log(res); => 해당 코드는 데이터 값의 주기적인 확인을 위해 사용하므로 페이지 구현 완료 시 리팩토링 진행하며 삭제
         setMemberName(res?.memberName);
         setBirthDate(res?.birthdate);
@@ -129,7 +126,7 @@ export default function MemberPageEdit() {
       tagList: tagList as string[],
     };
     if (window.confirm("수정하시겠습니까?")) {
-      updateMemberAddressData(session.memberId, reqBody);
+      updateMemberData(memberId, reqBody);
       alert("수정 완료");
       navigate("/memberPage/edit");
     }
@@ -149,7 +146,13 @@ export default function MemberPageEdit() {
         <Modal
           modalState={modalState}
           setModalState={setModalState}
-          element={<AddressPopup newAddressId={newAddressId} />}
+          element={
+            <AddressPopup
+              newAddressId={newAddressId}
+              modalState={modalState}
+              setModalState={setModalState}
+            />
+          }
         />
       ) : null}
       <section className="Edit_Page_Container">
@@ -223,17 +226,7 @@ export default function MemberPageEdit() {
                 {memberAddressData &&
                   memberAddressData.addressList.map((address) => {
                     return (
-                      <li className="Address_List_Item">
-                        <CustomButton
-                          bgColor="transparent"
-                          content="대표주소 설정"
-                          fontColor="skyblue"
-                          padding="5px"
-                          width="150px"
-                          border="none"
-                          onClick={openModal}
-                        />
-
+                      <li className="Address_List_Item" key={address.addressId}>
                         <div className="Address_List_Address">
                           <div>
                             {address.isPrimary ? "대표 주소: " : "주소: "}
@@ -241,6 +234,17 @@ export default function MemberPageEdit() {
                           </div>
                         </div>
                         <div className="Address_List_Button">
+                          {address.isPrimary ? null : (
+                            <CustomButton
+                              bgColor="transparent"
+                              content="대표주소 설정"
+                              fontColor="skyblue"
+                              padding="5px"
+                              width="150px"
+                              border="none"
+                              onClick={openModal}
+                            />
+                          )}
                           <CustomButton
                             bgColor="transparent"
                             content="수정"
@@ -248,6 +252,7 @@ export default function MemberPageEdit() {
                             padding="5px"
                             border="none"
                             width="75px"
+                            onClick={openModal}
                           />
                           <CustomButton
                             bgColor="transparent"
@@ -256,6 +261,7 @@ export default function MemberPageEdit() {
                             padding="5px"
                             border="none"
                             width="75px"
+                            onClick={openModal}
                           />
                         </div>
                       </li>

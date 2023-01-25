@@ -26,6 +26,13 @@ export interface MemberPageDataType {
   totalDeliveryDiscount: number;
   reserveProfit: number;
 }
+interface newAddressType {
+  memberId: number;
+  isPrimary: boolean;
+  addressTitle: string;
+  zipcode: string;
+  address: string;
+}
 
 interface UpdateDataType {
   memberName: string;
@@ -34,10 +41,10 @@ interface UpdateDataType {
   tagList: string[];
 }
 
-export const getMemberAddressData = async (memberId: number) => {
+export const getMemberData = async (memberId: number) => {
   try {
     const response = await axios.get<MemberPageDataType>(
-      `http://3.39.187.178:8080/api/v1/members/edit/${memberId}`,
+      `http://13.125.242.34:8080/api/v1/members/edit/${memberId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -50,21 +57,40 @@ export const getMemberAddressData = async (memberId: number) => {
   }
 };
 
-export const updateMemberAddressData = async (
+export const addNewAddress = async (newAddressData: newAddressType) => {
+  try {
+    await axios
+      .post(`http://13.125.242.34:8080/api/v1/addresses`, newAddressData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        console.log("새 주소지 추가 완료");
+      });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const updateMemberData = async (
   memberId: number,
   memberEditData: UpdateDataType
 ) => {
   try {
-    const response = await axios.patch(
-      `http://3.39.187.178:8080/api/v1/members/edit/${memberId}`,
-      memberEditData,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    return response.data;
+    await axios
+      .patch(
+        `http://13.125.242.34:8080/api/v1/members/edit/${memberId}`,
+        memberEditData,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log("내 정보 수정 완료");
+      });
   } catch (error) {
     console.error(error);
   }

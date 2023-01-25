@@ -43,6 +43,7 @@
 }
 
 .Info_Title {
+  background-color: rgb(105, 105, 105);
   display: flex;
   align-items: center;
   justify-content: center;

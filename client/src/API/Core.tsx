@@ -15,14 +15,14 @@ const changeToken = () => {
   if (tokenExp) {
     if (now > tokenExp) {
       axios
-        .get("http://13.125.242.34/api/v1/user/refresh-token", {
+        .get("http://13.125.242.34:8080/api/v1/user/refresh-token", {
           headers: {
             Refresh: refreshToken,
           },
         })
-        .then((res:any) => {
+        .then((res: any) => {
           console.log(res);
-          console.log('토큰 교체');
+          console.log("토큰 교체");
           sessionStorage.setItem("accessToken", res.accessToken);
           sessionStorage.setItem("refreshToken", res.refreshToken);
         });
@@ -43,7 +43,7 @@ const axiosApi = (url: string) => {
 const axiosAuthApi = (url: string) => {
   const instance = axios.create({
     baseURL: url,
-    headers: { Authorization: "Bearer " + accessToken },
+    headers: { Authorization: accessToken },
   });
 
   instance.interceptors.request.use(function (config) {
