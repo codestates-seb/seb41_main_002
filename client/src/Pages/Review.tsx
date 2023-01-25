@@ -5,18 +5,17 @@ import { ItemInfoType } from "../API/Review";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { SettingType, Rating } from "../Components/Commons/Rating";
 import { SkinTag } from "../Components/Commons/TypeBadge";
+import TextEdit from "../Components/Review/TextEdit";
 
 const Review = () => {
-  interface reviewTextType {
-    reviewTitle: string;
-    reviewContent: string;
-  }
 
-  interface reviewType extends reviewTextType {
+  interface reviewType {
     orderItemId: number;
     itemId: number;
     memberId: number;
     reviewRating: number;
+    reviewTitle: string;
+    reviewContent: string;
   }
 
   const [itemInfo, setItemInfo] = useState<ItemInfoType>({
@@ -27,10 +26,9 @@ const Review = () => {
     memberTagsList: ["지성", "미백"],
   });
 
-  const [reviewText, setReviewText] = useState<reviewTextType>({
-    reviewTitle: "",
-    reviewContent: "",
-  });
+  const [reviewTitle, setReviewTitle] = useState<string>("");
+
+  const [reviewContent, setReviewContent] = useState("");
 
   const ratingSetting: SettingType = {
     ratingEdit: true,
@@ -58,15 +56,14 @@ const Review = () => {
       itemId: Number(itemId),
       memberId: memberId,
       reviewRating: starRating,
-      reviewTitle: reviewText.reviewTitle,
-      reviewContent: "",
+      reviewTitle: reviewTitle,
+      reviewContent: reviewContent,
     };
     console.log(review);
   };
 
   const onReviewTextHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    setReviewText({ ...reviewText, [name]: value });
+    setReviewTitle(e.target.value);
   };
 
   return (
@@ -108,14 +105,16 @@ const Review = () => {
             type="text"
             className="textBox"
             name="reviewTitle"
-            value={reviewText.reviewTitle}
+            value={reviewTitle}
             onChange={onReviewTextHandler}
           />
         </div>
       </div>
       <div className="Review_Contents">
         <h2>내용</h2>
-        <div className="Review_TextBox"></div>
+        <div className="Review_TextBox">
+          <TextEdit setReviewContent ={setReviewContent}/>
+        </div>
       </div>
 
       <div className="Review_Submit">
