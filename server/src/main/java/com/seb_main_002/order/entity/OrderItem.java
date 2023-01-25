@@ -20,6 +20,8 @@ public class OrderItem extends Auditable {
 
     private Integer itemTotalPrice;
 
+    private Boolean isReviewed = false;
+
     @ManyToOne
     @JoinColumn(name = "ORDER_ID")
     private Order order;
