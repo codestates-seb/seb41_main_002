@@ -2,18 +2,25 @@ spring:
   redis:
     host: localhost
     port: 6379
-    password: 'sebbe41main02fightingsebbe41main02fightingsebbe41main02fighting'
+    password: 'sebbe41main02fightingsebbe41main02fightingsebbe41main02fighting' #${{secrets.BE_REDIS_SCRET_KEY}} #'sebbe41main02fightingsebbe41main02fightingsebbe41main02fighting'
 
-
-  h2:
-    console:
-      enabled: true
-      path: /h2
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2
+#  datasource:
+#    url: jdbc:h2:mem:test
   datasource:
-    url: jdbc:h2:mem:test
+    url: jdbc:mysql://jb-database-instance1.cwxmdz6g5fnu.ap-northeast-2.rds.amazonaws.com:13306/jbdatabase1?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    username: admin
+    password: ${{secrets.BE_DATABASE_PASSWORD}}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: create  # (1) ??? ?? ??
+      ddl-auto: create-drop  # (1) ??? ?? ??
     show-sql: true      # (2) SQL ?? ??
     properties:
       hibernate:
@@ -40,8 +47,8 @@ server:
 cloud:
   aws:
     credentials:
-      accessKey : 123412341234 #${{ secrets.AWS_ACCESS_KEY }} #AWS IAM AccessKey in github secret #${AWS_ACCESS_KEY_ID}
-      secretKey : 123412341234 #${{ secrets.AWS_SECRET_ACCESS_KEY }} #AWS IAM SecretKey in github secret #${AWS_SECRET_ACCESS_KEY}
+      accessKey : 1234 #${{ secrets.BE_AWS_ACCESS_KEY }}  #AWS IAM AccessKey in github secret #${AWS_ACCESS_KEY_ID}
+      secretKey : 1234 #${{ secrets.BE_AWS_SECRET_ACCESS_KEY }}  #AWS IAM SecretKey in github secret #${AWS_SECRET_ACCESS_KEY}
     s3:
       bucket: "jbawsbucket1"
       dir : "/itemImg"

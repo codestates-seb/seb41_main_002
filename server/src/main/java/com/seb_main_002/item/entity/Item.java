@@ -28,7 +28,7 @@ public class Item extends Auditable {
     private Integer price;
     private String contentImageUrl;
 
-    @Column(length = 65535)
+    @Column(length = 8126)
     private String content;
     private String titleImageUrl;
     private Double rating;
