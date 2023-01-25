@@ -1,22 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { getItemInfo } from "../API/Review";
+import { getItemInfo, reviewPost } from "../API/Review";
 import "./Style/review.css";
-import { ItemInfoType } from "../API/Review";
+import { ItemInfoType, reviewType } from "../API/Review";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { SettingType, Rating } from "../Components/Commons/Rating";
 import { SkinTag } from "../Components/Commons/TypeBadge";
 import TextEdit from "../Components/Review/TextEdit";
 
 const Review = () => {
-
-  interface reviewType {
-    orderItemId: number;
-    itemId: number;
-    memberId: number;
-    reviewRating: number;
-    reviewTitle: string;
-    reviewContent: string;
-  }
 
   const [itemInfo, setItemInfo] = useState<ItemInfoType>({
     itemTitle: "",
@@ -60,6 +51,9 @@ const Review = () => {
       reviewContent: reviewContent,
     };
     console.log(review);
+    reviewPost(review).then(res => {
+      console.log('리뷰 작성 완료');
+    });
   };
 
   const onReviewTextHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
