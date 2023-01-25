@@ -167,9 +167,6 @@ export default function MemberPageEdit() {
           </InfoWrapper>
           <InfoWrapper>
             <div className="Info_Label">이름</div>
-            {/* <div className="Info_Content">
-              {memberAddressData && memberAddressData.memberName}
-            </div> */}
             <div className="Info_Content">
               <input
                 className="Info_Input"
