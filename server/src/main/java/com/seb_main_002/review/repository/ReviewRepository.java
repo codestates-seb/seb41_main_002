@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    @Query(value = "SELECT * FROM REVIEW WHERE ITEM_ID = :itemId", nativeQuery = true)
+    @Query(value = "SELECT * FROM review WHERE item_id = :itemId", nativeQuery = true)
     List<Review> findReviewsByItemId(Long itemId);
 }
