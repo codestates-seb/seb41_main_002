@@ -91,8 +91,10 @@ public class MemberService {
     @Transactional
     public void updateMember(Long memberId, Member member) {
         Member verifedMember = verifyMember(memberId);
-        verifyExistsEmail(member.getEmail());
-
+        // 이메일 변경 요청시에만 검증하도록
+        if(member.getEmail()!=null) {
+            verifyExistsEmail(member.getEmail());
+        }
         Optional.ofNullable(member.getName())
                 .ifPresent(name -> verifedMember.setName(name));
         Optional.ofNullable(member.getEmail())
@@ -119,10 +121,6 @@ public class MemberService {
         member.setRoles(roles);
         // 구독 생성 후 저장
         Subscribe subscribe = new Subscribe();
-        subscribe.setIsSubscribed(false);
-        subscribe.setSampleCount(0);
-        subscribe.setReserveProfit(0);
-        subscribe.setTotalDeliveryDiscount(0);
         member.setSubscribe(subscribe);
         //카트 생성 후 저장
         Cart cart = new Cart();
