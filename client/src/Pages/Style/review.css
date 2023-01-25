@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
+  padding: 20px 0px;
 }
 
 .Review_TopBox{
@@ -18,20 +19,34 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid var(--lightgray);
-  background-color: var(--dark3);
+  background-color: var(--dark2);
   line-height: 30px;
+}
+
+.Review_Item li:nth-child(1){
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: var(--dark3);
+  border-bottom: 1px solid var(--lightgray);
+}
+
+.Review_Item li:nth-child(3){
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: var(--dark3);
+  border-top: 1px solid var(--lightgray);
 }
 
 .Review_Item li:last-child{
   height: 50px;
 }
 
-.Review_MyTags{
-  width: 100%;
-  height: 110px;
-  border: 1px solid var(--lightgray);
-  background-color: var(--dark3);
+.Review_Menu_Tag{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100%;
 }
 
 .Review_Title{
@@ -40,20 +55,24 @@
   align-items: center;
   width: 100%;
   height: 50px;
-  background-color: lightcyan;
+  background-color: var(--dark2);
+  border-radius: 10px;
+  padding: 0px 10px;
 }
 
 .Review_Title input{
-  width: 400px;
+  width: 100%;
   height: 30px;
   font-size: 27px;
+  background-color: var(--dark2);
+  border: none;
 }
 
 .Review_TextBox{
   width: 100%;
   height: 400px;
-  border: 1px solid var(--lightgray);
-  background-color: var(--dark3);
+  border-radius: 10px;
+  background-color: var(--dark2);
 }
 
 .Review_Submit{
@@ -65,8 +84,25 @@
   margin-right: 20px;
 }
 
+.Review_MyTags{
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.Review_Menu{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+}
+
 .Review_Rating{
   display: flex;
-  width: 150px;
+  padding-left: 25px;
+  width: 200px;
   height: 40px;
+}
+
+.Review_Contents h2{
+  margin: 10px;
 }

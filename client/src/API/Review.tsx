@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { defaultInstance } from "./Core";
+import { authInstance } from "./Core";
 
 export interface ItemInfoType {
   itemTitle: string;
@@ -11,6 +11,7 @@ export interface ItemInfoType {
 }
 
 export const getItemInfo = async (itemId: string) => {
-  const ItemInfo = await defaultInstance.get<ItemInfoType>(`/reviews/item/${itemId}`);
-  return ItemInfo.data;
+  const itemInfo = await authInstance.get<ItemInfoType>(`/reviews/item/${itemId}`);
+  console.log(itemInfo)
+  return itemInfo.data;
 };
