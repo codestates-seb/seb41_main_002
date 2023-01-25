@@ -1,7 +1,8 @@
 import CustomButton from "../Components/Commons/Buttons";
-import AddressPopup from "../Components/AddressPopup";
+import AddressPopup from "../Components/MemeberPageEdit/NewAddressModal";
 import Modal from "../Components/Commons/Modal";
 import {
+  AddressType,
   deleteAddress,
   getMemberData,
   MemberPageDataType,
@@ -12,6 +13,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "./Style/memberPageEdit.css";
+import NewAddressModal from "../Components/MemeberPageEdit/NewAddressModal";
+import EditAddressModal from "../Components/MemeberPageEdit/EditAddressModal";
 
 const InfoWrapper = styled.div`
   display: flex;
@@ -31,6 +34,10 @@ const memberId = Number(sessionStorage.getItem("memberId"));
 
 export default function MemberPageEdit() {
   const [modalState, setModalState] = useState(false);
+  // modal 컴포넌트의 element에 들어갈 컴포넌트를 결정하는 변수
+  const [isNewAddressModalOn, setIsNewAddressModalOn] = useState(false);
+  const [isEditAddressModalOn, setIsEditAddressModalOn] = useState(false);
+
   const navigate = useNavigate();
 
   const [memberAddressData, setMemberAddressData] =
@@ -44,8 +51,17 @@ export default function MemberPageEdit() {
   const [tagList, setTagList] = useState<string[] | undefined>([]);
   const [isSubscribed, setIsSubscribed] = useState<boolean | undefined>(true);
 
+  // API 요청 이후 리랜더링이 발생하지 않는 부분을 랜더링 하기 위한 변수
+  const [render, setRender] = useState(false);
+
   // 이후 주소 추가 기능 구현 시 사용될 예정 => 사용안될 시 페이지 리팩토링 단계에서 삭제
-  const [newAddressId, setNewAddressId] = useState(0);
+  const [newAddressId, setNewAddressId] = useState(
+    memberAddressData?.addressList.length
+  );
+
+  const [editingAddress, setEditingAddress] = useState<AddressType | undefined>(
+    memberAddressData?.addressList[0]
+  );
 
   useEffect(() => {
     try {
@@ -61,11 +77,7 @@ export default function MemberPageEdit() {
     } catch (err) {
       console.error(err);
     }
-  }, []);
-
-  const openModal = () => {
-    setModalState(true);
-  };
+  }, [render]);
 
   const handleMemberName: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setMemberName(e.target.value);
@@ -139,7 +151,22 @@ export default function MemberPageEdit() {
     if (window.confirm("대표 주소로 변경하시겠습니까?")) {
       updateAddress(addressId, addressData);
       alert("대표주소로 변경 완료");
+      setRender(!render);
     }
+  };
+
+  const addNewAddress: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    const addressListIndex = Number(e.currentTarget.id);
+    setNewAddressId(addressListIndex);
+    setIsNewAddressModalOn(true);
+    setModalState(true);
+  };
+
+  const editAddress: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    const addressListIndex = Number(e.currentTarget.id);
+    setEditingAddress(memberAddressData?.addressList[addressListIndex]);
+    setIsEditAddressModalOn(true);
+    setModalState(true);
   };
 
   const removeAddress: React.MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -149,6 +176,7 @@ export default function MemberPageEdit() {
     if (window.confirm("해당 주소지를 삭제하시겠습니까?")) {
       deleteAddress(addressId);
       alert("삭제가 완료되었습니다.");
+      setRender(!render);
     }
   };
 
@@ -176,13 +204,41 @@ export default function MemberPageEdit() {
   return (
     <>
       {/* 최상단에 모달 창 배치를 통해 위치 고정 */}
-      {modalState ? (
-        <Modal
-          modalState={modalState}
-          setModalState={setModalState}
-          element={<AddressPopup newAddressId={newAddressId} />}
-        />
-      ) : null}
+      {isNewAddressModalOn
+        ? modalState && (
+            <Modal
+              modalState={modalState}
+              setModalState={setModalState}
+              element={
+                <NewAddressModal
+                  setModalState={setModalState}
+                  currentAddressIndex={memberAddressData?.addressList.length}
+                  render={render}
+                  setRender={setRender}
+                  setIsNewAddressModalOn={setIsNewAddressModalOn}
+                />
+              }
+            />
+          )
+        : null}
+      {isEditAddressModalOn
+        ? modalState && (
+            <Modal
+              modalState={modalState}
+              setModalState={setModalState}
+              element={
+                <EditAddressModal
+                  setModalState={setModalState}
+                  editingAddress={editingAddress}
+                  render={render}
+                  setRender={setRender}
+                  setIsEditAddressModalOn={setIsEditAddressModalOn}
+                />
+              }
+            />
+          )
+        : null}
+
       <section className="Edit_Page_Container">
         <h1 className="Edit_Page_Title">회원정보 수정</h1>
         <div className="Member_Information_Wrapper">
@@ -269,6 +325,7 @@ export default function MemberPageEdit() {
                           </div>
                         </div>
                         <div className="Address_List_Button">
+                          {/* 커스텀 컴포넌트를 유지한 채로 커스텀 속성을 활용하기 위해 기존 name, id 속성을 활용 */}
                           {address.isPrimary ? null : (
                             <CustomButton
                               bgColor="transparent"
@@ -277,7 +334,6 @@ export default function MemberPageEdit() {
                               padding="5px"
                               width="125px"
                               border="none"
-                              // 커스텀 컴포넌트를 유지한 채로 커스텀 속성을 활용하기 위해 name, id 속성을 활용
                               buttonId={idx.toString()}
                               idx={address.addressId.toString()}
                               onClick={setPrimaryAddress}
@@ -290,7 +346,9 @@ export default function MemberPageEdit() {
                             padding="5px"
                             border="none"
                             width="50px"
-                            onClick={openModal}
+                            buttonId={idx.toString()}
+                            idx={address.addressId.toString()}
+                            onClick={editAddress}
                           />
                           <CustomButton
                             bgColor="transparent"
@@ -299,7 +357,6 @@ export default function MemberPageEdit() {
                             padding="5px"
                             border="none"
                             width="50px"
-                            // 커스텀 컴포넌트를 유지한 채로 커스텀 속성을 활용하기 위해 name, id 속성을 활용
                             buttonId={idx.toString()}
                             idx={address.addressId.toString()}
                             onClick={removeAddress}
@@ -318,7 +375,7 @@ export default function MemberPageEdit() {
               padding="10px"
               width="125px"
               border="none"
-              onClick={openModal}
+              onClick={addNewAddress}
             />
           </ul>
 

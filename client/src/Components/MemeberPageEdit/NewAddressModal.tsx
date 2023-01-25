@@ -1,29 +1,34 @@
-import { addNewAddress } from "../API/MemberPageEdit/MemberPageEditAPI";
-import CustomButton from "./Commons/Buttons";
+import { addNewAddress } from "../../API/MemberPageEdit/MemberPageEditAPI";
+import CustomButton from "../Commons/Buttons";
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
-import "./Style/addressPopup.css";
+import "./../Style/addressPopup.css";
 
 const memberId = Number(sessionStorage.getItem("memberId"));
 
-export default function AddressPopup({
-  newAddressId,
+export default function NewAddressModal({
+  currentAddressIndex,
+  setModalState,
+  render,
+  setRender,
+  setIsNewAddressModalOn,
 }: {
-  newAddressId: number;
+  currentAddressIndex: number | undefined;
+  setModalState: React.Dispatch<React.SetStateAction<boolean>>;
+  render: boolean;
+  setRender: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsNewAddressModalOn: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const navigate = useNavigate();
   const [isSearchOn, setIsSearchOn] = useState(false);
   const [userAddress, setUserAddress] = useState({
-    addressId: newAddressId,
-    isPrimary: false,
     recipient: "",
     addressTitle: "",
-    zipcode: "",
-    address: "",
     phoneNumber: "",
   });
-  const [isPrimary, setIsPrimary] = useState(false);
+  const [isPrimary, setIsPrimary] = useState(
+    currentAddressIndex === 0 ? true : false
+  );
   const [address, setAddress] = useState("");
   const [zipcode, setZipcode] = useState("");
   const [detailedAddress, setDetailedAddress] = useState("");
@@ -74,7 +79,7 @@ export default function AddressPopup({
 
     // 이후 api 명세 및 데이터 변경 시 해당 데이터 활용
     // const newAddressInfo = {
-    //   addressId: newAddressId,
+    //   addressId: currentAddressIndex,
     //   isPrimary: isPrimary,
     //   recipient: userAddress.recipient,
     //   addressTitle: userAddress.addressTitle,
@@ -91,7 +96,13 @@ export default function AddressPopup({
       address: combinedAddress,
     };
 
-    addNewAddress(newAddressInfo2);
+    if (window.confirm("현재 주소를 추가하시겠습니까?")) {
+      setModalState(false);
+      setIsNewAddressModalOn(false);
+      addNewAddress(newAddressInfo2);
+      alert("추가 완료");
+      setRender(!render);
+    }
   };
 
   return (
@@ -174,8 +185,14 @@ export default function AddressPopup({
           </div>
           <div className="Modal_Form_Buttons">
             <div>
-              {newAddressId && newAddressId === 0 ? (
-                <input type="checkbox" checked />
+              {isPrimary ? (
+                <input
+                  type="checkbox"
+                  defaultChecked
+                  onClick={() => {
+                    setIsPrimary(!isPrimary);
+                  }}
+                />
               ) : (
                 <input
                   type="checkbox"
