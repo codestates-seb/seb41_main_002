@@ -2,7 +2,7 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { decodeType } from "../Store/slices/userSlice";
 
-const BASE_URL = "http://3.39.187.178:8080/api/v1";
+const BASE_URL = process.env.REACT_APP_BASE_URL as string;
 const accessToken = sessionStorage.getItem("accessToken");
 const refreshToken = sessionStorage.getItem("refreshToken");
 
@@ -15,16 +15,19 @@ const changeToken = () => {
   if (tokenExp) {
     if (now > tokenExp) {
       axios
-        .get("http://3.39.187.178/api/v1/user/refresh-token", {
+        .get(`${BASE_URL}/user/refresh-token`, {
           headers: {
             Refresh: refreshToken,
           },
         })
         .then((res:any) => {
-          console.log(res);
+          console.log(res.data);
           console.log('토큰 교체');
-          sessionStorage.setItem("accessToken", res.accessToken);
-          sessionStorage.setItem("refreshToken", res.refreshToken);
+          sessionStorage.setItem("accessToken", res.data.accessToken);
+          sessionStorage.setItem("refreshToken", res.data.refreshToken);
+        }).catch(err => {
+          console.log('교체 실패');
+          console.log(err);
         });
     }
   }
@@ -43,7 +46,7 @@ const axiosApi = (url: string) => {
 const axiosAuthApi = (url: string) => {
   const instance = axios.create({
     baseURL: url,
-    headers: { Authorization: "Bearer " + accessToken },
+    headers: { Authorization: accessToken },
   });
 
   instance.interceptors.request.use(function (config) {
