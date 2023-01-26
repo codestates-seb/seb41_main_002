@@ -23,7 +23,6 @@ export const getShoppingCart = async (
     const result: any = await authInstance.get(
       `/members/${memberId}/carts`,
     );
-    console.log(result.data)
     return result.data;
   } catch (err) {
     console.error(err);

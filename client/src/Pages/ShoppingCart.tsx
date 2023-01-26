@@ -22,7 +22,6 @@ export default function ShoppingCart() {
   })
 
   const navigate = useNavigate();
-  console.log(cartData?.cart);
 
   const callCartData = async () => {
     const result = await getShoppingCart(accessToken as string);
@@ -38,7 +37,7 @@ export default function ShoppingCart() {
   }
 
   useEffect(()=>{
-    calculateTotalPrice(2)
+    calculateTotalPrice(1)
   }, [])
 
   useEffect(() => {
@@ -80,7 +79,7 @@ export default function ShoppingCart() {
           <span className="All_Check">전체선택</span>
         </div>
         <ul className="Shopping_List_Container">
-          <CartItemList cartData={cartData}/>
+          <CartItemList cartData={cartData} accessToken={accessToken}/>
         </ul>
       </div>
       <div className="Price_Info_Container">
