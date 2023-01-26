@@ -5,6 +5,7 @@ import { getShoppingCart } from "../API/ShoppingCart/getShoppingCart";
 import "./Style/shoppingCart.css";
 import { CartDataType } from "../API/ShoppingCart/getShoppingCart";
 import { useNavigate } from "react-router-dom";
+import CartItemList from "../Components/ShoppingCart/CartItemList";
 
 const BenefitContents = styled.span<{ marginLeft: string }>`
   color: black;
@@ -13,7 +14,13 @@ const BenefitContents = styled.span<{ marginLeft: string }>`
 `;
 
 export default function ShoppingCart() {
-  const [cartData, setCartData] = useState<CartDataType | undefined>(undefined);
+  const [cartData, setCartData] = useState<CartDataType | null>(null);
+  const [productCount, setProductCount] = useState([])
+  //추후 로직 변경 예정
+  const productTotalPrice:any = cartData&&cartData?.cart.map((el)=>{
+    return el.itemTotalPrice
+  })
+
   const navigate = useNavigate();
   console.log(cartData?.cart);
 
@@ -24,11 +31,15 @@ export default function ShoppingCart() {
 
   const accessToken = sessionStorage.getItem("memberId");
 //추후 타입수정 예정
-  const calculateProductPrice:any =
-    cartData &&
-    cartData?.cart.reduce((acc, cur): any => {
-      return acc.itemTotalPrice + cur.itemTotalPrice;
-    });
+  const calculateTotalPrice = (count: number) => {
+    productTotalPrice&&productTotalPrice.map((el:number)=>{
+      return el*count
+    })
+  }
+
+  useEffect(()=>{
+    calculateTotalPrice(2)
+  }, [])
 
   useEffect(() => {
     callCartData();
@@ -69,44 +80,11 @@ export default function ShoppingCart() {
           <span className="All_Check">전체선택</span>
         </div>
         <ul className="Shopping_List_Container">
-          {cartData &&
-            cartData.cart.map((cartItem: any) => {
-              return (
-                <li key={cartItem.itemId} className="Shopping_List_Contents">
-                  <div className="Product_Check">
-                    <input type={"checkbox"} /> <span>선택</span>
-                  </div>
-                  <div className="Product_Container">
-                    <div className="Product_Info">
-                      <img
-                        src={`${cartItem.titleImageURL}`}
-                        className="List_Product_Image"
-                      />
-                      <a>
-                        <span className="List_Product_Name">
-                          {cartItem.itemTitle}
-                        </span>
-                      </a>
-                    </div>
-                    <div className="Product_Price_Info">
-                      <span className="Product_Count">
-                        수량: {cartItem.itemCount}개
-                      </span>
-                      <span className="Product_Price">
-                        가격: {cartItem.itemTotalPrice}원
-                      </span>
-                    </div>
-                  </div>
-                  <div className="Product_Delete">
-                    <button className="Cart_Delete_Button">상품 삭제</button>
-                  </div>
-                </li>
-              );
-            })}
+          <CartItemList cartData={cartData}/>
         </ul>
       </div>
       <div className="Price_Info_Container">
-        <span>제품가격: {calculateProductPrice}원</span>
+        <span>제품가격: 원</span>
         <span> + 배송비 4,000원</span>
         <span> - 구독 2,000원</span>
         <span> = 총 42,000원</span>

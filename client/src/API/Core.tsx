@@ -15,7 +15,7 @@ const changeToken = () => {
   if (tokenExp) {
     if (now > tokenExp) {
       axios
-        .get("http://13.125.242.34/api/v1/user/refresh-token", {
+        .get("http://13.125.242.34:8080/api/v1/user/refresh-token", {
           headers: {
             Refresh: refreshToken,
           },
