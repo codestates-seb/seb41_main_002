@@ -2,6 +2,7 @@ package com.seb_main_002.member.controller;
 
 import com.seb_main_002.exception.BusinessLogicException;
 import com.seb_main_002.exception.ExceptionCode;
+import com.seb_main_002.member.dto.MemberMailRequestDto;
 import com.seb_main_002.member.dto.MemberPatchDto;
 import com.seb_main_002.member.dto.MemberPostDto;
 import com.seb_main_002.member.entity.Member;
@@ -100,5 +101,18 @@ public class MemberController {
     public ResponseEntity logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
        memberService.logout(request,response);
        return new ResponseEntity(HttpStatus.OK);
+    }
+    @PostMapping("/accountid")
+    @ResponseStatus(HttpStatus.OK)
+    public void findAccountId(@RequestBody MemberMailRequestDto memberMailRequestDto){
+        String email = memberMailRequestDto.getEmail();
+        memberService.sendMailWithAccountId(email);
+    }
+    @PostMapping("/password")
+    @ResponseStatus(HttpStatus.OK)
+    public void findpassword(@RequestBody MemberMailRequestDto memberMailRequestDto){
+        String email = memberMailRequestDto.getEmail();
+        String accountId = memberMailRequestDto.getAccountId();
+        memberService.sendMailWithPassword(accountId,email);
     }
 }
