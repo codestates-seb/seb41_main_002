@@ -1,7 +1,6 @@
 import { addNewAddress } from "../../API/MemberPageEdit/MemberPageEditAPI";
 import CustomButton from "../Commons/Buttons";
 import { FormEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
 import "./../Style/addressPopup.css";
 
@@ -121,6 +120,7 @@ export default function NewAddressModal({
               name="addressTitle"
               className="Form_Input Address_Type_Field"
               onChange={userAddressHandler}
+              required
             />
           </div>
           <div className="Modal_Field">
@@ -131,6 +131,7 @@ export default function NewAddressModal({
               name="recipient"
               className="Form_Input Address_Type_Field"
               onChange={userAddressHandler}
+              required
             />
           </div>
           <div className="Modal_Field">
@@ -181,6 +182,7 @@ export default function NewAddressModal({
               name="phoneNumber"
               className="Form_Input Address_Type_Field"
               onChange={userAddressHandler}
+              required
             />
           </div>
           <div className="Modal_Form_Buttons">

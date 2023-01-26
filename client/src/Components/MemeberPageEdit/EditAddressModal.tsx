@@ -1,11 +1,9 @@
 import {
-  addNewAddress,
   AddressType,
   updateAddress,
 } from "../../API/MemberPageEdit/MemberPageEditAPI";
 import CustomButton from "../Commons/Buttons";
 import { FormEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
 import "./../Style/addressPopup.css";
 

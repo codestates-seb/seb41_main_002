@@ -68,6 +68,13 @@ export default function MemberPageEdit() {
   );
 
   useEffect(() => {
+    if (modalState === false) {
+      setIsEditAddressModalOn(false);
+      setIsNewAddressModalOn(false);
+    }
+  }, [modalState]);
+
+  useEffect(() => {
     try {
       getMemberData(memberId).then((res) => {
         // console.log(res); => 해당 코드는 데이터 값의 주기적인 확인을 위해 사용하므로 페이지 구현 완료 시 리팩토링 진행하며 삭제
