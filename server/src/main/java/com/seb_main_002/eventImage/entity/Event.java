@@ -21,6 +21,7 @@ public class Event extends Auditable {
 
     private String eventImageUrl;
 
+    private String endAt;
     @Enumerated(value=EnumType.STRING)
     private Event.EventStatus eventStatus = EventStatus.EVENT_PROGRESS;
 
