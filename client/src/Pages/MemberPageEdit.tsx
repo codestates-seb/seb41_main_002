@@ -1,5 +1,4 @@
 import CustomButton from "../Components/Commons/Buttons";
-import AddressPopup from "../Components/MemeberPageEdit/NewAddressModal";
 import Modal from "../Components/Commons/Modal";
 import {
   AddressType,
@@ -11,12 +10,12 @@ import {
   updateMemberData,
 } from "../API/MemberPageEdit/MemberPageEditAPI";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import "./Style/memberPageEdit.css";
 import NewAddressModal from "../Components/MemeberPageEdit/NewAddressModal";
 import EditAddressModal from "../Components/MemeberPageEdit/EditAddressModal";
 import { subscriptionCalculation } from "../Function/memberEditPage";
+import "./Style/memberPageEdit.css";
 
 const InfoWrapper = styled.div`
   display: flex;
@@ -39,8 +38,6 @@ export default function MemberPageEdit() {
   // modal 컴포넌트의 element에 들어갈 컴포넌트를 결정하는 변수
   const [isNewAddressModalOn, setIsNewAddressModalOn] = useState(false);
   const [isEditAddressModalOn, setIsEditAddressModalOn] = useState(false);
-
-  const navigate = useNavigate();
 
   const [memberAddressData, setMemberAddressData] =
     useState<MemberPageDataType>();
@@ -74,12 +71,12 @@ export default function MemberPageEdit() {
     try {
       getMemberData(memberId).then((res) => {
         // console.log(res); => 해당 코드는 데이터 값의 주기적인 확인을 위해 사용하므로 페이지 구현 완료 시 리팩토링 진행하며 삭제
+        setMemberAddressData(res);
         setMemberName(res?.memberName);
         setBirthDate(res?.birthdate);
         setEmail(res?.email);
         setPhoneNumber(res?.phoneNumber);
         setTagList(res?.tagList);
-        setMemberAddressData(res);
       });
     } catch (err) {
       console.error(err);
@@ -194,10 +191,11 @@ export default function MemberPageEdit() {
       phoneNumber: phoneNumber as string,
       tagList: tagList as string[],
     };
+
     if (window.confirm("수정하시겠습니까?")) {
       updateMemberData(memberId, reqBody);
       alert("수정 완료");
-      navigate("/memberPage/edit");
+      setRender(!render);
     }
   };
 
@@ -411,13 +409,7 @@ export default function MemberPageEdit() {
               <InfoWrapper>
                 <div className="Info_Label">피지 타입</div>
                 <div className="Info_Content">
-                  <select
-                    className="Type_Dropdown"
-                    defaultValue={
-                      memberAddressData && memberAddressData.tagList[0]
-                    }
-                    onChange={editSkinType}
-                  >
+                  <select className="Type_Dropdown" onChange={editSkinType}>
                     <option value="건성">건성</option>
                     <option value="지성">지성</option>
                     <option value="복합성">복합성</option>
@@ -427,13 +419,7 @@ export default function MemberPageEdit() {
               <InfoWrapper>
                 <div className="Info_Label">피부 타입</div>
                 <div className="Info_Content">
-                  <select
-                    className="Type_Dropdown"
-                    defaultValue={
-                      memberAddressData && memberAddressData.tagList[1]
-                    }
-                    onChange={editSkinType}
-                  >
+                  <select className="Type_Dropdown" onChange={editSkinType}>
                     <option value="일반 피부">일반 피부</option>
                     <option value="여드름성 피부">여드름성 피부</option>
                   </select>
