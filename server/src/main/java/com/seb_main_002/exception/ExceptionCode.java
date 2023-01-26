@@ -21,7 +21,8 @@ public enum ExceptionCode {
     CANNOT_MODIFY_REVIEW(403,"No permission to modify Review"),
     CART_ITEM_NOT_FOUND(404,"CartItem not found"),
     CANNOT_POST_REVIEW(400, "Can not Post review, already exists"),
-    EVENT_NOT_FOUND(404,"Event not found");
+    EVENT_NOT_FOUND(404,"Event not found"),
+    EMAIL_NOT_FOUND(404, "Email not found");
 
     @Getter
     private int status;

@@ -12,9 +12,11 @@ import com.seb_main_002.order.dto.OrderInfoDto;
 import com.seb_main_002.order.entity.Order;
 import com.seb_main_002.order.repository.OrderRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+@Transactional
 @Service
 public class OrderService {
     private OrderRepository orderRepository;
