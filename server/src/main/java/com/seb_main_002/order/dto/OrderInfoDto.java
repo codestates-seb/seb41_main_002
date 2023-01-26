@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
@@ -18,9 +19,9 @@ public class OrderInfoDto {
     @Positive
     private Long addressId;
 
-    @Positive
+    @Min(value = 0)
     private Integer itemsTotalPrice;
 
-    @Positive
+    @Min(value = 0)
     private Integer usedReserve;
 }

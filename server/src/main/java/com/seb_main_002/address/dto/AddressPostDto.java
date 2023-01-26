@@ -5,10 +5,12 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 @Getter
 @NoArgsConstructor
 public class AddressPostDto {
+    @Positive
     private Long memberId;
 
     private Boolean isPrimary;
