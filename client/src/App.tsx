@@ -10,12 +10,14 @@ import ItemsTopList from "./Pages/ItemsTopList";
 import ShoppingCart from "./Pages/ShoppingCart";
 import MemberPageEdit from "./Pages/MemberPageEdit";
 import CompletePayment from "./Pages/CompletePayment";
+import CompleteRegular from "./Pages/CompleteRegular";
 import SubscriptionPage from "./Pages/SubscriptionPage";
 import Footer from "./Components/Commons/Footer";
 import EventDetail from "./Pages/EventDetail";
 import Header from "./Components/Commons/Header";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
+
 
 
 function App() {
@@ -26,6 +28,7 @@ function App() {
           <BrowserRouter>
             <Header />
             <Routes>
+              <Route path="/members/:memberId/subscribe/complete" element={<CompleteRegular/>}/>
               <Route path="/payment/complete" element={<CompletePayment/>}/>
               <Route path="/signUp" element={<SignUp />} />
               <Route path="/login" element={<Login />} />

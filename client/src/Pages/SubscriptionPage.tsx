@@ -1,10 +1,24 @@
+import { kakaoRegularPayment } from "../API/SubscriptionAPI";
 import "./Style/subscriptionPage.css";
 
 export default function SubscriptionPage() {
-
-  const onMonthlyPayment = () => {
-    console.log('결제')
+  interface TestType {
+    paymentURL: string;
+    tid: string;
   }
+
+  const onMonthlyPayment = async () => {
+    console.log("결제");
+    await kakaoRegularPayment().then(
+      (res: { paymentURL: string; tid: string } | undefined) => {
+        if (typeof res !== "undefined") {
+          window.localStorage.setItem("tid", res.tid);
+          window.location.replace(res.paymentURL);
+        }
+        console.log("카카오 결제가 완료되었습니다");
+      }
+    );
+  };
   return (
     <div className="Subscription_Container">
       <img
