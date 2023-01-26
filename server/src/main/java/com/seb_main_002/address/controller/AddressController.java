@@ -7,10 +7,14 @@ import com.seb_main_002.address.mapper.AddressMapper;
 import com.seb_main_002.address.service.AddressService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/addresses")
+@Validated
 public class AddressController {
     private final AddressMapper mapper;
     private final AddressService addressService;
@@ -21,14 +25,14 @@ public class AddressController {
     }
 
     @PostMapping
-    public ResponseEntity postAddress(@RequestBody AddressPostDto addressPostDto) {
+    public ResponseEntity postAddress(@Valid @RequestBody AddressPostDto addressPostDto) {
         addressService.createAddress(mapper.addressPostDtoToAddress(addressPostDto));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PatchMapping("/{addressId}")
     public ResponseEntity patchAddress(@PathVariable("addressId") Long addressId,
-                                       @RequestBody AddressPatchDto addressPatchDto) {
+                                       @Valid @RequestBody AddressPatchDto addressPatchDto) {
         Address address = mapper.addressPatchDtoToAddress(addressPatchDto);
         address.setAddressId(addressId);
         addressService.updateAddress(address);

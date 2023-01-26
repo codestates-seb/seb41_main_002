@@ -10,11 +10,13 @@ import com.seb_main_002.item.entity.Item;
 import com.seb_main_002.item.repository.ItemRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 @Service
 public class HomeService {
 
