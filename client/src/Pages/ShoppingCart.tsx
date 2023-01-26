@@ -15,11 +15,13 @@ const BenefitContents = styled.span<{ marginLeft: string }>`
 
 export default function ShoppingCart() {
   const [cartData, setCartData] = useState<CartDataType | null>(null);
-  const [productCount, setProductCount] = useState([])
+  const [productCount, setProductCount] = useState([]);
   //추후 로직 변경 예정
-  const productTotalPrice:any = cartData&&cartData?.cart.map((el)=>{
-    return el.itemTotalPrice
-  })
+  const productTotalPrice: any =
+    cartData &&
+    cartData?.cart.map((el) => {
+      return el.itemTotalPrice;
+    });
 
   const navigate = useNavigate();
 
@@ -29,16 +31,17 @@ export default function ShoppingCart() {
   };
 
   const accessToken = sessionStorage.getItem("memberId");
-//추후 타입수정 예정
+  //추후 타입수정 예정
   const calculateTotalPrice = (count: number) => {
-    productTotalPrice&&productTotalPrice.map((el:number)=>{
-      return el*count
-    })
-  }
+    productTotalPrice &&
+      productTotalPrice.map((el: number) => {
+        return el * count;
+      });
+  };
 
-  useEffect(()=>{
-    calculateTotalPrice(1)
-  }, [])
+  useEffect(() => {
+    calculateTotalPrice(1);
+  }, []);
 
   useEffect(() => {
     callCartData();
@@ -79,7 +82,7 @@ export default function ShoppingCart() {
           <span className="All_Check">전체선택</span>
         </div>
         <ul className="Shopping_List_Container">
-          <CartItemList cartData={cartData} accessToken={accessToken}/>
+          <CartItemList cartData={cartData} accessToken={accessToken} />
         </ul>
       </div>
       <div className="Price_Info_Container">

@@ -21,10 +21,10 @@ const changeToken = () => {
           },
         })
         .then((res:any) => {
-          console.log(res);
+          console.log(res.data);
           console.log('토큰 교체');
-          sessionStorage.setItem("accessToken", res.accessToken);
-          sessionStorage.setItem("refreshToken", res.refreshToken);
+          sessionStorage.setItem("accessToken", res.data.accessToken);
+          sessionStorage.setItem("refreshToken", res.data.refreshToken);
         });
     }
   }

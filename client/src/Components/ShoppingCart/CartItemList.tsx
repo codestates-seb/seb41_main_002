@@ -1,5 +1,8 @@
 import CustomButton from "../Commons/Buttons";
-import { deleteProduct } from "../../API/ShoppingCart/deleteProduct";
+import {
+  allDeleteProduct,
+  deleteProduct,
+} from "../../API/ShoppingCart/deleteProduct";
 import "./Style/cartItemList.css";
 import { NavigateFunction } from "react-router-dom";
 
@@ -52,7 +55,7 @@ export default function CartItemList(props: Props) {
                   <CustomButton
                     //추후 memberId로 변경될 예정
                     onClick={() => {
-                      deleteProduct(props.accessToken);
+                      deleteProduct(props.accessToken, cartItem.cartItemId);
                     }}
                     fontColor="white"
                     bgColor="var(--dark3)"
