@@ -23,7 +23,7 @@ public class Order extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToOne(mappedBy = "order", cascade = {CascadeType.ALL})
+    @OneToOne(mappedBy = "order", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private Delivery delivery;
 
     private Integer reserve;

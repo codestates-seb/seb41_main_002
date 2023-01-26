@@ -67,6 +67,11 @@ public class CartService {
         cartItemRepository.deleteAllByCart(cart);
     }
 
+    public void deleteCartItem(long cartItemId){
+        CartItem cartItem = findVerifiedCartItem(cartItemId);
+        cartItemRepository.delete(cartItem);
+    }
+
     @Transactional(readOnly = true)
     public Member findVerifiedMember(long memberId) {
         Optional<Member> optionalMember =
@@ -75,5 +80,13 @@ public class CartService {
                 optionalMember.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         return findMember;
+    }
+
+    @Transactional
+    public CartItem findVerifiedCartItem(long cartItemId){
+        Optional<CartItem> optionalCartItem = cartItemRepository.findById(cartItemId);
+        CartItem findCartItem = optionalCartItem.orElseThrow(()->
+                new BusinessLogicException(ExceptionCode.CART_ITEM_NOT_FOUND));
+        return findCartItem;
     }
 }
