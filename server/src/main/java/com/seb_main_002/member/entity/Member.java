@@ -50,10 +50,10 @@ public class Member extends Auditable {
     @OneToMany(mappedBy = "member")
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToOne(mappedBy = "member", cascade = {CascadeType.ALL} )
+    @OneToOne(mappedBy = "member", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private Cart cart;
 
-    @OneToOne(mappedBy = "member", cascade = {CascadeType.ALL})
+    @OneToOne(mappedBy = "member", cascade = {CascadeType.ALL},  fetch = FetchType.LAZY)
     private Subscribe subscribe;
 
     @OneToMany(mappedBy = "member", cascade = {CascadeType.ALL})

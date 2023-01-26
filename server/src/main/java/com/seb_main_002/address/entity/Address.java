@@ -24,7 +24,7 @@ public class Address extends Auditable {
 
     private String zipcode;
 
-    @ManyToOne
+    @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
