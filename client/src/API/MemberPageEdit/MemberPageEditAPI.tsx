@@ -135,3 +135,17 @@ export const updateMemberData = async (
     console.error(error);
   }
 };
+
+export const cancelSubscription = async (memberId: number) => {
+  const reqBody = { isSubscribed: false };
+
+  try {
+    await axios.patch(`${BASE_URL}/members/${memberId}/subscribe`, reqBody, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};

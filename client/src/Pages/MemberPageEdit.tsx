@@ -3,6 +3,7 @@ import AddressPopup from "../Components/MemeberPageEdit/NewAddressModal";
 import Modal from "../Components/Commons/Modal";
 import {
   AddressType,
+  cancelSubscription,
   deleteAddress,
   getMemberData,
   MemberPageDataType,
@@ -194,10 +195,12 @@ export default function MemberPageEdit() {
     }
   };
 
-  const cancelSubscription = () => {
+  const stopSubscription = () => {
     if (window.confirm("정말 구독을 취소하시겠습니까?")) {
-      alert("구독이 취소되었습니다.");
+      cancelSubscription(memberId);
       setIsSubscribed(false);
+      alert("구독이 취소되었습니다.");
+      setRender(!render);
     }
   };
 
@@ -603,7 +606,7 @@ export default function MemberPageEdit() {
                   border="none"
                   fontsize="19px"
                   width="125px"
-                  onClick={cancelSubscription}
+                  onClick={stopSubscription}
                 />
               </InfoWrapper>
             </div>
