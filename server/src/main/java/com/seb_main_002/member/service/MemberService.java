@@ -91,8 +91,9 @@ public class MemberService {
     @Transactional
     public void updateMember(Long memberId, Member member) {
         Member verifedMember = verifyMember(memberId);
-        // 이메일 변경 요청시에만 검증하도록
-        if(member.getEmail()!=null) {
+
+        // 기존 이메일과 동일할 경우에는 유효성 검증을 하지 않도록 수정하였습니다.
+        if(!member.getEmail().equals(verifedMember.getEmail())) {
             verifyExistsEmail(member.getEmail());
         }
         Optional.ofNullable(member.getName())
