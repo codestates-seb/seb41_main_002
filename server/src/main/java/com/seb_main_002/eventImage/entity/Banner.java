@@ -13,10 +13,10 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class BannerImage extends Auditable {
+public class Banner extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bannerImageId;
+    private Long bannerId;
 
     private String bannerImageUrl;
 
