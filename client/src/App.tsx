@@ -7,6 +7,7 @@ import ItemDetail from "./Pages/ItemDetail";
 import MemberPage from "./Pages/MemberPage";
 import ShoppingList from "./Pages/ShoppingList";
 import ItemsTopList from "./Pages/ItemsTopList";
+import ShoppingPage from "./Pages/ShoppingPage";
 import ShoppingCart from "./Pages/ShoppingCart";
 import MemberPageEdit from "./Pages/MemberPageEdit";
 import CompletePayment from "./Pages/CompletePayment";
@@ -33,7 +34,7 @@ function App() {
               <Route path="/itemDetail/:itemId" element={<ItemDetail />} />
               <Route path="/" element={<Home />} />
               <Route path="/member/edit" element={<MemberPageEdit />} />
-              <Route path="/items-list" element={<ShoppingList />} />
+              <Route path="/items-list/:categoryENName" element={<ShoppingPage />} />
               <Route path="/items-top-list/:categoryENName" element={<ItemsTopList />} />
               <Route
                 path="/members/:memberId/carts"

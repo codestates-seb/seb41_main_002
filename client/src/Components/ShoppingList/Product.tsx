@@ -10,49 +10,40 @@ export const ProductImage = styled.img`
 `;
 
 interface Props {
-  products: ProductData[];
-  onLastItemVisiable: () => void;
+  products: any;
+  page: number;
 }
 
 export default function Product(props: Props) {
-  // const lastItemRef = useRef(null);
-  // const setLastItemRef = useCallback((node: any) => {
-  //   lastItemRef.current = node;
-  //   if (node) {
-  //     const observer = new IntersectionObserver(([entry]) => {
-  //       if (entry.isIntersecting) {
-  //         console.log("isIntersecting: " + entry.isIntersecting);
-  //         props.onLastItemVisiable();
-  //       }
-  //     });
-  //     if (lastItemRef.current) {
-  //       observer.observe(lastItemRef.current);
-  //     }
-  //   }
-  // }, []);
 
   const [isLoading, setIsLoading] = useState(true);
+  const { page } = props;
 
-  const [_, setRef] = useIntersect((entry: any, observer: any) => {
-    props.onLastItemVisiable();
-    observer.unobserve(entry.target);
-    observer.observe(entry.target);
-  }, {});
+  // const [_, setRef] = useIntersect((entry: any, observer: any, _page: number) => {
+  //   console.log('Inside of userIntersect ', page);
+  //   console.log('Inside of useIntersect ', _page);
+  //   // props.onLastItemVisiable(_page);
+  //   observer.unobserve(entry.target);
+  //   observer.observe(entry.target);
+  // }, {}, page);
+
+  console.log('on render product ', page)
 
   return (
     <>
-      {props.products.map((item, index) => {
+      {props.products&&props.products.map((item:any, index:number) => {
+        console.log(item)
         if (index === props.products.length - 1) {
           return (
             <li key={index}>
               <a href={`/itemDetail/${item.itemId}`}>
                 <div className="Product_Info">
                   {/* ref={setLastItemRef} */}
-                  <ProductImage src="" />
+                  <ProductImage src={`${item.titleImageURL}`} />
                   <h3> {item.itemTitle} </h3>
                   <p>가격: {item.price}</p>
                 </div>
-                {isLoading && <p ref={setRef}>Loading...</p>}
+                {/* {isLoading && <p ref={setRef}>Loading...</p>} */}
               </a>
             </li>
           );
