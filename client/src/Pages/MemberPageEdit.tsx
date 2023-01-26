@@ -16,6 +16,7 @@ import styled from "styled-components";
 import "./Style/memberPageEdit.css";
 import NewAddressModal from "../Components/MemeberPageEdit/NewAddressModal";
 import EditAddressModal from "../Components/MemeberPageEdit/EditAddressModal";
+import { subscriptionCalculation } from "../Function/memberEditPage";
 
 const InfoWrapper = styled.div`
   display: flex;
@@ -62,6 +63,11 @@ export default function MemberPageEdit() {
 
   const [editingAddress, setEditingAddress] = useState<AddressType | undefined>(
     memberAddressData?.addressList[0]
+  );
+
+  // 구독 정보를 기반으로 혜택을 알려주기 위한 변수
+  const calcMonth = subscriptionCalculation(
+    memberAddressData?.subscribedDate as string
   );
 
   useEffect(() => {
@@ -584,17 +590,18 @@ export default function MemberPageEdit() {
               <InfoWrapper>
                 <div className="Info_Label">구독 시작일</div>
                 <div className="Info_Content">
-                  {memberAddressData?.subscribedDate}
+                  {memberAddressData?.subscribedDate.slice(0, 4)}년{" "}
+                  {memberAddressData?.subscribedDate.slice(5, 7)}월{" "}
+                  {memberAddressData?.subscribedDate.slice(8, 10)}일
                 </div>
               </InfoWrapper>
               <div className="Subscription_Summary">
                 <div className="Info_Label">지금까지 받은 혜택</div>
                 <div className="Subscription_Benefit">
                   <div>구독일로부터</div>
-                  <span>개의 샘플</span>
-                  <span>4개의 샘플</span>
-                  <span>4개의 샘플</span>
-                  {/* 1. 매월 고객님의 피부타입에 맞춘 5개의 토너 및 로션 샘플과 2개의 세안샘플, 그리고 3종류의 앰플 샘플을 무작위로 받아 볼 수 있습니다. */}
+                  <span>{calcMonth * 5}개의 토너/로션 샘플</span>
+                  <span>{calcMonth * 2}개의 세안 샘플</span>
+                  <span>{calcMonth * 3}개의 앰플 샘플</span>을 받았습니다.
                 </div>
               </div>
               <InfoWrapper>
