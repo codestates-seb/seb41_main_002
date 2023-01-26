@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/v1/home ")
+@RequestMapping("api/v1/home")
 public class HomeController {
     private HomeService homeService;
 

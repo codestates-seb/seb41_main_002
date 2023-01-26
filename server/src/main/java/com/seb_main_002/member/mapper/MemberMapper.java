@@ -28,6 +28,8 @@ public interface MemberMapper {
                 .orderStatus(order.getOrderStatus().toString())
                 .totalPrice(order.getTotalPrice())
                 .orderItems(order.getOrderItems().stream().map(orderItem -> MemberResponseDto.OrderItemResponseDto.builder()
+                        .orderItemId(orderItem.getOrderItemId())
+                        .isReviewed(orderItem.getIsReviewed())
                         .itemId(orderItem.getItem().getItemId())
                         .itemTitle(orderItem.getItem().getItemTitle())
                         .itemImageURL(orderItem.getItem().getTitleImageUrl())
