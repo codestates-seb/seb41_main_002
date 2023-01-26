@@ -18,15 +18,12 @@ public class Subscribe extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long subscribeId;
 
-    @ColumnDefault("false")
-    private Boolean isSubscribed;
-    @ColumnDefault("0")
-    private Integer sampleCount;
+    private Boolean isSubscribed = false;
+    private Integer sampleCount = 0;
     private LocalDateTime subscribedDate;
-    @ColumnDefault("0")
-    private Integer totalDeliveryDiscount;
-    @ColumnDefault("0")
-    private Integer reserveProfit;
+    private Integer totalDeliveryDiscount = 0;
+    private Integer reserveProfit = 0;
+
     @OneToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;

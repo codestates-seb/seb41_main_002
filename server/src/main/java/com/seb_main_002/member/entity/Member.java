@@ -7,16 +7,12 @@ import com.seb_main_002.order.entity.Order;
 import com.seb_main_002.review.entity.Review;
 import com.seb_main_002.subscribe.entity.Subscribe;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Getter
 @Setter
@@ -48,8 +44,8 @@ public class Member extends Auditable {
 
     @ElementCollection
     private List<String> tagList = new ArrayList<>();
-    @ColumnDefault("0")
-    private Integer memberReserve;
+
+    private Integer memberReserve = 0;
 
     @OneToMany(mappedBy = "member")
     private List<Review> reviews = new ArrayList<>();
