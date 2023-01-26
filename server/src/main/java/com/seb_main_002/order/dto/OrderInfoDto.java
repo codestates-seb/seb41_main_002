@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -12,9 +15,12 @@ import lombok.Setter;
 public class OrderInfoDto {
     private Boolean isPrimary;
 
+    @Positive
     private Long addressId;
 
+    @Positive
     private Integer itemsTotalPrice;
 
+    @Positive
     private Integer usedReserve;
 }
