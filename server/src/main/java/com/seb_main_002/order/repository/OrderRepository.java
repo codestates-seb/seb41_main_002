@@ -12,9 +12,6 @@ import java.util.Optional;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    @Query(value = "SELECT o.* FROM orders AS o JOIN order_item AS oi ON o.order_id WHERE o.member_id = :memberId AND oi.item_id = :itemId", nativeQuery = true)
-    List<Order> findOrdersByMemberIdAndItemId(Long memberId, Long itemId);
-
-    @Query(value = "SELECT oi.* FROM order_items AS oi JOIN orders AS o ON oi.order_id WHERE o.member_id = :memberId AND oi.order_item_id = :orderItemId", nativeQuery = true)
-    Optional<OrderItem> findOrderItemByMemberIdAndOrderItemId(Long memberId, Long orderItemId);
+    @Query(value = "SELECT order_id FROM order_item WHERE order_item_id = :orderItemId", nativeQuery = true)
+    Optional<Long> findOrderIdByOrderItemId(Long orderItemId);
 }
