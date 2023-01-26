@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ReviewPostDto {
+    private Long orderItemId;
+
     private Long itemId;
 
     private Long memberId;

@@ -31,7 +31,9 @@ public class ReviewController {
 
     @PostMapping
     public ResponseEntity postReview(@RequestBody ReviewPostDto reviewPostDto) {
-        reviewService.createReview(mapper.reviewPostDtoToReview(reviewPostDto));
+        Long orderItemId = reviewPostDto.getOrderItemId();
+
+        reviewService.createReview(mapper.reviewPostDtoToReview(reviewPostDto), orderItemId);
 
         return new ResponseEntity<> (HttpStatus.OK);
     }
