@@ -24,7 +24,7 @@ public class Subscribe extends Auditable {
     private Integer totalDeliveryDiscount = 0;
     private Integer reserveProfit = 0;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 

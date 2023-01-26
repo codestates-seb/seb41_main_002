@@ -16,11 +16,11 @@ public class CartItem extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartItemId;
 
-    @ManyToOne
+    @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "CART_ID")
     private Cart cart;
 
-    @ManyToOne
+    @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "ITEM_ID")
     private Item item;
 
