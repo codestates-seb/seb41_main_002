@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getItemInfo, reviewPost } from "../API/Review";
+import { getItemInfo, reviewPost, reviewTextType } from "../API/Review";
 import "./Style/review.css";
 import { ItemInfoType, reviewType } from "../API/Review";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { SettingType, Rating } from "../Components/Commons/Rating";
 import { SkinTag } from "../Components/Commons/TypeBadge";
-import TextEdit from "../Components/Review/TextEdit";
 
 const Review = () => {
-
   const [itemInfo, setItemInfo] = useState<ItemInfoType>({
     itemTitle: "",
     categoryKRName: "",
@@ -17,9 +15,10 @@ const Review = () => {
     memberTagsList: ["지성", "미백"],
   });
 
-  const [reviewTitle, setReviewTitle] = useState<string>("");
-
-  const [reviewContent, setReviewContent] = useState("");
+  const [reviewText, setReviewText] = useState<reviewTextType>({
+    reviewTitle: "",
+    reviewContent: "",
+  });
 
   const ratingSetting: SettingType = {
     ratingEdit: true,
@@ -35,10 +34,9 @@ const Review = () => {
   const memberId: number = Number(sessionStorage.getItem("memberId"));
 
   useEffect(() => {
-    console.log(itemId);
-    // getItemInfo(itemId).then((res) => {
-    //   setItemInfo(res);
-    // });
+    getItemInfo(itemId).then((res) => {
+      setItemInfo(res);
+    });
   }, []);
 
   const reviewWrite = () => {
@@ -47,17 +45,20 @@ const Review = () => {
       itemId: Number(itemId),
       memberId: memberId,
       reviewRating: starRating,
-      reviewTitle: reviewTitle,
-      reviewContent: reviewContent,
+      reviewTitle: reviewText.reviewTitle,
+      reviewContent: reviewText.reviewContent,
     };
     console.log(review);
-    reviewPost(review).then(res => {
-      console.log('리뷰 작성 완료');
+    reviewPost(review).then((res) => {
+      console.log("리뷰 작성 완료");
     });
   };
 
-  const onReviewTextHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setReviewTitle(e.target.value);
+  const onReviewTextHandler = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { value, name } = e.target;
+    setReviewText({ ...reviewText, [name]: value });
   };
 
   return (
@@ -99,18 +100,22 @@ const Review = () => {
             type="text"
             className="textBox"
             name="reviewTitle"
-            value={reviewTitle}
+            value={reviewText.reviewTitle}
             onChange={onReviewTextHandler}
+            autoComplete="off"
           />
         </div>
       </div>
       <div className="Review_Contents">
         <h2>내용</h2>
         <div className="Review_TextBox">
-          <TextEdit setReviewContent ={setReviewContent}/>
+          <textarea
+            name="reviewContent"
+            value={reviewText.reviewContent}
+            onChange={onReviewTextHandler}
+          />
         </div>
       </div>
-
       <div className="Review_Submit">
         <button onClick={reviewWrite}>Submit</button>
         <button onClick={() => navigate(-1)}>Cancel</button>

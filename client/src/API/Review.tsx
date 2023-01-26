@@ -9,14 +9,16 @@ export interface ItemInfoType {
   tagList: string[];
   memberTagsList: string[];
 }
+export interface reviewTextType {
+  reviewTitle: string;
+  reviewContent: string;
+}
 
-export interface reviewType {
+export interface reviewType extends reviewTextType{
   orderItemId: number;
   itemId: number;
   memberId: number;
   reviewRating: number;
-  reviewTitle: string;
-  reviewContent: string;
 }
 
 export const getItemInfo = async (itemId: string) => {
