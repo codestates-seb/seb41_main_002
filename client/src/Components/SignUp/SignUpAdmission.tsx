@@ -1,10 +1,9 @@
 import { signUp } from "../../API/SignUp";
 import { Dispatch, SetStateAction } from "react";
-import "../Style/signUp.css";
-import { useNavigate } from "react-router-dom";
 import { MemberType } from "../../API/SignUp";
-
-
+import { useAppDispatch } from "../../Store/hooks";
+import { asyncLogin, MemberInputType } from "../../Store/slices/userSlice";
+import "../Style/signUp.css";
 
 const SignUpAdmission = ({
   Member,
@@ -13,11 +12,19 @@ const SignUpAdmission = ({
   Member: MemberType;
   setSignUpModalState: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const memberSignUp = () => {
     signUp(Member).then((res) => {
-      setSignUpModalState(false);
-      navigate('/');
+      console.log(res);
+      if (res !== undefined) {
+        const memberInfo: MemberInputType = {
+          accountId: res.accountId,
+          password: res.password,
+        };
+        setSignUpModalState(false);
+        dispatch(asyncLogin(memberInfo));
+      }
     });
   };
 

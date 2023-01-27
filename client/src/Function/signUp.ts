@@ -55,11 +55,11 @@ export const onIdDoubleCheck = async (
   setModalState: Dispatch<SetStateAction<boolean>>
 ) => {
   let result = false;
-  if (Member.accountID === "") {
+  if (Member.accountId === "") {
     setMessage("아이디를 입력하세요.");
     setModalState(true);
   } else {
-    await doubleCheck(Member.accountID).then((res) => {
+    await doubleCheck(Member.accountId).then((res) => {
       if (res) {
         setMessage("사용 가능한 아이디입니다.");
         setModalState(true);

@@ -1,8 +1,9 @@
 import dummyData from "./../data/HomeData.json";
 import styled from "styled-components";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Style/home.css";
+import { getHomeData, HomeDataType } from "../API/Home/HomeAPI";
 
 const HeroImage = styled.div<{ bgUrl: string }>`
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
@@ -52,33 +53,47 @@ const TopSalesContent = styled.div<{ bgUrl: string }>`
 `;
 
 export default function Home() {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [homeData, setHomeData] = useState<HomeDataType>();
   const [xPos, setXPos] = useState(0);
   const [carouselStyleToSlide, setCarouselStyleToSlide] = useState({
     transform: `translateX(${xPos}px)`,
   });
 
   useEffect(() => {
+    try {
+      getHomeData().then((res) => {
+        setHomeData(res);
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+  useEffect(() => {
     setCarouselStyleToSlide({ transform: `translateX(${xPos}px)` });
   }, [xPos]);
 
   const slideCarousel = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const carouselWidth = carouselRef.current?.clientWidth as number;
     const arrowButton: HTMLButtonElement = event.currentTarget;
-    const maxXPos: number = -1000 * (dummyData.eventsInfo.length - 1);
+    const maxXPos: number = -carouselWidth * (dummyData.eventsInfo.length - 1);
 
     if (arrowButton.name === "left" && xPos === 0) {
       setXPos(maxXPos);
     } else if (arrowButton.name === "left" && xPos !== 0) {
-      setXPos(xPos + 1000);
+      setXPos(xPos + carouselWidth);
     } else if (arrowButton.name === "right" && xPos === maxXPos) {
       setXPos(0);
     } else if (arrowButton.name === "right" && xPos > maxXPos) {
-      setXPos(xPos - 1000);
+      setXPos(xPos - carouselWidth);
     }
   };
 
   return (
     <div className="Home_Container">
-      <HeroImage bgUrl={dummyData.bannerImageUrl}>
+      {/* 현재 이미지가 없어서 dummyData 활용, 이후 이미지 추가 시 해당 데이터는 삭제 (get 요청은 정상적으로 작동 중이고 데이터가 잘 들어오는지 확인 완료) */}
+      <HeroImage bgUrl={dummyData?.bannerImageUrl as string}>
         <div className="Hero_Text">
           <h1 className="Hero_Text_Gradient">남성 전용 화장품</h1>
           <p className="Hero_Text_Gradient">
@@ -94,15 +109,16 @@ export default function Home() {
           ◀
         </button>
         <div className="Events_Carousel">
-          {dummyData.eventsInfo.map((a) => {
+          {dummyData?.eventsInfo.map((a, idx) => {
             return (
               <CarouselSlide
                 bgUrl={a.eventImageURL}
                 key={`slide${a.eventId}`}
                 style={carouselStyleToSlide}
+                ref={carouselRef}
               >
                 <div className="Event_Number_Text">
-                  {a.eventId} / {dummyData.eventsInfo.length}
+                  {idx + 1} / {dummyData.eventsInfo.length}
                 </div>
                 <div className="Event_Caption_Text">
                   <Link to="/events/:eventId">
@@ -119,7 +135,7 @@ export default function Home() {
         </button>
       </div>
       <div className="Top_Sales_Banner">
-        {dummyData.topRankBanners.map((a, idx) => {
+        {homeData?.topRankBanners.map((a, idx) => {
           return (
             <Link
               to="/items-top-list"
