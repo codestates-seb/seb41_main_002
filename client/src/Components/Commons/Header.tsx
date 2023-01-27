@@ -1,9 +1,10 @@
 import CartIcon from "../../Icons/CartIcon";
 import UserIcon from "../../Icons/UserIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./../Style/header.css";
 import CustomButton from "./Buttons";
+import { kakaoRegularPayment } from "../../API/SubscriptionAPI";
 
 export default function Header() {
   const [isDropdownClicked, setIsDropdownClicked] = useState(false);
@@ -13,6 +14,40 @@ export default function Header() {
   const toggleDropdown = () => {
     setIsDropdownClicked(!isDropdownClicked);
   };
+
+  useEffect(() => {
+    const regularPaymentTime = sessionStorage.getItem(
+      "regularPayment"
+    ) as string;
+    if (regularPaymentTime) {
+      const nowDate = new Date();
+      const setTime =
+        nowDate.getTime() - new Date(regularPaymentTime).getTime();
+      const timeCalculation = (10 - setTime / 1000) * 1000;
+
+      if (timeCalculation >= 0) {
+        setTimeout(function () {
+          kakaoRegularPayment();
+
+          setInterval(function () {
+            kakaoRegularPayment();
+          }, 10000);
+
+        }, timeCalculation);
+      } else {
+        const Calculation =
+          10000 - Math.floor(((-timeCalculation / 1000) % 10) * 1000);
+        setTimeout(function () {
+          kakaoRegularPayment();
+
+          setInterval(function () {
+            kakaoRegularPayment();
+          }, 10000);
+          
+        }, Calculation);
+      }
+    }
+  }, []);
 
   return (
     <header>
