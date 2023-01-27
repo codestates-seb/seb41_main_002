@@ -10,6 +10,7 @@ import {
 } from "../Function/signUp";
 import { MemberType } from "../API/SignUp";
 import "./Style/memberAccess.css";
+import AccessMenu from "../Components/SignUp/AccessMenu";
 
 const SignUp = () => {
   //회원가입 정보
@@ -109,16 +110,7 @@ const SignUp = () => {
           element={<div className="Modal_Text">{message}</div>}
         />
       ) : null}
-      <ul className="Member_Access_Menu">
-        <li>
-          <Link to={"/signUp"}>회원가입</Link>
-        </li>
-        <li>
-          <Link to={"/login"}>로그인</Link>
-        </li>
-        <li>아이디 찾기</li>
-        <li>비밀번호 찾기</li>
-      </ul>
+      <AccessMenu/>
       <ul className="Member_Access_Contents">
         <li>회원가입</li>
         <li>
