@@ -22,7 +22,16 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 73vh;
+  height: 100%;
+  background-color: white;
+  border: 1px solid black;
+}
+
+.Empty_List_Container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
   background-color: white;
   border: 1px solid black;
 }
@@ -174,7 +183,6 @@
 .Cart_Product_Delete {
   width: 139.9px;
   background-color: var(--gray);
-  height: 100%;
   border-left: 1px solid black;
   display: flex;
   justify-content: center;
@@ -185,4 +193,16 @@
 .Shopping_List_Container {
   display: flex;
   flex-direction: column;
+}
+
+.Empty_List{
+  color: black;
+  margin-top: 30px;
+  font-size: 40px;
+  justify-content: center;
+  display: flex;
+}
+
+.Empty_List > a{
+  color: pink;
 }

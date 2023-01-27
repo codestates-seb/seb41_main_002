@@ -79,7 +79,7 @@ export default function ShoppingCart() {
           )}
         </div>
       </div>
-      <div className="Cart_List_Container">
+      <div className={cartData?.cart[0] !== undefined ? "Cart_List_Container" : "Empty_List_Container"}>
         <div className="List_Category_Container">
           <div className="All_Check_Section">
             <div className="Cart_Item_Id">제품번호</div>
@@ -110,12 +110,12 @@ export default function ShoppingCart() {
           )}
         </div>
         <ul className="Shopping_List_Container">
-          <CartItemList
+          {cartData?.cart[0] !== undefined ?           <CartItemList
             cartData={cartData}
             accessToken={accessToken}
             setRender={setRender}
             render={render}
-          />
+          /> : <div className="Empty_List">제품이 존재하지 않습니다,<a className="List_Navigate" href="/items-list/all">여기</a>를 클릭해서 상품을 구경하세요</div>}
         </ul>
       </div>
       <div className="Price_Info_Container">
