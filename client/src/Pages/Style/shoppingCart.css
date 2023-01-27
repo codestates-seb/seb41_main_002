@@ -179,6 +179,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .Shopping_List_Container {

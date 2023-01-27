@@ -1,10 +1,6 @@
 import CustomButton from "../Commons/Buttons";
-import {
-  allDeleteProduct,
-  deleteProduct,
-} from "../../API/ShoppingCart/deleteProduct";
+import { deleteProduct } from "../../API/ShoppingCart/deleteProduct";
 import "./Style/cartItemList.css";
-import { useEffect, useState } from "react";
 
 interface Props {
   cartData: any;

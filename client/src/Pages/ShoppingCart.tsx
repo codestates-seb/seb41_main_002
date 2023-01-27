@@ -2,10 +2,11 @@ import styled from "styled-components";
 import CustomButton from "../Components/Commons/Buttons";
 import { useEffect, useState } from "react";
 import { getShoppingCart } from "../API/ShoppingCart/getShoppingCart";
-import "./Style/shoppingCart.css";
+import { allDeleteProduct } from "../API/ShoppingCart/deleteProduct";
 import { CartDataType } from "../API/ShoppingCart/getShoppingCart";
 import { useNavigate } from "react-router-dom";
 import CartItemList from "../Components/ShoppingCart/CartItemList";
+import "./Style/shoppingCart.css";
 
 const BenefitContents = styled.span<{ marginLeft: string }>`
   color: black;
@@ -31,9 +32,12 @@ export default function ShoppingCart() {
       return el.itemTotalPrice;
     });
 
-  const totalResult = resultArr?.reduce((acc, cur) => {
-    return acc + cur;
-  });
+  const totalResult =
+    resultArr && resultArr?.length !== 0
+      ? resultArr?.reduce((acc, cur) => {
+          return acc + cur;
+        })
+      : 0;
 
   const deliveryTotalPrice = (totalResult as number) + 3000;
   const subscribeTotalPrice = (totalResult as number) + 2000;
@@ -45,6 +49,7 @@ export default function ShoppingCart() {
   useEffect(() => {
     callCartData();
   }, []);
+  console.log(cartData?.cart);
   return (
     <div className="Shopping_Cart_Container">
       <div className="Member_Benefits_Info">
@@ -76,15 +81,33 @@ export default function ShoppingCart() {
       </div>
       <div className="Cart_List_Container">
         <div className="List_Category_Container">
-        <div className="All_Check_Section">
-          <div className="Cart_Item_Id">제품번호</div>
-          <div className="Cart_Product_Info">제품정보</div>
-          <div className="Count_Price_Container">
-            <div className="Cart_Product_Count">수량</div>
-            <div className="Cart_Product_Price">제품가격</div>
+          <div className="All_Check_Section">
+            <div className="Cart_Item_Id">제품번호</div>
+            <div className="Cart_Product_Info">제품정보</div>
+            <div className="Count_Price_Container">
+              <div className="Cart_Product_Count">수량</div>
+              <div className="Cart_Product_Price">제품가격</div>
+            </div>
           </div>
-        </div>
-          <div className="Cart_Product_Delete">삭제</div>
+          {cartData?.cart[0] !== undefined ? (
+            <div
+              className="Cart_Product_Delete"
+              onClick={() => {
+                allDeleteProduct(accessToken);
+              }}
+            >
+              전체삭제
+            </div>
+          ) : (
+            <div
+              className="Cart_Product_Delete"
+              onClick={() => {
+                alert("삭제할 품목이 없습니다 🐰");
+              }}
+            >
+              전체삭제
+            </div>
+          )}
         </div>
         <ul className="Shopping_List_Container">
           <CartItemList
@@ -99,7 +122,11 @@ export default function ShoppingCart() {
         <span>제품가격: {totalResult}원</span>
         <span> + 배송비 3,000원</span>
         {cartData?.isSubscribed ? <span> - 구독 1,000원</span> : null}
-        {cartData?.isSubscribed ? <span> = 총 {subscribeTotalPrice}원</span> : <span> = 총 {deliveryTotalPrice}원</span>}
+        {cartData?.isSubscribed ? (
+          <span> = 총 {subscribeTotalPrice}원</span>
+        ) : (
+          <span> = 총 {deliveryTotalPrice}원</span>
+        )}
         <div className="Cart_Payment_Button">
           <button>결제하기</button>
         </div>
