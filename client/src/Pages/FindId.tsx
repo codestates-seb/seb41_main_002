@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { findId } from "../API/FindIdPw";
 import "./Style/memberAccess.css";
+import AccessMenu from "../Components/SignUp/AccessMenu";
 
 const FindId = () => {
   const [modalState, setModalState] = useState(false);
@@ -29,20 +30,7 @@ const FindId = () => {
           }
         />
       ) : null}
-      <ul className="Member_Access_Menu">
-        <li>
-          <Link to={"/signUp"}>회원가입</Link>
-        </li>
-        <li>
-          <Link to={"/login"}>로그인</Link>
-        </li>
-        <li>
-          <Link to={"/findId"}>아이디 찾기</Link>
-        </li>
-        <li>
-          <Link to={"/findPw"}>비밀번호 찾기</Link>
-        </li>
-      </ul>
+      <AccessMenu/>
       <ul className="Member_Access_Contents">
         <li>아이디 찾기</li>
         <li>
