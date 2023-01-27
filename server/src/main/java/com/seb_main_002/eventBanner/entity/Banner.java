@@ -1,4 +1,4 @@
-package com.seb_main_002.eventImage.entity;
+package com.seb_main_002.eventBanner.entity;
 
 import com.seb_main_002.audit.Auditable;
 import lombok.*;
@@ -19,6 +19,5 @@ public class Banner extends Auditable {
     private Long bannerId;
 
     private String bannerImageUrl;
-
 
 }
