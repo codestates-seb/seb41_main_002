@@ -17,10 +17,12 @@ interface Props {
 
 export default function TopListCategoryTab(props: Props) {
   const [activateTag, setActivateTage] = useState(0);
+
   interface Category {
     categoryENName: string;
     categoryKRName: string;
   }
+
   const categoryTitle: Array<Category> = [
     {
       categoryKRName: "전체",
