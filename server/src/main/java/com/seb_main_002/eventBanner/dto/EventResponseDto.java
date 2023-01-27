@@ -1,4 +1,4 @@
-package com.seb_main_002.eventImage.dto;
+package com.seb_main_002.eventBanner.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -6,11 +6,15 @@ import lombok.Getter;
 @Builder
 @Getter
 public class EventResponseDto{
+    private Long eventId;
 
-    Long eventId;
-    String title;
-    String content;
-    String eventImageURL;
-    String createdAt;
-    String endAt;
+    private String title;
+
+    private String content;
+
+    private String eventImageURL;
+
+    private String createdAt;
+
+    private String endAt;
 }
