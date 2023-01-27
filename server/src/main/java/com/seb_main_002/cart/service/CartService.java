@@ -43,19 +43,19 @@ public class CartService {
     public void updateCartItemCount(long memberId, long cartItemId, int itemCountChange){
         //변화감지를 통한 자동 db변경
         Member member = findVerifiedMember(memberId);
-
         Cart cart= member.getCart();
+        Integer itemCount;
 
         Optional<CartItem> optionalCartItem = cart.getCartItems().stream()
                 .filter(ci -> ci.getCartItemId() == cartItemId).findAny();
 
         CartItem cartItem = optionalCartItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.CART_ITEM_NOT_FOUND));
 
+        itemCount = cartItem.getItemCount() + itemCountChange;
+        if(itemCount < 1) itemCount = 1;
 
-
-        cartItem.setItemCount(cartItem.getItemCount() + itemCountChange);
+        cartItem.setItemCount(itemCount);
         cartItem.setItemTotalPrice(cartItem.getItem().getPrice() * cartItem.getItemCount());
-
     }
 
 
