@@ -5,6 +5,7 @@ import com.seb_main_002.exception.ExceptionCode;
 import com.seb_main_002.member.dto.MemberMailRequestDto;
 import com.seb_main_002.member.dto.MemberPatchDto;
 import com.seb_main_002.member.dto.MemberPostDto;
+import com.seb_main_002.member.dto.SIDResponseDto;
 import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.member.mapper.MemberMapper;
 import com.seb_main_002.member.repository.MemberRepository;
@@ -38,10 +39,17 @@ public class MemberController {
     public ResponseEntity subscribe(@PathVariable("memberId") Long memberId,
                                     @Valid @RequestBody MemberPatchDto requestBody) {
         Boolean isSubscribed = requestBody.getIsSubscribed();
-        memberService.updateSubscribe(memberId, isSubscribed);
+        String SID = requestBody.getSID();
+        memberService.updateSubscribe(memberId, isSubscribed, SID);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/members/{memberId}/subscribe")
+    public ResponseEntity getSID(@PathVariable("memberId") Long memberId){
+        Member member = memberService.findMember(memberId);
+        SIDResponseDto response = new SIDResponseDto(member.getSubscribe().getSID());
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
     @GetMapping("/members/{memberId}")
     public ResponseEntity getMember(@PathVariable("memberId") Long memberId) {
         Member member = memberService.findMember(memberId);
