@@ -7,8 +7,10 @@ const StyledButton = styled.button<{
   padding: string;
   fontsize?: string;
   border?: string;
+  height?: string;
 }>`
   width: ${(props) => props.width};
+  height: ${(props) => (props.height ? props.height : "100%")};
   color: ${(props) => props.fontColor};
   background-color: ${(props) => props.bgColor};
   padding: ${(props) => props.padding};
@@ -25,6 +27,7 @@ interface ButtonType {
   padding: string;
   type?: "button" | "submit" | "reset";
   fontsize?: string;
+  height?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   border?: string;
   buttonId?: string;
@@ -43,6 +46,7 @@ export default function CustomButton({
   border,
   buttonId,
   idx,
+  height,
 }: ButtonType) {
   return (
     <StyledButton
@@ -56,6 +60,7 @@ export default function CustomButton({
       border={border}
       id={buttonId}
       name={idx}
+      height={height}
     >
       {content}
     </StyledButton>

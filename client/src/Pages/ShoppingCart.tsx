@@ -1,6 +1,15 @@
-import "./Style/shoppingCart.css";
 import styled from "styled-components";
-import OrderedListItem from "../Components/Commons/OrderedListItem";
+import CustomButton from "../Components/Commons/Buttons";
+import { useEffect, useState } from "react";
+import {
+  getShoppingCart,
+  CartDataType,
+} from "../API/ShoppingCart/getShoppingCart";
+import { allDeleteProduct } from "../API/ShoppingCart/deleteProduct";
+import { useNavigate } from "react-router-dom";
+import CartItemList from "../Components/ShoppingCart/CartItemList";
+import { LocalType } from "../Function/payment";
+import "./Style/shoppingCart.css";
 
 const BenefitContents = styled.span<{ marginLeft: string }>`
   color: black;
@@ -9,97 +18,155 @@ const BenefitContents = styled.span<{ marginLeft: string }>`
 `;
 
 export default function ShoppingCart() {
-  // 데이터가 잘 들어가는지 확인하기 위한 더미데이터 => 추후 삭제 예정입니다.
-  // 데이터의 내용은 Checkout.tsx의 items와 동일합니다.
-  interface ItemInterface {
-    itemId: number;
-    itemImageURL: string;
-    itemTitle: string;
-    itemTotalPrice: number;
-    count: number;
-  }
+  const [cartData, setCartData] = useState<CartDataType | null>(null);
+  const [render, setRender] = useState(false);
+  const navigate = useNavigate();
+  const callCartData = async () => {
+    const result = await getShoppingCart(accessToken as string);
+    setCartData(result);
+  };
 
-  const items: ItemInterface[] = [
-    {
-      itemId: 1,
-      itemImageURL: "https://picsum.photos/75?random=1",
-      itemTitle: "어머 너무 이뻐요 앰플",
-      itemTotalPrice: 30000,
-      count: 1,
-    },
-    {
-      itemId: 2,
-      itemImageURL: "https://picsum.photos/75?random=2",
-      itemTitle: "어머 너무 촉촉해요 앰플",
-      itemTotalPrice: 20000,
-      count: 2,
-    },
-  ];
+  const pushProductData = () => {
+    const localProductArr: LocalType[] = [];
+    cartData &&
+      cartData.cart.map((product) => {
+        return localProductArr.push({
+          itemId: product.itemId,
+          itemTitle: product.itemTitle,
+          itemImageURL: product.titleImageURL,
+          itemTotalPrice: product.itemTotalPrice,
+          count: product.itemCount,
+        });
+      });
+    const arrString = JSON.stringify(localProductArr);
+    console.log(arrString);
+    window.sessionStorage.setItem("itemList", arrString);
+  };
+  const itemPriceArr =
+    cartData?.cart &&
+    cartData?.cart.map((el) => {
+      return el.itemTotalPrice;
+    });
 
+  const totalResult =
+    itemPriceArr && itemPriceArr?.length !== 0
+      ? itemPriceArr?.reduce((acc, cur) => {
+          return acc + cur;
+        })
+      : 0;
+  const deliveryTotalPrice = (totalResult as number) + 3000;
+  const subscribeTotalPrice = (totalResult as number) + 2000;
+  const accessToken = sessionStorage.getItem("memberId");
+  useEffect(() => {
+    callCartData();
+  }, []);
   return (
     <div className="Shopping_Cart_Container">
       <div className="Member_Benefits_Info">
         <div className="Benefits_Container">
           <BenefitContents marginLeft="0px">
-            혜택정보 | 적립금: 30000원
+            혜택정보 | 적립금: {cartData?.memberReserve}원
           </BenefitContents>
-          <BenefitContents marginLeft="15px">
-            프리미엄 구독 진행중!
-          </BenefitContents>
+          {cartData?.isSubscribed ? (
+            <BenefitContents marginLeft="15px">
+              프리미엄 구독 진행중!
+            </BenefitContents>
+          ) : (
+            <>
+              <BenefitContents marginLeft="15px">
+                구독중이 아닙니다
+              </BenefitContents>
+              <CustomButton
+                fontColor="black"
+                fontsize="15px"
+                bgColor="var(--gray)"
+                content="구독하러 가기"
+                width="110px"
+                padding="10px"
+                onClick={() => navigate(`/members/${accessToken}/subscribe`)}
+              />
+            </>
+          )}
         </div>
       </div>
-      <div className="Cart_List_Container">
-        <div className="All_Check_Section">
-          <input type={"checkbox"} />
-          <span className="All_Check">전체선택</span>
+      <div
+        className={
+          cartData?.cart[0] !== undefined
+            ? "Cart_List_Container"
+            : "Empty_List_Container"
+        }
+      >
+        <div className="List_Category_Container">
+          <div className="All_Check_Section">
+            <div className="Cart_Item_Id">제품번호</div>
+            <div className="Cart_Product_Info">제품정보</div>
+            <div className="Count_Price_Container">
+              <div className="Cart_Product_Count">수량</div>
+              <div className="Cart_Product_Price">제품가격</div>
+            </div>
+          </div>
+          {cartData?.cart[0] !== undefined ? (
+            <div
+              className="Cart_Product_Delete"
+              onClick={() => {
+                allDeleteProduct(accessToken);
+              }}
+            >
+              전체삭제
+            </div>
+          ) : (
+            <div
+              className="Cart_Product_Delete"
+              onClick={() => {
+                alert("삭제할 품목이 없습니다 🐰");
+              }}
+            >
+              전체삭제
+            </div>
+          )}
         </div>
-        {/* 추후 map 예정 */}
         <ul className="Shopping_List_Container">
-          <li className="Shopping_List_Contents">
-            <div className="Product_Check">
-              <input type={"checkbox"} /> <span>선택</span>
+          {cartData?.cart[0] !== undefined ? (
+            <CartItemList
+              cartData={cartData}
+              accessToken={accessToken}
+              setRender={setRender}
+              render={render}
+            />
+          ) : (
+            <div className="Empty_List">
+              제품이 존재하지 않습니다,
+              <a className="List_Navigate" href="/items-list/all">
+                여기
+              </a>
+              를 클릭해서 상품을 구경하세요
             </div>
-            <div className="Product_Container">
-              <div className="Product_Info">
-                <img src="" className="List_Product_Image" />
-                <a>
-                  <span className="List_Product_Name">
-                    어머 너무 이뻐요 앰플
-                  </span>
-                </a>
-              </div>
-              <div className="Product_Price_Info">
-                <span className="Product_Count">수량: 1개</span>
-                <span className="Product_Price">가격: 40,000원</span>
-              </div>
-            </div>
-            <div className="Product_Delete">
-              <button className="Cart_Delete_Button">상품 삭제</button>
-            </div>
-          </li>
-          {/* 비교를 위해 기존 li 요소를 유지한 채 새로운 li 요소를 추가했습니다. */}
-          <li className="Shopping_List_Contents">
-            <div className="Product_Check">
-              <input type={"checkbox"} /> <span>선택</span>
-            </div>
-            <div className="Product_Container">
-              <div className="Product_Container">
-                <OrderedListItem item={items[1]} />
-              </div>
-            </div>
-            <div className="Product_Delete">
-              <button className="Cart_Delete_Button">상품 삭제</button>
-            </div>
-          </li>
+          )}
         </ul>
       </div>
       <div className="Price_Info_Container">
-        <span>제품가격: 40,000원</span>
-        <span> + 배송비 4,000원</span>
-        <span> - 구독 2,000원</span>
-        <span> = 총 42,000원</span>
+        <span>제품가격: {totalResult}원</span>
+        <span> + 배송비 3,000원</span>
+        {cartData?.isSubscribed ? <span> - 구독 1,000원</span> : null}
+        {cartData?.isSubscribed ? (
+          <span> = 총 {subscribeTotalPrice}원</span>
+        ) : (
+          <span> = 총 {deliveryTotalPrice}원</span>
+        )}
         <div className="Cart_Payment_Button">
-          <button>결제하기</button>
+          <CustomButton
+            fontsize="13px"
+            fontColor="white"
+            bgColor="var(--dark3)"
+            content="결제하기"
+            width="100%"
+            height="100%"
+            padding="5px"
+            onClick={() => {
+              pushProductData();
+              navigate("/order/check");
+            }}
+          />
         </div>
       </div>
     </div>

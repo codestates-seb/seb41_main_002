@@ -22,18 +22,28 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 73vh;
+  height: 100%;
+  background-color: white;
+  border: 1px solid black;
+}
+
+.Empty_List_Container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
   background-color: white;
   border: 1px solid black;
 }
 
 .All_Check_Section {
-  align-items: center;
-  width: 100%;
+  width: 90%;
+  background-color: var(--gray);
   height: 50px;
-  border: 1px solid black;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--dark3);
 }
 
 .All_Check {
@@ -42,47 +52,34 @@
   font-size: 17px;
 }
 
-.Shopping_List_Container{
+.Shopping_List_Contents {
   display: flex;
-  flex-direction: column;
-}
-
-.Shopping_List_Contents{
-  display: flex;
-  height: 70px;
-  border-left: 1px solid black;
+  height: 80px;
   border-bottom: 1px solid black;
-  border-right: 1px solid black;
 }
 
-.Product_Check{
+.Product_Check {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 10%;
-  background-color: pink;
+  background-color: var(--gray);
   height: 100%;
   border-right: 1px solid black;
 }
 
-.Product_Container{
-  padding: 10px 10px;
+.Product_Container {
   width: 90%;
-  background-color: pink;
+  background-color: var(--gray);
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.Product_Info{
-  display: flex;
-  align-items: center;
-}
-
-.Product_Delete{
+.Product_Delete {
   width: 10%;
-  background-color: pink;
+  background-color: var(--gray);
   height: 100%;
   border-left: 1px solid black;
   display: flex;
@@ -90,33 +87,28 @@
   align-items: center;
 }
 
-.List_Product_Image{
-width: 50px;
-height: 50px;
-background-color: black;
+.List_Product_Image {
+  width: 50px;
+  height: 50px;
+  background-color: black;
 }
 
-.List_Product_Name{
-  font-size: 17px;
-  margin-left: 10px;
-}
-
-.Product_Count{
+.Product_Count {
   font-size: 17px;
   color: black;
   margin-right: 10px;
 }
 
-.Product_Price{
+.Product_Price {
   font-size: 17px;
   color: black;
 }
 
-.Cart_Delete_Button{
-  background-color: none
+.Cart_Delete_Button {
+  background-color: none;
 }
 
-.Price_Info_Container{
+.Price_Info_Container {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -133,11 +125,82 @@ background-color: black;
   margin-right: 10px;
 }
 
-.Cart_Payment_Button{
+.Cart_Payment_Button {
   width: 83.625px;
   height: 100%;
   border-left: 1px solid black;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.Cart_Item_Id {
+  border-right: 1px solid black;
+  height: 100%;
+  width: 99px;
+  align-items: center;
+  justify-content: center;
+  padding-right: 10px;
+  display: flex;
+}
+
+.Cart_Product_Info {
+  display: flex;
+  align-items: center;
+  width: 716.344px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.Count_Price_Container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  border-left: 1px solid black;
+  width: 257.8px;
+}
+.List_Category_Container {
+  display: flex;
+  border-bottom: 1px solid black;
+}
+.Cart_Product_Count {
+  border-right: 1px solid black;
+  height: 100%;
+  width: 204px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Cart_Product_Price {
+  display: flex;
+  justify-content: center;
+  width: 241px;
+}
+
+.Cart_Product_Delete {
+  width: 139.9px;
+  background-color: var(--gray);
+  border-left: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.Shopping_List_Container {
+  display: flex;
+  flex-direction: column;
+}
+
+.Empty_List{
+  color: black;
+  margin-top: 30px;
+  font-size: 40px;
+  justify-content: center;
+  display: flex;
+}
+
+.Empty_List > a{
+  color: pink;
 }

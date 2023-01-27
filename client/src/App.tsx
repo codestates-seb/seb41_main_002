@@ -33,14 +33,14 @@ function App() {
               <Route path="/itemDetail/:itemId" element={<ItemDetail />} />
               <Route path="/" element={<Home />} />
               <Route path="/member/edit" element={<MemberPageEdit />} />
-              <Route path="/items-list" element={<ShoppingList />} />
+              <Route path="/items-list/:categoryENName" element={<ShoppingList />} />
               <Route path="/items-top-list/:categoryENName" element={<ItemsTopList />} />
               <Route
                 path="/members/:memberId/carts"
                 element={<ShoppingCart />}
               />
               <Route path="/checkout" element={<Checkout />} />
-              <Route path="/reviews/:reviewId" element={<Review />} />
+              <Route path="/reviews/item/:itemId" element={<Review />} />
               <Route path="/members/:memberId/subscribe" element={<SubscriptionPage />} />
               <Route path="/events/:eventId" element={<EventDetail />} />
             </Routes>
