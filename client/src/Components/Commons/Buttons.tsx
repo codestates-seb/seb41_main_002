@@ -9,7 +9,7 @@ const StyledButton = styled.button<{
   height?: string
 }>`
   width: ${(props) => props.width};
-  height: ${(props) => props.height};
+  height: ${(props) => props.height ? props.height : "100%"};
   color: ${(props) => props.fontColor};
   background-color: ${(props) => props.bgColor};
   padding: ${(props) => props.padding};
