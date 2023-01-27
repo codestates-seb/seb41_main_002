@@ -16,7 +16,6 @@ interface Props {
 }
 
 export default function TopListCategoryTab(props: Props) {
-  console.log(props.userCustomInfo && props.userCustomInfo.memberTagsList);
   const [activateTag, setActivateTage] = useState(0);
   interface Category {
     categoryENName: string;
@@ -113,7 +112,6 @@ export default function TopListCategoryTab(props: Props) {
         )
       ) : (
         <li>
-          {" "}
           <CustomButton
             fontColor={props.customCheck ? "black" : "white"}
             fontsize={props.customCheck ? "21px" : "17px"}

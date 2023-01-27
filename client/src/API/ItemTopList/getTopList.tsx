@@ -25,13 +25,13 @@ export interface TopProductData {
 export const getTopList = (
   categoryENName: string,
   customCheck: boolean,
-  token: string|null
+  token: string | null
 ): Promise<Array<TopProductData>> => {
   return new Promise(async (resolve) => {
     //추후 타입변경 예정
     let result: any;
     try {
-      if(!token){
+      if (!token) {
         const responseData = await defaultInstance.get(
           `/items/toplist/${categoryENName}?custom=${customCheck}`
         );

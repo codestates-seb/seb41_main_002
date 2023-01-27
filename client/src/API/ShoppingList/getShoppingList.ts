@@ -25,6 +25,7 @@ export const getProductList = (
   option: ParamsType
 ): Promise<Array<ProductData>> => {
   return new Promise((resolve) => {
+    // 해당 API는 추후에 변경예정
     const result: Array<ProductData> = [];
     try {
       // const responseData = await axios.get(`api/v1/items/${categoryENName}&custom=${boolean}&title=${keyword}&page=${page}`)
