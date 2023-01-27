@@ -9,11 +9,11 @@ import {
   updateAddress,
   updateMemberData,
 } from "../API/MemberPageEdit/MemberPageEditAPI";
+import NewAddressModal from "../Components/MemberPageEdit/NewAddressModal";
+import EditAddressModal from "../Components/MemberPageEdit/EditAddressModal";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import NewAddressModal from "../Components/MemeberPageEdit/NewAddressModal";
-import EditAddressModal from "../Components/MemeberPageEdit/EditAddressModal";
 import { subscriptionCalculation } from "../Function/memberEditPage";
 import "./Style/memberPageEdit.css";
 
@@ -30,7 +30,6 @@ const InfoWrapper = styled.div`
   }
 `;
 
-// 이후 리덕스를 활용한 전역 상태 활용 시 삭제
 const memberId = Number(sessionStorage.getItem("memberId"));
 
 export default function MemberPageEdit() {
@@ -77,7 +76,6 @@ export default function MemberPageEdit() {
   useEffect(() => {
     try {
       getMemberData(memberId).then((res) => {
-        // console.log(res); => 해당 코드는 데이터 값의 주기적인 확인을 위해 사용하므로 페이지 구현 완료 시 리팩토링 진행하며 삭제
         setMemberAddressData(res);
         setMemberName(res?.memberName);
         setBirthDate(res?.birthdate);
@@ -181,7 +179,6 @@ export default function MemberPageEdit() {
   };
 
   const removeAddress: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    // 혼란을 방지하기 위해 공용 컴포넌트에서 사용한 속성을 이름에 맞게 할당
     const addressId = Number(e.currentTarget.name);
 
     if (window.confirm("해당 주소지를 삭제하시겠습니까?")) {
@@ -230,6 +227,7 @@ export default function MemberPageEdit() {
                   render={render}
                   setRender={setRender}
                   setIsNewAddressModalOn={setIsNewAddressModalOn}
+                  memberAddressData={memberAddressData as MemberPageDataType}
                 />
               }
             />
@@ -247,6 +245,7 @@ export default function MemberPageEdit() {
                   render={render}
                   setRender={setRender}
                   setIsEditAddressModalOn={setIsEditAddressModalOn}
+                  memberAddressData={memberAddressData as MemberPageDataType}
                 />
               }
             />
@@ -320,7 +319,6 @@ export default function MemberPageEdit() {
               <div className="No_Addresses"> 배송지 없음 </div>
             ) : (
               <div className="Addresses_Container">
-                {/* Address_List_Address, Address_List_Button은 현재 적용되는 CSS가 없지만 이후 디자인이 바뀔 가능성이 있어 class명을 사용해 분류 */}
                 {memberAddressData &&
                   memberAddressData.addressList.map((address, idx) => {
                     return (
@@ -432,7 +430,6 @@ export default function MemberPageEdit() {
                   </select>
                 </div>
               </InfoWrapper>
-              {/* Checkbox_List_Item은 현재 적용되는 CSS가 없지만 이후 디자인이 바뀔 가능성이 있어 class명을 사용해 분류 */}
               <InfoWrapper>
                 <div className="Info_Label">관심 분야</div>
                 <div className="Info_Content">

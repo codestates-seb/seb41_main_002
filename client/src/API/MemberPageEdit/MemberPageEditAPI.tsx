@@ -1,4 +1,4 @@
-import axios from "axios";
+import { authInstance } from "../Core";
 
 export interface AddressType {
   addressId: number;
@@ -45,18 +45,10 @@ interface UpdateMemberDataType {
   tagList: string[];
 }
 
-const BASE_URL = process.env.REACT_APP_BASE_URL as string;
-const accessToken = sessionStorage.getItem("accessToken");
-
 export const getMemberData = async (memberId: number) => {
   try {
-    const response = await axios.get<MemberPageDataType>(
-      `${BASE_URL}/members/edit/${memberId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
+    const response = await authInstance.get<MemberPageDataType>(
+      `/members/edit/${memberId}`
     );
     return response.data;
   } catch (error) {
@@ -66,15 +58,9 @@ export const getMemberData = async (memberId: number) => {
 
 export const addNewAddress = async (newAddressData: newAddressType) => {
   try {
-    await axios
-      .post(`${BASE_URL}/addresses`, newAddressData, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((res) => {
-        console.log("새 주소지 추가 완료");
-      });
+    await authInstance.post(`/addresses`, newAddressData).then((res) => {
+      console.log("새 주소지 추가 완료");
+    });
   } catch (error) {
     console.error(error);
   }
@@ -85,12 +71,8 @@ export const updateAddress = async (
   addressEditData: UpdateAddressDataType
 ) => {
   try {
-    await axios
-      .patch(`${BASE_URL}/addresses/${addressId}`, addressEditData, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
+    await authInstance
+      .patch(`/addresses/${addressId}`, addressEditData)
       .then((res) => {
         console.log("내 정보 수정 완료");
       });
@@ -101,15 +83,9 @@ export const updateAddress = async (
 
 export const deleteAddress = async (addressId: number) => {
   try {
-    await axios
-      .delete(`${BASE_URL}/addresses/${addressId}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((res) => {
-        console.log("해당 주소지 삭제 완료");
-      });
+    await authInstance.delete(`/addresses/${addressId}`).then((res) => {
+      console.log("해당 주소지 삭제 완료");
+    });
   } catch (error) {
     console.error(error);
   }
@@ -120,12 +96,8 @@ export const updateMemberData = async (
   memberEditData: UpdateMemberDataType
 ) => {
   try {
-    await axios
-      .patch(`${BASE_URL}/members/edit/${memberId}`, memberEditData, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
+    await authInstance
+      .patch(`/members/edit/${memberId}`, memberEditData)
       .then((res) => {
         console.log("내 정보 수정 완료");
       });
@@ -138,11 +110,7 @@ export const cancelSubscription = async (memberId: number) => {
   const reqBody = { isSubscribed: false };
 
   try {
-    await axios.patch(`${BASE_URL}/members/${memberId}/subscribe`, reqBody, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    await authInstance.patch(`/members/${memberId}/subscribe`, reqBody);
   } catch (error) {
     console.error(error);
   }

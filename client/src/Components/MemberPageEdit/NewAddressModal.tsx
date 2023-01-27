@@ -1,6 +1,6 @@
 import {
-  AddressType,
-  updateAddress,
+  addNewAddress,
+  MemberPageDataType,
 } from "../../API/MemberPageEdit/MemberPageEditAPI";
 import CustomButton from "../Commons/Buttons";
 import { FormEvent, useEffect, useState } from "react";
@@ -9,41 +9,33 @@ import "./../Style/addressPopup.css";
 
 const memberId = Number(sessionStorage.getItem("memberId"));
 
-export default function EditAddressModal({
-  editingAddress,
+export default function NewAddressModal({
+  currentAddressIndex,
   setModalState,
   render,
   setRender,
-  setIsEditAddressModalOn,
+  setIsNewAddressModalOn,
+  memberAddressData,
 }: {
-  editingAddress: AddressType | undefined;
+  currentAddressIndex: number | undefined;
   setModalState: React.Dispatch<React.SetStateAction<boolean>>;
   render: boolean;
   setRender: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsEditAddressModalOn: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsNewAddressModalOn: React.Dispatch<React.SetStateAction<boolean>>;
+  memberAddressData: MemberPageDataType;
 }) {
   const [isSearchOn, setIsSearchOn] = useState(false);
   const [userAddress, setUserAddress] = useState({
-    recipient: "심민섭",
-    addressTitle: editingAddress?.addressTitle as string,
-    phoneNumber: "010-5063-5505",
+    recipient: memberAddressData.memberName,
+    addressTitle: "",
+    phoneNumber: memberAddressData.phoneNumber,
   });
   const [isPrimary, setIsPrimary] = useState(
-    editingAddress?.isPrimary as boolean
+    currentAddressIndex === 0 ? true : false
   );
-  const [address, setAddress] = useState(
-    editingAddress?.address.slice(
-      0,
-      editingAddress?.address.indexOf(")") + 1
-    ) as string
-  );
-  const [zipcode, setZipcode] = useState(editingAddress?.zipcode as string);
-  const [detailedAddress, setDetailedAddress] = useState(
-    editingAddress?.address.slice(
-      editingAddress?.address.indexOf(")") + 1,
-      editingAddress?.address.length
-    ) as string
-  );
+  const [address, setAddress] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [detailedAddress, setDetailedAddress] = useState("");
   const [combinedAddress, setCombinedAddres] = useState("");
 
   useEffect(() => {
@@ -89,29 +81,19 @@ export default function EditAddressModal({
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // 이후 api 명세 및 데이터 변경 시 해당 데이터 활용
-    // const newAddressInfo = {
-    //   addressId: newAddressId,
-    //   isPrimary: isPrimary,
-    //   recipient: userAddress.recipient,
-    //   addressTitle: userAddress.addressTitle,
-    //   zipcode: zipcode,
-    //   address: combinedAddress,
-    //   phoneNumber: userAddress.phoneNumber,
-    // };
-
-    const updateAddressInfo = {
+    const newAddressInfo = {
+      memberId: memberId,
       isPrimary: isPrimary,
       addressTitle: userAddress.addressTitle,
       zipcode: zipcode,
       address: combinedAddress,
     };
 
-    if (window.confirm("주소 수정을 완료하시겠습니까?")) {
+    if (window.confirm("현재 주소를 추가하시겠습니까?")) {
       setModalState(false);
-      setIsEditAddressModalOn(false);
-      updateAddress(editingAddress?.addressId as number, updateAddressInfo);
-      alert("수정 완료");
+      setIsNewAddressModalOn(false);
+      addNewAddress(newAddressInfo);
+      alert("추가 완료");
       setRender(!render);
     }
   };
@@ -132,6 +114,7 @@ export default function EditAddressModal({
               name="addressTitle"
               className="Form_Input Address_Type_Field"
               onChange={userAddressHandler}
+              required
             />
           </div>
           <div className="Modal_Field">
@@ -141,7 +124,7 @@ export default function EditAddressModal({
               value={userAddress.recipient}
               name="recipient"
               className="Form_Input Address_Type_Field"
-              onChange={userAddressHandler}
+              disabled
             />
           </div>
           <div className="Modal_Field">
@@ -191,7 +174,7 @@ export default function EditAddressModal({
                 .replace(/(\-{1,2})$/g, "")}
               name="phoneNumber"
               className="Form_Input Address_Type_Field"
-              onChange={userAddressHandler}
+              disabled
             />
           </div>
           <div className="Modal_Form_Buttons">

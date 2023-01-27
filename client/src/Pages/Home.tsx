@@ -3,7 +3,7 @@ import styled from "styled-components";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Style/home.css";
-import { getHomeData, HomeDataType } from "../API/HomeAPI";
+import { getHomeData, HomeDataType } from "../API/Home/HomeAPI";
 
 const HeroImage = styled.div<{ bgUrl: string }>`
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { defaultInstance } from "../Core";
 
 interface EventDataType {
   eventId: number;
@@ -20,16 +21,9 @@ export interface HomeDataType {
   topRankBanners: TopRankType[];
 }
 
-const BASE_URL = process.env.REACT_APP_BASE_URL as string;
-const accessToken = sessionStorage.getItem("accessToken");
-
 export const getHomeData = async () => {
   try {
-    const response = await axios.get<HomeDataType>(`${BASE_URL}/home`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await defaultInstance.get<HomeDataType>(`/home`);
     return response.data;
   } catch (error) {
     console.error(error);
