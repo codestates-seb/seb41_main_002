@@ -36,7 +36,6 @@ export const signUp = async (memberData: MemberType) => {
       ...memberData,
       birthDate: dateChange,
     };
-    console.log(setMemberData);
     let reponse = await defaultInstance.post(`/signup`, setMemberData).then((res) => {
       const memberInfo:MemberInfo = {
         accountId: memberData.accountId,
