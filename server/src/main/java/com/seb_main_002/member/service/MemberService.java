@@ -35,11 +35,10 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
     private final JwtTokenizer jwtTokenizer;
-
     private final RedisService redisService;
     private final JavaMailSender javaMailSender;
     @Transactional
-    public void updateSubscribe(Long memberId, Boolean isSubScribed) {
+    public void updateSubscribe(Long memberId, Boolean isSubScribed, String SID) {
         Member member = verifyMember(memberId);
         Subscribe subscribe = member.getSubscribe();
 
@@ -51,12 +50,14 @@ public class MemberService {
                 subscribe.setReserveProfit(0);
                 subscribe.setTotalDeliveryDiscount(0);
                 subscribe.setSubscribedDate(null);
+                subscribe.setSID(null);
             } else {
                 //구독 신청의 경우
                 subscribe.setIsSubscribed(isSubScribed);
                 Integer sampleCount = subscribe.getSampleCount();
                 subscribe.setSampleCount(sampleCount + 10);
                 subscribe.setSubscribedDate(LocalDateTime.now());
+                subscribe.setSID(SID);
             }
             member.setSubscribe(subscribe);
             memberRepository.save(member);
