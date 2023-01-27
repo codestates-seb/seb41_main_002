@@ -1,8 +1,10 @@
 import Modal from "../Components/Commons/Modal";
-import { onLogin } from "../API/LoginAPI";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../Store/hooks";
+import { asyncLogin } from "../Store/slices/userSlice";
 import "./Style/memberAccess.css";
+import AccessMenu from "../Components/SignUp/AccessMenu";
 
 const Login = () => {
   const [MemberInput, setMemberInput] = useState({
@@ -11,6 +13,7 @@ const Login = () => {
   });
   const [modalState, setModalState] = useState(false);
 
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onMemberInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,15 +21,21 @@ const Login = () => {
     setMemberInput({ ...MemberInput, [name]: value });
   };
 
-  const memberLogin = () => {
-    onLogin(MemberInput).then((res) => {
-      if (res) {
-        navigate("/");
-        window.location.reload();
-      } else {
-        setModalState(true);
-      }
-    });
+  const userLogin = useAppSelector((state) => {
+    return state.user.userLogin;
+  });
+
+  useEffect(() => {
+    if (userLogin === 1) {
+      navigate("/");
+      window.location.reload();
+    } else if (userLogin === 2) {
+      setModalState(true);
+    }
+  }, [userLogin]);
+
+  const memberLogin = async () => {
+    dispatch(asyncLogin(MemberInput));
   };
 
   return (
@@ -40,16 +49,7 @@ const Login = () => {
           }
         />
       ) : null}
-      <ul className="Member_Access_Menu">
-        <li>
-          <Link to={"/signUp"}>회원가입</Link>
-        </li>
-        <li>
-          <Link to={"/login"}>로그인</Link>
-        </li>
-        <li>아이디 찾기</li>
-        <li>비밀번호 찾기</li>
-      </ul>
+      <AccessMenu/>
       <ul className="Member_Access_Contents">
         <li>로그인</li>
         <li>

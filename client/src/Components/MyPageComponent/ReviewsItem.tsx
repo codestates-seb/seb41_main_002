@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import {Rating} from "../Commons/Rating";
+import { Rating, SettingType } from "../Commons/Rating";
 
 interface ReviewType {
   reviewId: number;
@@ -14,11 +14,7 @@ interface ReviewType {
 }
 
 const ReviewsItem = ({ review }: { review: ReviewType }) => {
-  type settingType = {
-    ratingEdit: boolean;
-    ratingSize: number;
-  };
-  const ratingSetting: settingType = {
+  const ratingSetting: SettingType = {
     ratingEdit: false,
     ratingSize: 20,
   };

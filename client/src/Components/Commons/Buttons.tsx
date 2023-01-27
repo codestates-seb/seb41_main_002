@@ -5,14 +5,18 @@ const StyledButton = styled.button<{
   fontColor: string;
   width: string;
   padding: string;
-  fontsize?: string
+  fontsize?: string;
+  border?: string;
+  height?: string;
 }>`
   width: ${(props) => props.width};
+  height: ${(props) => (props.height ? props.height : "100%")};
   color: ${(props) => props.fontColor};
   background-color: ${(props) => props.bgColor};
   padding: ${(props) => props.padding};
+  border: ${(props) => (props.border ? props.border : "1px solid white")};
   border-radius: 5px;
-  font-size: ${(props)=> props.fontsize ? props.fontsize : "17px"};
+  font-size: ${(props) => (props.fontsize ? props.fontsize : "17px")};
 `;
 
 interface ButtonType {
@@ -21,8 +25,13 @@ interface ButtonType {
   content: string;
   width: string;
   padding: string;
+  type?: "button" | "submit" | "reset";
   fontsize?: string;
+  height?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  border?: string;
+  buttonId?: string;
+  idx?: string;
 }
 
 export default function CustomButton({
@@ -32,7 +41,12 @@ export default function CustomButton({
   content,
   width,
   padding,
-  onClick
+  onClick,
+  type,
+  border,
+  buttonId,
+  idx,
+  height,
 }: ButtonType) {
   return (
     <StyledButton
@@ -42,6 +56,11 @@ export default function CustomButton({
       width={width}
       padding={padding}
       onClick={onClick}
+      type={type}
+      border={border}
+      id={buttonId}
+      name={idx}
+      height={height}
     >
       {content}
     </StyledButton>

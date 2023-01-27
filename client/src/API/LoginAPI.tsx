@@ -19,7 +19,10 @@ const JWT_EXPIRY_TIME = 1200 * 1000;
 export const onLogin = async (MemberInput: MemberInputType) => {
   try {
     await axios
-      .post("http://13.209.97.3:8080/api/v1/login", JSON.stringify(MemberInput))
+      .post(
+        "http://13.125.242.34:8080/api/v1/login",
+        JSON.stringify(MemberInput)
+      )
       .then((res) => {
         onLoginSuccess(res.data);
       });
@@ -34,7 +37,7 @@ const onSilentRefresh = (refreshToken: string) => {
   try {
     axios.defaults.headers.common["Authorization"] = `${refreshToken}`;
     axios
-      .get("http://13.209.97.3:8080/api/v1/user/refresh-token")
+      .get("http://13.125.242.34:8080/api/v1/user/refresh-token")
       .then((res) => {
         onLoginSuccess(res.data);
       });

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { defaultInstance } from "./Core";
 
 interface ItemType {
   itemId: number;
@@ -50,14 +51,11 @@ interface GetMemberDataType {
   addressList: GetAddressType[];
 }
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 export const memberData = async (memberId: number) => {
   try {
-    const response = await axios.get<GetMemberDataType>(
-      `${BASE_URL}/members/${memberId}/payment`
+    const response = await defaultInstance.get<GetMemberDataType>(
+      `/members/${memberId}/payment`
     );
-
     return response.data;
   } catch (error) {
     console.error(error);
@@ -66,8 +64,8 @@ export const memberData = async (memberId: number) => {
 
 export const completePayment = async (order: PaymentType) => {
   try {
-    await axios
-      .post(`${BASE_URL}/orders`, order)
+    await defaultInstance
+      .post(`/orders`, order)
       .then((res) => {
         console.log("API 서버 저장 완료");
       });
@@ -78,8 +76,8 @@ export const completePayment = async (order: PaymentType) => {
 
 export const addAddress = async (addresses: AddressType) => {
   try {
-    await axios
-      .post(`${BASE_URL}/addresses`, addresses)
+    await defaultInstance
+      .post(`/addresses`, addresses)
       .then((res) => {
         console.log(res.data);
       });

@@ -2,6 +2,8 @@ import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import Review from "./Pages/Review";
 import SignUp from "./Pages/SignUp";
+import FindId from "./Pages/FindId";
+import FindPw from "./Pages/FindPw";
 import Checkout from "./Pages/Checkout";
 import ItemDetail from "./Pages/ItemDetail";
 import MemberPage from "./Pages/MemberPage";
@@ -17,7 +19,6 @@ import Header from "./Components/Commons/Header";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 
-
 function App() {
   return (
     <>
@@ -29,6 +30,8 @@ function App() {
               <Route path="/payment/complete" element={<CompletePayment/>}/>
               <Route path="/signUp" element={<SignUp />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/findId" element={<FindId/>}/>
+              <Route path="/findPw" element={<FindPw/>}/>
               <Route path="/memberPage/:memberId" element={<MemberPage />} />
               <Route path="/itemDetail/:itemId" element={<ItemDetail />} />
               <Route path="/" element={<Home />} />
@@ -39,8 +42,8 @@ function App() {
                 path="/members/:memberId/carts"
                 element={<ShoppingCart />}
               />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/reviews/:reviewId" element={<Review />} />
+              <Route path="/order/checkout" element={<Checkout />} />
+              <Route path="/reviews/item/:itemId" element={<Review />} />
               <Route path="/members/:memberId/subscribe" element={<SubscriptionPage />} />
               <Route path="/events/:eventId" element={<EventDetail />} />
             </Routes>
