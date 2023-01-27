@@ -12,7 +12,7 @@ const Review = () => {
     categoryKRName: "",
     titleImageURL: "",
     tagList: [],
-    memberTagsList: ["", ""],
+    memberTagsList: [],
   });
 
   const [reviewText, setReviewText] = useState<reviewTextType>({
