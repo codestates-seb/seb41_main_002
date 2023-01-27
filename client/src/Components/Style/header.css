@@ -3,18 +3,64 @@
   border: solid rgb(232, 223, 223) 1px;
   background-color: var(--dark3);
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 }
 
+.Nav_Menu{
+  width: 140px;
+  margin: 0 40px;
+}
+
+.Nav_Btn{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.Nav_Btn input{
+  display: none;
+}
+
+.Nav_Btn input:checked ~ span:nth-child(2){
+  transform: translate(0px, 13px) rotate(45deg);
+}
+
+.Nav_Btn input:checked ~ span:nth-child(3){
+  opacity: 0;
+}
+
+.Nav_Btn input:checked ~ span:nth-child(4){
+  transform: translate(0px, -13px) rotate(-45deg);
+}
+
+.Nav_Btn span{
+  display: block;
+  background-color: white;
+  border: none;
+  height: 4px;
+  width: 100%;
+  border-radius: 5px;
+  opacity: 1;
+  transition: 0.5s;
+}
+
+
+
 .Header_Logo {
+  width: 140px;
   font-size: 35px;
+  text-align: center;
   /* 해당 폰트체는 이후 디자인 과정에서 대치될 예정입니다. */
+  margin: 0 40px;
   font-family: cursive;
 }
 
 .Nav_List {
-  width: 50%;
+  width: 100%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -59,13 +105,21 @@
   border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+.Nav_Dropdown_Box{
+  width: 100%;
+}
+
 .Header_Icons {
-  width: 5%;
   display: flex;
-  justify-content: space-between;
+  width: 140px;
+  margin: 0 40px;
+  text-align: center;
 }
 
 .Header_Icon {
+  position: relative;
   width: 25px;
-  height: 100%;
+  height: 27.63px;
+  margin: 0 10px;
+  z-index: 100;
 }

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./../Style/header.css";
 import CustomButton from "./Buttons";
+import LogoutIcon from "../../Icons/LogoutIcon";
 
 export default function Header() {
   const [isDropdownClicked, setIsDropdownClicked] = useState(false);
@@ -14,50 +15,34 @@ export default function Header() {
     setIsDropdownClicked(!isDropdownClicked);
   };
 
+  const userLogOut = () => {
+    console.log("ㅎㅇ");
+  };
   return (
     <header>
       <nav className="Header_Nav">
-        <Link to="/">
-          <div className="Header_Logo">L'acier</div>
-        </Link>
-        <ul className="Nav_List">
+        <div className="Nav_Menu">
+          <label className="Nav_Btn" htmlFor="Nav_Menu">
+            <input type="checkbox" id="Nav_Menu"/>
+            <span></span>
+            <span></span>
+            <span></span>
+          </label>
+        </div>
+        {/* <ul className="Nav_List">
           <li className="Nav_Dropdown">
             <button className="Nav_Dropdown_Button" onClick={toggleDropdown}>
               제품
             </button>
-            {isDropdownClicked ? (
-              <div className="Nav_Dropdown_Content">
-                {/* 이후에 선택된 카테고리에 따라 링크 설정 변경이 필요할 예정
-                i.e. 스킨/토너 선택 => 상품 페이지 스킨/토너 선택 */}
-                <Link to="/items-list" onClick={toggleDropdown}>
-                  스킨/토너
-                </Link>
-                <Link to="/items-list" onClick={toggleDropdown}>
-                  크림
-                </Link>
-                <Link to="/items-list" onClick={toggleDropdown}>
-                  로션
-                </Link>
-                <Link to="/items-list" onClick={toggleDropdown}>
-                  클렌징
-                </Link>
-                <Link to="/items-list" onClick={toggleDropdown}>
-                  선크림
-                </Link>
-              </div>
-            ) : null}
           </li>
-          <Link to="/items-top-list">
-            <li>추천 리스트</li>
-          </Link>
-          <Link to="/event">
-            <li>이벤트</li>
-          </Link>
-        </ul>
+          <li>
+            <Link to="/items-top-list/all">추천 리스트</Link>
+          </li>
+        </ul> */}
+        <div className="Header_Logo">
+          <Link to="/">L'acier</Link>
+        </div>
         <div className="Header_Icons">
-          <Link to={`/members/${memberId}/carts`}>
-            <CartIcon name="Header_Icon" />
-          </Link>
           {memberId === null ? (
             <Link to="/login">
               <UserIcon name="Header_Icon" />
@@ -67,8 +52,38 @@ export default function Header() {
               <UserIcon name="Header_Icon" />
             </Link>
           )}
+          <Link to={`/members/${memberId}/carts`}>
+            <CartIcon name="Header_Icon" />
+          </Link>
+          <div onClick={userLogOut}>
+            <LogoutIcon name="Header_Icon" />
+          </div>
         </div>
       </nav>
+      <div className="Nav_Dropdown_Box">
+        {isDropdownClicked ? (
+          <div className="Nav_Dropdown_Content">
+            <Link to="/items-list/all" onClick={toggleDropdown}>
+              All
+            </Link>
+            <Link to="/items-list/toner" onClick={toggleDropdown}>
+              스킨/토너
+            </Link>
+            <Link to="/items-list/cream" onClick={toggleDropdown}>
+              크림
+            </Link>
+            <Link to="/items-list/lotion" onClick={toggleDropdown}>
+              로션
+            </Link>
+            <Link to="/items-list/cleansing" onClick={toggleDropdown}>
+              클렌징
+            </Link>
+            <Link to="/items-list/suncream" onClick={toggleDropdown}>
+              선크림
+            </Link>
+          </div>
+        ) : null}
+      </div>
     </header>
   );
 }
