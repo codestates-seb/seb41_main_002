@@ -33,11 +33,11 @@ export default function Product(props: Props) {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const [_, setRef] = useIntersect((entry: any, observer: any) => {
-    props.onLastItemVisiable();
-    observer.unobserve(entry.target);
-    observer.observe(entry.target);
-  }, {});
+  // const [_, setRef] = useIntersect((entry: any, observer: any) => {
+  //   props.onLastItemVisiable();
+  //   observer.unobserve(entry.target);
+  //   observer.observe(entry.target);
+  // }, {});
 
   return (
     <>
@@ -52,7 +52,7 @@ export default function Product(props: Props) {
                   <h3> {item.itemTitle} </h3>
                   <p>가격: {item.price}</p>
                 </div>
-                {isLoading && <p ref={setRef}>Loading...</p>}
+                {/* {isLoading && <p ref={setRef}>Loading...</p>} */}
               </a>
             </li>
           );

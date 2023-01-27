@@ -20,13 +20,14 @@ const changeToken = () => {
             Refresh: refreshToken,
           },
         })
-        .then((res:any) => {
+        .then((res: any) => {
           console.log(res.data);
-          console.log('토큰 교체');
+          console.log("토큰 교체");
           sessionStorage.setItem("accessToken", res.data.accessToken);
           sessionStorage.setItem("refreshToken", res.data.refreshToken);
-        }).catch(err => {
-          console.log('교체 실패');
+        })
+        .catch((err) => {
+          console.log("교체 실패");
           console.log(err);
         });
     }

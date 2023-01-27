@@ -49,7 +49,7 @@
 
 .Events_Carousel {
   height: 100%;
-  width: 1000px;
+  width: 100%;
   display: flex;
   overflow-x: scroll;
   scroll-behavior: smooth;
