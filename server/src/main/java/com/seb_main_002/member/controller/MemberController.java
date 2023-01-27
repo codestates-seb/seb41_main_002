@@ -5,6 +5,7 @@ import com.seb_main_002.exception.ExceptionCode;
 import com.seb_main_002.member.dto.MemberMailRequestDto;
 import com.seb_main_002.member.dto.MemberPatchDto;
 import com.seb_main_002.member.dto.MemberPostDto;
+import com.seb_main_002.member.dto.PasswordEditRequestDto;
 import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.member.mapper.MemberMapper;
 import com.seb_main_002.member.repository.MemberRepository;
@@ -114,5 +115,13 @@ public class MemberController {
         String email = memberMailRequestDto.getEmail();
         String accountId = memberMailRequestDto.getAccountId();
         memberService.sendMailWithPassword(accountId,email);
+    }
+    @PatchMapping("/members/edit/{memberId}/password")
+    @ResponseStatus(HttpStatus.OK)
+    public void patchPassword(@PathVariable("memberId") Long memberId,
+                              @RequestBody @Valid PasswordEditRequestDto passwordEditRequestDto) {
+        String oldPassword = passwordEditRequestDto.getOldPassword();
+        String newPassword = passwordEditRequestDto.getNewPassword();
+        memberService.updatePassword(memberId,oldPassword,newPassword);
     }
 }

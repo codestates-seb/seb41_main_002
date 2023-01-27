@@ -201,7 +201,8 @@ public class MemberService {
 
 
     }
-    private  String getRamdomPassword() {
+
+    private String getRamdomPassword() {
 
         char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7',
                 '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
@@ -218,6 +219,23 @@ public class MemberService {
         }
 
         return sb.toString();
+    }
+    @Transactional
+    public void updatePassword(Long memberId, String oldPassword, String newPassword) {
+        Member verifyMember = verifyMember(memberId);
+
+        // 기존 비밀번호와 바꾸려는 비밀번호가 같다면 예외처리
+        if(oldPassword.equals(newPassword)) {
+            throw new BusinessLogicException(ExceptionCode.SAME_PASSWORD);
+        }
+        // 입력한 비밀번호와 기존 비밀번호가 같다면 수정 진행
+        if (passwordEncoder.matches(oldPassword,verifyMember.getPassword())) {
+            String encryptedNewPassword = passwordEncoder.encode(newPassword);
+            verifyMember.setPassword(encryptedNewPassword);
+            memberRepository.save(verifyMember);
+        } else {
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
+        }
     }
 }
 
