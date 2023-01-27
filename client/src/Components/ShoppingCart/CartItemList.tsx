@@ -1,8 +1,10 @@
 import CustomButton from "../Commons/Buttons";
 import { deleteProduct } from "../../API/ShoppingCart/deleteProduct";
+import { addProductCount } from "../../API/ShoppingCart/addProductCount";
 import "./Style/cartItemList.css";
 
 interface Props {
+  //추후 타입 수정 예정
   cartData: any;
   accessToken: string | null;
   render: boolean;
@@ -26,7 +28,6 @@ export default function CartItemList(props: Props) {
                     : cartItem.itemCount + 1));
             }
           };
-          const calculateTotalPrice = () => {};
           return (
             <div key={index}>
               <li key={cartItem.itemId} className="Shopping_List_Contents">
@@ -39,7 +40,7 @@ export default function CartItemList(props: Props) {
                       src={`${cartItem.titleImageURL}`}
                       className="List_Product_Image"
                     />
-                    <a>
+                    <a href={`/itemDetail/${cartItem.itemId}`}>
                       <span className="List_Product_Name">
                         {cartItem.itemTitle}
                       </span>
@@ -50,21 +51,33 @@ export default function CartItemList(props: Props) {
                       <span
                         onClick={() => {
                           productCountHandler(1);
-                          calculateTotalPrice();
+                          addProductCount(
+                            props.accessToken as string,
+                            cartItem.cartItemId,
+                            1
+                          );
                           props.setRender(!props.render);
                         }}
                       >
                         🔼
                       </span>
-                      <span
-                        onClick={() => {
-                          productCountHandler(-1);
-                          calculateTotalPrice();
-                          props.setRender(!props.render);
-                        }}
-                      >
-                        🔽
-                      </span>
+                      {cartItem.itemCount > 1 ? (
+                        <span
+                          onClick={() => {
+                            productCountHandler(-1);
+                            addProductCount(
+                              props.accessToken as string,
+                              cartItem.cartItemId,
+                              -1
+                            );
+                            props.setRender(!props.render);
+                          }}
+                        >
+                          🔽
+                        </span>
+                      ) : (
+                        <span>🔽</span>
+                      )}
                     </div>
                     <div className="Product_Count_Container">
                       <span className="Product_Count">

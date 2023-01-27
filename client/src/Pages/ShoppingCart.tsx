@@ -6,6 +6,7 @@ import { allDeleteProduct } from "../API/ShoppingCart/deleteProduct";
 import { CartDataType } from "../API/ShoppingCart/getShoppingCart";
 import { useNavigate } from "react-router-dom";
 import CartItemList from "../Components/ShoppingCart/CartItemList";
+import { LocalType } from "../Function/payment";
 import "./Style/shoppingCart.css";
 
 const BenefitContents = styled.span<{ marginLeft: string }>`
@@ -17,39 +18,46 @@ const BenefitContents = styled.span<{ marginLeft: string }>`
 export default function ShoppingCart() {
   const [cartData, setCartData] = useState<CartDataType | null>(null);
   const [render, setRender] = useState(false);
-  const [allPrice, setAllPrice] = useState(0);
-
   const navigate = useNavigate();
-
   const callCartData = async () => {
     const result = await getShoppingCart(accessToken as string);
     setCartData(result);
   };
 
-  const resultArr =
+  const pushProductData = () => {
+    const localProductArr: LocalType[] = [];
+    cartData &&
+      cartData.cart.map((product) => {
+        return localProductArr.push({
+          itemId: product.itemId,
+          itemTitle: product.itemTitle,
+          itemImageURL: product.titleImageURL,
+          itemTotalPrice: product.itemTotalPrice,
+          count: product.itemCount,
+        });
+      });
+    const arrString = JSON.stringify(localProductArr);
+    console.log(arrString);
+    window.sessionStorage.setItem("itemList", arrString);
+  };
+  const itemPriceArr =
     cartData?.cart &&
     cartData?.cart.map((el) => {
       return el.itemTotalPrice;
     });
 
   const totalResult =
-    resultArr && resultArr?.length !== 0
-      ? resultArr?.reduce((acc, cur) => {
+    itemPriceArr && itemPriceArr?.length !== 0
+      ? itemPriceArr?.reduce((acc, cur) => {
           return acc + cur;
         })
       : 0;
-
   const deliveryTotalPrice = (totalResult as number) + 3000;
   const subscribeTotalPrice = (totalResult as number) + 2000;
-
-  console.log(subscribeTotalPrice);
-
   const accessToken = sessionStorage.getItem("memberId");
-  //추후 타입수정 예정
   useEffect(() => {
     callCartData();
   }, []);
-  console.log(cartData?.cart);
   return (
     <div className="Shopping_Cart_Container">
       <div className="Member_Benefits_Info">
@@ -79,7 +87,13 @@ export default function ShoppingCart() {
           )}
         </div>
       </div>
-      <div className={cartData?.cart[0] !== undefined ? "Cart_List_Container" : "Empty_List_Container"}>
+      <div
+        className={
+          cartData?.cart[0] !== undefined
+            ? "Cart_List_Container"
+            : "Empty_List_Container"
+        }
+      >
         <div className="List_Category_Container">
           <div className="All_Check_Section">
             <div className="Cart_Item_Id">제품번호</div>
@@ -110,12 +124,22 @@ export default function ShoppingCart() {
           )}
         </div>
         <ul className="Shopping_List_Container">
-          {cartData?.cart[0] !== undefined ?           <CartItemList
-            cartData={cartData}
-            accessToken={accessToken}
-            setRender={setRender}
-            render={render}
-          /> : <div className="Empty_List">제품이 존재하지 않습니다,<a className="List_Navigate" href="/items-list/all">여기</a>를 클릭해서 상품을 구경하세요</div>}
+          {cartData?.cart[0] !== undefined ? (
+            <CartItemList
+              cartData={cartData}
+              accessToken={accessToken}
+              setRender={setRender}
+              render={render}
+            />
+          ) : (
+            <div className="Empty_List">
+              제품이 존재하지 않습니다,
+              <a className="List_Navigate" href="/items-list/all">
+                여기
+              </a>
+              를 클릭해서 상품을 구경하세요
+            </div>
+          )}
         </ul>
       </div>
       <div className="Price_Info_Container">
@@ -128,7 +152,19 @@ export default function ShoppingCart() {
           <span> = 총 {deliveryTotalPrice}원</span>
         )}
         <div className="Cart_Payment_Button">
-          <button>결제하기</button>
+          <CustomButton
+            fontsize="13px"
+            fontColor="white"
+            bgColor="var(--dark3)"
+            content="결제하기"
+            width="100%"
+            height="100%"
+            padding="5px"
+            onClick={() => {
+              pushProductData();
+              navigate("/order/check");
+            }}
+          />
         </div>
       </div>
     </div>
