@@ -75,7 +75,7 @@ export default function CartItemList(props: Props) {
                         수량: {cartItem.itemCount}개
                       </span>
                     </div>
-                    <div>
+                    <div className="Product_Price_Container">
                       <span className="Product_Price">
                         가격: {cartItem.itemTotalPrice}원
                       </span>

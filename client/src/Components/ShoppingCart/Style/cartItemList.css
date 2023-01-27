@@ -4,6 +4,7 @@
   height: 100%;
   border-left: 1px solid black;
   padding-left: 10px;
+  width: 258px;
 }
 
 .Product_Price{
@@ -15,6 +16,7 @@
   flex-direction: column;
   margin-right: 10px;
   cursor: pointer;
+  width: 17px;
 }
 
 .Empty_Cart{
@@ -53,4 +55,13 @@
   height: 100%;
   display: flex;
   align-items: center;
+  width: 81px;
+}
+
+.Product_Price_Container{
+  width: 129px;
+}
+
+.Product_Delete{
+  width: 139.9px
 }

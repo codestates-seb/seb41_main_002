@@ -28,7 +28,6 @@
 }
 
 .All_Check_Section {
-  
   /* padding: 10px 10px; */
   width: 90%;
   background-color: var(--gray);
@@ -151,15 +150,16 @@
   align-items: center;
   height: 100%;
   border-left: 1px solid black;
-  width: 231.266px
+  width: 257.8px;
 }
-.List_Category_Container{
+.List_Category_Container {
   display: flex;
+  border-bottom: 1px solid black;
 }
 .Cart_Product_Count {
   border-right: 1px solid black;
   height: 100%;
-  width: 55%;
+  width: 204px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -168,11 +168,11 @@
 .Cart_Product_Price {
   display: flex;
   justify-content: center;
-  width: 63%;
+  width: 241px;
 }
 
 .Cart_Product_Delete {
-  width: 10%;
+  width: 139.9px;
   background-color: var(--gray);
   height: 100%;
   border-left: 1px solid black;
@@ -181,7 +181,7 @@
   align-items: center;
 }
 
-.Shopping_List_Container{
+.Shopping_List_Container {
   display: flex;
   flex-direction: column;
 }
