@@ -90,7 +90,7 @@ export default function Header() {
           </Link>
         </ul>
         <div className="Header_Icons">
-          <Link to="/members/:memberId/carts">
+          <Link to={`/members/${memberId}/carts`}>
             <CartIcon name="Header_Icon" />
           </Link>
           {memberId === null ? (

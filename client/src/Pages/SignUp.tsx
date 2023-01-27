@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Modal from "../Components/Commons/Modal";
 import SignUpAdmission from "../Components/SignUp/SignUpAdmission";
 import {
@@ -9,12 +9,14 @@ import {
   onPasswordConfirm,
 } from "../Function/signUp";
 import { MemberType } from "../API/SignUp";
+import { useAppSelector } from "../Store/hooks";
 import "./Style/memberAccess.css";
+import AccessMenu from "../Components/SignUp/AccessMenu";
 
 const SignUp = () => {
   //회원가입 정보
   const [Member, setMember] = useState<MemberType>({
-    accountID: "",
+    accountId: "",
     password: "",
     memberName: "",
     birthDate: "",
@@ -34,7 +36,7 @@ const SignUp = () => {
   //input 입력 핸들러
   const onMemberTextHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
-    if (name === "accountID") {
+    if (name === "accountId") {
       setIdCheck(false);
     }
     if (name === "phoneNumber") {
@@ -68,6 +70,17 @@ const SignUp = () => {
       setIdCheck(res);
     });
   };
+
+  const navigate = useNavigate();
+  const userLogin = useAppSelector((state) => {
+    return state.user.userLogin;
+  });
+  useEffect(() => {
+    if (userLogin === 1) {
+      navigate("/");
+      window.location.reload();
+    }
+  }, [userLogin]);
 
   const memberSignUpAdmission = () => {
     //회원가입
@@ -109,16 +122,7 @@ const SignUp = () => {
           element={<div className="Modal_Text">{message}</div>}
         />
       ) : null}
-      <ul className="Member_Access_Menu">
-        <li>
-          <Link to={"/signUp"}>회원가입</Link>
-        </li>
-        <li>
-          <Link to={"/login"}>로그인</Link>
-        </li>
-        <li>아이디 찾기</li>
-        <li>비밀번호 찾기</li>
-      </ul>
+      <AccessMenu/>
       <ul className="Member_Access_Contents">
         <li>회원가입</li>
         <li>
@@ -126,8 +130,8 @@ const SignUp = () => {
           <input
             id="SignUp_Id"
             type="text"
-            name="accountID"
-            value={Member.accountID}
+            name="accountId"
+            value={Member.accountId}
             onChange={onMemberTextHandler}
           />
           <button id="Double_Check_Btn" onClick={idDoubleCheck}>

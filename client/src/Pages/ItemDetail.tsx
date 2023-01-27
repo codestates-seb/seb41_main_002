@@ -17,9 +17,8 @@ const ItemDetail = () => {
     setDetailPageData(result);
   };
 
-  const [detailPageData, setDetailPageData] = useState<ItemDetailDataType | null>(
-    null
-  );
+  const [detailPageData, setDetailPageData] =
+    useState<ItemDetailDataType | null>(null);
   //추후 count 로직 리팩토링 예정
   const [productCount, setProductCount] = useState(0);
   const [productTotalPrice, setProductTotalPrice] = useState(0);
@@ -28,7 +27,7 @@ const ItemDetail = () => {
     //추후 타입 리팩토링 예정
     const result: any =
       detailPageData && detailPageData?.itemInfo.price * productCount;
-       setProductTotalPrice(result);
+    setProductTotalPrice(result);
   };
 
   useEffect(() => {
@@ -53,7 +52,7 @@ const ItemDetail = () => {
   //추후 session으로 변경예정
   const session = { memberId: 1, accountId: "kmklhy" };
 
-  console.log(productTotalPrice)
+  console.log(productTotalPrice);
 
   useEffect(() => {
     productDetailData();
