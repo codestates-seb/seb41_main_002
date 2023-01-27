@@ -2,11 +2,25 @@ import React, { useEffect, useState } from "react";
 import Modal from "../Components/Commons/Modal";
 import { Link, useNavigate } from "react-router-dom";
 import "./Style/memberAccess.css";
-
+import { findPw } from "../API/FindIdPw";
 
 const FindPw = () => {
-
   const [modalState, setModalState] = useState(false);
+  const [userInfo, setUserInfo] = useState({
+    accountId: "",
+    email: "",
+  });
+
+  const onUserInfoHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    setUserInfo({ ...userInfo, [name]: value });
+  }
+
+  const findPwHandler = () => {
+    findPw(userInfo).then(() => {
+      setModalState(true);
+    });
+  };
 
   return (
     <div className="Member_Access_Container">
@@ -15,7 +29,9 @@ const FindPw = () => {
           modalState={modalState}
           setModalState={setModalState}
           element={
-            <div className="Modal_Text">임시 비밀번호를 이메일로 전송했습니다.</div>
+            <div className="Modal_Text">
+              임시 비밀번호를 이메일로 전송했습니다.
+            </div>
           }
         />
       ) : null}
@@ -41,6 +57,8 @@ const FindPw = () => {
             id="FindPW_Id"
             type="text"
             name="accountId"
+            value={userInfo.accountId}
+            onChange={onUserInfoHandler}
           />
         </li>
         <li>
@@ -49,14 +67,16 @@ const FindPw = () => {
             id="FindPW_Email"
             type="email"
             name="email"
+            value={userInfo.email}
+            onChange={onUserInfoHandler}
           />
         </li>
         <li>
-          <button>확인</button>
+          <button onClick={findPwHandler}>확인</button>
         </li>
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default FindPw
+export default FindPw;

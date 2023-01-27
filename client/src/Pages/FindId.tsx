@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Modal from "../Components/Commons/Modal";
 import { Link, useNavigate } from "react-router-dom";
 import "./Style/memberAccess.css";
+import { findId } from "../API/FindIdPw";
 
 const FindId = () => {
   const [modalState, setModalState] = useState(false);
@@ -9,6 +10,12 @@ const FindId = () => {
 
   const onEmailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+  }
+
+  const findIdHandler = () => {
+    findId(email).then(() => {
+      setModalState(true);
+    });
   }
 
   return (
@@ -49,7 +56,7 @@ const FindId = () => {
           />
         </li>
         <li>
-          <button>확인</button>
+          <button onClick={findIdHandler}>확인</button>
         </li>
       </ul>
     </div>
