@@ -116,8 +116,12 @@ const SignUp = () => {
         <li>
           <Link to={"/login"}>로그인</Link>
         </li>
-        <li>아이디 찾기</li>
-        <li>비밀번호 찾기</li>
+        <li>
+          <Link to={"/findId"}>아이디 찾기</Link>
+        </li>
+        <li>
+          <Link to={"/findPw"}>비밀번호 찾기</Link>
+        </li>
       </ul>
       <ul className="Member_Access_Contents">
         <li>회원가입</li>
