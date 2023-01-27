@@ -1,17 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ReviewType } from "../../API/MemberPage/MemberPageAPI";
 import { Rating, SettingType } from "../Commons/Rating";
-
-interface ReviewType {
-  reviewId: number;
-  itemId: number;
-  itemImageURL: string;
-  itemTitle: string;
-  reviewTitle: string;
-  createdAt: string;
-  modifiedAt: string;
-  reviewRating: number;
-}
 
 const ReviewsItem = ({ review }: { review: ReviewType }) => {
   const ratingSetting: SettingType = {
