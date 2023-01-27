@@ -3,7 +3,6 @@ import "./Style/subscriptionPage.css";
 
 export default function SubscriptionPage() {
   const onMonthlyPayment = async () => {
-    console.log("결제");
     await kakaoRegularPaymentReady().then(
       (res: { paymentURL: string; tid: string } | undefined) => {
         if (typeof res !== "undefined") {

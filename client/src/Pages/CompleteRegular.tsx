@@ -1,4 +1,3 @@
-import React from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -31,13 +30,15 @@ const CompleteRegular = () => {
     })
       .then((res) => {
         sessionStorage.removeItem('tid');
+        console.log(res.data.sid);
         const subscribeParams = {
-          SID: res.data.sid,
-          isSubscribed: true,
+          "SID": String(res.data.sid),
+          "isSubscribed": true,
         };
         const response = authInstance
           .patch(`/members/${memberId}/subscribe`, subscribeParams)
           .then((res) => {
+            console.log('SID 저장!')
             return res;
           });
         const nowDate = new Date();

@@ -32,7 +32,6 @@ export default function Header() {
           setInterval(function () {
             kakaoRegularPayment();
           }, 10000);
-
         }, timeCalculation);
       } else {
         const Calculation =
@@ -43,7 +42,6 @@ export default function Header() {
           setInterval(function () {
             kakaoRegularPayment();
           }, 10000);
-          
         }, Calculation);
       }
     }
