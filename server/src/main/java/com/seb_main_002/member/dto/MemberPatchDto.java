@@ -22,4 +22,5 @@ public class MemberPatchDto {
 
     private List<String> tagList;
     private Boolean isSubscribed;
+    private String SID;
 }
