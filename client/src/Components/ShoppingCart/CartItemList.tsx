@@ -4,11 +4,13 @@ import {
   deleteProduct,
 } from "../../API/ShoppingCart/deleteProduct";
 import "./Style/cartItemList.css";
-import { NavigateFunction } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 interface Props {
   cartData: any;
   accessToken: string | null;
+  render: boolean;
+  setRender: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function CartItemList(props: Props) {
@@ -16,14 +18,27 @@ export default function CartItemList(props: Props) {
     <>
       {props.cartData && props.cartData.cart.length !== 0 ? (
         props.cartData.cart.map((cartItem: any, index: number) => {
+          const productCountHandler = (count: number) => {
+            if (cartItem.itemCount === 1 && count < 0) {
+            } else {
+              cartItem.itemCount = cartItem.itemCount + count;
+              cartItem.itemTotalPrice =
+                cartItem.itemCount *
+                (cartItem.itemTotalPrice /
+                  (count > 0
+                    ? cartItem.itemCount - 1
+                    : cartItem.itemCount + 1));
+            }
+          };
+          const calculateTotalPrice = () => {};
           return (
             <div key={index}>
               <li key={cartItem.itemId} className="Shopping_List_Contents">
-                <div className="Product_Check">
-                  <input type={"checkbox"} /> <span>선택</span>
-                </div>
                 <div className="Product_Container">
-                  <div className="Product_Info">
+                  <div className="Cart_Number">
+                    <span>{index + 1}번 제품</span>
+                  </div>
+                  <div className="Product_Profil">
                     <img
                       src={`${cartItem.titleImageURL}`}
                       className="List_Product_Image"
@@ -36,10 +51,26 @@ export default function CartItemList(props: Props) {
                   </div>
                   <div className="Product_Price_Info">
                     <div className="Count_Change">
-                      <span>🔼</span>
-                      <span>🔽</span>
+                      <span
+                        onClick={() => {
+                          productCountHandler(1);
+                          calculateTotalPrice();
+                          props.setRender(!props.render);
+                        }}
+                      >
+                        🔼
+                      </span>
+                      <span
+                        onClick={() => {
+                          productCountHandler(-1);
+                          calculateTotalPrice();
+                          props.setRender(!props.render);
+                        }}
+                      >
+                        🔽
+                      </span>
                     </div>
-                    <div>
+                    <div className="Product_Count_Container">
                       <span className="Product_Count">
                         수량: {cartItem.itemCount}개
                       </span>
@@ -62,6 +93,7 @@ export default function CartItemList(props: Props) {
                     content="상품삭제"
                     width="100%"
                     padding="5px"
+                    height="100%"
                   />
                 </div>
               </li>
