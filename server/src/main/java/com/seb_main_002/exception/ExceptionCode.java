@@ -22,7 +22,9 @@ public enum ExceptionCode {
     CART_ITEM_NOT_FOUND(404,"CartItem not found"),
     CANNOT_POST_REVIEW(400, "Can not Post review, already exists"),
     EVENT_NOT_FOUND(404,"Event not found"),
-    EMAIL_NOT_FOUND(404, "Email not found");
+    EMAIL_NOT_FOUND(404, "Email not found"),
+    SAME_PASSWORD(409, "Password is same as before");
+
 
     @Getter
     private int status;
