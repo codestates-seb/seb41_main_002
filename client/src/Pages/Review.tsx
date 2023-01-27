@@ -48,7 +48,7 @@ const Review = () => {
       reviewTitle: reviewText.reviewTitle,
       reviewContent: reviewText.reviewContent,
     };
-    reviewPost(review).then((res) => {
+    reviewPost(review).then(() => {
       navigate(`/itemDetail/${itemId}`)
     });
   };
@@ -63,6 +63,7 @@ const Review = () => {
   return (
     <div className="Review_Container">
       <div className="Review_TopBox">
+        <img className="Review_TitleImg" src={itemInfo.titleImageURL}></img>
         <ul className="Review_Item">
           <li>
             <div className="Review_Menu_Tag">제품명</div>
@@ -71,6 +72,14 @@ const Review = () => {
           <li>
             <div className="Review_Menu_Tag">카테고리</div>
             <div className="Review_Menu">{itemInfo.categoryKRName}</div>
+          </li>
+          <li>
+            <div className="Review_Menu_Tag">제품 타입</div>
+            <div className="Review_Menu">
+              {itemInfo.tagList.map((tags, index) => {
+                return <div key={index}>{SkinTag(tags)}</div>;
+              })}
+            </div>
           </li>
           <li>
             <div className="Review_Menu_Tag">별점</div>

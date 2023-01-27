@@ -2,12 +2,16 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
-  padding: 20px 0px;
+  padding: 20px;
 }
 
 .Review_TopBox {
   display: flex;
   gap: 30px;
+}
+
+.Review_TitleImg{
+  height: 162px;
 }
 
 .Review_Item {
@@ -21,6 +25,7 @@
   align-items: center;
   background-color: var(--dark2);
   line-height: 30px;
+  padding: 5px 0;
 }
 
 .Review_Item li:nth-child(1) {
@@ -31,10 +36,14 @@
 }
 
 .Review_Item li:nth-child(3) {
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-bottom: 1px solid var(--lightgray);
   background-color: var(--dark3);
   border-top: 1px solid var(--lightgray);
+}
+
+.Review_Item li:nth-child(4) {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .Review_Item li:last-child {
