@@ -7,8 +7,6 @@ interface Props {
 }
 
 export default function TopProductList(props: Props) {
-  console.log(props.topProductData)
-
   return (
     <>
       {props.topProductData&&props.topProductData.map((product:any)=>{
