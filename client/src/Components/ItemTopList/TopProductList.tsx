@@ -1,14 +1,15 @@
-import { TopProductData } from "../../API/ItemTopList/getTopList";
-import { ProductImage } from "../ShoppingList/Product";
+import styled from "styled-components";
 import "./Style/topProductList.css"
 // 추후 리팩토링 예정
 interface Props {
   topProductData: any;
 }
 
-export default function TopProductList(props: Props) {
-  console.log(props.topProductData)
+const ProductImage = styled.img`
+  width: 200px;
+`
 
+export default function TopProductList(props: Props) {
   return (
     <>
       {props.topProductData&&props.topProductData.map((product:any)=>{

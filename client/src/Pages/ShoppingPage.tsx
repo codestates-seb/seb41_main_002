@@ -111,7 +111,6 @@ export default function ShoppingPage() {
       pageNumber,
       serchWord
     );
-    console.log(result);
     return result;
   };
 
