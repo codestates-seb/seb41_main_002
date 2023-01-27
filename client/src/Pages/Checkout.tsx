@@ -60,8 +60,8 @@ export default function Checkout() {
   const { itemsTotalPrice, totalPrice, excludingPoints, itemListArray } =
     itemsCalculation(useReserve, memberInfo && memberInfo["isSubscribe"]);
   const isAdressEmpty = checkedList && checkedList?.addressId > 0
+  const memberId = Number(sessionStorage.getItem('memberId'));
   // 더미 데이터
-  const memberId: number = 1;
 
   const reserveInput = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
@@ -81,7 +81,7 @@ export default function Checkout() {
   const paymentRequest = () => {
     const itemList = itemsOrganize();
     const orderSheet: OrderSheetType = {
-      memberId: memberId, //연동 이후 변경
+      memberId: memberId,
       isPrimary: checkedList && checkedList.isPrimary,
       addressId: checkedList && checkedList.addressId,
       itemList: itemList,
