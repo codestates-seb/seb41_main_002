@@ -1,9 +1,9 @@
 package com.seb_main_002.home.service;
 
-import com.seb_main_002.eventImage.entity.BannerImage;
-import com.seb_main_002.eventImage.entity.Event;
-import com.seb_main_002.eventImage.repository.BannerImageRepository;
-import com.seb_main_002.eventImage.repository.EventRepository;
+import com.seb_main_002.eventBanner.entity.Banner;
+import com.seb_main_002.eventBanner.entity.Event;
+import com.seb_main_002.eventBanner.repository.BannerRepository;
+import com.seb_main_002.eventBanner.repository.EventRepository;
 import com.seb_main_002.exception.BusinessLogicException;
 import com.seb_main_002.exception.ExceptionCode;
 import com.seb_main_002.item.entity.Item;
@@ -20,22 +20,22 @@ import java.util.Optional;
 @Service
 public class HomeService {
 
-    private BannerImageRepository bannerImageRepository;
+    private BannerRepository bannerRepository;
     private EventRepository eventRepository;
     private ItemRepository itemRepository;
 
-    public HomeService(BannerImageRepository bannerImageRepository,
+    public HomeService(BannerRepository bannerRepository,
                        EventRepository eventRepository,
                        ItemRepository itemRepository) {
-        this.bannerImageRepository = bannerImageRepository;
+        this.bannerRepository = bannerRepository;
         this.eventRepository = eventRepository;
         this.itemRepository = itemRepository;
     }
 
     public String findBannerImageUrl() {
         final Long bannerImageId = (long)1;
-        BannerImage bannerImage = verifyBannerImage(bannerImageId);
-        return bannerImage.getBannerImageUrl();
+        Banner banner = verifyBannerImage(bannerImageId);
+        return banner.getBannerImageUrl();
     }
 
     public List<Event> findEvents() {
@@ -54,8 +54,8 @@ public class HomeService {
 
     }
 
-    private BannerImage verifyBannerImage(Long bannerImageId) {
-        Optional<BannerImage> optionalBannerImage = bannerImageRepository.findById(bannerImageId);
+    private Banner verifyBannerImage(Long bannerImageId) {
+        Optional<Banner> optionalBannerImage = bannerRepository.findById(bannerImageId);
         return optionalBannerImage.orElseThrow(
                 () -> new BusinessLogicException(ExceptionCode.BANNER_IMAGE_NOT_FOUND)
         );

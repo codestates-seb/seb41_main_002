@@ -1,4 +1,4 @@
-package com.seb_main_002.eventImage.entity;
+package com.seb_main_002.eventBanner.entity;
 
 import com.seb_main_002.audit.Auditable;
 import lombok.*;
@@ -13,12 +13,11 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class BannerImage extends Auditable {
+public class Banner extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bannerImageId;
+    private Long bannerId;
 
     private String bannerImageUrl;
-
 
 }
