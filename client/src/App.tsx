@@ -5,7 +5,6 @@ import SignUp from "./Pages/SignUp";
 import Checkout from "./Pages/Checkout";
 import ItemDetail from "./Pages/ItemDetail";
 import MemberPage from "./Pages/MemberPage";
-import ShoppingList from "./Pages/ShoppingList";
 import ItemsTopList from "./Pages/ItemsTopList";
 import ShoppingPage from "./Pages/ShoppingPage";
 import ShoppingCart from "./Pages/ShoppingCart";

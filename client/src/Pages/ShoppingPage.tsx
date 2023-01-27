@@ -1,6 +1,16 @@
-import "./Style/shoppingList.css";
-import { getProductList } from "../API/ShoppingList/getShoppingList";
+import "./Style/shoppingPage.css";
+import {
+  getProductList,
+  getMemberTagList,
+} from "../API/ShoppingList/getShoppingList";
 import { useEffect, useRef, useState } from "react";
+import { ShoppingCategoryTab } from "../Components/ShoppingList/CategoryTab";
+import styled from "styled-components";
+
+export const ProductImage = styled.img`
+  width: 200px;
+  height: 200px;
+`;
 
 interface ProductProps {
   itemId: number;
@@ -11,38 +21,25 @@ interface ProductProps {
 
 interface ProductListProps {
   products: ProductProps[];
-  onBottomReached: () => void;
 }
 
 const ProductList = (props: ProductListProps) => {
-  const bottomRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(props.onBottomReached);
-    if (bottomRef.current) observer.observe(bottomRef.current);
-    return () => {
-      if (bottomRef.current) observer.unobserve(bottomRef.current);
-    };
-  }, [bottomRef]);
-
   return (
-    <div>
+    <>
       {props.products.length === 0
         ? []
-        : props.products.map((item) => (
-            <div
-              key={item.itemId}
-              style={{ width: "100%", marginTop: 75, marginBottom: 75 }}
-            >
-              <div>
-                <img src={item.titleImageURL} />
-                <h3> {item.itmeTitle} </h3>
-                <p>가격: {item.price}</p>
-              </div>
-            </div>
+        : props.products.map((item, index) => (
+            <li key={index}>
+              <a href={`/itemDetail/${item.itemId}`}>
+                <div className="Shopping_Product_Info">
+                  <ProductImage src={`${item.titleImageURL}`} />
+                  <h4> {item.itmeTitle} </h4>
+                  <p>가격: {item.price}</p>
+                </div>
+              </a>
+            </li>
           ))}
-      <div ref={bottomRef}> 최하단 </div>
-    </div>
+    </>
   );
 };
 
@@ -52,9 +49,6 @@ const getProducts = async (
   page = 0,
   keyword = ""
 ): Promise<ProductProps[]> => {
-  if (page === 0) {
-    return [];
-  }
   const results = await getProductList({
     categoryENName: categoryName,
     custom,
@@ -70,78 +64,132 @@ const getProducts = async (
 };
 
 export default function ShoppingPage() {
-  /**
-   * 1) 상품 리스트를 렌더링 할 수 있도록 컴포넌트를 구현한다 (OK)
-   * 2) 상품 리스트 데이터를 서버에서 가져와서 컴포넌트로 전달 할 수 있도록 한다. (OK)
-   * 3) 상품 리스트의 최하단에 도착했을 때를 포착한다. (OK)
-   * 4) 최하단에 도착했음을 포착했을 때, 서버에서 새로운 데이터를 가져온다.
-   * 5) 새로운 데이터를 가져왔을 때, 상품 리스트 데이터를 갱신한다.
-   */
-
-  const [pageNumber, setPageNumber] = useState<number>(0);
+  const [categoryParam, setCategoryParams] = useState("all");
+  const [isCustom, setIsCustom] = useState(false);
+  const [pageNumber, setPageNumber] = useState<number>(1);
   const [products, setProducts] = useState<ProductProps[]>([]);
+  const [memberTagData, setMemberTagData] = useState<any>(null);
   const [fetchingStatus, setFetchingStatus] = useState<boolean>(false);
-  const [inited, setInited] = useState<boolean>(false);
+  const [serchWord, setSerchWord] = useState("");
+  const [lock, setLock] = useState<boolean>(false);
+  const [customCheck, setCustomCheck] = useState<boolean>(false)
+  const bottomRef = useRef(null);
 
-  const setProductsData = async () => {
-    console.log("####### Debug #######");
+  const session = sessionStorage.getItem("memberId");
+  const fetchMemberTagData = async () => {
+    const result = await getMemberTagList({
+      categoryENName: categoryParam,
+      custom: isCustom,
+      page: pageNumber,
+      keyword: serchWord,
+    });
+    setMemberTagData(result)
+  };
 
-    console.log("### products");
-    console.log(products);
-
-    console.log("### page");
-    console.log(pageNumber);
-
-    console.log("### fetching status");
-    console.log(fetchingStatus);
-
-    console.log("#####################");
-    if (fetchingStatus || !inited) {
-      try {
-        let newProducts: ProductProps[] = [];
-        const fetchedProducts = await getProducts("all", false, pageNumber);
-
-        newProducts = newProducts.concat(products);
-        newProducts = newProducts.concat(fetchedProducts);
-
-        console.log('newProducts');
-        console.log(newProducts);
-
-        setProducts(newProducts);
-        setFetchingStatus(false);
-        setInited(true)
-      } catch (err) {
-        console.error(err);
-      }
+  const fetchProducts = async () => {
+    setFetchingStatus(true);
+    let newProducts: ProductProps[] = [...products];
+    const fetchedProducts = await getProducts(
+      categoryParam,
+      isCustom,
+      pageNumber,
+      serchWord
+    );
+    if (fetchedProducts.length === 0) {
+      setLock(true);
+    } else {
+      newProducts = newProducts.concat(fetchedProducts);
+      setProducts(newProducts);
+      setFetchingStatus(false);
     }
   };
 
-  useEffect(() => {
-    if (!inited) {
-      setProductsData()
-    }
-  }, [inited])
+  const tabChangeFetch = async () => {
+    const result = await getProducts(
+      categoryParam,
+      isCustom,
+      pageNumber,
+      serchWord
+    );
+    console.log(result);
+    return result;
+  };
 
-  /* useEffect(() => {
-    setProductsData();
-  }, [pageNumber, products]); */
+  useEffect(() => {
+    setProducts([]);
+    setLock(false);
+    setPageNumber(1);
+  }, [categoryParam, isCustom, serchWord]);
+
+  useEffect(() => {
+    fetchMemberTagData();
+  }, []);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [pageNumber]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        if (lock === true) {
+          return;
+        }
+        setPageNumber(pageNumber + 1);
+      }
+    });
+    if (bottomRef.current) observer.observe(bottomRef.current);
+    return () => {
+      if (bottomRef.current) observer.unobserve(bottomRef.current);
+    };
+  }, [products]);
+
+  const serchSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      tabChangeFetch();
+    }
+  };
 
   return (
     <div>
-      <div className="Product_List_Container">
-        <ProductList
-          products={products}
-          onBottomReached={() => {
-            console.log("onBottomReached");
-            if (!fetchingStatus) {
-                console.log("increment page");
-                console.log(pageNumber);
-                setFetchingStatus(true);
-                setPageNumber(pageNumber + 1);
-            }
-          }}
-        />
+      <div className="Shopping_List_Container">
+        <div className="Shopping_List_Search">
+          <input
+            type="text"
+            placeholder="검색하세요"
+            className="Search_Bar"
+            defaultValue={serchWord}
+            onChange={(e) => setSerchWord(e.target.value)}
+            onKeyUp={(e) => {
+              if (serchWord.length !== 0) {
+                serchSubmit(e);
+              } else {
+              }
+            }}
+          />
+        </div>
+        <div className="Tab_Container">
+          <ul className="Tab_List">
+            <ShoppingCategoryTab
+              setCategoryParams={setCategoryParams}
+              setIsCustom={setIsCustom}
+              isCustom={isCustom}
+              session={session}
+              serchWord={serchWord}
+              pageNumber={pageNumber}
+              memberTagData={memberTagData}
+              customCheck={customCheck}
+              setCustomCheck={setCustomCheck}
+            />
+          </ul>
+        </div>
+        <div className="Product_List_Container">
+          <ul className="Product_List">
+            <ProductList products={products} />
+          </ul>
+        </div>
       </div>
+      <div ref={bottomRef} />
     </div>
   );
 }

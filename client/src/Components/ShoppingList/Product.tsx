@@ -18,15 +18,6 @@ export default function Product(props: Props) {
 
   const [isLoading, setIsLoading] = useState(true);
   const { page } = props;
-
-  // const [_, setRef] = useIntersect((entry: any, observer: any, _page: number) => {
-  //   console.log('Inside of userIntersect ', page);
-  //   console.log('Inside of useIntersect ', _page);
-  //   // props.onLastItemVisiable(_page);
-  //   observer.unobserve(entry.target);
-  //   observer.observe(entry.target);
-  // }, {}, page);
-
   console.log('on render product ', page)
 
   return (
@@ -38,12 +29,10 @@ export default function Product(props: Props) {
             <li key={index}>
               <a href={`/itemDetail/${item.itemId}`}>
                 <div className="Product_Info">
-                  {/* ref={setLastItemRef} */}
                   <ProductImage src={`${item.titleImageURL}`} />
                   <h3> {item.itemTitle} </h3>
                   <p>가격: {item.price}</p>
                 </div>
-                {/* {isLoading && <p ref={setRef}>Loading...</p>} */}
               </a>
             </li>
           );

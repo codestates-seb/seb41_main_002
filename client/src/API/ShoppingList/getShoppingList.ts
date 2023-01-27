@@ -36,3 +36,14 @@ export const getProductList = (
     resolve(result);
   });
 };
+
+export const getMemberTagList = async (option: ParamsType) => {
+  try {
+    const resultData = await axios.get(
+      `http://13.125.242.34:8080/api/v1/items/${option.categoryENName}?custom=${option.custom}&title=${option.keyword}&page=${option.page}`
+    );
+    return resultData.data.member;
+  } catch (err) {
+    console.error(err);
+  }
+};
