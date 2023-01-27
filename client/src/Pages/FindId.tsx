@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
 import Modal from "../Components/Commons/Modal";
-import { Link, useNavigate } from "react-router-dom";
-import "./Style/memberAccess.css";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { findId } from "../API/FindIdPw";
+import "./Style/memberAccess.css";
 
 const FindId = () => {
   const [modalState, setModalState] = useState(false);
