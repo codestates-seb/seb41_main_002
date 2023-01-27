@@ -1,4 +1,4 @@
-import axios from "axios";
+import {defaultInstance} from "../../API/Core"
 
 interface ItemType {
   itemId: number;
@@ -34,14 +34,13 @@ export default function getItemDetail(
   return new Promise(async (resolve) => {
     let result: any;
     try {
-      const itemDetailData = await axios.get(
-        `http://13.209.97.3:8080/api/v1/items/details/${itemId}`
+      const itemDetailData = await defaultInstance.get(
+        `/items/details/${itemId}`
       );
       result = itemDetailData.data;
     } catch (error) {
       console.error(error);
     }
-
     resolve(result);
   });
 }

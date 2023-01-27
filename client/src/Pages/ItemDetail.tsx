@@ -50,10 +50,8 @@ const ItemDetail = () => {
     return window.localStorage.setItem("itemList", result);
   };
 
-  //추후 session으로 변경예정
-  const session = { memberId: 1, accountId: "kmklhy" };
-
-  console.log(productTotalPrice)
+  const session = sessionStorage.getItem("memberId")
+  console.log(session)
 
   useEffect(() => {
     productDetailData();
@@ -87,7 +85,7 @@ const ItemDetail = () => {
               onClick={() => {
                 addCartItem({
                   itemId: detailPageData?.itemInfo.itemId,
-                  memberId: session && session.memberId,
+                  memberId: session && session,
                   itemCount: productCount,
                   itemTotalPrice: productTotalPrice,
                 });
