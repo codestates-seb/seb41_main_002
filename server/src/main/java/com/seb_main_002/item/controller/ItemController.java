@@ -67,47 +67,16 @@ public class ItemController {
     public ResponseEntity getTopItems(@PathVariable("categoryENName") String categoryENName,
                                       @RequestParam(required = false) Boolean custom,
                                       HttpServletRequest request){
-        if(custom == null) custom = false;
 
-        Boolean isLogin = true;
-        //memberTagsList는 비로그인시 null값을 가짐.
-        List<String> memberTagsList = null;
+        //로그인여부에따른 멤버아이디 얻기. 비로그인인 경우 memberId는 null값을 가짐
+        Long memberId = getMemberIdWithHttpServletRequest(request);
 
-        //로그인했을경우 멤버 태그리스트 추출
-        try {
-            Map<String, Object> claims = jwtVerificationFilter.verifyJws(request);
-            Long memberId = ((Number) claims.get("memberId")).longValue();
-            memberTagsList = memberService.findMember(memberId).getTagList();
-        }catch(NullPointerException e){
-            isLogin = false;
-        }
+        //로그인여부에따른 memberTagList 얻기. memberId가 null인경우 memberTagList는 null값을 가짐
+        List<String> memberTagList = itemService.findVerifiedMemberTagList(memberId);
 
-        //로그인안하고 custom = true로 요청을 보낸다면 예외발생
-        if(!isLogin && custom) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
+        List<Item> items = itemService.findFilteredItems(categoryENName, custom, null, 0, memberTagList, true);
 
-        List<Item> items = itemService.findTopListItems(categoryENName,custom,memberTagsList);
-
-        List<ItemTopListResponseDto.TopItemDto> topItemDtos = items.stream()
-                .map(item -> ItemTopListResponseDto.TopItemDto.builder()
-                        .itemId(item.getItemId())
-                        .itemTitle(item.getItemTitle())
-                        .categoryKRName(item.getCategoryKRName())
-                        .categoryENName(item.getCategoryENName())
-                        .titleImageURL(item.getTitleImageUrl())
-                        .price(item.getPrice())
-                        .salesCount(item.getSalesCount())
-                        .tagsList(item.getTagList())
-                        .build())
-                .collect(Collectors.toList());
-
-        ItemSearchResponseDto.MemberTagInfo memberTagInfo = ItemSearchResponseDto.MemberTagInfo.builder()
-                .memberTagsList(memberTagsList)
-                .build();
-
-        ItemTopListResponseDto response = ItemTopListResponseDto.builder()
-                .topList(topItemDtos)
-                .member(memberTagInfo)
-                .build();
+        ItemTopListResponseDto response = mapper.itemsToItemTopListResponseDto(items,memberTagList);
 
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
@@ -118,93 +87,36 @@ public class ItemController {
                                            @RequestParam(required = false) String title,
                                            @RequestParam @Positive int page,
                                            HttpServletRequest request){
-        if(categoryENName.equals("all")) categoryENName = "";
-        if(custom == null) custom = false;
-        if(title == null) title = "";
-        page -= 1;
 
-        Boolean isLogin = true;
-        //memberTagsList는 비로그인시 null값을 가짐.
-        List<String> memberTagsList = null;
+        //로그인여부에따른 멤버아이디 얻기. 비로그인인 경우 memberId는 null값을 가짐
+        Long memberId = getMemberIdWithHttpServletRequest(request);
 
-        //로그인했을경우 멤버 태그리스트 추출
-        try {
-            Map<String, Object> claims = jwtVerificationFilter.verifyJws(request);
-            Long memberId = ((Number) claims.get("memberId")).longValue();
-            memberTagsList = memberService.findMember(memberId).getTagList();
-        }catch(NullPointerException e){
-            isLogin = false;
-        }
+        //로그인여부에따른 memberTagList 얻기. memberId가 null인경우 memberTagList는 null값을 가짐
+        List<String> memberTagList = itemService.findVerifiedMemberTagList(memberId);
 
-        //로그인안하고 custom = true로 요청을 보낸다면 예외발생
-        if(!isLogin && custom) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
+        List<Item> items = itemService.findFilteredItems(categoryENName, custom, title, page-1, memberTagList, false);
 
-
-        List<Item> items = itemService.findFilteredItems(categoryENName, custom, title, page, memberTagsList);
-
-        List<ItemSearchResponseDto.SearchItemDto> searchItemDtos = items.stream()
-                .map(item -> ItemSearchResponseDto.SearchItemDto.builder()
-                        .itemId(item.getItemId())
-                        .itemTitle(item.getItemTitle())
-                        .categoryKRName(item.getCategoryKRName())
-                        .categoryENName(item.getCategoryENName())
-                        .titleImageURL(item.getTitleImageUrl())
-                        .price(item.getPrice())
-                        .tagsList(item.getTagList())
-                        .build())
-                .collect(Collectors.toList());
-
-        ItemSearchResponseDto.MemberTagInfo memberTagInfo = ItemSearchResponseDto.MemberTagInfo.builder()
-                .memberTagsList(memberTagsList)
-                .build();
-
-        ItemSearchResponseDto response = ItemSearchResponseDto.builder()
-                .cosmetics(searchItemDtos)
-                .member(memberTagInfo)
-                .build();
-
+        ItemSearchResponseDto response = mapper.itemsToItemSearchResponseDto(items, memberTagList);
 
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
+
     @GetMapping("/details/{itemId}")
     public ResponseEntity getItem(@PathVariable("itemId") @Positive Long itemId){
         Item item = itemService.findItem(itemId);
-        List<Review> reivews = item.getReviews();
 
-        ItemSimpleResponseDto.ItemInfo itemInfo = ItemSimpleResponseDto.ItemInfo.builder()
-                .itemId(item.getItemId())
-                .itemTitle(item.getItemTitle())
-                .categoryKRName(item.getCategoryKRName())
-                .titleImageURL(item.getTitleImageUrl())
-                .contentImageURL(item.getContentImageUrl())
-                .content(item.getContent())
-                .price(item.getPrice())
-                .tagList(item.getTagList())
-                .rating(item.getRating())
-                .build();
-
-        List<ItemSimpleResponseDto.ItemReviewResponseDto> responseReviews = reivews.stream()
-                .map(review -> ItemSimpleResponseDto.ItemReviewResponseDto.builder()
-                        .memberId(review.getMember().getMemberId())
-                        .accountId(review.getMember().getAccountId())
-                        .reviewId(review.getReviewId())
-                        .reviewTitle(review.getReviewTitle())
-                        .reviewContent(review.getReviewContent())
-                        .createdAt(review.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy/MM/dd/HH:mm")))
-                        .modifiedAt(review.getModifiedAt().format(DateTimeFormatter.ofPattern("yyyy/MM/dd/HH:mm")))
-                        .reviewRating(review.getReviewRating())
-                        .build())
-                .collect(Collectors.toList());
-
-        ItemSimpleResponseDto response = ItemSimpleResponseDto.builder()
-                .itemInfo(itemInfo)
-                .reviews(responseReviews)
-                .build();
-
+        ItemSimpleResponseDto response = mapper.itemToItemSimpleResponseDto(item);
 
         return new ResponseEntity<>(response,HttpStatus.OK);
-
     }
 
+    private Long getMemberIdWithHttpServletRequest(HttpServletRequest request){
+        Long memberId = null;
+        try {
+            Map<String, Object> claims = jwtVerificationFilter.verifyJws(request);
+            memberId = ((Number) claims.get("memberId")).longValue();
+        }catch(NullPointerException e){}
+        return memberId;
+    }
 
 }

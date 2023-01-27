@@ -25,10 +25,4 @@ public class ItemSearchResponseDto {
         private List<String> tagsList;
     }
 
-    @Builder
-    @Getter
-    public static class MemberTagInfo{
-        private List<String> memberTagsList = null;
-    }
-
 }
