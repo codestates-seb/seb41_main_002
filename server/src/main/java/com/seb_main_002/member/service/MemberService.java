@@ -96,9 +96,11 @@ public class MemberService {
     public void updateMember(Long memberId, Member member) {
         Member verifedMember = verifyMember(memberId);
 
-        // 기존 이메일과 동일할 경우에는 유효성 검증을 하지 않도록 수정하였습니다.
-        if(!member.getEmail().equals(verifedMember.getEmail())) {
-            verifyExistsEmail(member.getEmail());
+        if(member.getEmail() != null) {
+            // 기존 이메일과 동일할 경우에는 유효성 검증을 하지 않도록 수정하였습니다.
+            if(!member.getEmail().equals(verifedMember.getEmail())) {
+                verifyExistsEmail(member.getEmail());
+            }
         }
         Optional.ofNullable(member.getName())
                 .ifPresent(name -> verifedMember.setName(name));
