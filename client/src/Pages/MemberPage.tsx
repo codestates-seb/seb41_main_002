@@ -34,6 +34,7 @@ const MemberPage = () => {
   useEffect(() => {
     try {
       getProfileData(memberId).then((res) => {
+        console.log(res);
         setProfileData(res);
       });
     } catch (err) {
@@ -76,7 +77,11 @@ const MemberPage = () => {
           <InfoText width="100%">대표 주소</InfoText>
         </MemberTextBox>
         <MemberTextBox style={{ height: `100px` }}>
-          <InfoText width="100%">{profileData?.address}</InfoText>
+          {profileData?.address !== null ? (
+            <InfoText width="100%">{profileData?.address}</InfoText>
+          ) : (
+            <InfoText width="100%"> 대표주소가 없습니다.</InfoText>
+          )}
         </MemberTextBox>
         <MemberTextBox>
           <InfoText width="100%">
