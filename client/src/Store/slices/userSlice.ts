@@ -4,7 +4,7 @@ import { defaultInstance } from "../../API/Core";
 
 import jwtDecode from "jwt-decode";
 
-interface MemberInputType {
+export interface MemberInputType {
   accountId: string;
   password: string;
 }
