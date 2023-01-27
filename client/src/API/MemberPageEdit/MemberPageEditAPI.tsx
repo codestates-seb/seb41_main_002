@@ -1,8 +1,5 @@
 import axios from "axios";
 
-// 로그인 기능 일부 미구현으로 이후 기능 완료 시 해당 데이터 삭제
-const accessToken = sessionStorage.getItem("accessToken");
-
 export interface AddressType {
   addressId: number;
   isPrimary: boolean;
@@ -49,6 +46,7 @@ interface UpdateMemberDataType {
 }
 
 const BASE_URL = process.env.REACT_APP_BASE_URL as string;
+const accessToken = sessionStorage.getItem("accessToken");
 
 export const getMemberData = async (memberId: number) => {
   try {
