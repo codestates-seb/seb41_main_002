@@ -1,5 +1,5 @@
 // 더미 데이터 연동 후 지울 예정---------------------------
-interface LocalType {
+export interface LocalType {
   itemId: number;
   itemTitle: string;
   itemImageURL: string;

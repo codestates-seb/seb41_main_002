@@ -6,8 +6,10 @@ const StyledButton = styled.button<{
   width: string;
   padding: string;
   fontsize?: string
+  height?: string
 }>`
   width: ${(props) => props.width};
+  height: ${(props) => props.height ? props.height : "100%"};
   color: ${(props) => props.fontColor};
   background-color: ${(props) => props.bgColor};
   padding: ${(props) => props.padding};
@@ -22,6 +24,7 @@ interface ButtonType {
   width: string;
   padding: string;
   fontsize?: string;
+  height?: string
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -32,7 +35,8 @@ export default function CustomButton({
   content,
   width,
   padding,
-  onClick
+  onClick,
+  height
 }: ButtonType) {
   return (
     <StyledButton
@@ -42,6 +46,7 @@ export default function CustomButton({
       width={width}
       padding={padding}
       onClick={onClick}
+      height={height}
     >
       {content}
     </StyledButton>
