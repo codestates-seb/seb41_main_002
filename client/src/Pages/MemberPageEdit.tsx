@@ -11,10 +11,10 @@ import {
 } from "../API/MemberPageEdit/MemberPageEditAPI";
 import NewAddressModal from "../Components/MemberPageEdit/NewAddressModal";
 import EditAddressModal from "../Components/MemberPageEdit/EditAddressModal";
+import { subscriptionCalculation } from "../Function/memberEditPage";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { subscriptionCalculation } from "../Function/memberEditPage";
 import "./Style/memberPageEdit.css";
 
 const InfoWrapper = styled.div`

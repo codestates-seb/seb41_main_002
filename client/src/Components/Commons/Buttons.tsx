@@ -12,7 +12,7 @@ const StyledButton = styled.button<{
   color: ${(props) => props.fontColor};
   background-color: ${(props) => props.bgColor};
   padding: ${(props) => props.padding};
-  border: ${(props) => props.border};
+  border: ${(props) => (props.border ? props.border : "1px solid white")};
   border-radius: 5px;
   font-size: ${(props) => (props.fontsize ? props.fontsize : "17px")};
 `;
