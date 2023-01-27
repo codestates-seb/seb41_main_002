@@ -18,6 +18,8 @@ public class Subscribe extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long subscribeId;
 
+    //정기결제를 위한 결제아이디
+    private String SID;
     private Boolean isSubscribed = false;
     private Integer sampleCount = 0;
     private LocalDateTime subscribedDate;
