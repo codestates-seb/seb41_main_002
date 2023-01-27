@@ -37,7 +37,6 @@
 }
 
 .All_Check_Section {
-  /* padding: 10px 10px; */
   width: 90%;
   background-color: var(--gray);
   height: 50px;
@@ -70,7 +69,6 @@
 }
 
 .Product_Container {
-  /* padding: 10px 10px; */
   width: 90%;
   background-color: var(--gray);
   height: 100%;

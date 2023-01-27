@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import CustomButton from "../Components/Commons/Buttons";
 import { useEffect, useState } from "react";
-import { getShoppingCart } from "../API/ShoppingCart/getShoppingCart";
+import {
+  getShoppingCart,
+  CartDataType,
+} from "../API/ShoppingCart/getShoppingCart";
 import { allDeleteProduct } from "../API/ShoppingCart/deleteProduct";
-import { CartDataType } from "../API/ShoppingCart/getShoppingCart";
 import { useNavigate } from "react-router-dom";
 import CartItemList from "../Components/ShoppingCart/CartItemList";
 import { LocalType } from "../Function/payment";

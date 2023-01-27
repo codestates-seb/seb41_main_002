@@ -35,7 +35,7 @@ export default function CartItemList(props: Props) {
                   <div className="Cart_Number">
                     <span>{index + 1}번 제품</span>
                   </div>
-                  <div className="Product_Profil">
+                  <div className="Product_Profile">
                     <img
                       src={`${cartItem.titleImageURL}`}
                       className="List_Product_Image"
