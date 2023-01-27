@@ -14,11 +14,11 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/v1/image")
-public class EventImageController {
+public class EventImageController_D {
     private final EventImageService eventImageService;
     private final EventMapper mapper;
 
-    EventImageController(EventImageService eventImageService, EventMapper mapper) {
+    EventImageController_D(EventImageService eventImageService, EventMapper mapper) {
         this.eventImageService = eventImageService;
         this.mapper = mapper;
     }
