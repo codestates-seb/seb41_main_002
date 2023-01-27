@@ -59,7 +59,9 @@ public class SecurityConfiguration {
                 .accessDeniedHandler(new MemberAccessDeniedHandler())            // (2) 추가
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers("/api/v1/signup", "/api/v1/login", "/api/v1/home", "/api/v1/idcheck/**").permitAll()
+                        //.antMatchers(HttpMethod.PATCH,"/api/v1/home").hasRole("ADMIN")
+                        //.antMatchers(HttpMethod.DELETE,"/api/v1/home").hasRole("ADMIN")
+                        .antMatchers("/api/v1/signup", "/api/v1/login", "/api/v1/home", "/api/v1/idcheck/**", "/api/v1/event/**").permitAll()
                         .antMatchers("/api/v1/orders/**").hasRole("USER") // 주문은 유저만 가능
                         .antMatchers("/api/v1/members/**").hasAnyRole("ADMIN","USER") // 멤버정보는 유저, 어드민 가능
                         .antMatchers(HttpMethod.GET, "/api/v1/items/**").permitAll() // 아이템 정보 읽기 누구나 가능

@@ -25,6 +25,10 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
+      - uses: actions/checkout@v3
+      - run : touch ./server/src/main/resources/application.yml
+      - run : echo "${{secrets.BE_APPLICATION}}" > ./server/src/main/resources/application.yml
+
       - name : Add permission
         run : chmod +x ./server/gradlew
 

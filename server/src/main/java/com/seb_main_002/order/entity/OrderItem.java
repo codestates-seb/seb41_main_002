@@ -20,11 +20,13 @@ public class OrderItem extends Auditable {
 
     private Integer itemTotalPrice;
 
-    @ManyToOne
+    private Boolean isReviewed = false;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDER_ID")
     private Order order;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ITEM_ID")
     private Item item;
 }

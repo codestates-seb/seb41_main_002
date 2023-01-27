@@ -35,6 +35,8 @@ public class MemberResponseDto {
     @Getter
     @Builder
     public static class OrderItemResponseDto {
+        private Long orderItemId;
+        private Boolean isReviewed;
         private Long itemId;
         private String itemImageURL;
         private String itemTitle;

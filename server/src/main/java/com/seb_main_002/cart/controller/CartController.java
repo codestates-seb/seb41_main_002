@@ -12,14 +12,17 @@ import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.member.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 @RestController
 @RequestMapping("/api/v1/members")
+@Validated
 public class CartController {
 
     private final CartService cartService;
@@ -36,7 +39,7 @@ public class CartController {
 
     @PatchMapping("/{memberId}/carts")
     public ResponseEntity addCartItem(@PathVariable("memberId") Long memberId,
-                                      @RequestBody CartAddDto cartAddDto){
+                                      @RequestBody @Valid CartAddDto cartAddDto){
 
         CartItem cartItem = mapper.cartAddDtoToCartItem(cartAddDto);
 
@@ -50,7 +53,7 @@ public class CartController {
 
     @PatchMapping("/{memberId}/carts/{cartItemId}")
     public ResponseEntity changeCartItemCount(@PathVariable("memberId") Long memberId, @PathVariable("cartItemId") Long cartItemId,
-                                              @RequestBody CartItemCountChangeDto cartItemCountChangeDto){
+                                              @RequestBody @Valid CartItemCountChangeDto cartItemCountChangeDto){
 
         cartService.updateCartItemCount(memberId, cartItemId, cartItemCountChangeDto.getItemCountChange());
 
@@ -83,9 +86,15 @@ public class CartController {
     }
 
     @DeleteMapping("/{memberId}/carts")
-    public ResponseEntity deleteCart(@PathVariable("memberId") Long memberId){
+    public ResponseEntity deleteCarts(@PathVariable("memberId") Long memberId){
         cartService.deleteCartItems(memberId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @DeleteMapping("/{memberId}/carts/{cartItemId}")
+    public ResponseEntity deleteCart(@PathVariable("memberId") Long memberId,
+                                     @PathVariable("cartItemId") Long cartItemId){
+        cartService.deleteCartItem(cartItemId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

@@ -11,10 +11,12 @@ import com.seb_main_002.review.entity.Review;
 import com.seb_main_002.security.jwt.JwtVerificationFilter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/items")
+@Validated
 public class ItemController {
 
     private final ItemService itemService;
@@ -43,7 +46,7 @@ public class ItemController {
     @PostMapping
     public ResponseEntity postItem(@RequestPart(value = "titleImage") MultipartFile titleImage,
                                    @RequestPart(value = "contentImage") MultipartFile contentImage,
-                                   @RequestPart(value = "itemPostDto") ItemPostDto itemPostDto) throws IOException {
+                                   @RequestPart(value = "itemPostDto") @Valid ItemPostDto itemPostDto) throws IOException {
         Item item = mapper.itemPostDtoToItem(itemPostDto);
 
         item.setTitleImageUrl(itemService.uploadImage(titleImage.getInputStream(),
@@ -164,7 +167,7 @@ public class ItemController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
     @GetMapping("/details/{itemId}")
-    public ResponseEntity getItem(@PathVariable("itemId") Long itemId){
+    public ResponseEntity getItem(@PathVariable("itemId") @Positive Long itemId){
         Item item = itemService.findItem(itemId);
         List<Review> reivews = item.getReviews();
 

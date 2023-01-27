@@ -9,13 +9,16 @@ import com.seb_main_002.review.service.ReviewService;
 import com.seb_main_002.security.jwt.JwtVerificationFilter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/reviews")
+@Validated
 public class ReviewController {
     private final ReviewMapper mapper;
     private final ReviewService reviewService;
@@ -30,14 +33,16 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity postReview(@RequestBody ReviewPostDto reviewPostDto) {
-        reviewService.createReview(mapper.reviewPostDtoToReview(reviewPostDto));
+    public ResponseEntity postReview(@Valid @RequestBody ReviewPostDto reviewPostDto) {
+        Long orderItemId = reviewPostDto.getOrderItemId();
+
+        reviewService.createReview(mapper.reviewPostDtoToReview(reviewPostDto), orderItemId);
 
         return new ResponseEntity<> (HttpStatus.OK);
     }
 
     @PatchMapping("/{reviewId}")
-    public ResponseEntity patchReview(@RequestBody ReviewPatchDto reviewPatchDto,
+    public ResponseEntity patchReview(@Valid @RequestBody ReviewPatchDto reviewPatchDto,
                                       @PathVariable Long reviewId) {
         Review review = mapper.reviewPatchDtoToReview(reviewPatchDto);
         review.setReviewId(reviewId);
