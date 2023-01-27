@@ -12,7 +12,7 @@ const Review = () => {
     categoryKRName: "",
     titleImageURL: "",
     tagList: [],
-    memberTagsList: ["지성", "미백"],
+    memberTagsList: ["", ""],
   });
 
   const [reviewText, setReviewText] = useState<reviewTextType>({
@@ -48,9 +48,8 @@ const Review = () => {
       reviewTitle: reviewText.reviewTitle,
       reviewContent: reviewText.reviewContent,
     };
-    console.log(review);
     reviewPost(review).then((res) => {
-      console.log("리뷰 작성 완료");
+      navigate(`/itemDetail/${itemId}`)
     });
   };
 

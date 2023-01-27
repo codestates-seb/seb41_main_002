@@ -23,7 +23,6 @@ export interface reviewType extends reviewTextType{
 
 export const getItemInfo = async (itemId: string) => {
   const itemInfo = await authInstance.get<ItemInfoType>(`/reviews/item/${itemId}`);
-  console.log(itemInfo)
   return itemInfo.data;
 };
 
