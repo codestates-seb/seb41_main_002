@@ -97,7 +97,7 @@ export default function SkinTestPage() {
   const [effectArr, setEffectArr] = useState<any>([]);
   const [resultArr, setResultArr] = useState<any>([]);
   const skinTestArr: string[] = [skinTypeResult, acneTypeResult];
-  const memberId = sessionStorage.getItem("memberId")
+  const memberId = sessionStorage.getItem("memberId");
   const addSkinTestHandler = (tag: string, skinTag: string, index?: number) => {
     switch (skinTag) {
       case "피부타입":
@@ -107,7 +107,6 @@ export default function SkinTestPage() {
       case "여드름타입":
         setAcenTypeResult(tag);
         setIsAnceActivate(true);
-        console.log(skinTestArr);
         break;
       case "효능":
         if (!effectArr.includes(tag)) {
@@ -252,11 +251,19 @@ export default function SkinTestPage() {
           </div>
         ) : null}
         <div className="Submit_Section">
-          <TagButton height="40px" onClick={()=>{
-            addSkinTest(memberId,resultArr)
-          }}>Submit</TagButton>
+          {!isSubmitCheck ? (
+            <TagButton
+              height="40px"
+              onClick={() => {
+                addSkinTest(memberId, resultArr);
+                setIsSubmitCheck(true)
+              }}
+            >
+              Submit
+            </TagButton>
+          ) : null}
         </div>
-        {!isSubmitCheck ? (
+        {isSubmitCheck ? (
           <div className="Test_Result">
             <h1> 피부 타입의 결과를 알려드립니다!</h1>
             <div>
