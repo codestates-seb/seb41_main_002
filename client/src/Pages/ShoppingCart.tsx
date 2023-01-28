@@ -39,7 +39,7 @@ export default function ShoppingCart() {
         });
       });
     const arrString = JSON.stringify(localProductArr);
-    console.log(arrString);
+    window.sessionStorage.removeItem("itemList");
     window.sessionStorage.setItem("itemList", arrString);
   };
   const itemPriceArr =

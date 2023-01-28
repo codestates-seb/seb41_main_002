@@ -45,6 +45,7 @@ const ItemDetail = () => {
         itemCount: productCount,
       },
     ];
+    window.sessionStorage.removeItem("itemList");
     const result = JSON.stringify(productSaleInfo);
     return window.sessionStorage.setItem("itemList", result);
   };
