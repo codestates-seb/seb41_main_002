@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { ItemType, OrderType } from "../../API/MemberPage/MemberPageAPI";
 
 const OrderHistoryItem = ({ order }: { order: OrderType }) => {
-  console.log(order);
   const [isActive, setIsActive] = useState(false);
   const openAccordion = () => {
     setIsActive(!isActive);
