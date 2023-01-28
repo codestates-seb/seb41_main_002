@@ -8,11 +8,12 @@ const defaultOption = {
 //  커스텀 훅 부분
 // 관찰 대상을 지정할 수 있도록 ref값을 useState 훅을 이용해 state로 관리해준다.
 // 관찰자를 만들어준다.
-const useIntersect = (onIntersect:any, option:any) => {
+const useIntersect = (onIntersect:any, option:any, page: number) => {
+  console.log('inside of use intersect ', page)
   const [ref, setRef] = useState<any>(null);
   const checkIntersect = useCallback(([entry]:any, observer:any) => {
     if (entry.isIntersecting) {
-      onIntersect(entry, observer);
+      onIntersect(entry, observer, page);
     }
   }, []);
 // 관찰자가 언제 관찰하는지, 관찰을 종료하는지에 대해 로직을 구현해준다.

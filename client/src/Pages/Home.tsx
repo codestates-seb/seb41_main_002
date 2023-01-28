@@ -1,4 +1,3 @@
-import dummyData from "./../data/HomeData.json";
 import styled from "styled-components";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -77,7 +76,8 @@ export default function Home() {
   const slideCarousel = (event: React.MouseEvent<HTMLButtonElement>) => {
     const carouselWidth = carouselRef.current?.clientWidth as number;
     const arrowButton: HTMLButtonElement = event.currentTarget;
-    const maxXPos: number = -carouselWidth * (dummyData.eventsInfo.length - 1);
+    const maxXPos: number =
+      -carouselWidth * ((homeData?.eventsInfo.length as number) - 1);
 
     if (arrowButton.name === "left" && xPos === 0) {
       setXPos(maxXPos);
@@ -92,8 +92,7 @@ export default function Home() {
 
   return (
     <div className="Home_Container">
-      {/* 현재 이미지가 없어서 dummyData 활용, 이후 이미지 추가 시 해당 데이터는 삭제 (get 요청은 정상적으로 작동 중이고 데이터가 잘 들어오는지 확인 완료) */}
-      <HeroImage bgUrl={dummyData?.bannerImageUrl as string}>
+      <HeroImage bgUrl={homeData?.bannerImageUrl as string}>
         <div className="Hero_Text">
           <h1 className="Hero_Text_Gradient">남성 전용 화장품</h1>
           <p className="Hero_Text_Gradient">
@@ -109,7 +108,7 @@ export default function Home() {
           ◀
         </button>
         <div className="Events_Carousel">
-          {dummyData?.eventsInfo.map((a, idx) => {
+          {homeData?.eventsInfo.map((a, idx) => {
             return (
               <CarouselSlide
                 bgUrl={a.eventImageURL}
@@ -118,10 +117,10 @@ export default function Home() {
                 ref={carouselRef}
               >
                 <div className="Event_Number_Text">
-                  {idx + 1} / {dummyData.eventsInfo.length}
+                  {idx + 1} / {homeData.eventsInfo.length}
                 </div>
                 <div className="Event_Caption_Text">
-                  <Link to="/events/:eventId">
+                  <Link to={`/events/${a.eventId}`}>
                     <h4 className="Event_Title">{a.title}</h4>
                   </Link>
                   <p>{`${a.createdAt} ~ ${a.endAt}`}</p>

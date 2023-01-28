@@ -90,12 +90,12 @@ export default function Checkout() {
       usedReserve: useReserve !== undefined ? Number(useReserve) : 0,
     };
 
-    window.localStorage.setItem("orderSheet", JSON.stringify(orderSheet));
+    window.sessionStorage.setItem("orderSheet", JSON.stringify(orderSheet));
 
     kakaoPaymentRequest(orderSheet, itemListArray[0].itemTitle).then(
       (res: { paymentURL: string; tid: string } | undefined) => {
         if (typeof res !== "undefined") {
-          window.localStorage.setItem("tid", res.tid);
+          window.sessionStorage.setItem("tid", res.tid);
           window.location.replace(res.paymentURL);
         }
         console.log("카카오 결제가 완료되었습니다");

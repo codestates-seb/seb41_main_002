@@ -1,4 +1,3 @@
-import dummyData from "./../data/MemberPageData.json";
 import CustomButton from "../Components/Commons/Buttons";
 import { SkinTag } from "../Components/Commons/TypeBadge";
 import styled from "styled-components";
@@ -8,7 +7,11 @@ import {
 } from "../Components/MyPageComponent/MyPageTabs";
 import { Link } from "react-router-dom";
 import "./Style/memberPage.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  getProfileData,
+  ProfileDataType,
+} from "../API/MemberPage/MemberPageAPI";
 
 const MemberTextBox = styled.li`
   display: flex;
@@ -23,7 +26,21 @@ const InfoText = styled.div<{ width: string }>`
   width: ${(props) => props.width};
 `;
 
+const memberId = Number(sessionStorage.getItem("memberId"));
+
 const MemberPage = () => {
+  const [profileData, setProfileData] = useState<ProfileDataType>();
+
+  useEffect(() => {
+    try {
+      getProfileData(memberId).then((res) => {
+        setProfileData(res);
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
   const [currentTab, setCurrentTab] = useState(1);
 
   return (
@@ -41,29 +58,33 @@ const MemberPage = () => {
       <ul>
         <MemberTextBox>
           <InfoText width="33%">이름</InfoText>
-          <InfoText width="67%">{dummyData.memberName}</InfoText>
+          <InfoText width="67%">{profileData?.memberName}</InfoText>
         </MemberTextBox>
         <MemberTextBox>
           <InfoText width="33%">생년월일</InfoText>
-          <InfoText width="67%">{dummyData.birthdate}</InfoText>
+          <InfoText width="67%">{profileData?.birthdate}</InfoText>
         </MemberTextBox>
         <MemberTextBox>
           <InfoText width="33%">이메일</InfoText>
-          <InfoText width="67%">{dummyData.email}</InfoText>
+          <InfoText width="67%">{profileData?.email}</InfoText>
         </MemberTextBox>
         <MemberTextBox>
           <InfoText width="33%">연락처</InfoText>
-          <InfoText width="67%">{dummyData.phoneNumber}</InfoText>
+          <InfoText width="67%">{profileData?.phoneNumber}</InfoText>
         </MemberTextBox>
         <MemberTextBox>
           <InfoText width="100%">대표 주소</InfoText>
         </MemberTextBox>
         <MemberTextBox style={{ height: `100px` }}>
-          <InfoText width="100%">{dummyData.address}</InfoText>
+          {profileData?.address !== null ? (
+            <InfoText width="100%">{profileData?.address}</InfoText>
+          ) : (
+            <InfoText width="100%"> 대표주소가 없습니다.</InfoText>
+          )}
         </MemberTextBox>
         <MemberTextBox>
           <InfoText width="100%">
-            {dummyData.isSubscribed ? (
+            {profileData?.isSubscribed ? (
               <span className="Member_Subscribed"> 현재 구독 중 </span>
             ) : (
               <div className="Member_Not_Subscribed">
@@ -83,27 +104,27 @@ const MemberPage = () => {
         </MemberTextBox>
       </ul>
       <h2>내 태그 정보</h2>
-      {dummyData.tagList.length !== 0 ? (
+      {profileData?.tagList.length !== 0 ? (
         <ul className="Profile_Tags">
           <MemberTextBox>
             <InfoText width="33%">내 피부 타입</InfoText>
             <InfoText width="67%" className="Profile_Type_Badges">
-              {SkinTag(dummyData.tagList[0])}
+              {SkinTag(profileData?.tagList[0] as string)}
             </InfoText>
           </MemberTextBox>
           <MemberTextBox>
             <InfoText width="33%">여드름성 피부 여부</InfoText>
             <InfoText width="67%" className="Profile_Type_Badges">
-              {SkinTag(dummyData.tagList[1])}
+              {SkinTag(profileData?.tagList[1] as string)}
             </InfoText>
           </MemberTextBox>
           <MemberTextBox>
             <InfoText width="33%">원하는 기능</InfoText>
             <InfoText width="67%" className="Profile_Type_Badges">
-              {dummyData.tagList.slice(2, dummyData.tagList.length).length !==
-              0 ? (
-                dummyData.tagList
-                  .slice(2, dummyData.tagList.length)
+              {profileData?.tagList.slice(2, profileData?.tagList.length)
+                .length !== 0 ? (
+                profileData?.tagList
+                  .slice(2, profileData?.tagList.length)
                   .map((tag, idx) => {
                     return <> {SkinTag(tag)}</>;
                   })
@@ -136,8 +157,12 @@ const MemberPage = () => {
             내 리뷰
           </li>
         </ul>
-        {currentTab === 1 ? <OrderHistoryTab /> : null}
-        {currentTab === 2 ? <MyReviewsTab /> : null}
+        {currentTab === 1 ? (
+          <OrderHistoryTab profileData={profileData as ProfileDataType} />
+        ) : null}
+        {currentTab === 2 ? (
+          <MyReviewsTab profileData={profileData as ProfileDataType} />
+        ) : null}
       </div>
     </div>
   );

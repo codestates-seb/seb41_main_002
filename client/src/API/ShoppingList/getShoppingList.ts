@@ -1,5 +1,4 @@
 import axios from "axios";
-import productData from "../../data/shoppingList.json";
 
 interface ParamsType {
   categoryENName: string;
@@ -24,30 +23,27 @@ export interface ProductData {
 export const getProductList = (
   option: ParamsType
 ): Promise<Array<ProductData>> => {
-  return new Promise((resolve) => {
-    // 해당 API는 추후에 변경예정
-    const result: Array<ProductData> = [];
+  return new Promise(async (resolve, rejects) => {
+    let result: Array<ProductData> = [];
     try {
-      // const responseData = await axios.get(`api/v1/items/${categoryENName}&custom=${boolean}&title=${keyword}&page=${page}`)
-      // result.push(responseData.data.cosmetics)
-
-      for (let i = 0; i < 16; i++) {
-        result.push({
-          member: {
-            memberTagsList: ["tagElement", "tagElement2"],
-          },
-          itemId: 2,
-          itemTitle: "제품명2",
-          categoryKRName: "크림",
-          categoryENName: "cream",
-          titleImageURL: "이미지의URL",
-          price: 200,
-          tagsList: ["건성", "일반피부"],
-        });
-      }
+      const responseData = await axios.get(
+        `http://13.125.242.34:8080/api/v1/items/${option.categoryENName}?custom=${option.custom}&title=${option.keyword}&page=${option.page}`
+      );
+      result = responseData.data.cosmetics;
     } catch (error) {
-      console.error(error);
+      rejects(error);
     }
     resolve(result);
   });
+};
+
+export const getMemberTagList = async (option: ParamsType) => {
+  try {
+    const resultData = await axios.get(
+      `http://13.125.242.34:8080/api/v1/items/${option.categoryENName}?custom=${option.custom}&title=${option.keyword}&page=${option.page}`
+    );
+    return resultData.data.member;
+  } catch (err) {
+    console.error(err);
+  }
 };
