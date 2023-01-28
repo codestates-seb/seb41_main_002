@@ -1,36 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// 추후 변수명 변경 및 타입변경 예정
-import { TopProductData } from "../API/ItemTopList/getTopList";
 import { getTopList } from "../API/ItemTopList/getTopList";
 import TopListCategoryTab from "../Components/ItemTopList/TopListCategoryTab";
 import TopProductList from "../Components/ItemTopList/TopProductList";
 import "./Style/itemsTopList.css";
 
 export default function ItemsTopList() {
-  const navigate = useNavigate()
   const [category, setCategory] = useState("전체");
   const [categoryENName, setCategoryENName] = useState("all");
   // 추후 변경예정
   const [topProductData, setTopProductData] = useState<any>([]);
   const [customCheck, setCustomCheck] = useState(false);
+  const accessToken = sessionStorage.getItem("accessToken");
+  const session = sessionStorage.getItem("memberId");
+  const navigate = useNavigate();
 
-  const params = useParams()
+  const params = useParams();
 
   const topProductList = async () => {
-    const result = await getTopList(categoryENName, customCheck);
+    const result = await getTopList(categoryENName, customCheck, accessToken);
     setTopProductData(result);
   };
 
   useEffect(() => {
     topProductList();
   }, [categoryENName]);
-
-    // 더미 session
-    const session = {
-      memberId: 1,
-      accountId: "abc",
-    };
 
   return (
     <div>
