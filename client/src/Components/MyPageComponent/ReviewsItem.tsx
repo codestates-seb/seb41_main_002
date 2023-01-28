@@ -17,7 +17,6 @@ const ReviewsItem = ({ review }: { review: ReviewType }) => {
           <span className="History_Detail_Indicator">상품명</span>
           <div className="History_Product_Info">
             <img src={review.itemImageURL} alt="sample image" />
-            <span className="Review_Item_Title">{review.itemTitle}</span>
           </div>
         </div>
         <div className="History_Product_Info">

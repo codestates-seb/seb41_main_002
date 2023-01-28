@@ -98,7 +98,7 @@ export default function SkinTestPage() {
   const [resultArr, setResultArr] = useState<any>([]);
   const skinTestArr: string[] = [skinTypeResult, acneTypeResult];
   const memberId = sessionStorage.getItem("memberId");
-  const addSkinTestHandler = (tag: string, skinTag: string, index?: number) => {
+  const addSkinTestHandler = (tag: string, skinTag: string) => {
     switch (skinTag) {
       case "피부타입":
         setSkinTypeResult(() => tag);
@@ -230,15 +230,14 @@ export default function SkinTestPage() {
           <div className="Test_Type_Container">
             <h2>피부 개선 효능중 관심있는 태그를 골라주세요!</h2>
             <div className="Type_Test_Content">
-              {interestEffectArr.map((el: any, index: number) => {
+              {interestEffectArr.map((el: any) => {
                 return (
                   <div className="Type_Tag_Btn" key={el.effectCategory}>
                     <TagButton
                       onClick={() => {
                         addSkinTestHandler(
                           el.effectCategory,
-                          el.skinTag,
-                          index
+                          el.skinTag
                         );
                       }}
                     >
@@ -256,7 +255,7 @@ export default function SkinTestPage() {
               height="40px"
               onClick={() => {
                 addSkinTest(memberId, resultArr);
-                setIsSubmitCheck(true)
+                setIsSubmitCheck(true);
               }}
             >
               Submit

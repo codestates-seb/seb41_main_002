@@ -1,10 +1,12 @@
 import axios from "axios";
+import { defaultInstance, authInstance } from "../Core";
 
 interface ParamsType {
   categoryENName: string;
   custom?: boolean;
   keyword?: string;
   page?: number;
+  accessToken?: any
 }
 
 export interface ProductData {
@@ -26,10 +28,17 @@ export const getProductList = (
   return new Promise(async (resolve, rejects) => {
     let result: Array<ProductData> = [];
     try {
-      const responseData = await axios.get(
-        `http://13.125.242.34:8080/api/v1/items/${option.categoryENName}?custom=${option.custom}&title=${option.keyword}&page=${option.page}`
-      );
-      result = responseData.data.cosmetics;
+      if (option.accessToken) {
+        const responseData = await authInstance.get(
+          `/items/${option.categoryENName}?custom=${option.custom}&title=${option.keyword}&page=${option.page}`
+        );
+        result = responseData.data.cosmetics;
+      } else {
+        const responseData = await defaultInstance.get(
+          `/items/${option.categoryENName}?custom=${option.custom}&title=${option.keyword}&page=${option.page}`
+        );
+        result = responseData.data.cosmetics;
+      }
     } catch (error) {
       rejects(error);
     }
@@ -39,10 +48,17 @@ export const getProductList = (
 
 export const getMemberTagList = async (option: ParamsType) => {
   try {
-    const resultData = await axios.get(
-      `http://13.125.242.34:8080/api/v1/items/${option.categoryENName}?custom=${option.custom}&title=${option.keyword}&page=${option.page}`
-    );
-    return resultData.data.member;
+    if (option.accessToken) {
+      const resultData = await authInstance.get(
+        `/items/${option.categoryENName}?custom=${option.custom}&title=${option.keyword}&page=${option.page}`
+      );
+      return resultData.data.member;
+    } else {
+      const resultData = await defaultInstance.get(
+        `/items/${option.categoryENName}?custom=${option.custom}&title=${option.keyword}&page=${option.page}`
+      );
+      return resultData.data.member;
+    }
   } catch (err) {
     console.error(err);
   }

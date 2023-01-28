@@ -47,13 +47,15 @@ const getProducts = async (
   categoryName: string,
   custom: boolean,
   page = 0,
-  keyword = ""
+  keyword = "",
+  accessToken? : string|null
 ): Promise<ProductProps[]> => {
   const results = await getProductList({
     categoryENName: categoryName,
     custom,
     page,
     keyword,
+    accessToken
   });
   return results.map((item) => ({
     itemId: item.itemId,
@@ -72,9 +74,8 @@ export default function ShoppingPage() {
   const [fetchingStatus, setFetchingStatus] = useState<boolean>(false);
   const [serchWord, setSerchWord] = useState("");
   const [lock, setLock] = useState<boolean>(false);
-  const [customCheck, setCustomCheck] = useState<boolean>(false)
   const bottomRef = useRef(null);
-
+  const accessToken = sessionStorage.getItem("accessToken");
   const session = sessionStorage.getItem("memberId");
   const fetchMemberTagData = async () => {
     const result = await getMemberTagList({
@@ -82,8 +83,9 @@ export default function ShoppingPage() {
       custom: isCustom,
       page: pageNumber,
       keyword: serchWord,
+      accessToken: accessToken,
     });
-    setMemberTagData(result)
+    setMemberTagData(result);
   };
 
   const fetchProducts = async () => {
@@ -93,7 +95,8 @@ export default function ShoppingPage() {
       categoryParam,
       isCustom,
       pageNumber,
-      serchWord
+      serchWord,
+      accessToken,
     );
     if (fetchedProducts.length === 0) {
       setLock(true);
@@ -118,7 +121,7 @@ export default function ShoppingPage() {
     setProducts([]);
     setLock(false);
     setPageNumber(1);
-  }, [categoryParam, isCustom, serchWord]);
+  }, [categoryParam, serchWord]);
 
   useEffect(() => {
     fetchMemberTagData();
@@ -126,7 +129,7 @@ export default function ShoppingPage() {
 
   useEffect(() => {
     fetchProducts();
-  }, [pageNumber]);
+  }, [pageNumber, isCustom]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -177,8 +180,6 @@ export default function ShoppingPage() {
               serchWord={serchWord}
               pageNumber={pageNumber}
               memberTagData={memberTagData}
-              customCheck={customCheck}
-              setCustomCheck={setCustomCheck}
             />
           </ul>
         </div>
