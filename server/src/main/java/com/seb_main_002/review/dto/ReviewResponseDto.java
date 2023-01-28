@@ -9,6 +9,8 @@ public class ReviewResponseDto {
     @Getter
     @Builder
     public static class ReviewDto {
+        private Long memberId;
+
         private String reviewTitle;
 
         private String reviewContent;
