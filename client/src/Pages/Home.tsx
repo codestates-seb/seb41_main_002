@@ -137,7 +137,7 @@ export default function Home() {
         {homeData?.topRankBanners.map((a, idx) => {
           return (
             <Link
-              to="/items-top-list"
+              to={`/items-top-list/${a.categoryENName}`}
               className="Top_Sales"
               key={`topSales${idx}`}
             >

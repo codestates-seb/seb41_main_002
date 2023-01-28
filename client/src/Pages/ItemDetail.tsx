@@ -97,7 +97,7 @@ const ItemDetail = () => {
               content="바로 구매"
               onClick={() => {
                 sendProductSaleInfo();
-                navigate(`/checkout`);
+                navigate(`/order/checkout`);
               }}
             />
           </>
