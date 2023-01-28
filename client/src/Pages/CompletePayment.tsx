@@ -42,13 +42,12 @@ const CompletePayment = () => {
       },
       params,
     })
-      .then((res) => {
+      .then(() => {
         const localOrder = sessionStorage.getItem("orderSheet");
         let orderSheet: OrderSheetType = localOrder && JSON.parse(localOrder);
-        console.log(orderSheet);
-        completePayment(orderSheet).then((res) => {
-          console.log("결제가 완료되었습니다.");
+        completePayment(orderSheet).then(() => {
           window.sessionStorage.removeItem("tid");
+          window.sessionStorage.removeItem("itemList");
           window.sessionStorage.removeItem("orderSheet");
         });
       })

@@ -21,7 +21,7 @@ const SignUp = () => {
     memberName: "",
     birthDate: "",
     email: "",
-    phoneNumber: "",
+    phoneNumber: "010-",
   });
   //비밀번호 체크 input 내용
   const [passwordCheck, setPasswordCheck] = useState<string>("");
@@ -41,13 +41,20 @@ const SignUp = () => {
     }
     if (name === "phoneNumber") {
       //전화번호 - 추가
-      setMember({
-        ...Member,
-        [name]: value
-          .replace(/[^0-9]/g, "")
-          .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
-          .replace(/(\-{1,2})$/g, ""),
-      });
+      if (value.length < 5) {
+        setMember({
+          ...Member,
+          [name]: "010-",
+        });
+      } else {
+        setMember({
+          ...Member,
+          [name]: value
+            .replace(/[^0-9]/g, "")
+            .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
+            .replace(/(\-{1,2})$/g, ""),
+        });
+      }
     } else if (name === "memberName") {
       //특수문자, 숫자 제거
       setMember({
@@ -122,7 +129,7 @@ const SignUp = () => {
           element={<div className="Modal_Text">{message}</div>}
         />
       ) : null}
-      <AccessMenu/>
+      <AccessMenu />
       <ul className="Member_Access_Contents">
         <li>회원가입</li>
         <li>
