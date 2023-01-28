@@ -1,24 +1,58 @@
 import CartIcon from "../../Icons/CartIcon";
 import UserIcon from "../../Icons/UserIcon";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import LogoutIcon from "../../Icons/LogoutIcon";
 import { onLogout } from "../../API/LogoutAPI";
 import "./../Style/header.css";
+import { kakaoRegularPayment } from "../../API/SubscriptionAPI";
 
 export default function Header() {
   const [isDropdownClicked, setIsDropdownClicked] = useState(false);
   const [isCheckBoxClick, setIsCheckBoxClick] = useState(false);
 
   const memberId = sessionStorage.getItem("memberId");
+  const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setIsCheckBoxClick(!isCheckBoxClick);
     setIsDropdownClicked(!isDropdownClicked);
   };
 
+  useEffect(() => {
+    const regularPaymentTime = sessionStorage.getItem(
+      "regularPayment"
+    ) as string;
+    if (regularPaymentTime) {
+      const nowDate = new Date();
+      const setTime =
+        nowDate.getTime() - new Date(regularPaymentTime).getTime();
+      const timeCalculation = (40 - setTime / 1000) * 1000;
+
+      if (timeCalculation >= 0) {
+        setTimeout(function () {
+          kakaoRegularPayment();
+
+          setInterval(function () {
+            kakaoRegularPayment();
+          }, 40000);
+        }, timeCalculation);
+      } else {
+        const Calculation =
+          40000 - Math.floor(((-timeCalculation / 1000) % 10) * 1000);
+        setTimeout(function () {
+          kakaoRegularPayment();
+
+          setInterval(function () {
+            kakaoRegularPayment();
+          }, 40000);
+        }, Calculation);
+      }
+    }
+  }, []);
   const userLogOut = () => {
     onLogout().then(() => {
+      navigate("/");
       window.location.reload();
     });
   };
@@ -69,9 +103,9 @@ export default function Header() {
               <li>
                 <div className="Nav_Line"></div>
               </li>
-              {itemList.map((item) => {
+              {itemList.map((item, index) => {
                 return (
-                  <li onClick={toggleDropdown}>
+                  <li key={index} onClick={toggleDropdown}>
                     <Link to={`/items-list/${item.itemNameEN}`}>
                       {item.itemNameKR}
                     </Link>

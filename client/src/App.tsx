@@ -12,6 +12,7 @@ import ShoppingPage from "./Pages/ShoppingPage";
 import ShoppingCart from "./Pages/ShoppingCart";
 import MemberPageEdit from "./Pages/MemberPageEdit";
 import CompletePayment from "./Pages/CompletePayment";
+import CompleteRegular from "./Pages/CompleteRegular";
 import SubscriptionPage from "./Pages/SubscriptionPage";
 import Footer from "./Components/Commons/Footer";
 import EventDetail from "./Pages/EventDetail";
@@ -27,6 +28,7 @@ function App() {
           <BrowserRouter>
             <Header />
             <Routes>
+              <Route path="/members/:memberId/subscribe/complete" element={<CompleteRegular/>}/>
               <Route path="/payment/complete" element={<CompletePayment/>}/>
               <Route path="/signUp" element={<SignUp />} />
               <Route path="/login" element={<Login />} />
