@@ -68,8 +68,7 @@ export const completePayment = async (order: PaymentType) => {
   try {
     await authInstance
       .post(`/orders`, order)
-      .then((res) => {
-        console.log("API 서버 저장 완료");
+      .then(() => {
       });
   } catch (error) {
     console.error(error);
