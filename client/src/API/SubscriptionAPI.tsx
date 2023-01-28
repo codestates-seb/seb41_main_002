@@ -44,9 +44,10 @@ export const kakaoRegularPayment = async () => {
   try {
     const memberId = sessionStorage.getItem("memberId");
     await authInstance.get(`members/${memberId}/subscribe`).then((res) => {
+      console.log(res.data);
       const params = {
         cid: "TCSUBSCRIP",
-        sid: res.data,
+        sid: res.data.sid,
         partner_order_id: "850625",
         partner_user_id: memberId,
         item_name: "정기구독 결제",
