@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface ItemRepository extends JpaRepository<Item, Long> {
     Page<Item> findAllByCategoryENNameStartingWith(String categoryENName, Pageable pageable);
 
@@ -16,5 +18,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Query(value = "SELECT i FROM Item i INNER JOIN i.tagList t WHERE t = :tag1 OR t = :tag2 AND i.itemTitle LIKE %:title% AND i.categoryENName LIKE :categoryENName% GROUP BY i.itemId HAVING count(i.itemId)>1")
     Page<Item> findCustomItem(String tag1,String tag2, String title, String categoryENName, Pageable pageable);
+
+    @Query(value = "SELECT * FROM item WHERE categoryenname = :categoryENName ORDER BY sales_count DESC", nativeQuery = true)
+    List<Item> findItemsByENNameCategoryWithSalesCount(String categoryENName);
 
 }

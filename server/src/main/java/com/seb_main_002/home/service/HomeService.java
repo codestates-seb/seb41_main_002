@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -47,10 +48,19 @@ public class HomeService {
 
     }
 
-    public List<Item> findItemsSortedSalesCount() {
-        final int topRankingLimit = 5;
-        List<Item> items = itemRepository.findAll(Sort.by(Sort.Direction.DESC, "salesCount"));
-        return items.subList(0, topRankingLimit);
+    public List<Item> findItemsSortedSalesCountByCategory() {
+        List<String> categoryENNames = new ArrayList<>(5);
+        categoryENNames.add("toner");
+        categoryENNames.add("cream");
+        categoryENNames.add("lotion");
+        categoryENNames.add("cleansing");
+        categoryENNames.add("suncream");
+
+        List<Item> topRankItems = categoryENNames.stream().map(categoryENName -> {
+            return itemRepository.findItemsByENNameCategoryWithSalesCount(categoryENName).get(0);
+        }).collect(Collectors.toList());
+
+        return topRankItems;
 
     }
 

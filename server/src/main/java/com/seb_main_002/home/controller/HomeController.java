@@ -33,7 +33,7 @@ public class HomeController {
                             .endAt(event.getModifiedAt().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")))
                             .build();
                 }).collect(Collectors.toList()))
-                .topRankBanners(homeService.findItemsSortedSalesCount().stream().map(item -> {
+                .topRankBanners(homeService.findItemsSortedSalesCountByCategory().stream().map(item -> {
                     return HomeResponseDto.TopRankBanner.builder()
                             .categoryKRName(item.getCategoryKRName())
                             .categoryENName(item.getCategoryENName())
