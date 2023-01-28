@@ -60,7 +60,7 @@ export const onIdDoubleCheck = async (
     setModalState(true);
   } else {
     await doubleCheck(Member.accountId).then((res) => {
-      if (res) {
+      if (res && !res.data) {
         setMessage("사용 가능한 아이디입니다.");
         setModalState(true);
         result = true;
