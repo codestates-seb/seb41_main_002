@@ -116,10 +116,6 @@ export default function Checkout() {
     }
   }, []);
 
-  useEffect(()=> {
-    console.log('변경');
-  },[itemListArray])
-
   return (
     <div className="Checkout_Container">
       <h1 className="Checkout_Header">결제 페이지</h1>

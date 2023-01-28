@@ -11,9 +11,12 @@ export const itemsCalculation = (
   subscribeCheck?: boolean
 ) => {
   const getItemList = sessionStorage.getItem("itemList");
-  const itemListArray: LocalType[] = getItemList && JSON.parse(getItemList);
+  let itemListArray: LocalType[] = getItemList && JSON.parse(getItemList);
   let totalPrice = 0;
-  console.log(itemListArray);
+  itemListArray = itemListArray.map(item => {
+    return {...item,itemTotalPrice:item.itemCount*item.itemTotalPrice}
+  })
+  
   let itemsTotalPrice = itemListArray.reduce(
     (sum: number, value: LocalType) => sum + value.itemTotalPrice,
     0
