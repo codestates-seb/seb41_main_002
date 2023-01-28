@@ -49,6 +49,7 @@ const CompletePayment = () => {
         completePayment(orderSheet).then((res) => {
           console.log("결제가 완료되었습니다.");
           window.sessionStorage.removeItem("tid");
+          window.sessionStorage.removeItem("itemList");
           window.sessionStorage.removeItem("orderSheet");
         });
       })
