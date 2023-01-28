@@ -40,7 +40,7 @@ public interface MemberMapper {
         List<MemberResponseDto.ReviewResponseDto> reviews = member.getReviews().stream().map(review -> MemberResponseDto.ReviewResponseDto.builder()
                 .reviewId(review.getReviewId())
                 .itemId(review.getItem().getItemId())
-                .itemImagaeURL(review.getItem().getTitleImageUrl())
+                .itemImageURL(review.getItem().getTitleImageUrl())
                 .itemTitle(review.getReviewTitle())
                 .reviewTitle(review.getReviewTitle())
                 .createdAt(review.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")))
