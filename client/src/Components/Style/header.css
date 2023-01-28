@@ -52,7 +52,7 @@
 .Nav_List {
   position: absolute;
   width: 200px;
-  height: 245px;
+  height: 120px;
   background-color: var(--dark2);
   left: -40px;
   top: 65px;
@@ -61,17 +61,18 @@
   z-index: 10;
 }
 
-.Nav_List li{
+.Nav_List li {
   display: flex;
   justify-content: center;
-  margin: 5px 0;
+  margin: 10px 0;
+  font-size: 23px;
 }
 
-.Nav_Line{
+.Nav_Line {
   width: 80%;
   height: 2px;
   border-radius: 4px;
-  background-color: var(--dark);
+  background-color: lightblue;
 }
 
 .Header_Logo {

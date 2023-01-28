@@ -108,11 +108,11 @@ export default function Home() {
           ◀
         </button>
         <div className="Events_Carousel">
-          {homeData?.eventsInfo.map((a, idx) => {
+          {homeData?.eventsInfo.map((event, idx) => {
             return (
               <CarouselSlide
-                bgUrl={a.eventImageURL}
-                key={`slide${a.eventId}`}
+                bgUrl={event.eventImageURL}
+                key={`slide${event.eventId}`}
                 style={carouselStyleToSlide}
                 ref={carouselRef}
               >
@@ -120,10 +120,10 @@ export default function Home() {
                   {idx + 1} / {homeData.eventsInfo.length}
                 </div>
                 <div className="Event_Caption_Text">
-                  <Link to={`/events/${a.eventId}`}>
-                    <h4 className="Event_Title">{a.title}</h4>
+                  <Link to={`/events/${event.eventId}`}>
+                    <h4 className="Event_Title">{event.title}</h4>
                   </Link>
-                  <p>{`${a.createdAt} ~ ${a.endAt}`}</p>
+                  <p>{`${event.createdAt} ~ ${event.endAt}`}</p>
                 </div>
               </CarouselSlide>
             );
@@ -134,15 +134,15 @@ export default function Home() {
         </button>
       </div>
       <div className="Top_Sales_Banner">
-        {homeData?.topRankBanners.map((a, idx) => {
+        {homeData?.topRankBanners.map((topRankCategory, idx) => {
           return (
             <Link
-              to={`/items-top-list/${a.categoryENName}`}
+              to={`/items-top-list/${topRankCategory.categoryENName}`}
               className="Top_Sales"
               key={`topSales${idx}`}
             >
-              <TopSalesContent bgUrl={a.topListURL}>
-                <p>이 달의 Top 10 {a.categoryKRName}</p>
+              <TopSalesContent bgUrl={topRankCategory.topListURL}>
+                <p>이 달의 Top 10 {topRankCategory.categoryKRName}</p>
               </TopSalesContent>
             </Link>
           );
