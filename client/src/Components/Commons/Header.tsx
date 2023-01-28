@@ -22,7 +22,30 @@ export default function Header() {
       window.location.reload();
     });
   };
-  
+
+  const itemList = [
+    {
+      itemNameEN: "toner",
+      itemNameKR: "스킨/토너",
+    },
+    {
+      itemNameEN: "cream",
+      itemNameKR: "크림",
+    },
+    {
+      itemNameEN: "lotion",
+      itemNameKR: "로션",
+    },
+    {
+      itemNameEN: "cleansing",
+      itemNameKR: "클렌징",
+    },
+    {
+      itemNameEN: "suncream",
+      itemNameKR: "선크림",
+    },
+  ];
+
   return (
     <header>
       <nav className="Header_Nav">
@@ -46,21 +69,15 @@ export default function Header() {
               <li>
                 <div className="Nav_Line"></div>
               </li>
-              <li onClick={toggleDropdown}>
-                <Link to="/items-list/toner">스킨/토너</Link>
-              </li>
-              <li onClick={toggleDropdown}>
-                <Link to="/items-list/cream">크림</Link>
-              </li>
-              <li onClick={toggleDropdown}>
-                <Link to="/items-list/lotion">로션</Link>
-              </li>
-              <li onClick={toggleDropdown}>
-                <Link to="/items-list/cleansing">클렌징</Link>
-              </li>
-              <li onClick={toggleDropdown}>
-                <Link to="/items-list/suncream">선크림</Link>
-              </li>
+              {itemList.map((item) => {
+                return (
+                  <li onClick={toggleDropdown}>
+                    <Link to={`/items-list/${item.itemNameEN}`}>
+                      {item.itemNameKR}
+                    </Link>
+                  </li>
+                );
+              })}
               <li>
                 <div className="Nav_Line"></div>
               </li>
