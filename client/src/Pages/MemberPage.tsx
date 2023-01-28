@@ -32,16 +32,14 @@ const MemberPage = () => {
   const [profileData, setProfileData] = useState<ProfileDataType>();
 
   useEffect(() => {
-    if (!profileData) {
-      try {
-        getProfileData(memberId).then((res) => {
-          setProfileData(res);
-        });
-      } catch (err) {
-        console.error(err);
-      }
+    try {
+      getProfileData(memberId).then((res) => {
+        setProfileData(res);
+      });
+    } catch (err) {
+      console.error(err);
     }
-  });
+  }, []);
 
   const [currentTab, setCurrentTab] = useState(1);
 
@@ -139,7 +137,7 @@ const MemberPage = () => {
       ) : (
         <div className="Member_Not_Subscribed">
           <span>피부 타입 검사를 하지 않았습니다.</span>
-          <Link to={`/skin-test/${memberId}`}>
+          <Link to={`/members/:memberId/subscribe`}>
             <CustomButton
               bgColor="white"
               content="검사 받으러 가기"
