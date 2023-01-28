@@ -1,0 +1,46 @@
+.Top_List_Title {
+  text-align: center;
+  font-size: 27px;
+}
+
+.Filter_Options {
+  display: flex;
+  height: 50px;
+  justify-content: space-between;
+  align-items: center;
+  width: calc(100% - 50px);
+}
+
+.Tab_Container{
+  display: flex;
+  justify-content: center;
+}
+
+.Filter_Button {
+  width: 75px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+.Products_Gallery {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  background-color: var(--gray);
+}
+
+.Products_Row{
+  width: calc(100% - 50px);
+  margin-top: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.Product_Detail {
+  text-align: center;
+  font-size: 17px;
+}

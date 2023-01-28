@@ -1,0 +1,84 @@
+:root {
+  /* colors */
+  --black: #0c0d0e;
+  --black2: #18191C;
+  --dark: #202225;
+  --dark2: #2f3136;
+  --dark3: #36393f;
+  --gray: #6a737c;
+  --lightgray: #babfc4;
+	--lightgray2: #e3e6e8;
+  --white: #ffffff;
+  /* main colors */
+
+  /* ui colors */
+}
+
+/* layout*/
+html {
+  width: 100%;
+  font-size: 13px;
+  color: var(--white);
+  background-color: var(--dark);
+}
+
+.Browser_Container {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1600px;
+  height: 100%;
+}
+
+.Contents_Wrap {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1400px;
+  height: 100%;
+}
+
+/* input */
+input[type="text"].textBox{
+  padding: 8px 9px;
+}
+
+/* reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ol,ul {
+  list-style-type: none;
+}
+
+a:link {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+input {
+  border: 1px solid var(--lightgray);
+  border-radius: 10px;
+  background-color: var(--dark3);
+  color: var(--white);
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+  border: 0 none;
+}
