@@ -51,6 +51,8 @@ interface GetMemberDataType {
   addressList: GetAddressType[];
 }
 
+const CLIENT_URL = process.env.REACT_APP_CLIENT_URL as string;
+
 export const memberData = async (memberId: number) => {
   try {
     const response = await defaultInstance.get<GetMemberDataType>(
@@ -107,9 +109,9 @@ export const kakaoPaymentRequest = async (
       total_amount: totalAmount,
       vat_amount: 0,
       tax_free_amount: 0,
-      approval_url: `http://localhost:3000/payment/complete`,
-      fail_url: "http://localhost:3000/checkout",
-      cancel_url: "http://localhost:3000/checkout",
+      approval_url: `${CLIENT_URL}/payment/complete`,
+      fail_url: `${CLIENT_URL}/checkout`,
+      cancel_url: `${CLIENT_URL}/checkout`,
     };
 
     await axios({

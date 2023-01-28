@@ -1,6 +1,8 @@
 import axios from "axios";
 import { authInstance } from "./Core";
 
+const CLIENT_URL = process.env.REACT_APP_CLIENT_URL as string;
+
 export const kakaoRegularPaymentReady = async () => {
   try {
     let paymentURL = "";
@@ -15,9 +17,9 @@ export const kakaoRegularPaymentReady = async () => {
       total_amount: 5900,
       vat_amount: 590,
       tax_free_amount: 0,
-      approval_url: `http://localhost:3000/members/${memberId}/subscribe/complete`,
-      fail_url: `http://localhost:3000/members/${memberId}/subscribe`,
-      cancel_url: `http://localhost:3000/members/${memberId}/subscribe`,
+      approval_url: `${CLIENT_URL}/members/${memberId}/subscribe/complete`,
+      fail_url: `${CLIENT_URL}/members/${memberId}/subscribe`,
+      cancel_url: `${CLIENT_URL}/members/${memberId}/subscribe`,
     };
 
     await axios({
