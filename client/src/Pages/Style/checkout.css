@@ -109,3 +109,7 @@
 .Pay_Button {
   padding: 10px;
 }
+
+.Ordered_List_Item_Wrapper img{
+  height: 100px;
+}
