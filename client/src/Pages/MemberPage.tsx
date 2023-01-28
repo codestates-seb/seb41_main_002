@@ -34,7 +34,6 @@ const MemberPage = () => {
   useEffect(() => {
     try {
       getProfileData(memberId).then((res) => {
-        console.log(res);
         setProfileData(res);
       });
     } catch (err) {
