@@ -164,7 +164,7 @@ export default function ShoppingCart() {
             padding="5px"
             onClick={() => {
               pushProductData();
-              navigate("/order/check");
+              navigate("/order/checkout");
             }}
           />
         </div>
