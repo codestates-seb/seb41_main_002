@@ -72,9 +72,9 @@ export default function ShoppingPage() {
   const [fetchingStatus, setFetchingStatus] = useState<boolean>(false);
   const [serchWord, setSerchWord] = useState("");
   const [lock, setLock] = useState<boolean>(false);
-  const [customCheck, setCustomCheck] = useState<boolean>(false)
+  const [customCheck, setCustomCheck] = useState<boolean>(false);
   const bottomRef = useRef(null);
-
+  const accessToken = sessionStorage.getItem("accessToken");
   const session = sessionStorage.getItem("memberId");
   const fetchMemberTagData = async () => {
     const result = await getMemberTagList({
@@ -82,8 +82,9 @@ export default function ShoppingPage() {
       custom: isCustom,
       page: pageNumber,
       keyword: serchWord,
+      accessToken: accessToken,
     });
-    setMemberTagData(result)
+    setMemberTagData(result);
   };
 
   const fetchProducts = async () => {
@@ -93,7 +94,7 @@ export default function ShoppingPage() {
       categoryParam,
       isCustom,
       pageNumber,
-      serchWord
+      serchWord,
     );
     if (fetchedProducts.length === 0) {
       setLock(true);
@@ -118,7 +119,7 @@ export default function ShoppingPage() {
     setProducts([]);
     setLock(false);
     setPageNumber(1);
-  }, [categoryParam, isCustom, serchWord]);
+  }, [categoryParam, serchWord]);
 
   useEffect(() => {
     fetchMemberTagData();

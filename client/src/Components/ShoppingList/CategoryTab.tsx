@@ -12,18 +12,19 @@ interface Props {
   setCategoryParams(category: string): React.SetStateAction<string>;
   setIsCustom(custom: boolean): React.SetStateAction<boolean>;
   isCustom: boolean;
-  session: string | null
-  memberTagData: any
-  serchWord: string
-  pageNumber: number
-  customCheck: boolean
-  setCustomCheck: React.Dispatch<React.SetStateAction<boolean>>
+  session: string | null;
+  memberTagData: any;
+  serchWord: string;
+  pageNumber: number;
+  customCheck: boolean;
+  setCustomCheck: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const ShoppingCategoryTab: Function = (props: Props) => {
-  const param = useParams()
+  console.log(props.memberTagData)
+  const param = useParams();
   const [activateTag, setActivateTage] = useState(0);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const categoryTitle: Array<Category> = [
     {
       categoryKRName: "전체",
@@ -59,20 +60,24 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
             <CustomButton
               fontColor={activateTag === index ? "black" : "white"}
               fontsize={activateTag === index ? "21px" : "17px"}
-              bgColor={activateTag === index ? "var(--gray)": "var(--lightgray)"}
+              bgColor={
+                activateTag === index ? "var(--gray)" : "var(--lightgray)"
+              }
               width="100px"
               padding="5px"
               content={`${category.categoryKRName}`}
               onClick={() => {
                 setActivateTage(index);
                 props.setCategoryParams(category.categoryENName);
-                navigate(`/items-list/${category.categoryENName}?custom=${props.isCustom}&title=${props.serchWord}&page=${props.pageNumber}`)
+                navigate(
+                  `/items-list/${category.categoryENName}?custom=${props.isCustom}&title=${props.serchWord}&page=${props.pageNumber}`
+                );
               }}
             />
           </li>
         );
       })}
-                  {props.memberTagData && props.memberTagData.memberTagsList !== null ? (
+      {props.memberTagData && props.memberTagData.memberTagsList !== null ? (
         props.memberTagData &&
         props.memberTagData.memberTagsList.length !== 0 ? (
           <li>
@@ -103,7 +108,7 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
               padding="5px"
               content="커스텀"
               onClick={() => {
-                navigate("/");
+                navigate(`/skin-test/${props.session}`);
               }}
             />
           </li>
