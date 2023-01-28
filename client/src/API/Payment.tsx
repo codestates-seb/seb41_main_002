@@ -79,8 +79,7 @@ export const addAddress = async (addresses: AddressType) => {
   try {
     await authInstance
       .post(`/addresses`, addresses)
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
       });
   } catch (error) {
     console.error(error);
