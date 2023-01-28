@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { getReviewInfo } from '../../API/Review';
 import "../Style/reviewInfo.css"
 
 interface PropsType{
@@ -6,6 +7,11 @@ interface PropsType{
 }
 
 const ReviewInfo = ({reviewId} : PropsType) => {
+  useEffect(() => {
+    getReviewInfo(reviewId).then(res => {
+      console.log(res);
+    })
+  }, []);
   return (
     <div className='ReviewInfo_Container'>
       {reviewId}
