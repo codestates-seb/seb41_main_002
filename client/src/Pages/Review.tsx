@@ -48,8 +48,11 @@ const Review = () => {
       reviewTitle: reviewText.reviewTitle,
       reviewContent: reviewText.reviewContent,
     };
-    reviewPost(review).then(() => {
-      navigate(`/itemDetail/${itemId}`)
+    reviewPost(review).then((res) => {
+      // navigate(`/itemDetail/${itemId}`)
+      console.log(res);
+    }).catch(err => {
+      console.log('작성 X');
     });
   };
 
