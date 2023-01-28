@@ -126,7 +126,7 @@ const MemberPage = () => {
                 profileData?.tagList
                   .slice(2, profileData?.tagList.length)
                   .map((tag, idx) => {
-                    return <> {SkinTag(tag)}</>;
+                    return <span key={`tag${idx}`}> {SkinTag(tag)}</span>;
                   })
               ) : (
                 <span className="No_Tags">추가 태그 없음</span>
