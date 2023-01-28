@@ -60,7 +60,9 @@ const OrderHistoryItem = ({ order }: { order: OrderType }) => {
                   <div>{item.itemTotalPrice}</div>
                 </div>
                 <div>
-                  <Link to={`/reviews/item/${item.itemId}`}>
+                  <Link
+                    to={`/reviews/item/${item.itemId}?orderItemId=${item.orderItemId}`}
+                  >
                     <CustomButton
                       bgColor="transparent"
                       content="리뷰 작성"
