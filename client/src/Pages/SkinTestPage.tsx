@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import "./Style/skinTestPage.css";
-import CustomButton from "../Components/Commons/Buttons";
+import { addSkinTest } from "../API/SkinTestPage/addSkinTest";
 
 interface TagButtonProps {
   height?: string;
@@ -97,6 +97,7 @@ export default function SkinTestPage() {
   const [effectArr, setEffectArr] = useState<any>([]);
   const [resultArr, setResultArr] = useState<any>([]);
   const skinTestArr: string[] = [skinTypeResult, acneTypeResult];
+  const memberId = sessionStorage.getItem("memberId")
   const addSkinTestHandler = (tag: string, skinTag: string, index?: number) => {
     switch (skinTag) {
       case "피부타입":
@@ -251,7 +252,9 @@ export default function SkinTestPage() {
           </div>
         ) : null}
         <div className="Submit_Section">
-          <TagButton height="40px">Submit</TagButton>
+          <TagButton height="40px" onClick={()=>{
+            addSkinTest(memberId,resultArr)
+          }}>Submit</TagButton>
         </div>
         {!isSubmitCheck ? (
           <div className="Test_Result">
