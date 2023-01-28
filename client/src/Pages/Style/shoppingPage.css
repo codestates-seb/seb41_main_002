@@ -19,6 +19,11 @@
   justify-content: center;
 }
 
+.Shopping_Product_Info{
+  width: 200px;
+  height: 250px;
+}
+
 .Product_List{
   width: calc(100% - 50px);
   margin-top: 30px;
