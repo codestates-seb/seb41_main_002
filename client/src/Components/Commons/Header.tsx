@@ -1,7 +1,7 @@
 import CartIcon from "../../Icons/CartIcon";
 import UserIcon from "../../Icons/UserIcon";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LogoutIcon from "../../Icons/LogoutIcon";
 import { onLogout } from "../../API/LogoutAPI";
 import "./../Style/header.css";
@@ -12,6 +12,7 @@ export default function Header() {
   const [isCheckBoxClick, setIsCheckBoxClick] = useState(false);
 
   const memberId = sessionStorage.getItem("memberId");
+  const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setIsCheckBoxClick(!isCheckBoxClick);
@@ -51,6 +52,7 @@ export default function Header() {
   }, []);
   const userLogOut = () => {
     onLogout().then(() => {
+      navigate("/");
       window.location.reload();
     });
   };
