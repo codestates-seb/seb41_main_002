@@ -1,7 +1,7 @@
 import axios from "axios";
 import { authInstance } from "./Core";
 
-const CLIENT_URL = process.env.REACT_APP_CLIENT_URL as string;
+let CLIENT_URL = "http://seb41team02.s3-website.ap-northeast-2.amazonaws.com";
 
 export const kakaoRegularPaymentReady = async () => {
   try {

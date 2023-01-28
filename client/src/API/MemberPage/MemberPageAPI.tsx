@@ -14,7 +14,7 @@ export interface ItemType {
   itemId: number;
   itemImageURL: string;
   itemTitle: string;
-  count: number;
+  itemCount: number;
   itemTotalPrice: number;
 }
 

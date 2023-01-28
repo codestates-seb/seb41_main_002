@@ -3,7 +3,7 @@ export interface LocalType {
   itemTitle: string;
   itemImageURL: string;
   itemTotalPrice: number;
-  count: number;
+  itemCount: number;
 }
 
 const getItemList = sessionStorage.getItem("itemList");
@@ -26,7 +26,7 @@ export const itemsOrganize = () => {
   let itemList = itemListArray.map((item:LocalType) => {
     return{
       itemId: item.itemId,
-      count: item.count,
+      itemCount: item.itemCount,
       itemTotalPrice: item.itemTotalPrice,
     }
   })

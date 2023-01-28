@@ -3,7 +3,7 @@ import { authInstance } from "./Core";
 
 interface ItemType {
   itemId: number;
-  count: number;
+  itemCount: number;
   itemTotalPrice: number;
 }
 
@@ -51,7 +51,7 @@ interface GetMemberDataType {
   addressList: GetAddressType[];
 }
 
-const CLIENT_URL = process.env.REACT_APP_CLIENT_URL as string;
+let CLIENT_URL = "http://seb41team02.s3-website.ap-northeast-2.amazonaws.com";
 
 export const memberData = async (memberId: number) => {
   try {
@@ -113,7 +113,7 @@ export const kakaoPaymentRequest = async (
       fail_url: `${CLIENT_URL}/checkout`,
       cancel_url: `${CLIENT_URL}/checkout`,
     };
-
+    console.log(params);
     await axios({
       url: "https://kapi.kakao.com/v1/payment/ready",
       method: "POST",
