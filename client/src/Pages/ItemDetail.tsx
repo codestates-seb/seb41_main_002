@@ -46,7 +46,7 @@ const ItemDetail = () => {
       },
     ];
     const result = JSON.stringify(productSaleInfo);
-    return window.localStorage.setItem("itemList", result);
+    return window.sessionStorage.setItem("itemList", result);
   };
 
   const session = sessionStorage.getItem("memberId")

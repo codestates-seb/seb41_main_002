@@ -1,4 +1,3 @@
-// 더미 데이터 연동 후 지울 예정---------------------------
 export interface LocalType {
   itemId: number;
   itemTitle: string;
@@ -7,40 +6,8 @@ export interface LocalType {
   count: number;
 }
 
-const arr: LocalType[] = [
-  {
-    itemId: 1,
-    itemTitle: "상품이름1",
-    itemImageURL: "https://picsum.photos/75?random=1",
-    itemTotalPrice: 30000,
-    count: 3,
-  },
-  {
-    itemId: 2,
-    itemTitle: "상품이름2",
-    itemImageURL: "https://picsum.photos/75?random=2",
-    itemTotalPrice: 20000,
-    count: 2,
-  },
-  {
-    itemId: 3,
-    itemTitle: "상품이름3",
-    itemImageURL: "https://picsum.photos/75?random=3",
-    itemTotalPrice: 60000,
-    count: 6,
-  },
-];
-
-const arrString = JSON.stringify(arr);
-window.localStorage.setItem("itemList", arrString);
-
-//----------------------------------------------------------
-
-
-
-const getItemList = localStorage.getItem("itemList");
+const getItemList = sessionStorage.getItem("itemList");
 const itemListArray:LocalType[] = getItemList && JSON.parse(getItemList);
-
 
 export const itemsCalculation = (useReserve?: string | number , subscribeCheck?: boolean) => {
   let totalPrice = 0;
