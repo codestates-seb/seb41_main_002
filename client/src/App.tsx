@@ -10,6 +10,7 @@ import MemberPage from "./Pages/MemberPage";
 import ShoppingList from "./Pages/ShoppingList";
 import ItemsTopList from "./Pages/ItemsTopList";
 import ShoppingCart from "./Pages/ShoppingCart";
+import SkinTestPage from "./Pages/SkinTestPage";
 import MemberPageEdit from "./Pages/MemberPageEdit";
 import CompletePayment from "./Pages/CompletePayment";
 import SubscriptionPage from "./Pages/SubscriptionPage";
@@ -46,6 +47,7 @@ function App() {
               <Route path="/reviews/item/:itemId" element={<Review />} />
               <Route path="/members/:memberId/subscribe" element={<SubscriptionPage />} />
               <Route path="/events/:eventId" element={<EventDetail />} />
+              <Route path="skin-test/:memberId" element={<SkinTestPage/>}/>
             </Routes>
           </BrowserRouter>
         </div>
