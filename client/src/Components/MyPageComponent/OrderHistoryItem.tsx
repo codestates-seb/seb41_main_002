@@ -40,12 +40,12 @@ const OrderHistoryItem = ({ order }: { order: OrderType }) => {
             return (
               <div
                 className="Profile_History_Content"
-                key={`order${order.orderId}Item${item.itemId}`}
+                key={`order${order.orderId}Item${item.orderItemId}`}
               >
-                <div>
+                <div className="History_Image_Container">
                   <img src={item.itemImageURL} alt="item image" />
                 </div>
-                <div className="History_Product_Info">
+                <div className="History_Product_Name">
                   <span className="History_Detail_Indicator">상품명</span>
                   <Link to={`/itemDetail/${item.itemId}`}>
                     <div>{item.itemTitle} </div>
@@ -53,13 +53,13 @@ const OrderHistoryItem = ({ order }: { order: OrderType }) => {
                 </div>
                 <div className="History_Product_Info">
                   <span className="History_Detail_Indicator">상품 개수</span>
-                  <div>{item.itemCount}</div>
+                  <div>{item.count}</div>
                 </div>
                 <div className="History_Product_Info">
                   <span className="History_Detail_Indicator">가격</span>
                   <div>{item.itemTotalPrice}</div>
                 </div>
-                <div>
+                <div className="History_Review_Button">
                   <Link
                     to={`/reviews/item/${item.itemId}?orderItemId=${item.orderItemId}`}
                   >
