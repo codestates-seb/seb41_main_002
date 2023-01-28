@@ -6,6 +6,7 @@ import com.seb_main_002.exception.BusinessLogicException;
 import com.seb_main_002.exception.ExceptionCode;
 import com.seb_main_002.item.entity.Item;
 import com.seb_main_002.item.repository.ItemRepository;
+import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -61,49 +62,61 @@ public class ItemService {
 
 
     //상위 10개만 출력
-    public List<Item> findTopListItems(String categoryENName, Boolean custom, List<String> memberTagsList){
+//    public List<Item> findTopListItems(String categoryENName, Boolean custom, List<String> memberTagList){
+//
+//
+//        if(categoryENName.equals("all")) categoryENName = "";
+//        if(custom == null) custom = false;
+//
+//        Page<Item> findItems;
+//
+//        if(custom == true && memberTagList.size() != 0){
+//            String tag1="", tag2="";
+//            if     (memberTagList.contains("건성")){ tag1 = "건성";}
+//            else if(memberTagList.contains("지성")){ tag1 = "지성";}
+//            else if(memberTagList.contains("복합성")){ tag1 = "복합성";}
+//
+//            if     (memberTagList.contains("일반피부")){ tag2 = "일반피부";}
+//            else if(memberTagList.contains("여드름성 피부")){ tag2 = "여드름성 피부";}
+//
+//            findItems = itemRepository.findCustomTopListItem(tag1,tag2,categoryENName,PageRequest.of(0, 10, Sort.by("salesCount").descending()));
+//        }
+//        else{
+//            findItems = itemRepository.findAllByCategoryENNameStartingWith(categoryENName, PageRequest.of(0, 10, Sort.by("salesCount").descending()));
+//        }
+//
+//        return findItems.getContent();
+//    }
+
+    public List<Item> findFilteredItems(String categoryENName, Boolean custom, String title, int page, List<String> memberTagList, Boolean topListFlag){
+
         if(categoryENName.equals("all")) categoryENName = "";
+        if(custom == null) custom = false;
+        if(title == null) title = "";
+
+        //로그인여부에따른 custom 예외처리
+        if(memberTagList == null && custom == true ) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
         Page<Item> findItems;
 
-        if(custom == true && memberTagsList.size() != 0){
-            List<String> membertags = memberTagsList;
-
+        if(custom == true && memberTagList.size() != 0){
             String tag1="", tag2="";
-            if     (membertags.contains("건성")){ tag1 = "건성";}
-            else if(membertags.contains("지성")){ tag1 = "지성";}
-            else if(membertags.contains("복합성")){ tag1 = "복합성";}
+            if     (memberTagList.contains("건성")){ tag1 = "건성";}
+            else if(memberTagList.contains("지성")){ tag1 = "지성";}
+            else if(memberTagList.contains("복합성")){ tag1 = "복합성";}
 
-            if     (membertags.contains("일반피부")){ tag2 = "일반피부";}
-            else if(membertags.contains("여드름성 피부")){ tag2 = "여드름성 피부";}
+            if     (memberTagList.contains("일반피부")){ tag2 = "일반피부";}
+            else if(memberTagList.contains("여드름성 피부")){ tag2 = "여드름성 피부";}
 
-            findItems = itemRepository.findCustomTopListItem(tag1,tag2,categoryENName,PageRequest.of(0, 10, Sort.by("salesCount").descending()));
-        }
-        else{
-            findItems = itemRepository.findAllByCategoryENNameStartingWith(categoryENName, PageRequest.of(0, 10, Sort.by("salesCount").descending()));
-        }
-
-        return findItems.getContent();
-    }
-
-    public List<Item> findFilteredItems(String categoryENName, Boolean custom, String title, int page, List<String> memberTagsList){
-
-        Page<Item> findItems;
-
-        if(custom == true && memberTagsList.size() != 0){
-            List<String> membertags = memberTagsList;
-
-            String tag1="", tag2="";
-            if     (membertags.contains("건성")){ tag1 = "건성";}
-            else if(membertags.contains("지성")){ tag1 = "지성";}
-            else if(membertags.contains("복합성")){ tag1 = "복합성";}
-
-            if     (membertags.contains("일반피부")){ tag2 = "일반피부";}
-            else if(membertags.contains("여드름성 피부")){ tag2 = "여드름성 피부";}
-
+            if(topListFlag)
+                findItems = itemRepository.findCustomTopListItem(tag1,tag2,categoryENName,PageRequest.of(0, 10, Sort.by("salesCount").descending()));
+            else
                 findItems = itemRepository.findCustomItem(tag1, tag2, title,categoryENName, PageRequest.of(page,18));
         }
         else{
-            findItems = itemRepository.findAllByCategoryENNameStartingWithAndItemTitleContaining(categoryENName,title, PageRequest.of(page,18));
+            if(topListFlag)
+                findItems = itemRepository.findAllByCategoryENNameStartingWith(categoryENName, PageRequest.of(0, 10, Sort.by("salesCount").descending()));
+            else
+                findItems = itemRepository.findAllByCategoryENNameStartingWithAndItemTitleContaining(categoryENName,title, PageRequest.of(page,18));
         }
 
         return findItems.getContent();
@@ -114,5 +127,14 @@ public class ItemService {
                 .orElseThrow( () ->
                         new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
         return findItem;
+    }
+
+
+    public List<String> findVerifiedMemberTagList(Long memberId){
+        if(memberId == null)
+            return null;
+
+        Member findMember = memberRepository.findById(memberId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        return findMember.getTagList();
     }
 }

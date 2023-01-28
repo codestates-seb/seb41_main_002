@@ -9,7 +9,7 @@ import java.util.List;
 @Builder
 @Getter
 public class ItemTopListResponseDto {
-    ItemSearchResponseDto.MemberTagInfo member;
+    MemberTagInfo member;
     List<TopItemDto> topList;
 
 
