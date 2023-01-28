@@ -1,6 +1,7 @@
 import { ProfileDataType } from "../../API/MemberPage/MemberPageAPI";
 import OrderHistoryItem from "./OrderHistoryItem";
 import ReviewsItem from "./ReviewsItem";
+import "./../Style/myPageTabs.css";
 
 export const OrderHistoryTab = ({
   profileData,

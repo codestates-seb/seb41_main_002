@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ItemType, OrderType } from "../../API/MemberPage/MemberPageAPI";
 
 const OrderHistoryItem = ({ order }: { order: OrderType }) => {
+  console.log(order);
   const [isActive, setIsActive] = useState(false);
   const openAccordion = () => {
     setIsActive(!isActive);
@@ -40,9 +41,9 @@ const OrderHistoryItem = ({ order }: { order: OrderType }) => {
             return (
               <div
                 className="Profile_History_Content"
-                key={`order${order.orderId}Item${item.itemId}`}
+                key={`order${order.orderId}Item${item.orderItemId}`}
               >
-                <div>
+                <div className="History_Image_Container">
                   <img src={item.itemImageURL} alt="item image" />
                 </div>
                 <div className="History_Product_Info">
@@ -53,7 +54,7 @@ const OrderHistoryItem = ({ order }: { order: OrderType }) => {
                 </div>
                 <div className="History_Product_Info">
                   <span className="History_Detail_Indicator">상품 개수</span>
-                  <div>{item.itemCount}</div>
+                  <div>{item.count}</div>
                 </div>
                 <div className="History_Product_Info">
                   <span className="History_Detail_Indicator">가격</span>
