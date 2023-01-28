@@ -19,7 +19,7 @@ export interface ReviewType extends ReviewTextType {
   reviewRating: number;
 }
 
-interface ReviewInfoType {
+export interface ReviewInfoType {
   memberId: number;
   reviewTitle: string;
   reviewContent: string;
@@ -49,4 +49,18 @@ export const getReviewInfo = async (reviewId: number) => {
     `/reviews/${reviewId}`
   );
   return reviewInfo.data;
+};
+
+export const ReviewInfoUpdate = async (reviewId:number,review: ReviewInfoType) => {
+  const reviewInfo = await authInstance.patch<ReviewInfoType>(
+    `/reviews/${reviewId}`, review
+  );
+  return reviewInfo;
+};
+
+export const ReviewInfoDelete = async (reviewId:number) => {
+  const reviewInfo = await authInstance.delete<ReviewInfoType>(
+    `/reviews/${reviewId}`
+  );
+  return reviewInfo;
 };
