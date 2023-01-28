@@ -20,7 +20,6 @@ interface Props {
 }
 
 export const ShoppingCategoryTab: Function = (props: Props) => {
-  console.log(props.memberTagData)
   const param = useParams();
   const [activateTag, setActivateTage] = useState(0);
   const navigate = useNavigate();
@@ -88,7 +87,6 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
               padding="5px"
               content="커스텀"
               onClick={() => {
-                console.log("찍혔다")
                 props.setIsCustom(!props.isCustom);
                 navigate(
                   `/items-list/all?custom=${props.isCustom}&title=${props.serchWord}&page=${props.pageNumber}`
