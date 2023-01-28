@@ -8,7 +8,6 @@ import com.seb_main_002.exception.BusinessLogicException;
 import com.seb_main_002.exception.ExceptionCode;
 import com.seb_main_002.item.entity.Item;
 import com.seb_main_002.item.repository.ItemRepository;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,8 +33,8 @@ public class HomeService {
     }
 
     public String findBannerImageUrl() {
-        final Long bannerImageId = (long)1;
-        Banner banner = verifyBannerImage(bannerImageId);
+        Optional<Banner> findBanner = bannerRepository.findLatestBanner();
+        Banner banner = findBanner.orElseThrow(() -> new BusinessLogicException(ExceptionCode.BANNER_IMAGE_NOT_FOUND));
         return banner.getBannerImageUrl();
     }
 
