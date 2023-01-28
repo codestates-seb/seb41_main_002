@@ -1,18 +1,12 @@
 import React from "react";
 import { useState } from "react";
-import {
-  NavigateFunction,
-  Params,
-} from "react-router-dom";
+import { NavigateFunction, Params } from "react-router-dom";
 import CustomButton from "../Commons/Buttons";
 
 interface Props {
   setCategory: React.Dispatch<React.SetStateAction<string>>;
   setCategoryENName: React.Dispatch<React.SetStateAction<string>>;
-  session: {
-    memberId: number;
-    accountId: string;
-  };
+  session: string | null;
   navigate: NavigateFunction;
   customCheck: boolean;
   setCustomCheck: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,10 +17,12 @@ interface Props {
 
 export default function TopListCategoryTab(props: Props) {
   const [activateTag, setActivateTage] = useState(0);
+
   interface Category {
     categoryENName: string;
     categoryKRName: string;
   }
+
   const categoryTitle: Array<Category> = [
     {
       categoryKRName: "전체",
@@ -80,8 +76,9 @@ export default function TopListCategoryTab(props: Props) {
           </li>
         );
       })}
-      {props.session && props.session ? (
-        props.userCustomInfo && props.userCustomInfo.memberTagsList.length !== 0 ? (
+      {props.userCustomInfo && props.userCustomInfo.memberTagsList !== null ? (
+        props.userCustomInfo &&
+        props.userCustomInfo.memberTagsList.length !== 0 ? (
           <li>
             <CustomButton
               fontColor={props.customCheck ? "black" : "white"}

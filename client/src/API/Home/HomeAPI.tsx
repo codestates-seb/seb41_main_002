@@ -1,4 +1,3 @@
-import axios from "axios";
 import { defaultInstance } from "../Core";
 
 interface EventDataType {
