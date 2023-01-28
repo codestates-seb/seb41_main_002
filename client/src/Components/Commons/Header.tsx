@@ -9,13 +9,13 @@ import { kakaoRegularPayment } from "../../API/SubscriptionAPI";
 
 export default function Header() {
   const [isDropdownClicked, setIsDropdownClicked] = useState(false);
-  const [isCheckBoxClick, setIsCheckBoxClick] = useState(false);
+  const [isCheckBoxClicked, setIsCheckBoxClicked] = useState(false);
 
   const memberId = sessionStorage.getItem("memberId");
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
-    setIsCheckBoxClick(!isCheckBoxClick);
+    setIsCheckBoxClicked(!isCheckBoxClicked);
     setIsDropdownClicked(!isDropdownClicked);
   };
 
@@ -88,7 +88,7 @@ export default function Header() {
             <input
               type="checkbox"
               id="Nav_Menu"
-              checked={isCheckBoxClick}
+              checked={isCheckBoxClicked}
               onChange={toggleDropdown}
             />
             <span></span>
@@ -103,7 +103,8 @@ export default function Header() {
               <li>
                 <div className="Nav_Line"></div>
               </li>
-              {itemList.map((item, index) => {
+              {/* 해당 코드는 이후 수정 예정 */}
+              {/* {itemList.map((item, index) => {
                 return (
                   <li key={index} onClick={toggleDropdown}>
                     <Link to={`/items-list/${item.itemNameEN}`}>
@@ -111,12 +112,13 @@ export default function Header() {
                     </Link>
                   </li>
                 );
-              })}
-              <li>
-                <div className="Nav_Line"></div>
-              </li>
+              })} */}
+
               <li onClick={toggleDropdown}>
                 <Link to="/items-top-list/all">추천 리스트</Link>
+              </li>
+              <li>
+                <div className="Nav_Line"></div>
               </li>
             </ul>
           ) : null}
