@@ -15,9 +15,15 @@
 }
 
 .History_Image_Container,
-.History_Product_Info,
 .History_Review_Button {
   width: 20%;
+}
+
+.History_Product_Name {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .History_Image_Container img {
@@ -28,6 +34,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 15%;
 }
 
 .Review_Item_Title {
