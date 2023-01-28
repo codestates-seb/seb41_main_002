@@ -23,7 +23,7 @@ const CompletePayment = () => {
 
   const urlParams = new URL(window.location.href).searchParams;
   const pg_token = urlParams.get("pg_token");
-  const tid = window.localStorage.getItem("tid");
+  const tid = window.sessionStorage.getItem("tid");
 
   useEffect(() => {
     const params = {
@@ -43,13 +43,13 @@ const CompletePayment = () => {
       params,
     })
       .then((res) => {
-        const localOrder = localStorage.getItem("orderSheet");
+        const localOrder = sessionStorage.getItem("orderSheet");
         let orderSheet: OrderSheetType = localOrder && JSON.parse(localOrder);
         completePayment(orderSheet).then((res) => {
           console.log("결제가 완료되었습니다.");
         });
-        window.localStorage.removeItem("tid");
-        window.localStorage.removeItem("orderSheet");
+        window.sessionStorage.removeItem("tid");
+        window.sessionStorage.removeItem("orderSheet");
       })
       .catch((err) => {
         console.error(err);
