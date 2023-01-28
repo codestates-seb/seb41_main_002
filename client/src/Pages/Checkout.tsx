@@ -61,7 +61,6 @@ export default function Checkout() {
     itemsCalculation(useReserve, memberInfo && memberInfo["isSubscribe"]);
   const isAdressEmpty = checkedList && checkedList?.addressId > 0
   const memberId = Number(sessionStorage.getItem('memberId'));
-  // 더미 데이터
 
   const reserveInput = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;

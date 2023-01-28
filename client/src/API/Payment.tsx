@@ -1,5 +1,5 @@
 import axios from "axios";
-import { defaultInstance } from "./Core";
+import { authInstance } from "./Core";
 
 interface ItemType {
   itemId: number;
@@ -53,7 +53,7 @@ interface GetMemberDataType {
 
 export const memberData = async (memberId: number) => {
   try {
-    const response = await defaultInstance.get<GetMemberDataType>(
+    const response = await authInstance.get<GetMemberDataType>(
       `/members/${memberId}/payment`
     );
     return response.data;
@@ -64,7 +64,7 @@ export const memberData = async (memberId: number) => {
 
 export const completePayment = async (order: PaymentType) => {
   try {
-    await defaultInstance
+    await authInstance
       .post(`/orders`, order)
       .then((res) => {
         console.log("API 서버 저장 완료");
@@ -76,7 +76,7 @@ export const completePayment = async (order: PaymentType) => {
 
 export const addAddress = async (addresses: AddressType) => {
   try {
-    await defaultInstance
+    await authInstance
       .post(`/addresses`, addresses)
       .then((res) => {
         console.log(res.data);
