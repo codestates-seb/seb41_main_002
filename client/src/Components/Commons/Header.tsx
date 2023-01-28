@@ -103,9 +103,9 @@ export default function Header() {
               <li>
                 <div className="Nav_Line"></div>
               </li>
-              {itemList.map((item) => {
+              {itemList.map((item, index) => {
                 return (
-                  <li onClick={toggleDropdown}>
+                  <li key={index} onClick={toggleDropdown}>
                     <Link to={`/items-list/${item.itemNameEN}`}>
                       {item.itemNameKR}
                     </Link>
