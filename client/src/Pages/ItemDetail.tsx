@@ -55,7 +55,7 @@ const ItemDetail = () => {
   useEffect(() => {
     productDetailData();
   }, []);
-
+  
   return (
     <div className="Detail_Container">
       <div className="Item_Container">
