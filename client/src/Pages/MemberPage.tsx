@@ -46,15 +46,17 @@ const MemberPage = () => {
   return (
     <div className="Profile_Container">
       <h1>내 정보</h1>
-      <Link to="/member/edit" className="Profile_Edit_Link">
-        <CustomButton
-          bgColor="white"
-          content="수정하기"
-          fontColor="black"
-          padding="10px"
-          width="100px"
-        />
-      </Link>
+      <div className="Profile_Edit_Link">
+        <Link to="/member/edit">
+          <CustomButton
+            bgColor="white"
+            content="수정하기"
+            fontColor="black"
+            padding="10px"
+            width="100px"
+          />
+        </Link>
+      </div>
       <ul>
         <MemberTextBox>
           <InfoText width="33%">이름</InfoText>
@@ -137,7 +139,7 @@ const MemberPage = () => {
       ) : (
         <div className="Member_Not_Subscribed">
           <span>피부 타입 검사를 하지 않았습니다.</span>
-          <Link to={ `/skin-test/${memberId}` }>
+          <Link to={`/skin-test/${memberId}`}>
             <CustomButton
               bgColor="white"
               content="검사 받으러 가기"
