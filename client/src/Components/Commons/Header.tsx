@@ -8,12 +8,12 @@ import "./../Style/header.css";
 
 export default function Header() {
   const [isDropdownClicked, setIsDropdownClicked] = useState(false);
-  const [isCheck, setIsCheck] = useState(false);
+  const [isCheckBoxClick, setIsCheckBoxClick] = useState(false);
 
   const memberId = sessionStorage.getItem("memberId");
 
   const toggleDropdown = () => {
-    setIsCheck(!isCheck);
+    setIsCheckBoxClick(!isCheckBoxClick);
     setIsDropdownClicked(!isDropdownClicked);
   };
 
@@ -31,7 +31,7 @@ export default function Header() {
             <input
               type="checkbox"
               id="Nav_Menu"
-              checked={isCheck}
+              checked={isCheckBoxClick}
               onChange={toggleDropdown}
             />
             <span></span>
