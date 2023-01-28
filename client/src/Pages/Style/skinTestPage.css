@@ -1,0 +1,22 @@
+.Test_Page_Container{
+  height: 100vh;
+  padding-top: 10px;
+}
+
+.Test_Question_Title{
+  display: flex;
+  align-items: center;
+}
+
+.Skin_Test_ContentBox{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  background-color: var(--lightgray);
+  height: 70vh;
+}
+
+.Type_Test_Content{
+  display: flex;
+}
