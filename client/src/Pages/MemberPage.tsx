@@ -137,7 +137,7 @@ const MemberPage = () => {
       ) : (
         <div className="Member_Not_Subscribed">
           <span>피부 타입 검사를 하지 않았습니다.</span>
-          <Link to={`/skin-test/${memberId}`}>
+          <Link to={ `/skin-test/${memberId}` }>
             <CustomButton
               bgColor="white"
               content="검사 받으러 가기"

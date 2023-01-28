@@ -10,8 +10,8 @@ interface Props {
 
 export default function ProductReview(props: Props) {
   const [isModalActivate, setIsModalActivate] = useState(false);
-  //임시데이터
-  const session = { memberId: 1, accountId: "kmklhy" };
+  
+  const session = sessionStorage.getItem("memberId")
   return (
     <div className="Item_Reviews">
       {isModalActivate ? (
@@ -45,7 +45,8 @@ export default function ProductReview(props: Props) {
                   <div className="Review_User_Info">
                     <span>{review.accountId}</span>
                     <span>{review.createdAt}</span>
-                    {session && session.memberId === review.memberId ? (
+                    {/* any타입 추후 리팩토링 예정 */}
+                    {session && session as any === review.memberId ? (
                       <a href={`/reviews/${review.reviewId}`}>
                         <span>✍🏻</span>
                       </a>
