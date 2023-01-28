@@ -13,7 +13,7 @@ import NewAddressModal from "../Components/MemberPageEdit/NewAddressModal";
 import EditAddressModal from "../Components/MemberPageEdit/EditAddressModal";
 import { subscriptionCalculation } from "../Function/memberEditPage";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "./Style/memberPageEdit.css";
 
@@ -33,6 +33,7 @@ const InfoWrapper = styled.div`
 const memberId = Number(sessionStorage.getItem("memberId"));
 
 export default function MemberPageEdit() {
+  const navigate = useNavigate();
   const [modalState, setModalState] = useState(false);
   // modal 컴포넌트의 element에 들어갈 컴포넌트를 결정하는 변수
   const [isNewAddressModalOn, setIsNewAddressModalOn] = useState(false);
@@ -82,6 +83,7 @@ export default function MemberPageEdit() {
         setEmail(res?.email);
         setPhoneNumber(res?.phoneNumber);
         setTagList(res?.tagList);
+        setRender(!render);
       });
     } catch (err) {
       console.error(err);
@@ -198,8 +200,9 @@ export default function MemberPageEdit() {
 
     if (window.confirm("수정하시겠습니까?")) {
       updateMemberData(memberId, reqBody);
-      alert("수정 완료");
       setRender(!render);
+      alert("수정 완료");
+      navigate(`/memberPage/${memberId}`);
     }
   };
 
