@@ -1,22 +1,7 @@
 import CustomButton from "../Commons/Buttons";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
-interface OrderType {
-  orderId: number;
-  orderCreatedAt: string;
-  orderStatus: string;
-  totalPrice: number;
-  orderItems: ItemType[];
-}
-
-interface ItemType {
-  itemId: number;
-  itemImageURL: string;
-  itemTitle: string;
-  itemTotalPrice: number;
-  count: number;
-}
+import { ItemType, OrderType } from "../../API/MemberPage/MemberPageAPI";
 
 const OrderHistoryItem = ({ order }: { order: OrderType }) => {
   const [isActive, setIsActive] = useState(false);

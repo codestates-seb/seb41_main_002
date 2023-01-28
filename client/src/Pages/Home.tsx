@@ -121,7 +121,7 @@ export default function Home() {
                   {idx + 1} / {dummyData.eventsInfo.length}
                 </div>
                 <div className="Event_Caption_Text">
-                  <Link to="/events/:eventId">
+                  <Link to={`/events/${a.eventId}`}>
                     <h4 className="Event_Title">{a.title}</h4>
                   </Link>
                   <p>{`${a.createdAt} ~ ${a.endAt}`}</p>

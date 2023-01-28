@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import CustomButton from "../Commons/Buttons";
 import "./Style/categoryTab.css";
 
@@ -11,16 +12,18 @@ interface Props {
   setCategoryParams(category: string): React.SetStateAction<string>;
   setIsCustom(custom: boolean): React.SetStateAction<boolean>;
   isCustom: boolean;
-  session: {
-    memberId: number;
-    accountId: string;
-  };
-  userTagInfo: string[];
+  session: string | null
+  memberTagData: any
+  serchWord: string
+  pageNumber: number
+  customCheck: boolean
+  setCustomCheck: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const ShoppingCategoryTab: Function = (props: Props) => {
+  const param = useParams()
   const [activateTag, setActivateTage] = useState(0);
-
+  const navigate = useNavigate()
   const categoryTitle: Array<Category> = [
     {
       categoryKRName: "전체",
@@ -63,47 +66,62 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
               onClick={() => {
                 setActivateTage(index);
                 props.setCategoryParams(category.categoryENName);
+                navigate(`/items-list/${category.categoryENName}?custom=${props.isCustom}&title=${props.serchWord}&page=${props.pageNumber}`)
               }}
             />
           </li>
         );
       })}
-      {props.session && props.session ? (
-        props.userTagInfo && props.userTagInfo.length !== 0 ? (
+                  {props.memberTagData && props.memberTagData.memberTagsList !== null ? (
+        props.memberTagData &&
+        props.memberTagData.memberTagsList.length !== 0 ? (
           <li>
             <CustomButton
-              fontColor={props.isCustom ? "black" : "white"}
-              bgColor={props.isCustom ? "var(--gray)": "var(--lightgray)"}
-              fontsize={props.isCustom ? "21px" : "17px"}
+              fontColor={props.customCheck ? "black" : "white"}
+              fontsize={props.customCheck ? "21px" : "17px"}
+              bgColor={props.customCheck ? "var(--gray)" : "var(--lightgray)"}
               width="100px"
               padding="5px"
-              content={"커스텀"}
+              content="커스텀"
               onClick={() => {
-                props.setIsCustom(!props.isCustom);
+                navigate(
+                  `/items-top-list/${param.categoryENName}?custom=${
+                    props.customCheck && props.customCheck
+                  }`
+                );
+                props.setCustomCheck(!props.customCheck);
               }}
             />
           </li>
         ) : (
-          <a href="/">
+          <li>
             <CustomButton
-              fontColor="white"
-              bgColor="var(--lightgray)"
+              fontColor={props.customCheck ? "black" : "white"}
+              fontsize={props.customCheck ? "21px" : "17px"}
+              bgColor={props.customCheck ? "var(--gray)" : "var(--lightgray)"}
               width="100px"
               padding="5px"
-              content={"커스텀"}
+              content="커스텀"
+              onClick={() => {
+                navigate("/");
+              }}
             />
-          </a>
+          </li>
         )
       ) : (
-        <a href="/login">
+        <li>
           <CustomButton
-            fontColor="white"
-            bgColor="var(--lightgray)"
+            fontColor={props.customCheck ? "black" : "white"}
+            fontsize={props.customCheck ? "21px" : "17px"}
+            bgColor={props.customCheck ? "var(--gray)" : "var(--lightgray)"}
             width="100px"
             padding="5px"
-            content={"커스텀"}
+            content="커스텀"
+            onClick={() => {
+              navigate("/login");
+            }}
           />
-        </a>
+        </li>
       )}
     </>
   );
