@@ -32,14 +32,16 @@ const MemberPage = () => {
   const [profileData, setProfileData] = useState<ProfileDataType>();
 
   useEffect(() => {
-    try {
-      getProfileData(memberId).then((res) => {
-        setProfileData(res);
-      });
-    } catch (err) {
-      console.error(err);
+    if (!profileData) {
+      try {
+        getProfileData(memberId).then((res) => {
+          setProfileData(res);
+        });
+      } catch (err) {
+        console.error(err);
+      }
     }
-  }, []);
+  });
 
   const [currentTab, setCurrentTab] = useState(1);
 
