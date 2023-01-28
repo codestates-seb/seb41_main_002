@@ -34,8 +34,10 @@ public class OrderService {
         this.itemRepository = itemRepository;
     }
 
-    public void createOrder(Order order, OrderInfoDto orderInfoDto) {
+    public void createOrder(Long tokenMemberId, Order order, OrderInfoDto orderInfoDto) {
         Long memberId = order.getMember().getMemberId();
+
+        if(!tokenMemberId.equals(memberId)) throw new BusinessLogicException(ExceptionCode.CANNOT_POST_ORDER);
 
         Member member = verifyMember(memberId);
         boolean isSubscribed = member.getSubscribe().getIsSubscribed();
