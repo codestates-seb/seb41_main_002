@@ -5,7 +5,7 @@ import {
   OrderHistoryTab,
   MyReviewsTab,
 } from "../Components/MyPageComponent/MyPageTabs";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./Style/memberPage.css";
 import { useEffect, useState } from "react";
 import {
@@ -29,17 +29,20 @@ const InfoText = styled.div<{ width: string }>`
 const memberId = Number(sessionStorage.getItem("memberId"));
 
 const MemberPage = () => {
+  const { memberPageId } = useParams();
   const [profileData, setProfileData] = useState<ProfileDataType>();
 
   useEffect(() => {
-    try {
-      getProfileData(memberId).then((res) => {
-        setProfileData(res);
-      });
-    } catch (err) {
-      console.error(err);
+    if (memberPageId) {
+      try {
+        getProfileData(memberId).then((res) => {
+          setProfileData(res);
+        });
+      } catch (err) {
+        console.error(err);
+      }
     }
-  }, []);
+  }, [memberPageId]);
 
   const [currentTab, setCurrentTab] = useState(1);
 
