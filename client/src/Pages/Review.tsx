@@ -49,10 +49,9 @@ const Review = () => {
       reviewContent: reviewText.reviewContent,
     };
     reviewPost(review).then((res) => {
-      // navigate(`/itemDetail/${itemId}`)
-      console.log(res);
+      navigate(`/itemDetail/${itemId}`)
     }).catch(err => {
-      console.log('작성 X');
+      console.error(err);
     });
   };
 

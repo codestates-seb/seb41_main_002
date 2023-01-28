@@ -25,8 +25,8 @@ export const getItemInfo = async (itemId: string) => {
 };
 
 export const reviewPost = async (review: reviewType) => {
-  const reviewInfo = await authInstance.post(`/reviews`, review).then(res => {
-    console.log("리뷰작성 완료");
+  const reviewInfo = await authInstance.post(`/reviews`, review).then(() => {
+    
   }).catch(err => {
     console.log(err);
   });
