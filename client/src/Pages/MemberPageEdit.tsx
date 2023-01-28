@@ -193,10 +193,11 @@ export default function MemberPageEdit() {
       } else if (phoneNumber?.length !== 13) {
         alert("핸드폰 번호는 010을 포함한 총 11자리가 되어야 합니다.");
       } else {
-        updateMemberData(memberId, reqBody);
-        setRender(!render);
-        alert("수정 완료");
-        navigate(`/memberPage/${memberId}`);
+        updateMemberData(memberId, reqBody).then(() => {
+          setRender(!render);
+          alert("수정 완료");
+          navigate(`/memberPage/${memberId}`);
+        });
       }
     }
   };
@@ -580,6 +581,7 @@ export default function MemberPageEdit() {
             fontsize="19px"
             width="125px"
             onClick={submitEdit}
+            type="submit"
           />
         </div>
         <div className="Subscribe_Edit_Container">
@@ -587,7 +589,7 @@ export default function MemberPageEdit() {
           {memberAddressData?.isSubscribed === false ? (
             <div className="Recommend_Subscription">
               <div className="No_Subscription">구독하고 있지 않습니다.</div>
-              <Link to="/members/:memberId/subscribe">
+              <Link to={`/members/${memberId}/subscribe`}>
                 <CustomButton
                   bgColor="transparent"
                   content="지금 구독하세요!"

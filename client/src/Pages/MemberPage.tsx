@@ -29,7 +29,6 @@ const InfoText = styled.div<{ width: string }>`
 const memberId = Number(sessionStorage.getItem("memberId"));
 
 const MemberPage = () => {
-  const { memberPageId } = useParams();
   const [profileData, setProfileData] = useState<ProfileDataType>();
 
   useEffect(() => {
@@ -40,7 +39,7 @@ const MemberPage = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [memberPageId]);
+  }, []);
 
   const [currentTab, setCurrentTab] = useState(1);
 

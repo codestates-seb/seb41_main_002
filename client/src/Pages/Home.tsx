@@ -51,6 +51,8 @@ const TopSalesContent = styled.div<{ bgUrl: string }>`
   }
 `;
 
+const memberId = Number(sessionStorage.getItem("memberId"));
+
 export default function Home() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [homeData, setHomeData] = useState<HomeDataType>();
@@ -99,7 +101,9 @@ export default function Home() {
             당신의 피부타입을 알아보고 화장품을 추천 받아보세요.
           </p>
           <button className="Hero_Button">
-            <span>알아보기</span>
+            <Link to={`/skin-test/${memberId}`}>
+              <span>알아보기</span>
+            </Link>
           </button>
         </div>
       </HeroImage>
