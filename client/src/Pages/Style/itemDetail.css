@@ -39,8 +39,10 @@
 }
 
 .Item_Submit {
-  width: 100%;
+  width: 1024px;
   display: flex;
+  justify-content: flex-end;
+  margin: 0 auto;
 }
 
 .Item_Submit button {
