@@ -10,7 +10,6 @@
 본인 피부에 어울리는 제품을 쉽게 찾기를 원하는 남성들을 위해 Lacier 쇼핑몰 프로젝트가 시작되었습니다.
 
 <br>
----
 
 ## 🛠 기술 스택
 
@@ -21,7 +20,6 @@
 <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=green"> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=yellow"> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=black"> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=black"> <img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=Redis&logoColor=black"> <img src="https://img.shields.io/badge/OpenJDK-FFFFFF?style=for-the-badge&logo=Spring Boot&logoColor=black"> 
 
 <br>
----
 
 
 ## 😎팀원 소개
