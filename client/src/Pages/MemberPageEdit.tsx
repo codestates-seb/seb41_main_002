@@ -44,7 +44,6 @@ export default function MemberPageEdit() {
 
   // 각 인풋 태그의 필드값 => 객체 상태에서 값을 불러올 시 문제가 발생하여 patch 메서드 사용 및 Input값 onChange 이벤트 핸들링을 위해 각 상태를 선언, 할당해 사용
   const [memberName, setMemberName] = useState<string | undefined>("");
-  const [birthdate, setBirthDate] = useState<string | undefined>("");
   const [email, setEmail] = useState<string | undefined>("");
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>("");
   const [tagList, setTagList] = useState<string[] | undefined>([]);
@@ -77,13 +76,12 @@ export default function MemberPageEdit() {
   useEffect(() => {
     try {
       getMemberData(memberId).then((res) => {
+        setRender(true);
         setMemberAddressData(res);
         setMemberName(res?.memberName);
-        setBirthDate(res?.birthdate);
         setEmail(res?.email);
         setPhoneNumber(res?.phoneNumber);
         setTagList(res?.tagList);
-        setRender(!render);
       });
     } catch (err) {
       console.error(err);
@@ -92,15 +90,6 @@ export default function MemberPageEdit() {
 
   const handleMemberName: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setMemberName(e.target.value);
-  };
-
-  const handleBirthDate: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setBirthDate(
-      e.target.value
-        .replace(/[^0-9]/g, "")
-        .replace(/^(\d{0,4})(\d{0,2})(\d{0,2})$/g, "$1/$2/$3")
-        .replace(/(\/{1,2})$/g, "")
-    );
   };
 
   const handleEmail: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -117,11 +106,9 @@ export default function MemberPageEdit() {
   };
 
   const editSkinType: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    // 검사를 위한 값
     const sebumType = ["건성", "복합성", "지성"];
-    const skinType = ["일반 피부", "여드름성 피부"];
+    const skinType = ["일반피부", "여드름성 피부"];
 
-    // 1, 2 번째 필드값 변동시 tagList 변경
     if (sebumType.includes(e.target.value) && tagList) {
       tagList[0] = e.target.value;
     }
@@ -161,8 +148,8 @@ export default function MemberPageEdit() {
     };
     if (window.confirm("대표 주소로 변경하시겠습니까?")) {
       updateAddress(addressId, addressData);
-      alert("대표주소로 변경 완료");
       setRender(!render);
+      alert("대표주소로 변경 완료");
     }
   };
 
@@ -185,8 +172,8 @@ export default function MemberPageEdit() {
 
     if (window.confirm("해당 주소지를 삭제하시겠습니까?")) {
       deleteAddress(addressId);
-      alert("삭제가 완료되었습니다.");
       setRender(!render);
+      alert("삭제가 완료되었습니다.");
     }
   };
 
@@ -199,10 +186,18 @@ export default function MemberPageEdit() {
     };
 
     if (window.confirm("수정하시겠습니까?")) {
-      updateMemberData(memberId, reqBody);
-      setRender(!render);
-      alert("수정 완료");
-      navigate(`/memberPage/${memberId}`);
+      if (email?.includes("@") === false) {
+        alert("이메일은 도메인(@)을 포함해야 합니다.");
+      } else if (phoneNumber?.slice(0, 3) !== "010") {
+        alert("핸드폰 번호는 010으로 시작해야 합니다.");
+      } else if (phoneNumber?.length !== 13) {
+        alert("핸드폰 번호는 010을 포함한 총 11자리가 되어야 합니다.");
+      } else {
+        updateMemberData(memberId, reqBody);
+        setRender(!render);
+        alert("수정 완료");
+        navigate(`/memberPage/${memberId}`);
+      }
     }
   };
 
@@ -210,8 +205,8 @@ export default function MemberPageEdit() {
     if (window.confirm("정말 구독을 취소하시겠습니까?")) {
       cancelSubscription(memberId);
       setIsSubscribed(false);
-      alert("구독이 취소되었습니다.");
       setRender(!render);
+      alert("구독이 취소되었습니다.");
     }
   };
 
@@ -282,13 +277,7 @@ export default function MemberPageEdit() {
           <InfoWrapper>
             <div className="Info_Label">생년월일</div>
             <div className="Info_Content">
-              <input
-                className="Info_Input"
-                type="text"
-                maxLength={10}
-                value={birthdate}
-                onChange={handleBirthDate}
-              />
+              {memberAddressData && memberAddressData.birthdate}
             </div>
           </InfoWrapper>
           <InfoWrapper>
@@ -311,6 +300,7 @@ export default function MemberPageEdit() {
                 maxLength={13}
                 value={phoneNumber}
                 onChange={handlePhoneNumber}
+                required
               />
             </div>
           </InfoWrapper>
@@ -418,9 +408,27 @@ export default function MemberPageEdit() {
                 <div className="Info_Label">피지 타입</div>
                 <div className="Info_Content">
                   <select className="Type_Dropdown" onChange={editSkinType}>
-                    <option value="건성">건성</option>
-                    <option value="지성">지성</option>
-                    <option value="복합성">복합성</option>
+                    {tagList && tagList[0] === "건성" ? (
+                      <option value="건성" selected>
+                        건성
+                      </option>
+                    ) : (
+                      <option value="건성">건성</option>
+                    )}
+                    {tagList && tagList[0] === "지성" ? (
+                      <option value="지성" selected>
+                        지성
+                      </option>
+                    ) : (
+                      <option value="지성">지성</option>
+                    )}
+                    {tagList && tagList[0] === "복합성" ? (
+                      <option value="복합성" selected>
+                        복합성
+                      </option>
+                    ) : (
+                      <option value="복합성">복합성</option>
+                    )}
                   </select>
                 </div>
               </InfoWrapper>
@@ -428,8 +436,20 @@ export default function MemberPageEdit() {
                 <div className="Info_Label">피부 타입</div>
                 <div className="Info_Content">
                   <select className="Type_Dropdown" onChange={editSkinType}>
-                    <option value="일반 피부">일반 피부</option>
-                    <option value="여드름성 피부">여드름성 피부</option>
+                    {tagList && tagList[1] === "일반피부" ? (
+                      <option value="일반피부" selected>
+                        일반피부
+                      </option>
+                    ) : (
+                      <option value="일반피부">일반피부</option>
+                    )}
+                    {tagList && tagList[1] === "여드름성 피부" ? (
+                      <option value="여드름성 피부" selected>
+                        여드름성 피부
+                      </option>
+                    ) : (
+                      <option value="여드름성 피부">여드름성 피부</option>
+                    )}
                   </select>
                 </div>
               </InfoWrapper>
