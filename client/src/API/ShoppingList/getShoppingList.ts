@@ -6,7 +6,7 @@ interface ParamsType {
   custom?: boolean;
   keyword?: string;
   page?: number;
-  accessToken?: string | null;
+  accessToken?: any
 }
 
 export interface ProductData {

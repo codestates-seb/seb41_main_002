@@ -16,8 +16,7 @@ interface Props {
   memberTagData: any;
   serchWord: string;
   pageNumber: number;
-  customCheck: boolean;
-  setCustomCheck: React.Dispatch<React.SetStateAction<boolean>>;
+  setisCustom: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const ShoppingCategoryTab: Function = (props: Props) => {
@@ -82,28 +81,27 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
         props.memberTagData.memberTagsList.length !== 0 ? (
           <li>
             <CustomButton
-              fontColor={props.customCheck ? "black" : "white"}
-              fontsize={props.customCheck ? "21px" : "17px"}
-              bgColor={props.customCheck ? "var(--gray)" : "var(--lightgray)"}
+              fontColor={props.isCustom ? "black" : "white"}
+              fontsize={props.isCustom ? "21px" : "17px"}
+              bgColor={props.isCustom ? "var(--gray)" : "var(--lightgray)"}
               width="100px"
               padding="5px"
               content="커스텀"
               onClick={() => {
+                console.log("찍혔다")
+                props.setIsCustom(!props.isCustom);
                 navigate(
-                  `/items-top-list/${param.categoryENName}?custom=${
-                    props.customCheck && props.customCheck
-                  }`
-                );
-                props.setCustomCheck(!props.customCheck);
+                  `/items-list/all?custom=${props.isCustom}&title=${props.serchWord}&page=${props.pageNumber}`
+                  );
               }}
             />
           </li>
         ) : (
           <li>
             <CustomButton
-              fontColor={props.customCheck ? "black" : "white"}
-              fontsize={props.customCheck ? "21px" : "17px"}
-              bgColor={props.customCheck ? "var(--gray)" : "var(--lightgray)"}
+              fontColor={props.isCustom ? "black" : "white"}
+              fontsize={props.isCustom ? "21px" : "17px"}
+              bgColor={props.isCustom ? "var(--gray)" : "var(--lightgray)"}
               width="100px"
               padding="5px"
               content="커스텀"
@@ -116,9 +114,9 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
       ) : (
         <li>
           <CustomButton
-            fontColor={props.customCheck ? "black" : "white"}
-            fontsize={props.customCheck ? "21px" : "17px"}
-            bgColor={props.customCheck ? "var(--gray)" : "var(--lightgray)"}
+            fontColor={props.isCustom ? "black" : "white"}
+            fontsize={props.isCustom ? "21px" : "17px"}
+            bgColor={props.isCustom ? "var(--gray)" : "var(--lightgray)"}
             width="100px"
             padding="5px"
             content="커스텀"

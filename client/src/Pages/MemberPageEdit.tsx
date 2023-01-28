@@ -388,7 +388,7 @@ export default function MemberPageEdit() {
             <div className="My_Type_Wrapper Recommend_Survey">
               <p>피부 타입 검사를 실행하지 않았습니다.</p>
               <div>
-                <Link to="/">
+                <Link to={`/skin-test/${memberId}`}>
                   <CustomButton
                     bgColor="transparent"
                     content="나의 피부타입은?"
