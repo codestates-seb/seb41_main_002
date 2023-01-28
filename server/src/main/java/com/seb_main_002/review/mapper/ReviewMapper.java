@@ -40,6 +40,7 @@ public interface ReviewMapper {
 
     default ReviewResponseDto.ReviewDto reviewToReviewResponseDto(Review review) {
         return ReviewResponseDto.ReviewDto.builder()
+                .memberId(review.getMember().getMemberId())
                 .reviewTitle(review.getReviewTitle())
                 .reviewContent(review.getReviewContent())
                 .build();
