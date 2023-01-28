@@ -27,7 +27,7 @@ export default function Header() {
       const nowDate = new Date();
       const setTime =
         nowDate.getTime() - new Date(regularPaymentTime).getTime();
-      const timeCalculation = (10 - setTime / 1000) * 1000;
+      const timeCalculation = (40 - setTime / 1000) * 1000;
 
       if (timeCalculation >= 0) {
         setTimeout(function () {
@@ -35,17 +35,17 @@ export default function Header() {
 
           setInterval(function () {
             kakaoRegularPayment();
-          }, 10000);
+          }, 40000);
         }, timeCalculation);
       } else {
         const Calculation =
-          10000 - Math.floor(((-timeCalculation / 1000) % 10) * 1000);
+          40000 - Math.floor(((-timeCalculation / 1000) % 10) * 1000);
         setTimeout(function () {
           kakaoRegularPayment();
 
           setInterval(function () {
             kakaoRegularPayment();
-          }, 10000);
+          }, 40000);
         }, Calculation);
       }
     }

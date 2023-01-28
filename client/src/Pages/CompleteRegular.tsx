@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { authInstance } from "../API/Core";
 import "./Style/completePayment.css";
 
@@ -8,7 +8,7 @@ const CompleteRegular = () => {
   const urlParams = new URL(window.location.href).searchParams;
   const pg_token = urlParams.get("pg_token");
   const tid = sessionStorage.getItem("tid");
-
+  const navigate = useNavigate();
   useEffect(() => {
     const memberId = sessionStorage.getItem("memberId");
     const params = {
@@ -29,20 +29,24 @@ const CompleteRegular = () => {
       params,
     })
       .then((res) => {
-        sessionStorage.removeItem('tid');
+        sessionStorage.removeItem("tid");
         console.log(res.data.sid);
         const subscribeParams = {
-          "SID": String(res.data.sid),
-          "isSubscribed": true,
+          SID: String(res.data.sid),
+          isSubscribed: true,
         };
         const response = authInstance
           .patch(`/members/${memberId}/subscribe`, subscribeParams)
           .then((res) => {
-            console.log('SID 저장!')
+            console.log("SID 저장!");
             return res;
           });
         const nowDate = new Date();
         sessionStorage.setItem("regularPayment", String(nowDate));
+        setTimeout(() => {
+          navigate("/");
+          window.location.reload();
+        }, 2000);
         return response;
       })
       .catch((err) => {
