@@ -33,14 +33,12 @@ const MemberPage = () => {
   const [profileData, setProfileData] = useState<ProfileDataType>();
 
   useEffect(() => {
-    if (memberPageId) {
-      try {
-        getProfileData(memberId).then((res) => {
-          setProfileData(res);
-        });
-      } catch (err) {
-        console.error(err);
-      }
+    try {
+      getProfileData(memberId).then((res) => {
+        setProfileData(res);
+      });
+    } catch (err) {
+      console.error(err);
     }
   }, [memberPageId]);
 
