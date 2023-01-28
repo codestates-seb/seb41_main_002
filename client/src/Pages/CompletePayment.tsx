@@ -7,7 +7,7 @@ import "./Style/completePayment.css";
 const CompletePayment = () => {
   interface ItemType {
     itemId: number;
-    count: number;
+    itemCount: number;
     itemTotalPrice: number;
   }
 
@@ -45,11 +45,12 @@ const CompletePayment = () => {
       .then((res) => {
         const localOrder = sessionStorage.getItem("orderSheet");
         let orderSheet: OrderSheetType = localOrder && JSON.parse(localOrder);
+        console.log(orderSheet);
         completePayment(orderSheet).then((res) => {
           console.log("결제가 완료되었습니다.");
+          window.sessionStorage.removeItem("tid");
+          window.sessionStorage.removeItem("orderSheet");
         });
-        window.sessionStorage.removeItem("tid");
-        window.sessionStorage.removeItem("orderSheet");
       })
       .catch((err) => {
         console.error(err);
@@ -60,7 +61,7 @@ const CompletePayment = () => {
     <div className="Complete_Container">
       <h1 className="Complete_Message">상품 결제 완료</h1>
       <button>
-        <Link to="/checkout">돌아가기</Link>
+        <Link to="/">돌아가기</Link>
       </button>
     </div>
   );

@@ -16,14 +16,14 @@ export default function CartItemList(props: Props) {
     <>
       {props.cartData && props.cartData.cart.length !== 0 ? (
         props.cartData.cart.map((cartItem: any, index: number) => {
-          const productCountHandler = (count: number) => {
-            if (cartItem.itemCount === 1 && count < 0) {
+          const productCountHandler = (itemCount: number) => {
+            if (cartItem.itemCount === 1 && itemCount < 0) {
             } else {
-              cartItem.itemCount = cartItem.itemCount + count;
+              cartItem.itemCount = cartItem.itemCount + itemCount;
               cartItem.itemTotalPrice =
                 cartItem.itemCount *
                 (cartItem.itemTotalPrice /
-                  (count > 0
+                  (itemCount > 0
                     ? cartItem.itemCount - 1
                     : cartItem.itemCount + 1));
             }

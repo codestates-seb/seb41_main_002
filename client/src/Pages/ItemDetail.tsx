@@ -42,7 +42,7 @@ const ItemDetail = () => {
         itemTitle: detailPageData && detailPageData.itemInfo.itemTitle,
         itemImageURL: detailPageData && detailPageData.itemInfo.titleImageURL,
         itemTotalPrice: detailPageData && detailPageData.itemInfo.price,
-        count: productCount,
+        itemCount: productCount,
       },
     ];
     const result = JSON.stringify(productSaleInfo);

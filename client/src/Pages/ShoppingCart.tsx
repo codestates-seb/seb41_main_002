@@ -35,7 +35,7 @@ export default function ShoppingCart() {
           itemTitle: product.itemTitle,
           itemImageURL: product.titleImageURL,
           itemTotalPrice: product.itemTotalPrice,
-          count: product.itemCount,
+          itemCount: product.itemCount,
         });
       });
     const arrString = JSON.stringify(localProductArr);

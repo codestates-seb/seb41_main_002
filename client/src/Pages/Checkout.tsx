@@ -19,7 +19,7 @@ export default function Checkout() {
     itemImageURL: string;
     itemTitle: string;
     itemTotalPrice: number;
-    count: number;
+    itemCount: number;
   }
 
   interface AddressType {
@@ -40,7 +40,7 @@ export default function Checkout() {
 
   interface ItemListType {
     itemId: number;
-    count: number;
+    itemCount: number;
     itemTotalPrice: number;
   }
 

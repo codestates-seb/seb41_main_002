@@ -53,7 +53,7 @@ const OrderHistoryItem = ({ order }: { order: OrderType }) => {
                 </div>
                 <div className="History_Product_Info">
                   <span className="History_Detail_Indicator">상품 개수</span>
-                  <div>{item.count}</div>
+                  <div>{item.itemCount}</div>
                 </div>
                 <div className="History_Product_Info">
                   <span className="History_Detail_Indicator">가격</span>

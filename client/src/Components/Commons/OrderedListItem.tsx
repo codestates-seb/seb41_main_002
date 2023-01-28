@@ -6,7 +6,7 @@ interface ItemInterface {
   itemImageURL: string;
   itemTitle: string;
   itemTotalPrice: number;
-  count: number;
+  itemCount: number;
 }
 
 // 이후 협의를 통해 props가 더 추가될 예정입니다.
@@ -17,7 +17,7 @@ const OrderedListItem = ({ item }: { item: ItemInterface }) => {
       <Link to={`/itemDetail/${item.itemId}`}>
         <span className="Ordered_List_Item_Title">{item.itemTitle} </span>
       </Link>
-      <span>수량: {item.count}개 </span>
+      <span>수량: {item.itemCount}개 </span>
       <span>가격: {item.itemTotalPrice}원 </span>
     </div>
   );
