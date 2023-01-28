@@ -5,8 +5,10 @@ import ShippingAddress from "../Components/Payment/ShippingAddress";
 import { memberData, kakaoPaymentRequest } from "../API/Payment";
 import { itemsCalculation, itemsOrganize } from "../Function/payment";
 import React, { useEffect, useState } from "react";
+import DaumPostcode from "react-daum-postcode";
 import styled from "styled-components";
 import "./Style/checkout.css";
+import Modal from "../Components/Commons/Modal";
 
 const MemberSubscribe = styled.span<{ subscribeCheck: boolean }>`
   color: ${(props) => (props.subscribeCheck ? "green" : "red")};
@@ -54,13 +56,17 @@ export default function Checkout() {
     usedReserve: number;
   }
 
+  const [callAddressModal, setCallAddressModal] = useState(false);
+  const [address, setAddress] = useState("");
+  const [zipcode, setZipcode] = useState("");
+
   const [memberInfo, setMemberInfo] = useState<GetMemberDataType | undefined>();
   const [useReserve, setUseReserve] = useState<number | undefined | string>(0);
   const [checkedList, setCheckedList] = useState<AddressType>();
   const { itemsTotalPrice, totalPrice, excludingPoints, itemListArray } =
     itemsCalculation(useReserve, memberInfo && memberInfo["isSubscribe"]);
-  const isAdressEmpty = checkedList && checkedList?.addressId > 0
-  const memberId = Number(sessionStorage.getItem('memberId'));
+  const isAdressEmpty = checkedList && checkedList?.addressId > 0;
+  const memberId = Number(sessionStorage.getItem("memberId"));
 
   const reserveInput = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
@@ -116,8 +122,38 @@ export default function Checkout() {
     }
   }, []);
 
+  const handleComplete = (data: any) => {
+    let fullAddress = data.address;
+    let extraAddress = "";
+    console.log(data);
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+    console.log(data.zonecode);
+    console.log(fullAddress);
+    setCallAddressModal(!callAddressModal);
+    setZipcode(data.zonecode);
+    setAddress(fullAddress);
+  };
+
   return (
     <div className="Checkout_Container">
+      {callAddressModal ? (
+        <Modal
+          modalState={callAddressModal}
+          setModalState={setCallAddressModal}
+          element={
+            <DaumPostcode onComplete={handleComplete} autoClose={false} />
+          }
+        />
+      ) : null}
       <h1 className="Checkout_Header">결제 페이지</h1>
       <section className="Checkout_Section">
         <div className="Member_Info">
@@ -212,7 +248,7 @@ export default function Checkout() {
             />
           )
         ) : (
-          <NewAddress />
+          <NewAddress callAddressModal={callAddressModal} setCallAddressModal={setCallAddressModal} address={address} zipcode={zipcode}/>
         )}
       </section>
       <section className="Checkout_Section">

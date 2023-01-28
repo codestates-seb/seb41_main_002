@@ -10,6 +10,7 @@ const ModalOverlay = styled.div`
   background: rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(1.5px);
   -webkit-backdrop-filter: blur(1.5px);
+  z-index: 1000000;
 `;
 
 const ModalContainer = styled.div`

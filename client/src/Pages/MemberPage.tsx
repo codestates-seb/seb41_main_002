@@ -5,7 +5,7 @@ import {
   OrderHistoryTab,
   MyReviewsTab,
 } from "../Components/MyPageComponent/MyPageTabs";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./Style/memberPage.css";
 import { useEffect, useState } from "react";
 import {

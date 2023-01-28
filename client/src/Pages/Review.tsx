@@ -48,8 +48,10 @@ const Review = () => {
       reviewTitle: reviewText.reviewTitle,
       reviewContent: reviewText.reviewContent,
     };
-    reviewPost(review).then(() => {
+    reviewPost(review).then((res) => {
       navigate(`/itemDetail/${itemId}`)
+    }).catch(err => {
+      console.error(err);
     });
   };
 

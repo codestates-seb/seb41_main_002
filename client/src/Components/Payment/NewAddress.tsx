@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styled from "styled-components";
 import { addAddress } from "../../API/Payment";
 
@@ -38,22 +38,39 @@ const Input = styled.input<{ width: string }>`
   width: ${(props) => props.width};
 `;
 
-const NewAddress = () => {
+interface Props {
+  callAddressModal:boolean
+  setCallAddressModal: Dispatch<SetStateAction<boolean>>;
+  address: string;
+  zipcode: string;
+}
+
+const NewAddress = ({ callAddressModal, setCallAddressModal, address, zipcode }: Props) => {
   const [addressInfo, setAddressInfo] = useState({
     shippingAddress: "",
     zipcode: "",
-    address: ""
-  })
+    address: "",
+  });
+
+  useEffect(() => {
+    setAddressInfo({ ...addressInfo, zipcode: zipcode, address: address });
+  }, [callAddressModal]);
+
+  const callAddress = () => {
+    setCallAddressModal(true);
+  };
 
   const saveAddress = () => {
+    const memberId = sessionStorage.getItem("memberId");
     const addressSheet = {
-      memberId: 1,
+      memberId: Number(memberId),
       isPrimary: false,
       addressTitle: addressInfo.shippingAddress,
       zipcode: addressInfo.zipcode,
       address: addressInfo.address,
     };
     addAddress(addressSheet).then((res) => {
+      window.location.reload();
       console.log(res);
     });
   };
@@ -85,9 +102,7 @@ const NewAddress = () => {
           name="zipcode"
           value={addressInfo.zipcode}
           onChange={onChangeAddress}
-          onClick={() => {
-            console.log("주소 입력");
-          }}
+          onClick={callAddress}
           placeholder="주소를 입력하세요"
           readOnly
         />
@@ -101,9 +116,7 @@ const NewAddress = () => {
           name="address"
           value={addressInfo.address}
           onChange={onChangeAddress}
-          onClick={() => {
-            console.log("주소 입력");
-          }}
+          onClick={callAddress}
           readOnly
         />
       </li>
