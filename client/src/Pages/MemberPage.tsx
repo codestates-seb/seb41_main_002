@@ -5,7 +5,7 @@ import {
   OrderHistoryTab,
   MyReviewsTab,
 } from "../Components/MyPageComponent/MyPageTabs";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./Style/memberPage.css";
 import { useEffect, useState } from "react";
 import {
@@ -29,10 +29,11 @@ const InfoText = styled.div<{ width: string }>`
 const memberId = Number(sessionStorage.getItem("memberId"));
 
 const MemberPage = () => {
+  const { memberPageId } = useParams();
   const [profileData, setProfileData] = useState<ProfileDataType>();
 
   useEffect(() => {
-    if (!profileData) {
+    if (memberPageId) {
       try {
         getProfileData(memberId).then((res) => {
           setProfileData(res);
@@ -41,7 +42,7 @@ const MemberPage = () => {
         console.error(err);
       }
     }
-  });
+  }, [memberPageId]);
 
   const [currentTab, setCurrentTab] = useState(1);
 
@@ -139,7 +140,7 @@ const MemberPage = () => {
       ) : (
         <div className="Member_Not_Subscribed">
           <span>피부 타입 검사를 하지 않았습니다.</span>
-          <Link to={`/skin-test/${memberId}`}>
+          <Link to={`/members/:memberId/subscribe`}>
             <CustomButton
               bgColor="white"
               content="검사 받으러 가기"
