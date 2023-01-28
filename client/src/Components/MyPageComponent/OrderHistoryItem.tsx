@@ -31,6 +31,8 @@ const OrderHistoryItem = ({ order }: { order: OrderType }) => {
             fontColor="skyblue"
             padding="10px"
             width="100px"
+            border="none"
+            fontsize="21px"
           />
         </div>
       </div>
@@ -59,21 +61,25 @@ const OrderHistoryItem = ({ order }: { order: OrderType }) => {
                   <span className="History_Detail_Indicator">가격</span>
                   <div>{item.itemTotalPrice}</div>
                 </div>
-                <div className="History_Review_Button">
-                  <Link
-                    to={`/reviews/item/${item.itemId}?orderItemId=${item.orderItemId}`}
-                  >
-                    <CustomButton
-                      bgColor="transparent"
-                      content="리뷰 작성"
-                      width="100px"
-                      padding="10px"
-                      fontColor="gold"
-                      border="none"
-                      fontsize="19px"
-                    />
-                  </Link>
-                </div>
+                {item.isReviewed ? (
+                  <div className="Review_Done">리뷰 완료</div>
+                ) : (
+                  <div className="History_Review_Button">
+                    <Link
+                      to={`/reviews/item/${item.itemId}?orderItemId=${item.orderItemId}`}
+                    >
+                      <CustomButton
+                        bgColor="transparent"
+                        content="리뷰 작성"
+                        width="100px"
+                        padding="10px"
+                        fontColor="gold"
+                        border="none"
+                        fontsize="21px"
+                      />
+                    </Link>
+                  </div>
+                )}
               </div>
             );
           })}
