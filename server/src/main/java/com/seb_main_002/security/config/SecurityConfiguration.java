@@ -65,6 +65,7 @@ public class SecurityConfiguration {
                         .antMatchers("/api/v1/orders/**").hasRole("USER") // 주문은 유저만 가능
                         .antMatchers("/api/v1/members/**").hasAnyRole("ADMIN","USER") // 멤버정보는 유저, 어드민 가능
                         .antMatchers(HttpMethod.GET, "/api/v1/items/**").permitAll() // 아이템 정보 읽기 누구나 가능
+                        .antMatchers(HttpMethod.GET, "/api/v1/reviews/*").permitAll() // 리뷰 정보 읽기 누구나 가능
                         .antMatchers("/api/v1/password").permitAll() //임시번호 재발급 누구나 가능
                         .antMatchers("/api/v1/accountid").permitAll() // 아이디 재발급 누구나 가능
                         //.antMatchers(HttpMethod.POST, "/api/v1/user/refresh-token").permitAll() // 리프레시 토큰을 이용한 엑세스토큰 재발급
