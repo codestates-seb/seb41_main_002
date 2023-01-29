@@ -4,8 +4,10 @@ import antlr.Token;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seb_main_002.member.entity.Member;
 import com.seb_main_002.security.dto.LoginDto;
+import com.seb_main_002.security.dto.LoginResponseDto;
 import com.seb_main_002.security.redis.RedisService;
 import com.seb_main_002.security.util.ErrorResponder;
+import com.seb_main_002.subscribe.entity.Subscribe;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,8 +73,19 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .accessToken("Bearer " + accessToken)
                 .refreshToken(refreshToken)
                 .build();
+
+        Subscribe subscribeInfo = member.getSubscribe();
+        Boolean isSubscribed = subscribeInfo.getIsSubscribed();
+        String subscribedDate = isSubscribed ? subscribeInfo.getSubscribedDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd/HH:mm")) : "";
+
+        LoginResponseDto loginResponseDto = LoginResponseDto.builder()
+                .tokenInfo(tokenInfo)
+                .isSubscribed(isSubscribed)
+                .subscribedDate(subscribedDate)
+                .build();
+
         ObjectMapper objectMapper = new ObjectMapper();
-        response.getWriter().write(objectMapper.writeValueAsString(tokenInfo));
+        response.getWriter().write(objectMapper.writeValueAsString(loginResponseDto));
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
 

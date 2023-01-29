@@ -43,6 +43,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 setPhoneNumber(member.getPhoneNumber());
                 setPassword(member.getPassword());
                 setRoles(member.getRoles());
+                setSubscribe(member.getSubscribe());
             }
 
             @Override
