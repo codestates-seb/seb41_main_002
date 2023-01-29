@@ -19,7 +19,6 @@ export default function ProductReview(props: Props) {
     setIsModalActivate(!isModalActivate);
     setReviewNum(index);
   };
-
   return (
     <div className="Item_Reviews">
       {props.reviewsInfo && isModalActivate ? (
