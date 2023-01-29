@@ -1,5 +1,6 @@
 import { ReviewType } from "../../API/ItemDetail/getItemDetail";
 import { Rating } from "../Commons/Rating";
+import ReviewInfo from "../Commons/ReviewInfo";
 import Modal from "../Commons/Modal";
 import { useState } from "react";
 import "./Style/productReview.css";
@@ -10,15 +11,28 @@ interface Props {
 
 export default function ProductReview(props: Props) {
   const [isModalActivate, setIsModalActivate] = useState(false);
-  
-  const session = sessionStorage.getItem("memberId")
+  const [reviewNum, setReviewNum] = useState(0);
+
+  const session = sessionStorage.getItem("memberId");
+
+  const modalClick = (index: number) => {
+    setIsModalActivate(!isModalActivate);
+    setReviewNum(index);
+  };
+
   return (
     <div className="Item_Reviews">
-      {isModalActivate ? (
+      {props.reviewsInfo && isModalActivate ? (
         <Modal
           modalState={isModalActivate}
           setModalState={setIsModalActivate}
-          element={<></>}
+          element={
+            <ReviewInfo
+              reviewId={
+                props.reviewsInfo && props.reviewsInfo[reviewNum].reviewId
+              }
+            />
+          }
         />
       ) : null}
       <div className="Review_Section_Title">
@@ -26,14 +40,14 @@ export default function ProductReview(props: Props) {
       </div>
       <ul className="Review_Container">
         {props.reviewsInfo &&
-          props.reviewsInfo.map((review) => {
+          props.reviewsInfo.map((review, index) => {
             return (
               <li key={review.reviewId}>
                 <div className="Review_User_Info">
                   <div className="Review_Title_Content">
                     <span
                       className="Title_Content"
-                      onClick={() => setIsModalActivate(!isModalActivate)}
+                      onClick={() => modalClick(index)}
                     >
                       {review.reviewTitle}
                     </span>
@@ -46,7 +60,7 @@ export default function ProductReview(props: Props) {
                     <span>{review.accountId}</span>
                     <span>{review.createdAt}</span>
                     {/* any타입 추후 리팩토링 예정 */}
-                    {session && session as any === review.memberId ? (
+                    {session && (session as any) === review.memberId ? (
                       <a href={`/reviews/${review.reviewId}`}>
                         <span>✍🏻</span>
                       </a>
