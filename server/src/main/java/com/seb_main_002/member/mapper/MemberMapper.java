@@ -19,8 +19,6 @@ public interface MemberMapper {
             return null;
         }
 
-
-
         //OrderResponseDto
         List<MemberResponseDto.OrderResponseDto> orderHistory = member.getOrders().stream().map(order -> MemberResponseDto.OrderResponseDto.builder()
                 .orderId(order.getOrderId())
@@ -88,8 +86,6 @@ public interface MemberMapper {
             stringSubscribedDate = subscribedDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
         }
 
-
-
         List<MemberBeforeEditResponseDto.AddressDetailResponseDto> addresses = member.getAddressList().stream().map(address -> MemberBeforeEditResponseDto.AddressDetailResponseDto.builder()
                         .addressId(address.getAddressId())
                         .isPrimary(address.getIsPrimary())
@@ -98,7 +94,6 @@ public interface MemberMapper {
                         .address(address.getAddress())
                         .build())
                 .collect(Collectors.toList());
-
 
         return MemberBeforeEditResponseDto.builder()
                 .accountId(member.getAccountId())
