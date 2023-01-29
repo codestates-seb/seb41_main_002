@@ -4,12 +4,13 @@ export const findId = async (email: string) => {
   try {
     const response = await defaultInstance
       .post(`/accountid`, { email: email })
-      .then((res) => {
-        return res;
+      .then(() => {
+        return true;
       });
     return response;
   } catch (error) {
     console.error(error);
+    return false;
   }
 };
 
