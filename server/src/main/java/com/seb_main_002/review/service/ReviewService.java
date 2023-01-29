@@ -62,6 +62,7 @@ public class ReviewService {
         if(savedReviewMemberId.equals(requestReviewMemberId)) {
             verifiedReview.setReviewTitle(review.getReviewTitle());
             verifiedReview.setReviewContent(review.getReviewContent());
+            verifiedReview.setReviewRating(review.getReviewRating());
 
             reviewRepository.save(verifiedReview);
         }  else {

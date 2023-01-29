@@ -14,4 +14,6 @@ public class ReviewPatchDto {
     private String reviewTitle;
 
     private String reviewContent;
+
+    private Double reviewRating;
 }

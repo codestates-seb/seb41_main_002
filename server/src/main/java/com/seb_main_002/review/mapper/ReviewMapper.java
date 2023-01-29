@@ -32,6 +32,7 @@ public interface ReviewMapper {
         member.setMemberId(reviewPatchDto.getMemberId());
 
         review.setMember(member);
+        review.setReviewRating(reviewPatchDto.getReviewRating());
         review.setReviewTitle(reviewPatchDto.getReviewTitle());
         review.setReviewContent(reviewPatchDto.getReviewContent());
 
