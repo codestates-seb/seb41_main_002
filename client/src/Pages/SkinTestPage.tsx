@@ -54,7 +54,7 @@ export default function SkinTestPage() {
   const [isSubmitCheck, setIsSubmitCheck] = useState<boolean>(false);
   const [skinTypeResult, setSkinTypeResult] = useState<string>("");
   const [acneTypeResult, setAcenTypeResult] = useState<string>("");
-  const [resultArr, setResultArr] = useState<any>([]);
+  const [resultArr, setResultArr] = useState<string[]>([]);
   const [skinTagIndex, setSkinTagIndex] = useState<number | null>(null);
   const [acneTagIndex, setAcneTagIndex] = useState<number | null>(null);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
