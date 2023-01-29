@@ -60,6 +60,10 @@
   margin-top: 10px;
 }
 
+.Review_Link:hover {
+  color: skyblue;
+}
+
 .Review_Done {
   width: 20%;
   color: lightgoldenrodyellow;
