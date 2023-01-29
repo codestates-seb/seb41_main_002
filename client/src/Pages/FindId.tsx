@@ -1,23 +1,34 @@
 import Modal from "../Components/Commons/Modal";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { findId } from "../API/FindIdPw";
 import "./Style/memberAccess.css";
 import AccessMenu from "../Components/SignUp/AccessMenu";
 
 const FindId = () => {
   const [modalState, setModalState] = useState(false);
+  const [modalText, setModalText] = useState("");
   const [email, setEmail] = useState("");
 
   const onEmailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-  }
+  };
 
   const findIdHandler = () => {
-    findId(email).then(() => {
-      setModalState(true);
-    });
-  }
+    setModalState(true);
+    if (email === "") {
+      setModalText("이메일이 비었습니다.");
+    } else if (email.includes("@") === false) {
+      setModalText("이메일에 @가 없습니다.");
+    } else {
+      findId(email).then((res) => {
+        if (res) {
+          setModalText("아이디를 이메일로 전송했습니다.");
+        } else {
+          setModalText("이메일이 틀렸습니다.");
+        }
+      });
+    }
+  };
 
   return (
     <div className="Member_Access_Container">
@@ -26,11 +37,11 @@ const FindId = () => {
           modalState={modalState}
           setModalState={setModalState}
           element={
-            <div className="Modal_Text">아이디가 이메일로 전송되었습니다.</div>
+            <div className="Modal_Text">{modalText}</div>
           }
         />
       ) : null}
-      <AccessMenu/>
+      <AccessMenu />
       <ul className="Member_Access_Contents">
         <li>아이디 찾기</li>
         <li>
@@ -40,7 +51,7 @@ const FindId = () => {
             type="text"
             name="email"
             value={email}
-            onChange={(e)=>onEmailHandler(e)}
+            onChange={(e) => onEmailHandler(e)}
           />
         </li>
         <li>

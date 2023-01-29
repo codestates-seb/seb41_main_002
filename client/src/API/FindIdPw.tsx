@@ -4,12 +4,13 @@ export const findId = async (email: string) => {
   try {
     const response = await defaultInstance
       .post(`/accountid`, { email: email })
-      .then((res) => {
-        return res;
+      .then(() => {
+        return true;
       });
     return response;
   } catch (error) {
     console.error(error);
+    return false;
   }
 };
 
@@ -20,18 +21,17 @@ interface UserInfo {
 
 export const findPw = async (userInfo: UserInfo) => {
   try {
-    console.log(userInfo);
     const response = await defaultInstance
       .post(`/password`, {
         accountId: userInfo.accountId,
         email: userInfo.email,
       })
-      .then((res) => {
-        console.log("분명 보냄");
-        return res;
+      .then(() => {
+        return true;
       });
     return response;
   } catch (error) {
     console.error(error);
+    return false;
   }
 };
