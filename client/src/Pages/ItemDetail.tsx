@@ -50,7 +50,7 @@ const ItemDetail = () => {
     return window.sessionStorage.setItem("itemList", result);
   };
 
-  const session = sessionStorage.getItem("memberId")
+  const session = sessionStorage.getItem("memberId");
 
   useEffect(() => {
     productDetailData();

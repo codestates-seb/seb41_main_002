@@ -49,7 +49,6 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
       categoryENName: "suncream",
     },
   ];
-
   return (
     <>
       {categoryTitle.map((category, index) => {
@@ -90,7 +89,7 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
                 props.setIsCustom(!props.isCustom);
                 navigate(
                   `/items-list/all?custom=${props.isCustom}&title=${props.serchWord}&page=${props.pageNumber}`
-                  );
+                );
               }}
             />
           </li>

@@ -68,7 +68,7 @@ const getProducts = async (
 export default function ShoppingPage() {
   const [categoryParam, setCategoryParams] = useState("all");
   const [isCustom, setIsCustom] = useState(false);
-  const [pageNumber, setPageNumber] = useState<number>(0);
+  const [pageNumber, setPageNumber] = useState<number>(1);
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [memberTagData, setMemberTagData] = useState<any>(null);
   const [fetchingStatus, setFetchingStatus] = useState<boolean>(false);
@@ -88,6 +88,21 @@ export default function ShoppingPage() {
     setMemberTagData(result);
   };
 
+  useEffect(() => {
+    fetchMemberTagData();
+  },[]);
+  
+  useEffect(() => {
+    setProducts([]);
+    setLock(false);
+    setPageNumber(1);
+  }, [categoryParam, serchWord]);
+
+
+  useEffect(() => {
+    fetchProducts();
+  }, [pageNumber, isCustom]);
+
   const fetchProducts = async () => {
     setFetchingStatus(true);
     let newProducts: ProductProps[] = [...products];
@@ -106,30 +121,17 @@ export default function ShoppingPage() {
       setFetchingStatus(false);
     }
   };
-
+  
   const tabChangeFetch = async () => {
     const result = await getProducts(
       categoryParam,
       isCustom,
       pageNumber,
       serchWord
-    );
-    return result;
-  };
+      );
+      return result;
+    };
 
-  useEffect(() => {
-    setProducts([]);
-    setLock(false);
-    setPageNumber(1);
-  }, [categoryParam, serchWord]);
-
-  useEffect(() => {
-    fetchMemberTagData();
-  }, []);
-
-  useEffect(() => {
-    fetchProducts();
-  }, [pageNumber, isCustom]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
