@@ -37,7 +37,7 @@ const ReviewsItem = ({ review, setModalState, setReviewId }: PropsType) => {
         </div>
         <div className="History_Product_Info">
           <span className="History_Detail_Indicator">리뷰 제목</span>
-          <div>{review.reviewTitle}</div>
+          <div onClick={titleClick}>{review.reviewTitle}</div>
         </div>
         <div className="History_Product_Info">
           <span className="History_Detail_Indicator">별점</span>
