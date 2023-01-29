@@ -94,12 +94,10 @@ export default function Checkout() {
       totalPrice: totalPrice,
       usedReserve: useReserve !== undefined ? Number(useReserve) : 0,
     };
-
     window.sessionStorage.setItem("orderSheet", JSON.stringify(orderSheet));
 
     if (window.confirm("결제를 진행하시겠습니까?")) {
-      console.log(address);
-      if (address === "") {
+      if (orderSheet.addressId === undefined) {
         alert("배송지를 선택해주세요!");
       } else {
         kakaoPaymentRequest(orderSheet, itemListArray[0].itemTitle).then(

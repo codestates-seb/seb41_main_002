@@ -65,11 +65,14 @@ export const memberData = async (memberId: number) => {
 };
 
 export const completePayment = async (order: PaymentType) => {
+  const memberId = sessionStorage.getItem("memberId");
+  const cartpayment = sessionStorage.getItem("cartpayment");
   try {
-    await authInstance
-      .post(`/orders`, order)
-      .then(() => {
-      });
+    await authInstance.post(`/orders`, order).then(() => {
+      if (cartpayment === "true") {
+        authInstance.delete(`/members/${memberId}/carts`);
+      }
+    });
   } catch (error) {
     console.error(error);
   }
@@ -77,10 +80,7 @@ export const completePayment = async (order: PaymentType) => {
 
 export const addAddress = async (addresses: AddressType) => {
   try {
-    await authInstance
-      .post(`/addresses`, addresses)
-      .then(() => {
-      });
+    await authInstance.post(`/addresses`, addresses).then(() => {});
   } catch (error) {
     console.error(error);
   }
