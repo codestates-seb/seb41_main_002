@@ -18,6 +18,7 @@ import styled from "styled-components";
 import "./Style/memberPageEdit.css";
 
 const InfoWrapper = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -207,6 +208,7 @@ export default function MemberPageEdit() {
       cancelSubscription(memberId);
       setIsSubscribed(false);
       setRender(!render);
+      sessionStorage.removeItem("regularPayment");
       alert("구독이 취소되었습니다.");
     }
   };
@@ -263,6 +265,16 @@ export default function MemberPageEdit() {
           <InfoWrapper>
             <div className="Info_Label">PW</div>
             <div className="Info_Content">**********</div>
+            <Link to="/findPw" className="Find_PW">
+              <CustomButton
+                bgColor="transparent"
+                content="비밀번호 재설정"
+                fontColor="rgb(238, 158, 73)"
+                padding="10px"
+                width="150px"
+                border="none"
+              />
+            </Link>
           </InfoWrapper>
           <InfoWrapper>
             <div className="Info_Label">이름</div>
@@ -377,7 +389,7 @@ export default function MemberPageEdit() {
             <CustomButton
               bgColor="transparent"
               content="배송지 추가"
-              fontColor="skyblue"
+              fontColor="rgb(238, 158, 73)"
               padding="10px"
               width="125px"
               border="none"

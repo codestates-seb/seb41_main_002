@@ -94,18 +94,23 @@ export default function Checkout() {
       totalPrice: totalPrice,
       usedReserve: useReserve !== undefined ? Number(useReserve) : 0,
     };
-
     window.sessionStorage.setItem("orderSheet", JSON.stringify(orderSheet));
 
-    kakaoPaymentRequest(orderSheet, itemListArray[0].itemTitle).then(
-      (res: { paymentURL: string; tid: string } | undefined) => {
-        if (typeof res !== "undefined") {
-          window.sessionStorage.setItem("tid", res.tid);
-          window.location.replace(res.paymentURL);
-        }
-        console.log("카카오 결제가 완료되었습니다");
+    if (window.confirm("결제를 진행하시겠습니까?")) {
+      if (orderSheet.addressId === undefined) {
+        alert("배송지를 선택해주세요!");
+      } else {
+        kakaoPaymentRequest(orderSheet, itemListArray[0].itemTitle).then(
+          (res: { paymentURL: string; tid: string } | undefined) => {
+            if (typeof res !== "undefined") {
+              window.sessionStorage.setItem("tid", res.tid);
+              window.location.replace(res.paymentURL);
+            }
+            console.log("카카오 결제가 완료되었습니다");
+          }
+        );
       }
-    );
+    }
   };
 
   const addressCheck = (address: AddressType) => {
@@ -248,7 +253,12 @@ export default function Checkout() {
             />
           )
         ) : (
-          <NewAddress callAddressModal={callAddressModal} setCallAddressModal={setCallAddressModal} address={address} zipcode={zipcode}/>
+          <NewAddress
+            callAddressModal={callAddressModal}
+            setCallAddressModal={setCallAddressModal}
+            address={address}
+            zipcode={zipcode}
+          />
         )}
       </section>
       <section className="Checkout_Section">

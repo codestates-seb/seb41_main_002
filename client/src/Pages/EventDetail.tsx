@@ -4,13 +4,12 @@ import { EventType, getEventData } from "../API/Event/EventAPI";
 import "./Style/eventDetail.css";
 
 export default function EventDetail() {
-  const eventId = useParams();
+  const { eventId } = useParams();
   const [event, setEvent] = useState<EventType>();
 
   useEffect(() => {
     try {
       getEventData(Number(eventId)).then((res) => {
-        console.log(res);
         setEvent(res);
       });
     } catch (err) {
