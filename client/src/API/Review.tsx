@@ -32,7 +32,7 @@ export interface ReviewUpdateType extends ReviewInfoType{
 export interface ReviewUserInfoType extends ReviewInfoType {
   titleImageURL: string;
   itemTitle: string;
-  reiviewRating: number;
+  reviewRating: number;
 }
 
 export const getItemInfo = async (itemId: string) => {

@@ -15,26 +15,30 @@ interface PropsType {
 }
 
 const ReviewInfo = ({ reviewId }: PropsType) => {
-  const memberId = sessionStorage.getItem("memberId");
+  const [reviewUpdate, setReviewUpdate] = useState(false);
+
+  const ratingSetting: SettingType = {
+    ratingEdit: reviewUpdate,
+    ratingSize: 30,
+  };
   const [starRating, setStarRating] = useState(5);
+  useEffect(() => {
+    getReviewInfo(reviewId).then((res) => {
+      setStarRating(res.reviewRating);
+      setReviewInfo(res);
+    });
+  }, []);
+
+  const memberId = sessionStorage.getItem("memberId");
+
   const [reviewInfo, setReviewInfo] = useState<ReviewUserInfoType>({
     titleImageURL: "",
     itemTitle: "",
     memberId: 0,
     reviewTitle: "",
     reviewContent: "",
-    reiviewRating: starRating,
+    reviewRating: 0,
   });
-  const [reviewUpdate, setReviewUpdate] = useState(false);
-
-  // const [reviewText, setReviewText] = useState({
-  //   reviewTitle: "",
-  //   reviewContent: "",
-  // });
-  const ratingSetting: SettingType = {
-    ratingEdit: reviewUpdate,
-    ratingSize: 30,
-  };
 
   const onReviewTextHandler = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -45,7 +49,7 @@ const ReviewInfo = ({ reviewId }: PropsType) => {
   const onReviewUpdateCancel = () => {
     setReviewUpdate(false);
     getReviewInfo(reviewId).then((res) => {
-      setStarRating(res.reiviewRating);
+      setStarRating(res.reviewRating);
       setReviewInfo(res);
     });
   };
@@ -55,12 +59,14 @@ const ReviewInfo = ({ reviewId }: PropsType) => {
       memberId: reviewInfo.memberId,
       reviewTitle: reviewInfo.reviewTitle,
       reviewContent: reviewInfo.reviewContent,
-      reviewRating: reviewInfo.reiviewRating
+      reviewRating: starRating,
     };
     if (window.confirm("수정하시겠습니까?")) {
       setReviewUpdate(false);
-      ReviewInfoUpdate(reviewId, review);
-      alert("수정되었습니다.");
+      ReviewInfoUpdate(reviewId, review).then(() => {
+        alert("수정되었습니다.");
+        window.location.reload();
+      })
     } else {
       alert("취소했습니다.");
     }
@@ -76,12 +82,10 @@ const ReviewInfo = ({ reviewId }: PropsType) => {
     }
   };
 
-  useEffect(() => {
-    getReviewInfo(reviewId).then((res) => {
-      setStarRating(res.reiviewRating);
-      setReviewInfo(res);
-    });
-  }, []);
+  const test = () => {
+    console.log(reviewInfo);
+    setStarRating(reviewInfo.reviewRating);
+  };
 
   return (
     <div className="ReviewInfo_Container">
@@ -89,7 +93,9 @@ const ReviewInfo = ({ reviewId }: PropsType) => {
         <img src={reviewInfo.titleImageURL} />
         <ul>
           <li>
-            <div className="Review_Item_Tag">제품명</div>
+            <div onClick={test} className="Review_Item_Tag">
+              제품명
+            </div>
             <div className="Review_Item">{reviewInfo.itemTitle}</div>
           </li>
           <li>
