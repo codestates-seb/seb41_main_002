@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { defaultInstance } from "./Core";
 
 export interface MemberType {
@@ -44,9 +45,9 @@ export const signUp = async (memberData: MemberType) => {
           password: memberData.password,
         };
         return memberInfo;
-      })
+      });
     return reponse;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    return error.response.status;
   }
 };

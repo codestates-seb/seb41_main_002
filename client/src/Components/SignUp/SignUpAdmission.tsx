@@ -7,21 +7,31 @@ import "../Style/signUp.css";
 const SignUpAdmission = ({
   Member,
   setSignUpModalState,
+  setModalState,
+  setMessage,
 }: {
   Member: MemberType;
   setSignUpModalState: Dispatch<SetStateAction<boolean>>;
+  setModalState: Dispatch<SetStateAction<boolean>>;
+  setMessage: Dispatch<SetStateAction<string>>;
 }) => {
   const dispatch = useAppDispatch();
-  
+
   const memberSignUp = () => {
-    signUp(Member).then((res) => { 
+    signUp(Member).then((res) => {
       if (res !== undefined) {
-        const memberInfo: MemberInputType = {
-          accountId: res.accountId,
-          password: res.password,
-        };
-        setSignUpModalState(false);
-        dispatch(asyncLogin(memberInfo));
+        if (res === 409) {
+          setModalState(true);
+          setMessage("이메일이 중복입니다.");
+          setSignUpModalState(false);
+        } else {
+          const memberInfo: MemberInputType = {
+            accountId: res.accountId,
+            password: res.password,
+          };
+          setSignUpModalState(false);
+          dispatch(asyncLogin(memberInfo));
+        }
       }
     });
   };
