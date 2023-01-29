@@ -68,7 +68,7 @@ const getProducts = async (
 export default function ShoppingPage() {
   const [categoryParam, setCategoryParams] = useState("all");
   const [isCustom, setIsCustom] = useState(false);
-  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [pageNumber, setPageNumber] = useState<number>(0);
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [memberTagData, setMemberTagData] = useState<any>(null);
   const [fetchingStatus, setFetchingStatus] = useState<boolean>(false);

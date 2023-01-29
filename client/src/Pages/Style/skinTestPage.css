@@ -1,47 +1,55 @@
-.Test_Page_Container{
+.Test_Page_Container {
   height: 100vh;
   padding-top: 10px;
 }
 
-.Test_Question_Title{
+.Test_Question_Title {
   display: flex;
   align-items: center;
 }
 
-.Skin_Test_ContentBox{
+.Skin_Test_ContentBox {
   margin-top: 30px;
   background-color: var(--lightgray);
   height: 70vh;
   padding-top: 10px;
 }
 
-.Type_Test_Content{
+.Type_Test_Content {
   display: flex;
 }
 
-.Test_Type_Container{
+.Test_Type_Container {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 10px;
 }
 
-.Type_Tag_Btn{
+.Type_Tag_Btn {
   gap: 60px;
   margin: 10px;
 }
 
-.Submit_Section{
+.Submit_Section {
   display: flex;
   justify-content: center;
   margin-top: 30px;
 }
 
-.Test_Result{
+.Test_Result {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 30px;
   height: 30vh;
   background-color: var(--gray);
+}
+
+.btn_active {
+  background-color: pink;
+}
+
+.Navigate_Shopping_List {
+  color: pink !important;
 }
