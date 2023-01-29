@@ -60,6 +60,11 @@
   margin-top: 10px;
 }
 
+.Review_Link:hover {
+  cursor: pointer;
+  color: goldenrod;
+}
+
 .Review_Done {
   width: 20%;
   color: lightgoldenrodyellow;
