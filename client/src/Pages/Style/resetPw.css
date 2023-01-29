@@ -1,0 +1,17 @@
+.Reset_Pw_Form {
+  text-align: center;
+}
+
+.Input_Fields_Wrapper {
+  width: 50%;
+  margin: 25px auto 10px auto;
+}
+
+.Input_Content {
+  height: 50%;
+  width: 50%;
+  text-align: center;
+  font-size: 17px;
+  border: none;
+  border-bottom: 1px solid rgba(249, 216, 170, 0.8);
+}

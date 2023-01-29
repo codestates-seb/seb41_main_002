@@ -91,7 +91,7 @@ export default function MemberPageEdit() {
 
   const toFindPW = () => {
     if (window.confirm("비밀번호를 재설정하시겠습니까?")) {
-      navigate("/findPw");
+      navigate("/resetPw");
     }
   };
 
