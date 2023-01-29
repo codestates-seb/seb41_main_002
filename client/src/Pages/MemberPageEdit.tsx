@@ -89,8 +89,8 @@ export default function MemberPageEdit() {
     }
   }, [render]);
 
-  const toFindPW = () => {
-    if (window.confirm("비밀번호를 재설정하시겠습니까?")) {
+  const toResetPW = () => {
+    if (window.confirm("비밀번호를 변경하시겠습니까?")) {
       navigate("/resetPw");
     }
   };
@@ -271,16 +271,15 @@ export default function MemberPageEdit() {
           </InfoWrapper>
           <InfoWrapper>
             <div className="Info_Label">PW</div>
-            <div className="Info_Content">**********</div>
-            <div className="Find_PW">
+            <div className="Info_Content">
               <CustomButton
                 bgColor="transparent"
-                content="비밀번호 재설정"
+                content="비밀번호 변경"
                 fontColor="rgb(238, 158, 73)"
                 padding="10px"
                 width="150px"
                 border="none"
-                onClick={toFindPW}
+                onClick={toResetPW}
               />
             </div>
           </InfoWrapper>
