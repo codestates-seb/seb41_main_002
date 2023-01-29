@@ -30,7 +30,6 @@ const CompleteRegular = () => {
     })
       .then((res) => {
         sessionStorage.removeItem("tid");
-        console.log(res.data.sid);
         const subscribeParams = {
           SID: String(res.data.sid),
           isSubscribed: true,
@@ -45,6 +44,7 @@ const CompleteRegular = () => {
         navigate("/");
         window.location.reload();
         const nowDate = new Date();
+        sessionStorage.setItem("isSubscribed", "true");
         sessionStorage.setItem("regularPayment", String(nowDate));
         return response;
       })

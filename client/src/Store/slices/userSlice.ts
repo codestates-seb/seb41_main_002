@@ -16,6 +16,8 @@ interface UserType {
   accessToken: string;
   refreshToken: string;
   userLogin: number;
+  isSubscribed: boolean,
+  subscribedDate: string
 }
 
 export interface decodeType {
@@ -62,6 +64,8 @@ const initialState: UserType = {
   accessToken: "",
   refreshToken: "",
   userLogin: 0,
+  isSubscribed: false,
+  subscribedDate: ""
 };
 
 const userSlice = createSlice({
@@ -70,16 +74,21 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(asyncLogin.fulfilled, (state, action) => {
-      state.accessToken = action.payload.accessToken;
-      state.refreshToken = action.payload.refreshToken;
+      console.log(state);
+      console.log(action);
+      state.accessToken = action.payload.tokenInfo.accessToken;
+      state.refreshToken = action.payload.tokenInfo.refreshToken;
+      state.isSubscribed = action.payload.isSubscribed;
+      state.subscribedDate = action.payload.subscribedDate;
       state.userLogin = 1;
 
       const decode: decodeType = jwtDecode(state.accessToken);
       state.memberId = decode.memberId;
-
+      sessionStorage.setItem("regularPayment", action.payload.subscribedDate);
+      sessionStorage.setItem("isSubscribed", action.payload.isSubscribed);
       sessionStorage.setItem("memberId", String(decode.memberId));
-      sessionStorage.setItem("accessToken", action.payload.accessToken);
-      sessionStorage.setItem("refreshToken", action.payload.refreshToken);
+      sessionStorage.setItem("accessToken", action.payload.tokenInfo.accessToken);
+      sessionStorage.setItem("refreshToken", action.payload.tokenInfo.refreshToken);
     });
 
     builder.addCase(asyncLogin.rejected, (state) => {

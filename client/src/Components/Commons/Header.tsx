@@ -25,12 +25,12 @@ export default function Header() {
     const regularPaymentTime = sessionStorage.getItem(
       "regularPayment"
     ) as string;
-    if (regularPaymentTime) {
+    if (regularPaymentTime !== "") {
       const nowDate = new Date();
       const setTime =
         nowDate.getTime() - new Date(regularPaymentTime).getTime();
       const timeCalculation = (time - setTime / 1000) * 1000;
-
+      console.log(timeCalculation);
       if (timeCalculation >= 0) {
         setTimeout(function () {
           kakaoRegularPayment();
