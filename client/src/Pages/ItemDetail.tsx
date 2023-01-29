@@ -41,7 +41,7 @@ const ItemDetail = () => {
         itemId: detailPageData && detailPageData?.itemInfo.itemId,
         itemTitle: detailPageData && detailPageData.itemInfo.itemTitle,
         itemImageURL: detailPageData && detailPageData.itemInfo.titleImageURL,
-        itemTotalPrice: detailPageData && detailPageData.itemInfo.price,
+        itemTotalPrice: detailPageData && detailPageData.itemInfo.price * productCount,
         itemCount: productCount,
       },
     ];
