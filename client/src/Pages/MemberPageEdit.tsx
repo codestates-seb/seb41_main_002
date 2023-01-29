@@ -89,6 +89,12 @@ export default function MemberPageEdit() {
     }
   }, [render]);
 
+  const toFindPW = () => {
+    if (window.confirm("비밀번호를 재설정하시겠습니까?")) {
+      navigate("/findPw");
+    }
+  };
+
   const handleMemberName: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setMemberName(e.target.value);
   };
@@ -266,7 +272,7 @@ export default function MemberPageEdit() {
           <InfoWrapper>
             <div className="Info_Label">PW</div>
             <div className="Info_Content">**********</div>
-            <Link to="/findPw" className="Find_PW">
+            <div className="Find_PW">
               <CustomButton
                 bgColor="transparent"
                 content="비밀번호 재설정"
@@ -274,8 +280,9 @@ export default function MemberPageEdit() {
                 padding="10px"
                 width="150px"
                 border="none"
+                onClick={toFindPW}
               />
-            </Link>
+            </div>
           </InfoWrapper>
           <InfoWrapper>
             <div className="Info_Label">이름</div>
