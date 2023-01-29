@@ -7,29 +7,74 @@ export interface ItemInfoType {
   tagList: string[];
   memberTagsList: string[];
 }
-export interface reviewTextType {
+export interface ReviewTextType {
   reviewTitle: string;
   reviewContent: string;
 }
 
-export interface reviewType extends reviewTextType{
+export interface ReviewType extends ReviewTextType {
   orderItemId: number;
   itemId: number;
   memberId: number;
   reviewRating: number;
 }
 
+export interface ReviewInfoType {
+  memberId: number;
+  reviewTitle: string;
+  reviewContent: string;
+}
+
+export interface ReviewUpdateType extends ReviewInfoType{
+  reviewRating: number;
+}
+
+export interface ReviewUserInfoType extends ReviewInfoType {
+  titleImageURL: string;
+  itemTitle: string;
+  reiviewRating: number;
+}
+
 export const getItemInfo = async (itemId: string) => {
-  const itemInfo = await authInstance.get<ItemInfoType>(`/reviews/item/${itemId}`);
+  const itemInfo = await authInstance.get<ItemInfoType>(
+    `/reviews/item/${itemId}`
+  );
   return itemInfo.data;
 };
 
-export const reviewPost = async (review: reviewType) => {
-  const reviewInfo = await authInstance.post(`/reviews`, review).then(() => {
-    
-  }).catch(err => {
-    console.log(err);
-  });
-  
+export const reviewPost = async (review: ReviewType) => {
+  const reviewInfo = await authInstance
+    .post(`/reviews`, review)
+    .then(() => {
+      alert("리뷰 작성 완료되어습니다.");
+    })
+    .catch((err) => {
+      alert("리뷰 작성을 이미 하셨습니다.");
+    });
+  return reviewInfo;
+};
+
+export const getReviewInfo = async (reviewId: number) => {
+  const reviewInfo = await authInstance.get(
+    `/reviews/${reviewId}`
+  );
+  return reviewInfo.data;
+};
+
+export const ReviewInfoUpdate = async (
+  reviewId: number,
+  review: ReviewUpdateType
+) => {
+  const reviewInfo = await authInstance.patch<ReviewUpdateType>(
+    `/reviews/${reviewId}`,
+    review
+  );
+  return reviewInfo;
+};
+
+export const ReviewInfoDelete = async (reviewId: number) => {
+  const reviewInfo = await authInstance.delete<ReviewInfoType>(
+    `/reviews/${reviewId}`
+  );
   return reviewInfo;
 };

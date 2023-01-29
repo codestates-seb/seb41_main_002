@@ -41,12 +41,11 @@ const CompleteRegular = () => {
             console.log("SID 저장!");
             return res;
           });
+        alert("구독을 완료했습니다");
+        navigate("/");
+        window.location.reload();
         const nowDate = new Date();
         sessionStorage.setItem("regularPayment", String(nowDate));
-        setTimeout(() => {
-          navigate("/");
-          window.location.reload();
-        }, 2000);
         return response;
       })
       .catch((err) => {

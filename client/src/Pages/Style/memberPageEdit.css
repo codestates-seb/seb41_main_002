@@ -27,6 +27,11 @@
   align-items: center;
 }
 
+.Find_PW {
+  position: absolute;
+  right: 1%;
+}
+
 .Info_Input {
   height: 50%;
   width: 50%;

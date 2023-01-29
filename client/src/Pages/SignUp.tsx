@@ -100,8 +100,15 @@ const SignUp = () => {
     );
     const emailCheck = onEmailRegex(Member.email);
     const allCheck = idCheck && emailCheck && nullCheck && pwCheck;
+
     if (!idCheck) {
       setMessage("아이디 중복확인을 해주세요.");
+      setModalState(true);
+    } else if (Member.email?.includes("@") === false) {
+      setMessage("이메일은 도메인(@)을 포함해야 합니다.");
+      setModalState(true);
+    } else if (Member.phoneNumber?.length !== 13) {
+      setMessage("핸드폰 번호는 010을 포함한 총 11자리가 되어야 합니다.");
       setModalState(true);
     } else if (allCheck) {
       setSignUpModalState(true);
