@@ -27,10 +27,6 @@ h2{
   width: 100px;
 }
 
-.Review_Item_Info ul{
-
-}
-
 .Review_Item_Info li{
   display: flex;
   justify-content: center;
