@@ -69,7 +69,7 @@ export const completePayment = async (order: PaymentType) => {
   const cartpayment = sessionStorage.getItem("cartpayment");
   try {
     await authInstance.post(`/orders`, order).then(() => {
-      if (cartpayment === "true") {
+      if (cartpayment) {
         authInstance.delete(`/members/${memberId}/carts`);
       }
     });
