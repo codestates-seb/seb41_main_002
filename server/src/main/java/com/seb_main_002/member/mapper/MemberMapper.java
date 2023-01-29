@@ -41,7 +41,7 @@ public interface MemberMapper {
                 .reviewId(review.getReviewId())
                 .itemId(review.getItem().getItemId())
                 .itemImageURL(review.getItem().getTitleImageUrl())
-                .itemTitle(review.getReviewTitle())
+                .itemTitle(review.getItem().getItemTitle())
                 .reviewTitle(review.getReviewTitle())
                 .createdAt(review.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")))
                 .modifiedAt(review.getModifiedAt().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")))
