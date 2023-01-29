@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getItemInfo, reviewPost, reviewTextType } from "../API/Review";
-import "./Style/review.css";
-import { ItemInfoType, reviewType } from "../API/Review";
+import { getItemInfo, reviewPost, ReviewTextType } from "../API/Review";
+import { ItemInfoType, ReviewType } from "../API/Review";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { SettingType, Rating } from "../Components/Commons/Rating";
 import { SkinTag } from "../Components/Commons/TypeBadge";
+import "./Style/review.css";
 
 const Review = () => {
   const [itemInfo, setItemInfo] = useState<ItemInfoType>({
@@ -15,7 +15,7 @@ const Review = () => {
     memberTagsList: [],
   });
 
-  const [reviewText, setReviewText] = useState<reviewTextType>({
+  const [reviewText, setReviewText] = useState<ReviewTextType>({
     reviewTitle: "",
     reviewContent: "",
   });
@@ -40,7 +40,7 @@ const Review = () => {
   }, []);
 
   const reviewWrite = () => {
-    const review: reviewType = {
+    const review: ReviewType = {
       orderItemId: orderItemId,
       itemId: Number(itemId),
       memberId: memberId,
@@ -48,7 +48,7 @@ const Review = () => {
       reviewTitle: reviewText.reviewTitle,
       reviewContent: reviewText.reviewContent,
     };
-    reviewPost(review).then((res) => {
+    reviewPost(review).then(() => {
       navigate(`/itemDetail/${itemId}`)
     }).catch(err => {
       console.error(err);

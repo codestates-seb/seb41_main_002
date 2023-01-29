@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { ProfileDataType } from "../../API/MemberPage/MemberPageAPI";
 import OrderHistoryItem from "./OrderHistoryItem";
 import ReviewsItem from "./ReviewsItem";
@@ -24,8 +25,12 @@ export const OrderHistoryTab = ({
 
 export const MyReviewsTab = ({
   profileData,
+  setModalState,
+  setReviewId
 }: {
   profileData: ProfileDataType;
+  setModalState: Dispatch<SetStateAction<boolean>>;
+  setReviewId:Dispatch<SetStateAction<number>>;
 }) => {
   return (
     <div className="History_Contents">
@@ -34,7 +39,7 @@ export const MyReviewsTab = ({
       ) : (
         profileData &&
         profileData.reviews.map((review, idx) => {
-          return <ReviewsItem review={review} key={`review${idx}`} />;
+          return <ReviewsItem review={review} setModalState={setModalState} setReviewId={setReviewId} key={`review${idx}`} />;
         })
       )}
     </div>

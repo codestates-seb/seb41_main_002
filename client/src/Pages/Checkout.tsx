@@ -1,3 +1,4 @@
+import Modal from "../Components/Commons/Modal";
 import NewAddress from "../Components/Payment/NewAddress";
 import AddressDetail from "../Components/Payment/AddressDetail";
 import OrderedListItem from "../Components/Commons/OrderedListItem";
@@ -8,7 +9,6 @@ import React, { useEffect, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import styled from "styled-components";
 import "./Style/checkout.css";
-import Modal from "../Components/Commons/Modal";
 
 const MemberSubscribe = styled.span<{ subscribeCheck: boolean }>`
   color: ${(props) => (props.subscribeCheck ? "green" : "red")};

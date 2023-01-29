@@ -1,22 +1,33 @@
-import { useState } from "react";
+import { Dispatch, useState, SetStateAction } from "react";
 import { Link } from "react-router-dom";
 import { ReviewType } from "../../API/MemberPage/MemberPageAPI";
 import { Rating, SettingType } from "../Commons/Rating";
 
-const ReviewsItem = ({ review }: { review: ReviewType }) => {
+interface PropsType {
+  review: ReviewType;
+  setModalState: Dispatch<SetStateAction<boolean>>;
+  setReviewId: Dispatch<SetStateAction<number>>;
+}
+
+const ReviewsItem = ({ review, setModalState, setReviewId }: PropsType) => {
   const ratingSetting: SettingType = {
     ratingEdit: false,
     ratingSize: 20,
   };
   const [starRating, setStarRating] = useState(review.reviewRating);
 
-  console.log(review);
+  const titleClick = () => {
+    setReviewId(review.reviewId);
+    setModalState(true);
+  };
 
   return (
     <div>
       <div className="Profile_History_Item">
         <div className="History_Image_Container">
-          <img src={review.itemImageURL} alt="sample image" />
+          <Link to={`/itemDetail/${review.itemId}`}>
+            <img src={review.itemImageURL} alt="sample image" />
+          </Link>
         </div>
         <div className="History_Product_Name">
           <span className="History_Detail_Indicator">상품명</span>
@@ -24,9 +35,7 @@ const ReviewsItem = ({ review }: { review: ReviewType }) => {
         </div>
         <div className="History_Product_Info">
           <span className="History_Detail_Indicator">리뷰 제목</span>
-          <Link to={`/itemDetail/${review.itemId}`}>
-            <div>{review.reviewTitle}</div>
-          </Link>
+          <div onClick={titleClick}>{review.reviewTitle}</div>
         </div>
         <div className="History_Product_Info">
           <span className="History_Detail_Indicator">별점</span>
