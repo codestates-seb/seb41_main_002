@@ -1,19 +1,19 @@
+import {
+  getProfileData,
+  ProfileDataType,
+} from "../API/MemberPage/MemberPageAPI";
 import CustomButton from "../Components/Commons/Buttons";
 import { SkinTag } from "../Components/Commons/TypeBadge";
 import ReviewInfo from "../Components/Commons/ReviewInfo";
 import Modal from "../Components/Commons/Modal";
-import styled from "styled-components";
 import {
   OrderHistoryTab,
   MyReviewsTab,
 } from "../Components/MyPageComponent/MyPageTabs";
 import { Link, useParams } from "react-router-dom";
-import "./Style/memberPage.css";
 import { useEffect, useState } from "react";
-import {
-  getProfileData,
-  ProfileDataType,
-} from "../API/MemberPage/MemberPageAPI";
+import styled from "styled-components";
+import "./Style/memberPage.css";
 
 const MemberTextBox = styled.li`
   display: flex;
