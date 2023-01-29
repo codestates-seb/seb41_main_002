@@ -208,6 +208,7 @@ export default function MemberPageEdit() {
       cancelSubscription(memberId);
       setIsSubscribed(false);
       setRender(!render);
+      sessionStorage.removeItem("isSubscribed");
       sessionStorage.removeItem("regularPayment");
       alert("구독이 취소되었습니다.");
     }
