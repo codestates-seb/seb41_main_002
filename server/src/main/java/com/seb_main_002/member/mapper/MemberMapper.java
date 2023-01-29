@@ -37,7 +37,8 @@ public interface MemberMapper {
                         .itemTotalPrice(orderItem.getItemTotalPrice()).build()).collect(Collectors.toList())).build()).collect(Collectors.toList());
 
         //ReviewResponseDto
-        List<MemberResponseDto.ReviewResponseDto> reviews = member.getReviews().stream().map(review -> MemberResponseDto.ReviewResponseDto.builder()
+        List<MemberResponseDto.ReviewResponseDto> reviews = member.getReviews().stream().map(review ->{
+            System.out.println("수정시각 : "+review.getModifiedAt());return MemberResponseDto.ReviewResponseDto.builder()
                 .reviewId(review.getReviewId())
                 .itemId(review.getItem().getItemId())
                 .itemImageURL(review.getItem().getTitleImageUrl())
@@ -46,7 +47,7 @@ public interface MemberMapper {
                 .createdAt(review.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")))
                 .modifiedAt(review.getModifiedAt().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")))
                 .reviewRating(review.getReviewRating())
-                .build()).collect(Collectors.toList());
+                .build();}).collect(Collectors.toList());
 
         // 대표주소
         List<Address> addressList = member.getAddressList();
