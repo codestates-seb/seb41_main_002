@@ -9,6 +9,7 @@ import com.seb_main_002.review.repository.ReviewRepository;
 import com.seb_main_002.review.service.ReviewService;
 import com.seb_main_002.security.jwt.JwtTokenizer;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -34,7 +35,16 @@ public class ReviewAuthInterceptor implements HandlerInterceptor{
     //리뷰 아이디를 통해 멤버아이디를 얻고 토큰에 있는 멤버아이디 비교
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String httpMethod = request.getMethod();
+
         Map<String, String> pathVariable = (Map<String, String>) request.getAttribute(URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+
+        if(HttpMethod.GET.matches(httpMethod)){
+            String itemId = pathVariable.get("itemId");
+            if(itemId == null)
+               return true;
+        }
+
         String reviewid = pathVariable.get("reviewId");
 
         if(reviewid == null) {

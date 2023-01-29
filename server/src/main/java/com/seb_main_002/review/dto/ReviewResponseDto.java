@@ -14,6 +14,12 @@ public class ReviewResponseDto {
         private String reviewTitle;
 
         private String reviewContent;
+
+        private Double reviewRating;
+
+        private String itemTitle;
+
+        private String titleImageURL;
     }
 
     @Getter

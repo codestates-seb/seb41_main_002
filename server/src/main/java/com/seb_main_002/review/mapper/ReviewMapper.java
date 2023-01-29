@@ -39,11 +39,14 @@ public interface ReviewMapper {
         return review;
     }
 
-    default ReviewResponseDto.ReviewDto reviewToReviewResponseDto(Review review) {
+    default ReviewResponseDto.ReviewDto reviewToReviewResponseDto(Review review, Item item) {
         return ReviewResponseDto.ReviewDto.builder()
                 .memberId(review.getMember().getMemberId())
                 .reviewTitle(review.getReviewTitle())
                 .reviewContent(review.getReviewContent())
+                .reviewRating(review.getReviewRating())
+                .itemTitle(item.getItemTitle())
+                .titleImageURL(item.getTitleImageUrl())
                 .build();
     }
 }

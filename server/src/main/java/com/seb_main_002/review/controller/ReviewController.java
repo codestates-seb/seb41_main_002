@@ -1,5 +1,6 @@
 package com.seb_main_002.review.controller;
 
+import com.seb_main_002.item.entity.Item;
 import com.seb_main_002.review.dto.ReviewPatchDto;
 import com.seb_main_002.review.dto.ReviewPostDto;
 import com.seb_main_002.review.dto.ReviewResponseDto;
@@ -55,8 +56,9 @@ public class ReviewController {
     @GetMapping("/{reviewId}")
     public ResponseEntity getReview(@PathVariable Long reviewId) {
         Review review = reviewService.findReview(reviewId);
+        Item reviewItem = review.getItem();
 
-        return new ResponseEntity<> (mapper.reviewToReviewResponseDto(review), HttpStatus.OK);
+        return new ResponseEntity<> (mapper.reviewToReviewResponseDto(review, reviewItem), HttpStatus.OK);
     }
 
     @GetMapping("/item/{itemId}")
