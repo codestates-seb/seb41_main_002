@@ -26,9 +26,9 @@ export const getItemInfo = async (itemId: string) => {
 
 export const reviewPost = async (review: reviewType) => {
   const reviewInfo = await authInstance.post(`/reviews`, review).then(() => {
-    
+    alert("리뷰 작성 완료되어습니다.")
   }).catch(err => {
-    console.log(err);
+    alert("리뷰 작성을 이미 하셨습니다.")
   });
   
   return reviewInfo;

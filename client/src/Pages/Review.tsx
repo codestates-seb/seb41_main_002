@@ -48,7 +48,7 @@ const Review = () => {
       reviewTitle: reviewText.reviewTitle,
       reviewContent: reviewText.reviewContent,
     };
-    reviewPost(review).then((res) => {
+    reviewPost(review).then(() => {
       navigate(`/itemDetail/${itemId}`)
     }).catch(err => {
       console.error(err);

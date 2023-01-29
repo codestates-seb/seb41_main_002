@@ -10,8 +10,6 @@ const ReviewsItem = ({ review }: { review: ReviewType }) => {
   };
   const [starRating, setStarRating] = useState(review.reviewRating);
 
-  console.log(review);
-
   return (
     <div>
       <div className="Profile_History_Item">
