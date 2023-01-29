@@ -49,6 +49,7 @@ const CompletePayment = () => {
           window.sessionStorage.removeItem("tid");
           window.sessionStorage.removeItem("itemList");
           window.sessionStorage.removeItem("orderSheet");
+          window.sessionStorage.removeItem("cartpayment");
         });
       })
       .catch((err) => {
