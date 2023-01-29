@@ -45,11 +45,12 @@ export default function ResetPw() {
       alert("새 비밀번호가 일치하지 않습니다.");
     } else if (confirmNewPw === resetPwData.newPassword) {
       if (window.confirm("새 비밀번호로 변경합니다.")) {
-        resetMemberPw(memberId, resetPwData);
-        onLogout().then(() => {
-          navigate("/");
-          window.location.reload();
-          alert("비밀번호 변경 완료. 새 비밀번호로 로그인 해주세요.");
+        resetMemberPw(memberId, resetPwData).then(() => {
+          onLogout().then(() => {
+            navigate("/");
+            window.location.reload();
+            alert("비밀번호 변경 완료. 새 비밀번호로 로그인 해주세요.");
+          });
         });
       }
     }

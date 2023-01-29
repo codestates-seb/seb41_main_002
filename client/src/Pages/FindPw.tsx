@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import { findPw } from "../API/FindIdPw";
 import "./Style/memberAccess.css";
 import AccessMenu from "../Components/SignUp/AccessMenu";
+import { useNavigate } from "react-router-dom";
 
 const FindPw = () => {
+  const navigate = useNavigate();
   const [modalState, setModalState] = useState(false);
   const [modalText, setModalText] = useState("");
   const [userInfo, setUserInfo] = useState({
@@ -18,7 +20,6 @@ const FindPw = () => {
   };
 
   const findPwHandler = () => {
-    setModalState(true);
     if (userInfo.accountId === "") {
       setModalText("아이디가 비었습니다.");
     } else if (userInfo.email === "") {
@@ -27,10 +28,17 @@ const FindPw = () => {
       setModalText("이메일에 @가 없습니다.");
     } else {
       findPw(userInfo).then((res) => {
+        setModalState(true);
         if (res) {
           setModalText("임시 비밀번호를 이메일로 전송했습니다.");
+          setTimeout(() => {
+            navigate("/login");
+          }, 1000);
         } else {
-          setModalText("아이디 혹은 비밀번호가 틀렸습니다.");
+          setModalText("아이디 또는 이메일을 잘못 입력했습니다.");
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         }
       });
     }
