@@ -3,7 +3,6 @@ import { Rating } from "../Commons/Rating";
 import Modal from "../Commons/Modal";
 import { useState } from "react";
 import "./Style/productReview.css";
-import ReviewInfo from "../Commons/ReviewInfo";
 
 interface Props {
   reviewsInfo?: ReviewType[];
@@ -11,22 +10,15 @@ interface Props {
 
 export default function ProductReview(props: Props) {
   const [isModalActivate, setIsModalActivate] = useState(false);
-  const [reviewNum, setReviewNum] = useState(0);
-
-  const session = sessionStorage.getItem("memberId");
-
-  const modalClick = (index: number) => {
-    setIsModalActivate(!isModalActivate)
-    setReviewNum(index)
-  }
   
+  const session = sessionStorage.getItem("memberId")
   return (
     <div className="Item_Reviews">
-      {props.reviewsInfo && isModalActivate ? (
+      {isModalActivate ? (
         <Modal
           modalState={isModalActivate}
           setModalState={setIsModalActivate}
-          element={<ReviewInfo reviewId={props.reviewsInfo&& props.reviewsInfo[reviewNum].reviewId} />}
+          element={<></>}
         />
       ) : null}
       <div className="Review_Section_Title">
@@ -34,14 +26,14 @@ export default function ProductReview(props: Props) {
       </div>
       <ul className="Review_Container">
         {props.reviewsInfo &&
-          props.reviewsInfo.map((review, index) => {
+          props.reviewsInfo.map((review) => {
             return (
               <li key={review.reviewId}>
                 <div className="Review_User_Info">
                   <div className="Review_Title_Content">
                     <span
                       className="Title_Content"
-                      onClick={() => modalClick(index)}
+                      onClick={() => setIsModalActivate(!isModalActivate)}
                     >
                       {review.reviewTitle}
                     </span>
@@ -54,7 +46,7 @@ export default function ProductReview(props: Props) {
                     <span>{review.accountId}</span>
                     <span>{review.createdAt}</span>
                     {/* any타입 추후 리팩토링 예정 */}
-                    {session && (session as any) === review.memberId ? (
+                    {session && session as any === review.memberId ? (
                       <a href={`/reviews/${review.reviewId}`}>
                         <span>✍🏻</span>
                       </a>
