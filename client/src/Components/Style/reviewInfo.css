@@ -5,29 +5,29 @@
   padding: 20px;
 }
 
-h2{
+.Review_Header {
   margin-bottom: 10px;
 }
 
-.Review_BtnBox{
+.Review_BtnBox {
   display: flex;
   gap: 20px;
 }
 
-.Review_BtnBox button{
+.Review_BtnBox button {
   width: 100%;
 }
 
-.Review_Item_Info{
+.Review_Item_Info {
   display: flex;
   gap: 20px;
 }
 
-.Review_Item_Info img{
+.Review_Item_Info img {
   width: 100px;
 }
 
-.Review_Item_Info li{
+.Review_Item_Info li {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,7 +48,7 @@ h2{
   border-bottom-right-radius: 10px;
 }
 
-.Review_Item_Tag{
+.Review_Item_Tag {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,7 +56,7 @@ h2{
   height: 100%;
 }
 
-.Review_Item{
+.Review_Item {
   display: flex;
   justify-content: center;
   align-items: center;

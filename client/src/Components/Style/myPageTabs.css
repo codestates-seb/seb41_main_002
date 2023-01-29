@@ -61,7 +61,8 @@
 }
 
 .Review_Link:hover {
-  color: skyblue;
+  cursor: pointer;
+  color: goldenrod;
 }
 
 .Review_Done {

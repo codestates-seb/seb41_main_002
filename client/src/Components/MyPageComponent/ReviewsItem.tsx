@@ -29,13 +29,18 @@ const ReviewsItem = ({ review, setModalState, setReviewId }: PropsType) => {
         </div>
         <div className="History_Product_Name">
           <span className="History_Detail_Indicator">상품명</span>
-          <div>{review.itemTitle}</div>
+          <div>
+            <span>{review.itemTitle} </span>
+            <Link to={`/itemDetail/${review.itemId}`} className="Review_Link">
+              <span>[상품 보기]</span>
+            </Link>
+          </div>
         </div>
         <div className="History_Product_Info">
           <span className="History_Detail_Indicator">리뷰 제목</span>
-          <Link to={`/itemDetail/${review.itemId}`} className="Review_Link">
-            <div onClick={titleClick}>{review.reviewTitle}</div>
-          </Link>
+          <div onClick={titleClick} className="Review_Link">
+            {review.reviewTitle}
+          </div>
         </div>
         <div className="History_Product_Info">
           <span className="History_Detail_Indicator">별점</span>

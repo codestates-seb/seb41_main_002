@@ -55,7 +55,7 @@ const ReviewInfo = ({ reviewId }: PropsType) => {
       memberId: reviewInfo.memberId,
       reviewTitle: reviewInfo.reviewTitle,
       reviewContent: reviewInfo.reviewContent,
-      reviewRating: reviewInfo.reiviewRating
+      reviewRating: reviewInfo.reiviewRating,
     };
     if (window.confirm("수정하시겠습니까?")) {
       setReviewUpdate(false);
@@ -105,7 +105,7 @@ const ReviewInfo = ({ reviewId }: PropsType) => {
         </ul>
       </div>
       <div>
-        <h2>제목</h2>
+        <h2 className="Review_Header">제목</h2>
         <div className="Review_Title">
           <input
             type="text"
@@ -119,7 +119,7 @@ const ReviewInfo = ({ reviewId }: PropsType) => {
         </div>
       </div>
       <div>
-        <h2>내용</h2>
+        <h2 className="Review_Header">내용</h2>
         <div className="Review_TextBox">
           <textarea
             name="reviewContent"
