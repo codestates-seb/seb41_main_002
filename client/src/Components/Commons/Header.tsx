@@ -19,6 +19,8 @@ export default function Header() {
     setIsDropdownClicked(!isDropdownClicked);
   };
 
+  const time = 60;
+
   useEffect(() => {
     const regularPaymentTime = sessionStorage.getItem(
       "regularPayment"
@@ -27,7 +29,7 @@ export default function Header() {
       const nowDate = new Date();
       const setTime =
         nowDate.getTime() - new Date(regularPaymentTime).getTime();
-      const timeCalculation = (40 - setTime / 1000) * 1000;
+      const timeCalculation = (time - setTime / 1000) * 1000;
 
       if (timeCalculation >= 0) {
         setTimeout(function () {
@@ -35,17 +37,17 @@ export default function Header() {
 
           setInterval(function () {
             kakaoRegularPayment();
-          }, 40000);
+          }, time*1000);
         }, timeCalculation);
       } else {
         const Calculation =
-          40000 - Math.floor(((-timeCalculation / 1000) % 10) * 1000);
+        time*1000 - Math.floor(((-timeCalculation / 1000) % 10) * 1000);
         setTimeout(function () {
           kakaoRegularPayment();
 
           setInterval(function () {
             kakaoRegularPayment();
-          }, 40000);
+          }, time*1000);
         }, Calculation);
       }
     }

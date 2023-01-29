@@ -15,11 +15,8 @@ export const onLogout = async () => {
   };
   try {
     await axios(config)
-      .then((res) => {
-        console.log("로그아웃 성공");
-        sessionStorage.removeItem("accessToken");
-        sessionStorage.removeItem("refreshToken");
-        sessionStorage.removeItem("memberId");
+      .then(() => {
+        sessionStorage.clear();
       })
       .catch((err) => {
         console.log(err);

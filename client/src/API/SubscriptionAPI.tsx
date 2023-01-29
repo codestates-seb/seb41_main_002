@@ -31,7 +31,6 @@ export const kakaoRegularPaymentReady = async () => {
       },
       params,
     }).then((res) => {
-      console.log(res.data);
       tid = res.data.tid;
       paymentURL = res.data.next_redirect_pc_url;
     });
@@ -46,7 +45,6 @@ export const kakaoRegularPayment = async () => {
   try {
     const memberId = sessionStorage.getItem("memberId");
     await authInstance.get(`members/${memberId}/subscribe`).then((res) => {
-      console.log(res.data);
       const params = {
         cid: "TCSUBSCRIP",
         sid: res.data.sid,
@@ -67,11 +65,9 @@ export const kakaoRegularPayment = async () => {
         },
         params,
       }).then((res) => {
-        console.log("정기 결제됨");
-        console.log(res.data);
       });
     });
   } catch (error) {
-    console.error(error);
+    
   }
 };
