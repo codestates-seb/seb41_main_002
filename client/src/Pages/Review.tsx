@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getItemInfo, reviewPost, ReviewTextType } from "../API/Review";
-import "./Style/review.css";
 import { ItemInfoType, ReviewType } from "../API/Review";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { SettingType, Rating } from "../Components/Commons/Rating";
 import { SkinTag } from "../Components/Commons/TypeBadge";
+import "./Style/review.css";
 
 const Review = () => {
   const [itemInfo, setItemInfo] = useState<ItemInfoType>({
