@@ -18,7 +18,6 @@ const CompleteRegular = () => {
       partner_user_id: memberId,
       pg_token: pg_token,
     };
-
     axios({
       url: "https://kapi.kakao.com/v1/payment/approve",
       method: "POST",
@@ -38,14 +37,15 @@ const CompleteRegular = () => {
           .patch(`/members/${memberId}/subscribe`, subscribeParams)
           .then((res) => {
             console.log("SID 저장!");
+            alert("구독을 완료했습니다");
+            navigate("/");
+            window.location.reload();
+            const nowDate = new Date();
+            sessionStorage.setItem("isSubscribed", "true");
+            sessionStorage.setItem("regularPayment", String(nowDate));
             return res;
           });
-        alert("구독을 완료했습니다");
-        navigate("/");
-        window.location.reload();
-        const nowDate = new Date();
-        sessionStorage.setItem("isSubscribed", "true");
-        sessionStorage.setItem("regularPayment", String(nowDate));
+
         return response;
       })
       .catch((err) => {

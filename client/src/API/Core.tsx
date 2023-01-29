@@ -23,6 +23,7 @@ const changeToken = () => {
         .then((res: any) => {
           sessionStorage.setItem("accessToken", res.data.accessToken);
           sessionStorage.setItem("refreshToken", res.data.refreshToken);
+          window.location.reload();
         })
         .catch((err) => {
           console.log("교체 실패");

@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { defaultInstance } from "../../API/Core";
 
 import jwtDecode from "jwt-decode";
@@ -38,22 +37,6 @@ const asyncLogin = createAsyncThunk(
       JSON.stringify(MemberInput)
     );
     return login.data;
-  }
-);
-
-// 토큰 재발급
-const asyncSilentRefresh = createAsyncThunk(
-  "userSlice/asyncSilentRefresh",
-  async (refreshToken: string) => {
-    const tokenChange = await axios.get(
-      "http://13.125.242.34:8080/api/v1/user/refresh-token",
-      {
-        headers: {
-          Refresh: refreshToken,
-        },
-      }
-    );
-    return tokenChange.data;
   }
 );
 
@@ -98,4 +81,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export { asyncLogin, asyncSilentRefresh };
+export { asyncLogin };
