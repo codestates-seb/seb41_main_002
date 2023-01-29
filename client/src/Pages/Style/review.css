@@ -14,12 +14,12 @@
   height: 162px;
 }
 
-.Review_Item {
+.Review_Item_Info_Box {
   width: 300px;
   text-align: center;
 }
 
-.Review_Item li {
+.Review_Item_Info_Box li {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,25 +28,25 @@
   padding: 5px 0;
 }
 
-.Review_Item li:nth-child(1) {
+.Review_Item_Info_Box li:nth-child(1) {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   background-color: var(--dark3);
   border-bottom: 1px solid var(--lightgray);
 }
 
-.Review_Item li:nth-child(3) {
+.Review_Item_Info_Box li:nth-child(3) {
   border-bottom: 1px solid var(--lightgray);
   background-color: var(--dark3);
   border-top: 1px solid var(--lightgray);
 }
 
-.Review_Item li:nth-child(4) {
+.Review_Item_Info_Box li:nth-child(4) {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
 
-.Review_Item li:last-child {
+.Review_Item_Info_Box li:last-child {
   height: 50px;
 }
 

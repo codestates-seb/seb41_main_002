@@ -66,7 +66,7 @@ const Review = () => {
     <div className="Review_Container">
       <div className="Review_TopBox">
         <img className="Review_TitleImg" src={itemInfo.titleImageURL}></img>
-        <ul className="Review_Item">
+        <ul className="Review_Item_Info_Box">
           <li>
             <div className="Review_Menu_Tag">제품명</div>
             <div className="Review_Menu">{itemInfo.itemTitle}</div>
