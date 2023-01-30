@@ -5,3 +5,16 @@
   justify-content: center;
   padding-right: 150px;
 }
+
+.Product_Total_Count{
+  margin-right: 10px;
+}
+
+.Count_Container{
+  display: flex;
+}
+
+.Product_Total_Count{
+  display: flex;
+  align-items: center;
+}

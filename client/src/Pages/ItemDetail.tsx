@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import EmptyReviewContainer from "../Components/ItemDetail/EmptyReviewContainer";
 import getItemDetail from "../API/ItemDetail/getItemDetail";
 import ProductInfo from "../Components/ItemDetail/productInfo";
-import { addCartItem } from "../API/ItemDetail/addCartItem";
 import { ItemDetailDataType } from "../API/ItemDetail/getItemDetail";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductReview from "../Components/ItemDetail/ProductReview";
@@ -36,13 +35,14 @@ const ItemDetail = () => {
 
   const navigate = useNavigate();
   const sendProductSaleInfo = () => {
-    if(productCount !== 0){
+    if (productCount !== 0) {
       const productSaleInfo = [
         {
           itemId: detailPageData && detailPageData?.itemInfo.itemId,
           itemTitle: detailPageData && detailPageData.itemInfo.itemTitle,
           itemImageURL: detailPageData && detailPageData.itemInfo.titleImageURL,
-          itemTotalPrice: detailPageData && detailPageData.itemInfo.price * productCount,
+          itemTotalPrice:
+            detailPageData && detailPageData.itemInfo.price * productCount,
           itemCount: productCount,
         },
       ];
@@ -52,7 +52,7 @@ const ItemDetail = () => {
       window.sessionStorage.setItem("itemList", result);
       navigate(`/order/checkout`);
     } else {
-      alert("제품 수량을 확인해주세요 🐰")
+      alert("제품 수량을 확인해주세요 🐰");
     }
   };
 
@@ -70,6 +70,11 @@ const ItemDetail = () => {
           src={`${detailPageData?.itemInfo.titleImageURL}`}
         />
         <ProductInfo
+          session={session}
+          navigate={navigate}
+          sendProductSaleInfo={sendProductSaleInfo}
+          productTotalPrice={productTotalPrice}
+          detailPageData={detailPageData}
           productInfo={detailPageData?.itemInfo}
           productCount={productCount}
           setProductCount={setProductCount}
@@ -78,60 +83,8 @@ const ItemDetail = () => {
       <div className="Item_Contents">
         <img src={`${detailPageData?.itemInfo.contentImageURL}`} />
       </div>
-      <div className="Item_Submit">
-        {session && session ? (
-          <>
-            <CustomButton
-              fontColor="white"
-              width="130px"
-              bgColor="var(--gray)"
-              padding="5px"
-              content="장바구니에 추가"
-              onClick={() => {
-                addCartItem({
-                  itemId: detailPageData?.itemInfo.itemId,
-                  memberId: session && session,
-                  itemCount: productCount,
-                  itemTotalPrice: productTotalPrice,
-                });
-              }}
-            />
-            <CustomButton
-              fontColor="white"
-              width="130px"
-              bgColor="var(--gray)"
-              padding="5px"
-              content="바로 구매"
-              onClick={() => {
-                sendProductSaleInfo();
-              }}
-            />
-          </>
-        ) : (
-          <>
-            <CustomButton
-              fontColor="white"
-              width="130px"
-              bgColor="var(--gray)"
-              padding="5px"
-              content="장바구니에 추가"
-              onClick={() => {
-                navigate(`/login`);
-              }}
-            />
-            <CustomButton
-              fontColor="white"
-              width="130px"
-              bgColor="var(--gray)"
-              padding="5px"
-              content="바로 구매"
-              onClick={() => {
-                navigate(`/login`);
-              }}
-            />
-          </>
-        )}
-      </div>
+      {/* <div className="Item_Submit">
+      </div> */}
       {detailPageData?.reviews && detailPageData.reviews.length !== 0 ? (
         <ProductReview reviewsInfo={detailPageData?.reviews} />
       ) : (
