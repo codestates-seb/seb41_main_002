@@ -65,7 +65,7 @@ const MemberPage = () => {
               fontColor="black"
               padding="10px"
               width="100px"
-              hoverColor="blue"
+              hoverColor="var(--hoverColor1)"
             />
           </Link>
         </div>
@@ -110,7 +110,7 @@ const MemberPage = () => {
                       content="구독하러 가기"
                       fontColor="black"
                       padding="10px"
-                      hoverColor="blue"
+                      hoverColor="var(--hoverColor1)"
                     />
                   </Link>
                 </div>

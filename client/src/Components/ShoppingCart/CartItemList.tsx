@@ -98,11 +98,11 @@ export default function CartItemList(props: Props) {
                       deleteProduct(props.accessToken, cartItem.cartItemId);
                     }}
                     fontColor="white"
-                    bgColor="var(--dark3)"
+                    bgColor="transparent"
                     content="상품삭제"
                     width="100%"
                     padding="5px"
-                    height="100%"
+                    border="none"
                   />
                 </div>
               </li>

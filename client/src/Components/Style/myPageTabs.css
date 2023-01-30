@@ -47,7 +47,7 @@
 
 .History_Detail_Indicator {
   font-size: 17px;
-  color: wheat;
+  color: var(--indicatorColor2);
   margin-bottom: 10px;
 }
 
@@ -62,7 +62,7 @@
 
 .Review_Link:hover {
   cursor: pointer;
-  color: goldenrod;
+  color: var(--indicatorColor1);
 }
 
 .Review_Done {

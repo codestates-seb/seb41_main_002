@@ -34,7 +34,7 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  color: rgb(242, 137, 32);
+  color: var(--indicatorColor2);
 }
 
 .Profile_Tags {

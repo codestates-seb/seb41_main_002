@@ -39,7 +39,7 @@ export default function ShoppingCart() {
         });
       });
     const arrString = JSON.stringify(localProductArr);
-    window.sessionStorage.setItem('cartpayment', 'true');
+    window.sessionStorage.setItem("cartpayment", "true");
     window.sessionStorage.removeItem("itemList");
     window.sessionStorage.setItem("itemList", arrString);
   };
@@ -84,6 +84,7 @@ export default function ShoppingCart() {
                 content="구독하러 가기"
                 width="110px"
                 padding="10px"
+                height="50px"
                 onClick={() => navigate(`/members/${accessToken}/subscribe`)}
               />
             </>
