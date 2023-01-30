@@ -46,13 +46,18 @@ public class EventBannerController {
     }
 
     @PostMapping("/event")
-    public ResponseEntity postEventImage(@RequestPart(value = "eventImage") MultipartFile eventImage,
+    public ResponseEntity postEventImage(@RequestPart(value = "eventTitleImage") MultipartFile eventTitleImage,
+                                         @RequestPart(value = "eventContentImage") MultipartFile eventContentImage,
                                          @RequestPart(value = "eventPostDto") @Valid EventPostDto eventPostDto) throws IOException {
         Event event = eventMapper.eventPostDtoToEvent(eventPostDto);
 
-        event.setEventImageUrl(eventBannerService.uploadImage(eventImage.getInputStream(),
-                eventImage.getOriginalFilename(),
-                eventImage.getSize()));
+        event.setEventTitleImageUrl(eventBannerService.uploadImage(eventTitleImage.getInputStream(),
+                eventTitleImage.getOriginalFilename(),
+                eventTitleImage.getSize()));
+
+        event.setEventContentImageUrl(eventBannerService.uploadImage(eventContentImage.getInputStream(),
+                eventContentImage.getOriginalFilename(),
+                eventContentImage.getSize()));
 
         Event response = eventBannerService.createEvent(event);
 

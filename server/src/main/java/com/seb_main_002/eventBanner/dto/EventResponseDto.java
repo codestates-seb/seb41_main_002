@@ -12,7 +12,9 @@ public class EventResponseDto{
 
     private String content;
 
-    private String eventImageURL;
+    private String eventTitleImageURL;
+
+    private String eventContentImageURL;
 
     private String createdAt;
 

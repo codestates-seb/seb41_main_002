@@ -19,7 +19,9 @@ public class Event extends Auditable {
 
     private String content;
 
-    private String eventImageUrl;
+    private String eventTitleImageUrl;
+
+    private String eventContentImageUrl;
 
     private String endAt;
     @Enumerated(value=EnumType.STRING)

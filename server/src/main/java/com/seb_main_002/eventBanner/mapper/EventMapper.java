@@ -15,7 +15,8 @@ public interface EventMapper {
                 .eventId(event.getEventId())
                 .title(event.getTitle())
                 .content(event.getContent())
-                .eventImageURL(event.getEventImageUrl())
+                .eventTitleImageURL(event.getEventTitleImageUrl())
+                .eventContentImageURL(event.getEventContentImageUrl())
                 .createdAt(event.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy/MM/dd/HH:mm")))
                 .endAt(event.getEndAt())
                 .build();
