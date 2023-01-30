@@ -21,10 +21,15 @@ export default function EventDetail() {
       <div className="Event_Title_Banner">
         <img src={event?.eventTitleImageURL} alt="event image"></img>
       </div>
-      <h1 className="Event_Title">{event?.title}</h1>
+      <h1 className="Event_Detail_Title">{event?.title}</h1>
       <div className="Event_Term">
-        기간:
-        <span>{event?.createdAt}</span> ~ <span>{event?.endAt}</span>
+        {`${event?.createdAt.slice(0, 4)}년 ${event?.createdAt.slice(
+          5,
+          7
+        )}월 ${event?.createdAt.slice(8, 10)}일 ~ ${event?.endAt.slice(
+          0,
+          4
+        )}년 ${event?.endAt.slice(5, 7)}월 ${event?.endAt.slice(8, 10)}일 `}
       </div>
 
       <div>

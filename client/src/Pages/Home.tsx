@@ -31,7 +31,7 @@ const TopSalesContent = styled.div<{ bgUrl: string }>`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  border: solid 0.5px burlywood;
+  border: solid 0.5px lightgray;
   width: 250px;
   height: 100%;
   text-align: center;
@@ -98,11 +98,11 @@ export default function Home() {
         <div className="Hero_Text">
           <h1 className="Hero_Text_Gradient">남성 전용 화장품</h1>
           <p className="Hero_Text_Gradient">
-            당신의 피부타입을 알아보고 화장품을 추천 받아보세요.
+            당신의 피부타입을 검사받고 화장품을 추천 받아보세요.
           </p>
           <button className="Hero_Button">
             <Link to={`/skin-test/${memberId}`}>
-              <span>알아보기</span>
+              <span>내 피부타입 검사하기</span>
             </Link>
           </button>
         </div>

@@ -28,11 +28,12 @@ const OrderHistoryItem = ({ order }: { order: OrderType }) => {
           <CustomButton
             bgColor="transparent"
             content={isActive ? "접기" : "자세히"}
-            fontColor="skyblue"
+            fontColor="var(--indicatorColor1)"
             padding="10px"
             width="100px"
             border="none"
             fontsize="21px"
+            hoverColor="white"
           />
         </div>
       </div>
@@ -73,9 +74,10 @@ const OrderHistoryItem = ({ order }: { order: OrderType }) => {
                         content="리뷰 작성"
                         width="100px"
                         padding="10px"
-                        fontColor="gold"
+                        fontColor="var(--indicatorColor1)"
                         border="none"
                         fontsize="21px"
+                        hoverColor="white"
                       />
                     </Link>
                   </div>

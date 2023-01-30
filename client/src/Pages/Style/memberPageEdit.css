@@ -79,11 +79,7 @@
 }
 
 .Adrress_Primary {
-  color: rgb(9, 138, 45);
-}
-
-.Address_Title {
-  color: rgb(145, 189, 167);
+  color: #1f8a70;
 }
 
 .Address_List_Button {
@@ -144,7 +140,7 @@
 }
 
 .No_Subscription {
-  color: rgb(238, 158, 73);
+  color: var(--indicatorColor1);
   margin: 25px 0;
   font-size: 23px;
 }

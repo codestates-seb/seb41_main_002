@@ -1,17 +1,20 @@
 :root {
   /* colors */
   --black: #0c0d0e;
-  --black2: #18191C;
+  --black2: #18191c;
   --dark: #202225;
   --dark2: #2f3136;
   --dark3: #36393f;
   --gray: #6a737c;
   --lightgray: #babfc4;
-	--lightgray2: #e3e6e8;
+  --lightgray2: #e3e6e8;
   --white: #ffffff;
   /* main colors */
 
   /* ui colors */
+  --indicatorColor1: #ffd56f;
+  --indicatorColor2: wheat;
+  --hoverColor1: #820000;
 }
 
 /* layout*/
@@ -37,7 +40,7 @@ html {
 }
 
 /* input */
-input[type="text"].textBox{
+input[type="text"].textBox {
   padding: 8px 9px;
 }
 
@@ -48,7 +51,8 @@ input[type="text"].textBox{
   padding: 0;
 }
 
-ol,ul {
+ol,
+ul {
   list-style-type: none;
 }
 
@@ -83,20 +87,19 @@ button {
   border: 0 none;
 }
 
-html::-webkit-scrollbar-thumb{
+html::-webkit-scrollbar-thumb {
   background-color: var(--black);
   border-radius: 10px;
 }
 
-html::-webkit-scrollbar-track{
+html::-webkit-scrollbar-track {
   background-color: var(--dark2);
 }
 
-html::-webkit-scrollbar-corner{
+html::-webkit-scrollbar-corner {
   background-color: var(--dark2);
 }
 
-html::-webkit-scrollbar{
+html::-webkit-scrollbar {
   background-color: var(--dark3);
 }
-
