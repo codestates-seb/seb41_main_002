@@ -65,9 +65,10 @@ export default function Checkout() {
   const [useReserve, setUseReserve] = useState<number | undefined | string>(0);
   const [checkedList, setCheckedList] = useState<AddressType>();
   const { itemsTotalPrice, totalPrice, excludingPoints, itemListArray } =
-    itemsCalculation(useReserve, memberInfo && memberInfo["isSubscribe"]);
+    itemsCalculation(useReserve);
   const isAdressEmpty = checkedList && checkedList?.addressId > 0;
   const memberId = Number(sessionStorage.getItem("memberId"));
+  const isSubscribe = sessionStorage.getItem("isSubscribed");
 
   const reserveInput = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
@@ -167,9 +168,9 @@ export default function Checkout() {
             내 적립금 : {memberInfo && memberInfo["memberReserve"]}원
           </span>
           {memberInfo && (
-            <MemberSubscribe subscribeCheck={memberInfo["isSubscribe"]}>
+            <MemberSubscribe subscribeCheck={isSubscribe && JSON.parse(isSubscribe)}>
               프리미엄 구독{" "}
-              {memberInfo && memberInfo["isSubscribe"] ? "사용" : "미사용"}
+              {isSubscribe ? "사용" : "미사용"}
             </MemberSubscribe>
           )}
         </div>
@@ -197,7 +198,7 @@ export default function Checkout() {
         </div>
         <div className="Calculate_Container">
           총 금액 : {itemsTotalPrice}원 + 배송비 3000원{" "}
-          {memberInfo && memberInfo["isSubscribe"]
+          {isSubscribe
             ? "- 구독 혜택 1000원"
             : null}{" "}
           {useReserve === undefined ? null : "- 적립금 " + useReserve + "원"} =
@@ -272,7 +273,7 @@ export default function Checkout() {
               <li>최종 금액: {totalPrice}원</li>
               <li>
                 적립금:{" "}
-                {memberInfo && memberInfo["isSubscribe"]
+                {isSubscribe
                   ? itemsTotalPrice * 0.03
                   : itemsTotalPrice * 0.01}
                 원
