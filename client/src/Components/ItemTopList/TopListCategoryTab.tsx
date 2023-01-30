@@ -69,7 +69,7 @@ export default function TopListCategoryTab(props: Props) {
                 props.setCategoryENName(category.categoryENName);
                 setActivateTage(index);
                 props.navigate(
-                  `/items-top-list/${category.categoryENName}?custom=${props.customCheck}`
+                  `/items-top-list/${category.categoryENName}`
                 );
               }}
             />
@@ -89,9 +89,7 @@ export default function TopListCategoryTab(props: Props) {
               content="커스텀"
               onClick={() => {
                 props.navigate(
-                  `/items-top-list/${props.params.categoryENName}?custom=${
-                    props.customCheck && props.customCheck
-                  }`
+                  `/items-top-list/${props.params.categoryENName}`
                 );
                 props.setCustomCheck(!props.customCheck);
               }}
