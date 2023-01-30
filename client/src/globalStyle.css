@@ -1,3 +1,8 @@
+@font-face {
+  font-family: myFirstFont;
+  src: url("./Font/BMDOHYEON_ttf.ttf");
+}
+
 :root {
   /* colors */
   --black: #0c0d0e;
@@ -27,6 +32,10 @@ html {
   font-size: 13px;
   color: var(--white);
   background-color: var(--dark);
+}
+
+* {
+  font-family: myFirstFont;
 }
 
 .Browser_Container {
