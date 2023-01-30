@@ -6,7 +6,7 @@ import AccessMenu from "../Components/SignUp/AccessMenu";
 
 const FindId = () => {
   const [modalState, setModalState] = useState(false);
-  const [modalText, setModalText] = useState("");
+  const [modalText, setModalText] = useState("이메일 전송중입니다.");
   const [email, setEmail] = useState("");
 
   const onEmailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
