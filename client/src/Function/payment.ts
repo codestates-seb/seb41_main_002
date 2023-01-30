@@ -7,15 +7,12 @@ export interface LocalType {
 }
 
 export const itemsCalculation = (
-  useReserve?: string | number,
-  subscribeCheck?: boolean
+  useReserve?: string | number
 ) => {
+  const subscribeCheck = sessionStorage.getItem("isSubscribed");
   const getItemList = sessionStorage.getItem("itemList");
   let itemListArray: LocalType[] = getItemList && JSON.parse(getItemList);
   let totalPrice = 0;
-  // itemListArray = itemListArray.map(item => {
-  //   return {...item,itemTotalPrice:item.itemCount*item.itemTotalPrice}
-  // })
   
   let itemsTotalPrice = itemListArray.reduce(
     (sum: number, value: LocalType) => sum + value.itemTotalPrice,
