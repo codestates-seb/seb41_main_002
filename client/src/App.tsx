@@ -62,8 +62,8 @@ function App() {
             <Route path="skin-test/:memberId" element={<SkinTestPage />} />
           </Routes>
         </div>
-        <Footer />
       </div>
+      <Footer />
     </BrowserRouter>
   );
 }
