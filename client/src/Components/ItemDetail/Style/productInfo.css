@@ -3,5 +3,19 @@
   height: 100%;
   display: flex;
   justify-content: center;
+  margin-top: 10px;
   padding-right: 150px;
+}
+
+.Product_Total_Count{
+  margin-right: 10px;
+}
+
+.Count_Container{
+  display: flex;
+}
+
+.Product_Total_Count{
+  display: flex;
+  align-items: center;
 }

@@ -1,7 +1,7 @@
 import { authInstance } from "../Core";
 
 interface ProductData {
-  memberId: string;
+  memberId: string| null;
   itemId: number | undefined;
   itemCount: number;
   itemTotalPrice: number | null;
