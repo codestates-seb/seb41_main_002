@@ -28,7 +28,7 @@
   border: 1px solid black;
 }
 
-.Empty_List_Container{
+.Empty_List_Container {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -178,7 +178,7 @@
 
 .Cart_Product_Delete {
   width: 139.9px;
-  background-color: var(--gray);
+  background-color: var(--dark3);
   border-left: 1px solid black;
   display: flex;
   justify-content: center;
@@ -199,6 +199,10 @@
   display: flex;
 }
 
-.Empty_List > a{
+.Empty_List > a {
   color: pink;
+}
+
+.Shopping_Cart_Container {
+  padding: 20px;
 }

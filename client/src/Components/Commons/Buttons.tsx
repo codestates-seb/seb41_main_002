@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
 const StyledButton = styled.button<{
-  bgColor: string;
-  fontColor: string;
-  width: string;
-  padding: string;
+  bgColor?: string;
+  fontColor?: string;
+  width?: string;
+  padding?: string;
   fontsize?: string;
   border?: string;
   height?: string;
+  hoverColor?: string;
+  hoverBGColor?: string;
 }>`
   width: ${(props) => props.width};
   height: ${(props) => (props.height ? props.height : "100%")};
@@ -17,14 +19,19 @@ const StyledButton = styled.button<{
   border: ${(props) => (props.border ? props.border : "1px solid white")};
   border-radius: 5px;
   font-size: ${(props) => (props.fontsize ? props.fontsize : "17px")};
+
+  &:hover {
+    color: ${(props) => props.hoverColor};
+    background-color: ${(props) => props.hoverBGColor};
+  }
 `;
 
 interface ButtonType {
-  fontColor: string;
-  bgColor: string;
+  fontColor?: string;
+  bgColor?: string;
   content: string;
-  width: string;
-  padding: string;
+  width?: string;
+  padding?: string;
   type?: "button" | "submit" | "reset";
   fontsize?: string;
   height?: string;
@@ -32,6 +39,8 @@ interface ButtonType {
   border?: string;
   buttonId?: string;
   idx?: string;
+  hoverColor?: string;
+  hoverBGColor?: string;
 }
 
 export default function CustomButton({
@@ -47,6 +56,8 @@ export default function CustomButton({
   buttonId,
   idx,
   height,
+  hoverColor,
+  hoverBGColor,
 }: ButtonType) {
   return (
     <StyledButton
@@ -61,6 +72,8 @@ export default function CustomButton({
       id={buttonId}
       name={idx}
       height={height}
+      hoverColor={hoverColor}
+      hoverBGColor={hoverBGColor}
     >
       {content}
     </StyledButton>

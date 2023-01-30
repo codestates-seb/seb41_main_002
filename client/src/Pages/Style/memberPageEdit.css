@@ -3,7 +3,7 @@
 }
 
 .Edit_Page_Title {
-  font-size: 25px;
+  font-size: 23px;
   margin: 20px 0 30px 0;
 }
 
@@ -38,7 +38,7 @@
   text-align: center;
   font-size: 17px;
   border: none;
-  border-bottom: 1px solid rgba(249, 216, 170, 0.8);
+  border-bottom: 1px solid var(--lineColor1);
 }
 
 .Member_Information_Addresses {
@@ -51,7 +51,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 23px;
+  font-size: 21px;
   font-weight: 450;
   height: 50px;
   border-bottom: solid white 1px;
@@ -75,15 +75,11 @@
 
 .Address_List_Address {
   width: 70%;
-  font-size: 19px;
+  font-size: 17px;
 }
 
 .Adrress_Primary {
-  color: rgb(9, 138, 45);
-}
-
-.Address_Title {
-  color: rgb(145, 189, 167);
+  color: #1f8a70;
 }
 
 .Address_List_Button {
@@ -144,9 +140,9 @@
 }
 
 .No_Subscription {
-  color: rgb(238, 158, 73);
+  color: var(--indicatorColor1);
   margin: 25px 0;
-  font-size: 23px;
+  font-size: 21px;
 }
 
 .Subscription_Summary {
@@ -167,7 +163,7 @@
 }
 
 .Subscription_Benefit div {
-  font-size: 19px;
+  font-size: 17px;
 }
 
 .Subscription_Benefit span {

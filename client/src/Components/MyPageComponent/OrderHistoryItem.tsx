@@ -28,11 +28,12 @@ const OrderHistoryItem = ({ order }: { order: OrderType }) => {
           <CustomButton
             bgColor="transparent"
             content={isActive ? "접기" : "자세히"}
-            fontColor="skyblue"
+            fontColor="var(--indicatorColor1)"
             padding="10px"
             width="100px"
             border="none"
             fontsize="21px"
+            hoverColor="white"
           />
         </div>
       </div>
@@ -50,7 +51,9 @@ const OrderHistoryItem = ({ order }: { order: OrderType }) => {
                 <div className="History_Product_Name">
                   <span className="History_Detail_Indicator">상품명</span>
                   <Link to={`/itemDetail/${item.itemId}`}>
-                    <div>{item.itemTitle} </div>
+                    <div className="History_Product_Title">
+                      {item.itemTitle}{" "}
+                    </div>
                   </Link>
                 </div>
                 <div className="History_Product_Info">
@@ -71,11 +74,12 @@ const OrderHistoryItem = ({ order }: { order: OrderType }) => {
                       <CustomButton
                         bgColor="transparent"
                         content="리뷰 작성"
-                        width="100px"
+                        width="125px"
                         padding="10px"
-                        fontColor="gold"
+                        fontColor="var(--indicatorColor1)"
                         border="none"
                         fontsize="21px"
+                        hoverColor="white"
                       />
                     </Link>
                   </div>

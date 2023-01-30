@@ -21,10 +21,11 @@
 }
 
 .Hero_Button {
-  background-color: black;
+  margin-top: 20px;
+  background-color: transparent;
   color: white;
   padding: 10px;
-  font-size: 17px;
+  font-size: 21px;
   border: none;
 }
 
@@ -36,15 +37,14 @@
 }
 
 .Events_Banner {
-  width: 85%;
-  height: 600px;
+  width: 90%;
+  height: 700px;
   margin: 0 auto;
   padding: 50px 0;
-  background-color: black;
+  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  color: white;
 }
 
 .Events_Carousel {
@@ -71,7 +71,7 @@
 }
 
 .Carousel_Arrow:hover {
-  color: burlywood;
+  color: var(--indicatorColor1);
 }
 
 .Event_Caption_Text {
@@ -79,7 +79,7 @@
   font-size: 25px;
   padding: 8px 12px;
   position: absolute;
-  bottom: 15px;
+  bottom: 0px;
   width: 100%;
   line-height: 1.75;
   text-align: center;
@@ -95,10 +95,7 @@
 
 .Event_Title {
   font-size: 31px;
-  background: linear-gradient(to right, #faf8f1, #faeab1, #e5ba73, #c58940);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: white;
 }
 
 .Event_Title:hover {

@@ -18,19 +18,24 @@ export default function EventDetail() {
   }, []);
   return (
     <div>
-      <h1 className="Event_Title">{event?.title}</h1>
-      <div className="Event_Posted_Date">{event?.createdAt}</div>
-
-      <div className="Event_Image">
-        <img src={event?.eventImageURL} alt="event image"></img>
+      <div className="Event_Title_Banner">
+        <img src={event?.eventTitleImageURL} alt="event image"></img>
+      </div>
+      <h1 className="Event_Detail_Title">{event?.title}</h1>
+      <div className="Event_Term">
+        {`${event?.createdAt.slice(0, 4)}년 ${event?.createdAt.slice(
+          5,
+          7
+        )}월 ${event?.createdAt.slice(8, 10)}일 ~ ${event?.endAt.slice(
+          0,
+          4
+        )}년 ${event?.endAt.slice(5, 7)}월 ${event?.endAt.slice(8, 10)}일 `}
       </div>
 
       <div>
-        <div className="Event_Term">
-          기간:
-          <span>{event?.createdAt}</span> ~ <span>{event?.endAt}</span>
+        <div className="Event_Detail">
+          <img src={event?.eventContentImageURL} alt="event image"></img>
         </div>
-        <div className="Event_Detail">{event?.content}</div>
       </div>
     </div>
   );

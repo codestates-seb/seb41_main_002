@@ -12,6 +12,7 @@
   align-items: center;
   background-color: dimgrey;
   border-bottom: solid 1px rgba(255, 255, 255, 0.4);
+  height: 200px;
 }
 
 .History_Image_Container,
@@ -26,8 +27,12 @@
   align-items: center;
 }
 
+.History_Product_Title:hover {
+  color: var(--hoverColor2);
+}
+
 .History_Image_Container img {
-  width: 100%;
+  width: 175px;
 }
 
 .History_Product_Info {
@@ -46,8 +51,8 @@
 }
 
 .History_Detail_Indicator {
-  font-size: 17px;
-  color: wheat;
+  font-size: 21px;
+  color: var(--indicatorColor2);
   margin-bottom: 10px;
 }
 
@@ -62,10 +67,10 @@
 
 .Review_Link:hover {
   cursor: pointer;
-  color: goldenrod;
+  color: var(--indicatorColor1);
 }
 
 .Review_Done {
   width: 20%;
-  color: lightgoldenrodyellow;
+  color: var(--indicatorColor3);
 }

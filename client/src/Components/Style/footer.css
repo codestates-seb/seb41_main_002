@@ -39,6 +39,10 @@
   padding: 0 23px;
 }
 
+.Footer_Img{
+  display: flex;
+}
+
 @media (max-width:767px){
   .Footer_Inside{
     flex-direction: column;

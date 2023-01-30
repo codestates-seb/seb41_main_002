@@ -174,7 +174,7 @@ export default function ShoppingCart() {
             />
           ) : (
             <a href="/items-list/all">제품담으러가기</a>
-          )}
+        )}
         </div>
       </div>
     </div>

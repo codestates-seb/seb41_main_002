@@ -3,8 +3,8 @@ import { defaultInstance } from "../Core";
 export interface EventType {
   eventId: number;
   title: string;
-  content: string;
-  eventImageURL: string;
+  eventContentImageURL: string;
+  eventTitleImageURL: string;
   createdAt: string;
   endAt: string;
 }

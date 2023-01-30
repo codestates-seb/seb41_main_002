@@ -214,7 +214,7 @@ export default function MemberPageEdit() {
       cancelSubscription(memberId);
       setIsSubscribed(false);
       setRender(!render);
-      sessionStorage.removeItem("isSubscribed");
+      sessionStorage.setItem("isSubscribed", "false");
       sessionStorage.removeItem("regularPayment");
       alert("구독이 취소되었습니다.");
     }
@@ -275,11 +275,12 @@ export default function MemberPageEdit() {
               <CustomButton
                 bgColor="transparent"
                 content="비밀번호 변경"
-                fontColor="rgb(238, 158, 73)"
+                fontColor="var(--indicatorColor1)"
                 padding="10px"
                 width="150px"
                 border="none"
                 onClick={toResetPW}
+                hoverColor="var(--hoverColor3)"
               />
             </div>
           </InfoWrapper>
@@ -343,10 +344,7 @@ export default function MemberPageEdit() {
                                 (대표주소)
                               </span>
                             ) : null}
-                            <span className="Address_Title">
-                              {` ${address.addressTitle}`}
-                            </span>
-                            {` : ${address.address} (${address.zipcode})`}
+                            {` ${address.addressTitle} : ${address.address} (${address.zipcode})`}
                           </div>
                         </div>
                         <div className="Address_List_Button">
@@ -354,37 +352,40 @@ export default function MemberPageEdit() {
                           {address.isPrimary ? null : (
                             <CustomButton
                               bgColor="transparent"
-                              content="대표주소 설정"
-                              fontColor="skyblue"
+                              content="대표주소 변경"
+                              fontColor="var(--indicatorColor1)"
                               padding="5px"
                               width="125px"
                               border="none"
                               buttonId={idx.toString()}
                               idx={address.addressId.toString()}
                               onClick={setPrimaryAddress}
+                              hoverColor="var(--hoverColor3)"
                             />
                           )}
                           <CustomButton
                             bgColor="transparent"
                             content="수정"
-                            fontColor="skyblue"
+                            fontColor="var(--indicatorColor1)"
                             padding="5px"
                             border="none"
                             width="50px"
                             buttonId={idx.toString()}
                             idx={address.addressId.toString()}
                             onClick={editAddress}
+                            hoverColor="var(--hoverColor3)"
                           />
                           <CustomButton
                             bgColor="transparent"
                             content="삭제"
-                            fontColor="skyblue"
+                            fontColor="var(--indicatorColor1)"
                             padding="5px"
                             border="none"
                             width="50px"
                             buttonId={idx.toString()}
                             idx={address.addressId.toString()}
                             onClick={removeAddress}
+                            hoverColor="var(--hoverColor3)"
                           />
                         </div>
                       </li>
@@ -396,11 +397,12 @@ export default function MemberPageEdit() {
             <CustomButton
               bgColor="transparent"
               content="배송지 추가"
-              fontColor="rgb(238, 158, 73)"
+              fontColor="var(--indicatorColor1)"
               padding="10px"
               width="125px"
               border="none"
               onClick={addNewAddress}
+              hoverColor="var(--hoverColor3)"
             />
           </ul>
 
@@ -412,11 +414,12 @@ export default function MemberPageEdit() {
                   <CustomButton
                     bgColor="transparent"
                     content="나의 피부타입은?"
-                    fontColor="rgb(243, 194, 35)"
+                    fontColor="var(--indicatorColor1)"
                     padding="10px"
                     fontsize="19px"
                     border="none"
                     width="200px"
+                    hoverColor="var(--hoverColor3)"
                   />
                 </Link>
               </div>
@@ -601,6 +604,7 @@ export default function MemberPageEdit() {
             width="125px"
             onClick={submitEdit}
             type="submit"
+            hoverColor="var(--hoverColor1)"
           />
         </div>
         <div className="Subscribe_Edit_Container">
@@ -610,12 +614,13 @@ export default function MemberPageEdit() {
               <div className="No_Subscription">구독하고 있지 않습니다.</div>
               <Link to={`/members/${memberId}/subscribe`}>
                 <CustomButton
-                  bgColor="transparent"
+                  bgColor="white"
                   content="지금 구독하세요!"
-                  fontColor="skyblue"
+                  fontColor="black"
                   padding="15px"
                   fontsize="19px"
                   width="200px"
+                  hoverColor="var(--hoverColor1)"
                 />
               </Link>
             </div>
@@ -642,12 +647,13 @@ export default function MemberPageEdit() {
                 <CustomButton
                   bgColor="transparent"
                   content="구독 취소"
-                  fontColor="tomato"
+                  fontColor="gray"
                   padding="15px"
                   border="none"
                   fontsize="19px"
                   width="125px"
                   onClick={stopSubscription}
+                  hoverColor="tomato"
                 />
               </InfoWrapper>
             </div>
