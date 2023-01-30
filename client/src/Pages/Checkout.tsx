@@ -72,12 +72,12 @@ export default function Checkout() {
 
   const reserveInput = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
-    if (excludingPoints < Number(target.value)) {
-      setUseReserve(excludingPoints);
-    } else if (
+    if (
       Number(target.value) > Number(memberInfo && memberInfo["memberReserve"])
     ) {
       setUseReserve(memberInfo && memberInfo["memberReserve"]);
+    } else if (excludingPoints < Number(target.value)) {
+      setUseReserve(excludingPoints);
     } else if (target.value === "") {
       setUseReserve(0);
     } else {
