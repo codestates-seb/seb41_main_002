@@ -20,7 +20,9 @@ public class HomeResponseDto {
 
         private String title;
 
-        private String eventImageURL;
+        private String eventTitleImageURL;
+
+        private String eventContentImageURL;
 
         private String createdAt;
 
