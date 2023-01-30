@@ -20,7 +20,7 @@
   --indicatorColor1: #ffd56f;
   --indicatorColor2: wheat;
   --indicatorColor3: lightgoldenrodyellow;
-  --hoverColor1: #da0037;
+  --hoverColor1: #1c6dd0;
   --hoverColor2: #181d31;
   --hoverColor3: #ffffff;
   --lineColor1: rgba(249, 216, 170, 0.8);
@@ -34,15 +34,12 @@ html {
   background-color: var(--dark);
 }
 
-* {
-  font-family: myFirstFont;
-}
-
 .Browser_Container {
   width: 100%;
   margin: 0 auto;
   max-width: 1600px;
   height: 100%;
+  font-family: myFirstFont;
 }
 
 .Contents_Wrap {
