@@ -5,6 +5,7 @@ const CustomBadge = styled.span<{
   padding: string;
   fontSize: string;
 }>`
+  color: #343434;
   background-color: ${(props) => props.bgColor};
   padding: ${(props) => props.padding};
   font-size: ${(props) => props.fontSize};
@@ -32,7 +33,7 @@ export const SkinTag = (tags: string) => {
     case "지성":
       return (
         <TypeBadge
-          bgColor="black"
+          bgColor="#E5E0FF"
           padding="5px"
           fontSize="15px"
           content={`${tags}`}
@@ -41,7 +42,7 @@ export const SkinTag = (tags: string) => {
     case "건성":
       return (
         <TypeBadge
-          bgColor="gray"
+          bgColor="#7286D3"
           padding="5px"
           fontSize="15px"
           content={`${tags}`}
@@ -50,7 +51,7 @@ export const SkinTag = (tags: string) => {
     case "복합성":
       return (
         <TypeBadge
-          bgColor="Pink"
+          bgColor="#C780FA"
           padding="5px"
           fontSize="15px"
           content={`${tags}`}
@@ -59,7 +60,7 @@ export const SkinTag = (tags: string) => {
     case "미백":
       return (
         <TypeBadge
-          bgColor="red"
+          bgColor="#BFEAF5"
           padding="5px"
           fontSize="15px"
           content={`${tags}`}
@@ -68,7 +69,7 @@ export const SkinTag = (tags: string) => {
     case "주름":
       return (
         <TypeBadge
-          bgColor="blue"
+          bgColor="#FFF6BD"
           padding="5px"
           fontSize="15px"
           content={`${tags}`}
@@ -77,7 +78,7 @@ export const SkinTag = (tags: string) => {
     case "여드름성 피부":
       return (
         <TypeBadge
-          bgColor="gold"
+          bgColor="#EB455F"
           padding="5px"
           fontSize="15px"
           content={`${tags}`}
@@ -86,7 +87,7 @@ export const SkinTag = (tags: string) => {
     case "일반피부":
       return (
         <TypeBadge
-          bgColor="yellow"
+          bgColor="#FFE5F1"
           padding="5px"
           fontSize="15px"
           content={`${tags}`}
@@ -95,7 +96,7 @@ export const SkinTag = (tags: string) => {
     case "보습":
       return (
         <TypeBadge
-          bgColor="yellow"
+          bgColor="#009EFF"
           padding="5px"
           fontSize="15px"
           content={`${tags}`}
@@ -104,7 +105,7 @@ export const SkinTag = (tags: string) => {
     case "모공":
       return (
         <TypeBadge
-          bgColor="yellow"
+          bgColor="#CFF5E7"
           padding="5px"
           fontSize="15px"
           content={`${tags}`}
@@ -113,7 +114,7 @@ export const SkinTag = (tags: string) => {
     case "수분":
       return (
         <TypeBadge
-          bgColor="yellow"
+          bgColor="#D6E4E5"
           padding="5px"
           fontSize="15px"
           content={`${tags}`}
@@ -122,7 +123,7 @@ export const SkinTag = (tags: string) => {
     case "탄력":
       return (
         <TypeBadge
-          bgColor="yellow"
+          bgColor="#FF9F9F"
           padding="5px"
           fontSize="15px"
           content={`${tags}`}

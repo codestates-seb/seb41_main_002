@@ -105,7 +105,7 @@ export default function Header() {
                 <div className="Nav_Line"></div>
               </li>
               {/* 해당 코드는 이후 수정 예정 */}
-              {/* {itemList.map((item, index) => {
+              {itemList.map((item, index) => {
                 return (
                   <li key={index} onClick={toggleDropdown}>
                     <Link to={`/items-list/${item.itemNameEN}`}>
@@ -113,13 +113,13 @@ export default function Header() {
                     </Link>
                   </li>
                 );
-              })} */}
+              })}
 
-              <li onClick={toggleDropdown}>
-                <Link to="/items-top-list/all">추천 리스트</Link>
-              </li>
               <li>
                 <div className="Nav_Line"></div>
+              </li>
+              <li onClick={toggleDropdown}>
+                <Link to="/items-top-list/all">추천 리스트</Link>
               </li>
             </ul>
           ) : null}
