@@ -25,7 +25,7 @@ export default function Header() {
     const regularPaymentTime = sessionStorage.getItem(
       "regularPayment"
     ) as string;
-    if (regularPaymentTime !== "") {
+    if (regularPaymentTime !== "" && regularPaymentTime) {
       const nowDate = new Date();
       const setTime =
         nowDate.getTime() - new Date(regularPaymentTime).getTime();
