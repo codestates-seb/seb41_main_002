@@ -35,6 +35,7 @@ const Footer = () => {
             <div className="Footer_Img">
               <img src="https://img.shields.io/badge/Yarn-2C8EBB?style=for-the-badge&logo=Yarn&logoColor=black"/>
               <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black"/>
+              <img src="https://img.shields.io/badge/GitHub Actions-2088FF?style=for-the-badge&logo=GitHub Actions&logoColor=black"/>
             </div>
             <br/>
             <h3>✔️Back-end</h3>
