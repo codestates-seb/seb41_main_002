@@ -1,9 +1,9 @@
-.Shopping_List_Search{
+.Shopping_List_Search {
   display: flex;
   justify-content: center;
   margin-top: 20px;
   margin-bottom: 10px;
-  width: 100%
+  width: 100%;
 }
 
 .Search_Bar {
@@ -14,17 +14,19 @@
   text-align: center;
 }
 
-.Product_List_Container{
+.Product_List_Container {
   display: flex;
   justify-content: center;
 }
 
-.Shopping_Product_Info{
+.Shopping_Product_Info {
   width: 200px;
-  height: 250px;
+  height: 260px;
+  background: var(--gray);
+  border-radius: 10px;
 }
 
-.Product_List{
+.Product_List {
   width: calc(100% - 50px);
   margin-top: 30px;
   margin-bottom: 30px;
@@ -35,14 +37,31 @@
   flex-wrap: wrap;
 }
 
-.Tab_Container{
+.Tab_Container {
   display: flex;
   justify-content: center;
 }
 
-.Tab_List{
+.Tab_List {
   margin-top: 10px;
   display: flex;
   width: calc(100% - 50px);
   justify-content: space-between;
+}
+.Product_Price_Content {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
+.Product_Title_Content {
+  text-align: center;
+}
+
+.Product_Text_Container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 60px;
 }
