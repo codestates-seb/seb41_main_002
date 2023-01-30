@@ -98,12 +98,13 @@ export default function ResetPw() {
             height="50px"
             bgColor="transparent"
             content="비밀번호 변경"
-            fontColor="orange"
+            fontColor="var(--indicatorColor1)"
             padding="5px"
             width="200px"
             border="none"
             fontsize="23px"
             type="submit"
+            hoverColor="var(--hoverColor1)"
           />
         </div>
       </form>

@@ -3,7 +3,7 @@
 }
 
 .Edit_Page_Title {
-  font-size: 25px;
+  font-size: 23px;
   margin: 20px 0 30px 0;
 }
 
@@ -51,7 +51,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 23px;
+  font-size: 21px;
   font-weight: 450;
   height: 50px;
   border-bottom: solid white 1px;
@@ -75,7 +75,7 @@
 
 .Address_List_Address {
   width: 70%;
-  font-size: 19px;
+  font-size: 17px;
 }
 
 .Adrress_Primary {
@@ -142,7 +142,7 @@
 .No_Subscription {
   color: var(--indicatorColor1);
   margin: 25px 0;
-  font-size: 23px;
+  font-size: 21px;
 }
 
 .Subscription_Summary {
@@ -163,7 +163,7 @@
 }
 
 .Subscription_Benefit div {
-  font-size: 19px;
+  font-size: 17px;
 }
 
 .Subscription_Benefit span {

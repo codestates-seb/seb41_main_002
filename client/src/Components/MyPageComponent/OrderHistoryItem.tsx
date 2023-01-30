@@ -74,7 +74,7 @@ const OrderHistoryItem = ({ order }: { order: OrderType }) => {
                       <CustomButton
                         bgColor="transparent"
                         content="리뷰 작성"
-                        width="100px"
+                        width="125px"
                         padding="10px"
                         fontColor="var(--indicatorColor1)"
                         border="none"
