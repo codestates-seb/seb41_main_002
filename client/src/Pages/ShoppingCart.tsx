@@ -12,9 +12,10 @@ import { LocalType } from "../Function/payment";
 import "./Style/shoppingCart.css";
 
 const BenefitContents = styled.span<{ marginLeft: string }>`
-  color: black;
+  color: white;
   font-size: 21px;
   margin-left: ${(props) => props.marginLeft};
+  margin-right: 10px;
 `;
 
 export default function ShoppingCart() {
@@ -61,6 +62,7 @@ export default function ShoppingCart() {
   useEffect(() => {
     callCartData();
   }, []);
+
   return (
     <div className="Shopping_Cart_Container">
       <div className="Member_Benefits_Info">
@@ -78,13 +80,13 @@ export default function ShoppingCart() {
                 구독중이 아닙니다
               </BenefitContents>
               <CustomButton
+                height="40px"
                 fontColor="black"
                 fontsize="15px"
                 bgColor="var(--gray)"
                 content="구독하러 가기"
                 width="110px"
                 padding="10px"
-                height="50px"
                 onClick={() => navigate(`/members/${accessToken}/subscribe`)}
               />
             </>
@@ -156,19 +158,23 @@ export default function ShoppingCart() {
           <span> = 총 {deliveryTotalPrice}원</span>
         )}
         <div className="Cart_Payment_Button">
-          <CustomButton
-            fontsize="13px"
-            fontColor="white"
-            bgColor="var(--dark3)"
-            content="결제하기"
-            width="100%"
-            height="100%"
-            padding="5px"
-            onClick={() => {
-              pushProductData();
-              navigate("/order/checkout");
-            }}
-          />
+          {cartData && cartData.cart.length === 1 ? (
+            <CustomButton
+              fontsize="13px"
+              fontColor="white"
+              bgColor="var(--dark3)"
+              content="결제하기"
+              width="100%"
+              height="100%"
+              padding="5px"
+              onClick={() => {
+                pushProductData();
+                navigate("/order/checkout");
+              }}
+            />
+          ) : (
+            <a href="/items-list/all">제품담으러가기</a>
+        )}
         </div>
       </div>
     </div>

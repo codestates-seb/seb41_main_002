@@ -1,6 +1,12 @@
 .Top_List_Title {
-  text-align: center;
   font-size: 27px;
+  margin-top: 10px;
+  background-color: var(--dark3);
+  border-radius: 10px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .Filter_Options {
@@ -14,6 +20,12 @@
 .Tab_Container{
   display: flex;
   justify-content: center;
+  display: flex;
+  justify-content: center;
+  background-color: var(--dark3);
+  margin-top: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
 
 .Filter_Button {
@@ -25,8 +37,10 @@
 .Products_Gallery {
   display: flex;
   justify-content: center;
-  padding: 20px 0;
-  background-color: var(--gray);
+  background-color: var(--dark3);
+  margin-top: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
 
 .Products_Row{

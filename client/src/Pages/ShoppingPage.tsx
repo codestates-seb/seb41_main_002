@@ -11,6 +11,8 @@ import { useParams } from "react-router-dom";
 export const ProductImage = styled.img`
   width: 200px;
   height: 200px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 `;
 
 interface ProductProps {
@@ -34,8 +36,12 @@ const ProductList = (props: ProductListProps) => {
               <a href={`/itemDetail/${item.itemId}`}>
                 <div className="Shopping_Product_Info">
                   <ProductImage src={`${item.titleImageURL}`} />
-                  <h4> {item.itmeTitle} </h4>
-                  <p>가격: {item.price}</p>
+                  <div className="Product_Text_Container">
+                    <h4 className="Product_Title_Content">
+                      {item.itmeTitle}
+                    </h4>
+                    <p className="Product_Price_Content">가격: {item.price}원</p>
+                  </div>
                 </div>
               </a>
             </li>
@@ -171,7 +177,7 @@ export default function ShoppingPage() {
             }}
           />
         </div>
-        <div className="Tab_Container">
+        <div className="Shopping_Tab_Container">
           <ul className="Tab_List">
             <ShoppingCategoryTab
               setIsCustom={setIsCustom}

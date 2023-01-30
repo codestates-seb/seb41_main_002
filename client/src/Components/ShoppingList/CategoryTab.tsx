@@ -52,6 +52,7 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
         return (
           <li key={category.categoryENName}>
             <CustomButton
+              height="36px"
               fontColor={props.params === category.categoryENName ? "black" : "white"}
               fontsize={props.params === category.categoryENName ? "21px" : "17px"}
               bgColor={
