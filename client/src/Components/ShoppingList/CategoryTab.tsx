@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CustomButton from "../Commons/Buttons";
 import "./Style/categoryTab.css";
 
@@ -9,7 +8,6 @@ interface Category {
 }
 
 interface Props {
-  setCategoryParams(category: string): React.SetStateAction<string>;
   setIsCustom(custom: boolean): React.SetStateAction<boolean>;
   isCustom: boolean;
   session: string | null;
@@ -17,11 +15,10 @@ interface Props {
   serchWord: string;
   pageNumber: number;
   setisCustom: React.Dispatch<React.SetStateAction<boolean>>;
+  params: string
 }
 
 export const ShoppingCategoryTab: Function = (props: Props) => {
-  const param = useParams();
-  const [activateTag, setActivateTage] = useState(0);
   const navigate = useNavigate();
   const categoryTitle: Array<Category> = [
     {
@@ -51,23 +48,21 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
   ];
   return (
     <>
-      {categoryTitle.map((category, index) => {
+      {categoryTitle.map((category) => {
         return (
           <li key={category.categoryENName}>
             <CustomButton
-              fontColor={activateTag === index ? "black" : "white"}
-              fontsize={activateTag === index ? "21px" : "17px"}
+              fontColor={props.params === category.categoryENName ? "black" : "white"}
+              fontsize={props.params === category.categoryENName ? "21px" : "17px"}
               bgColor={
-                activateTag === index ? "var(--gray)" : "var(--lightgray)"
+                props.params === category.categoryENName ? "var(--gray)" : "var(--lightgray)"
               }
               width="100px"
               padding="5px"
               content={`${category.categoryKRName}`}
               onClick={() => {
-                setActivateTage(index);
-                props.setCategoryParams(category.categoryENName);
                 navigate(
-                  `/items-list/${category.categoryENName}?custom=${props.isCustom}&title=${props.serchWord}&page=${props.pageNumber}`
+                  `/items-list/${category.categoryENName}?custom=${props.isCustom}`
                 );
               }}
             />
@@ -88,7 +83,7 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
               onClick={() => {
                 props.setIsCustom(!props.isCustom);
                 navigate(
-                  `/items-list/all?custom=${props.isCustom}&title=${props.serchWord}&page=${props.pageNumber}`
+                  `/items-list/all?custom=${props.isCustom}`
                 );
               }}
             />

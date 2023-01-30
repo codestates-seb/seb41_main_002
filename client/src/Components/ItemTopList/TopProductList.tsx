@@ -7,6 +7,7 @@ interface Props {
 
 const ProductImage = styled.img`
   width: 200px;
+  height: 200px;
 `;
 export default function TopProductList(props: Props) {
   return (

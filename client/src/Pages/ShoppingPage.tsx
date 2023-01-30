@@ -6,6 +6,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { ShoppingCategoryTab } from "../Components/ShoppingList/CategoryTab";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
 
 export const ProductImage = styled.img`
   width: 200px;
@@ -48,14 +49,14 @@ const getProducts = async (
   custom: boolean,
   page = 0,
   keyword = "",
-  accessToken? : string|null
+  accessToken?: string | null
 ): Promise<ProductProps[]> => {
   const results = await getProductList({
     categoryENName: categoryName,
     custom,
     page,
     keyword,
-    accessToken
+    accessToken,
   });
   return results.map((item) => ({
     itemId: item.itemId,
@@ -66,7 +67,6 @@ const getProducts = async (
 };
 
 export default function ShoppingPage() {
-  const [categoryParam, setCategoryParams] = useState("all");
   const [isCustom, setIsCustom] = useState(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [products, setProducts] = useState<ProductProps[]>([]);
@@ -77,9 +77,10 @@ export default function ShoppingPage() {
   const bottomRef = useRef(null);
   const accessToken = sessionStorage.getItem("accessToken");
   const session = sessionStorage.getItem("memberId");
+  const params = useParams();
   const fetchMemberTagData = async () => {
     const result = await getMemberTagList({
-      categoryENName: categoryParam,
+      categoryENName: params.categoryENName as string,
       custom: isCustom,
       page: pageNumber,
       keyword: serchWord,
@@ -90,14 +91,13 @@ export default function ShoppingPage() {
 
   useEffect(() => {
     fetchMemberTagData();
-  },[]);
-  
+  }, []);
+
   useEffect(() => {
     setProducts([]);
     setLock(false);
     setPageNumber(1);
-  }, [categoryParam, serchWord]);
-
+  }, [params.categoryENName, serchWord]);
 
   useEffect(() => {
     fetchProducts();
@@ -107,11 +107,11 @@ export default function ShoppingPage() {
     setFetchingStatus(true);
     let newProducts: ProductProps[] = [...products];
     const fetchedProducts = await getProducts(
-      categoryParam,
+      params.categoryENName as string,
       isCustom,
       pageNumber,
       serchWord,
-      accessToken,
+      accessToken
     );
     if (fetchedProducts.length === 0) {
       setLock(true);
@@ -121,17 +121,16 @@ export default function ShoppingPage() {
       setFetchingStatus(false);
     }
   };
-  
+
   const tabChangeFetch = async () => {
     const result = await getProducts(
-      categoryParam,
+      params.categoryENName as string,
       isCustom,
       pageNumber,
       serchWord
-      );
-      return result;
-    };
-
+    );
+    return result;
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -175,13 +174,13 @@ export default function ShoppingPage() {
         <div className="Tab_Container">
           <ul className="Tab_List">
             <ShoppingCategoryTab
-              setCategoryParams={setCategoryParams}
               setIsCustom={setIsCustom}
               isCustom={isCustom}
               session={session}
               serchWord={serchWord}
               pageNumber={pageNumber}
               memberTagData={memberTagData}
+              params={params.categoryENName}
             />
           </ul>
         </div>

@@ -6,7 +6,6 @@ import TopProductList from "../Components/ItemTopList/TopProductList";
 import "./Style/itemsTopList.css";
 
 export default function ItemsTopList() {
-  const [category, setCategory] = useState("전체");
   const [categoryENName, setCategoryENName] = useState("all");
   // 추후 변경예정
   const [topProductData, setTopProductData] = useState<any>([]);
@@ -16,9 +15,9 @@ export default function ItemsTopList() {
   const navigate = useNavigate();
 
   const params = useParams();
-
+  console.log(params)
   const topProductList = async () => {
-    const result = await getTopList(categoryENName, customCheck, accessToken);
+    const result = await getTopList(params.categoryENName as string, customCheck, accessToken);
     setTopProductData(result);
   };
 
@@ -28,11 +27,10 @@ export default function ItemsTopList() {
 
   return (
     <div>
-      <h2 className="Top_List_Title">이 달의 Top 10 {category}</h2>
+      <h2 className="Top_List_Title">이 달의 Top 10 제품</h2>
       <div className="Tab_Container">
         <ul className="Filter_Options">
           <TopListCategoryTab
-            setCategory={setCategory}
             setCategoryENName={setCategoryENName}
             session={session}
             navigate={navigate}
