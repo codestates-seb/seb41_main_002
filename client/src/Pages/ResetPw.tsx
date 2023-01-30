@@ -104,7 +104,7 @@ export default function ResetPw() {
             border="none"
             fontsize="23px"
             type="submit"
-            hoverColor="var(--hoverColor1)"
+            hoverColor="var(--hoverColor3)"
           />
         </div>
       </form>
