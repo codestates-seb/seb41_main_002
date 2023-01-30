@@ -9,7 +9,8 @@
   margin-top: 25px;
   display: flex;
   justify-content: center;
-  background-color: white;
+  background-color:var(--dark3);
+  border-radius: 10px;
   align-items: center;
   border: 1px solid black;
 }
@@ -32,7 +33,10 @@
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  background-color: white;
+  background-color: var(--dark3);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin-bottom: 10px;
   border: 1px solid black;
 }
 
@@ -44,12 +48,6 @@
   align-items: center;
   justify-content: space-between;
   background-color: var(--dark3);
-}
-
-.All_Check {
-  color: black;
-  margin-left: 10px;
-  font-size: 17px;
 }
 
 .Shopping_List_Contents {
@@ -115,13 +113,13 @@
   margin-top: 20px;
   height: 50px;
   width: 100%;
-  background-color: white;
+  background-color: var(--dark3);
   border: 1px solid black;
 }
 
 .Price_Info_Container > span {
   font-size: 17px;
-  color: black;
+  color: white;
   margin-right: 10px;
 }
 
@@ -194,7 +192,7 @@
 }
 
 .Empty_List{
-  color: black;
+  color: white;
   margin-top: 30px;
   font-size: 40px;
   justify-content: center;

@@ -177,7 +177,7 @@ export default function ShoppingPage() {
             }}
           />
         </div>
-        <div className="Tab_Container">
+        <div className="Shopping_Tab_Container">
           <ul className="Tab_List">
             <ShoppingCategoryTab
               setIsCustom={setIsCustom}
