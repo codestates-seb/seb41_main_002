@@ -214,7 +214,7 @@ export default function MemberPageEdit() {
       cancelSubscription(memberId);
       setIsSubscribed(false);
       setRender(!render);
-      sessionStorage.setItem("isSubscribed", 'false');
+      sessionStorage.setItem("isSubscribed", "false");
       sessionStorage.removeItem("regularPayment");
       alert("구독이 취소되었습니다.");
     }
@@ -280,7 +280,7 @@ export default function MemberPageEdit() {
                 width="150px"
                 border="none"
                 onClick={toResetPW}
-                hoverColor="white"
+                hoverColor="var(--hoverColor3)"
               />
             </div>
           </InfoWrapper>
@@ -360,7 +360,7 @@ export default function MemberPageEdit() {
                               buttonId={idx.toString()}
                               idx={address.addressId.toString()}
                               onClick={setPrimaryAddress}
-                              hoverColor="white"
+                              hoverColor="var(--hoverColor3)"
                             />
                           )}
                           <CustomButton
@@ -373,7 +373,7 @@ export default function MemberPageEdit() {
                             buttonId={idx.toString()}
                             idx={address.addressId.toString()}
                             onClick={editAddress}
-                            hoverColor="white"
+                            hoverColor="var(--hoverColor3)"
                           />
                           <CustomButton
                             bgColor="transparent"
@@ -385,7 +385,7 @@ export default function MemberPageEdit() {
                             buttonId={idx.toString()}
                             idx={address.addressId.toString()}
                             onClick={removeAddress}
-                            hoverColor="white"
+                            hoverColor="var(--hoverColor3)"
                           />
                         </div>
                       </li>
@@ -402,7 +402,7 @@ export default function MemberPageEdit() {
               width="125px"
               border="none"
               onClick={addNewAddress}
-              hoverColor="white"
+              hoverColor="var(--hoverColor3)"
             />
           </ul>
 
@@ -419,7 +419,7 @@ export default function MemberPageEdit() {
                     fontsize="19px"
                     border="none"
                     width="200px"
-                    hoverColor="white"
+                    hoverColor="var(--hoverColor3)"
                   />
                 </Link>
               </div>

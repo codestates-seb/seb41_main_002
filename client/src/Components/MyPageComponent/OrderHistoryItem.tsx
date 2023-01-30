@@ -51,7 +51,9 @@ const OrderHistoryItem = ({ order }: { order: OrderType }) => {
                 <div className="History_Product_Name">
                   <span className="History_Detail_Indicator">상품명</span>
                   <Link to={`/itemDetail/${item.itemId}`}>
-                    <div>{item.itemTitle} </div>
+                    <div className="History_Product_Title">
+                      {item.itemTitle}{" "}
+                    </div>
                   </Link>
                 </div>
                 <div className="History_Product_Info">
