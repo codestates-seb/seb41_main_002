@@ -18,7 +18,7 @@ export const itemsCalculation = (
     (sum: number, value: LocalType) => sum + value.itemTotalPrice,
     0
   );
-  let deliveryFee = subscribeCheck ? 2000 : 3000;
+  let deliveryFee = subscribeCheck&&JSON.parse(subscribeCheck) ? 2000 : 3000;
   let excludingPoints = itemsTotalPrice + deliveryFee;
   if (typeof useReserve === "undefined") {
     totalPrice = itemsTotalPrice + deliveryFee;

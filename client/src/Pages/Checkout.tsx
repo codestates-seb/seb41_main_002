@@ -170,7 +170,7 @@ export default function Checkout() {
           {memberInfo && (
             <MemberSubscribe subscribeCheck={isSubscribe && JSON.parse(isSubscribe)}>
               프리미엄 구독{" "}
-              {isSubscribe ? "사용" : "미사용"}
+              {isSubscribe && JSON.parse(isSubscribe) ? "사용" : "미사용"}
             </MemberSubscribe>
           )}
         </div>
@@ -198,7 +198,7 @@ export default function Checkout() {
         </div>
         <div className="Calculate_Container">
           총 금액 : {itemsTotalPrice}원 + 배송비 3000원{" "}
-          {isSubscribe
+          {isSubscribe && JSON.parse(isSubscribe)
             ? "- 구독 혜택 1000원"
             : null}{" "}
           {useReserve === undefined ? null : "- 적립금 " + useReserve + "원"} =
@@ -273,7 +273,7 @@ export default function Checkout() {
               <li>최종 금액: {totalPrice}원</li>
               <li>
                 적립금:{" "}
-                {isSubscribe
+                {isSubscribe && JSON.parse(isSubscribe)
                   ? itemsTotalPrice * 0.03
                   : itemsTotalPrice * 0.01}
                 원
