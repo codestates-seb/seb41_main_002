@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const FindPw = () => {
   const navigate = useNavigate();
   const [modalState, setModalState] = useState(false);
-  const [modalText, setModalText] = useState("");
+  const [modalText, setModalText] = useState("이메일 전송중입니다.");
   const [userInfo, setUserInfo] = useState({
     accountId: "",
     email: "",

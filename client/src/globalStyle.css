@@ -82,3 +82,21 @@ button {
   cursor: pointer;
   border: 0 none;
 }
+
+html::-webkit-scrollbar-thumb{
+  background-color: var(--black);
+  border-radius: 10px;
+}
+
+html::-webkit-scrollbar-track{
+  background-color: var(--dark2);
+}
+
+html::-webkit-scrollbar-corner{
+  background-color: var(--dark2);
+}
+
+html::-webkit-scrollbar{
+  background-color: var(--dark3);
+}
+
