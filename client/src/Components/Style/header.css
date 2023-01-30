@@ -3,12 +3,12 @@ header {
 }
 .Header_Nav {
   width: 100%;
-  height: 100px;
+  height: 80px;
   background-color: var(--dark3);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 40px;
+  padding: 20px;
 }
 
 .Nav_Menu {
