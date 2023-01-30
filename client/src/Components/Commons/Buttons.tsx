@@ -8,6 +8,8 @@ const StyledButton = styled.button<{
   fontsize?: string;
   border?: string;
   height?: string;
+  hoverColor?: string;
+  hoverBGColor?: string;
 }>`
   width: ${(props) => props.width};
   height: ${(props) => (props.height ? props.height : "100%")};
@@ -17,6 +19,11 @@ const StyledButton = styled.button<{
   border: ${(props) => (props.border ? props.border : "1px solid white")};
   border-radius: 5px;
   font-size: ${(props) => (props.fontsize ? props.fontsize : "17px")};
+
+  &:hover {
+    color: ${(props) => props.hoverColor};
+    background-color: ${(props) => props.hoverBGColor};
+  }
 `;
 
 interface ButtonType {
@@ -32,6 +39,8 @@ interface ButtonType {
   border?: string;
   buttonId?: string;
   idx?: string;
+  hoverColor?: string;
+  hoverBGColor?: string;
 }
 
 export default function CustomButton({
@@ -47,6 +56,8 @@ export default function CustomButton({
   buttonId,
   idx,
   height,
+  hoverColor,
+  hoverBGColor,
 }: ButtonType) {
   return (
     <StyledButton
@@ -61,6 +72,8 @@ export default function CustomButton({
       id={buttonId}
       name={idx}
       height={height}
+      hoverColor={hoverColor}
+      hoverBGColor={hoverBGColor}
     >
       {content}
     </StyledButton>
