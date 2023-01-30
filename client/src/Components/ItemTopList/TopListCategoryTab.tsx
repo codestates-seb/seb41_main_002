@@ -75,6 +75,7 @@ export default function TopListCategoryTab(props: Props) {
               content={`${category.categoryKRName}`}
               onClick={() => {
                 props.setCategoryENName(category.categoryENName);
+
                 props.navigate(`/items-top-list/${category.categoryENName}`);
               }}
             />
