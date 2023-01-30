@@ -49,7 +49,7 @@ export const ToggleButtons = (props: Props) => {
           //추후 로직변경 예정
           style={
             props.selectedItems.includes(el.effectCategory)
-              ? { backgroundColor: "pink" }
+              ? { backgroundColor: "var(--dark2)" }
               : {}
           }
         >

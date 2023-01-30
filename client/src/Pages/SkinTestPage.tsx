@@ -154,7 +154,7 @@ export default function SkinTestPage() {
                   <TagButton
                     mapIndex={index}
                     arrIndex={skinTagIndex}
-                    backgroundColor="pink"
+                    backgroundColor="var(--dark2)"
                     onClick={() => {
                       addSkinTestHandler(el.skinCategory, el.skinTag, index);
                     }}
@@ -174,7 +174,7 @@ export default function SkinTestPage() {
                 return (
                   <div className="Type_Tag_Btn" key={el.questionAnswer}>
                     <TagButton
-                      backgroundColor="pink"
+                      backgroundColor="var(--dark2)"
                       mapIndex={index}
                       arrIndex={acneTagIndex}
                       onClick={() => {
@@ -227,7 +227,7 @@ export default function SkinTestPage() {
             <div>
               <h2>당신이 관심있는 효능은 </h2>
               {selectedItems.map((el: any) => {
-                return <h2 key={el}>{el}</h2>;
+                return <h2 key={el}>🧴 {el}</h2>;
               })}
               <h2>입니다</h2>
               <h2>
