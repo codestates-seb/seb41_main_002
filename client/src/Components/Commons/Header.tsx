@@ -105,7 +105,6 @@ export default function Header() {
                 <li>
                   <div className="Nav_Line"></div>
                 </li>
-                {/* 해당 코드는 이후 수정 예정 */}
                 {itemList.map((item, index) => {
                   return (
                     <li key={index} onClick={toggleDropdown}>
