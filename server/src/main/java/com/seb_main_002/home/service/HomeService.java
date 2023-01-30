@@ -36,6 +36,7 @@ public class HomeService {
         Optional<Banner> findBanner = bannerRepository.findLatestBanner();
         Banner banner = findBanner.orElseThrow(() -> new BusinessLogicException(ExceptionCode.BANNER_IMAGE_NOT_FOUND));
         return banner.getBannerImageUrl();
+
     }
 
     public List<Event> findEvents() {
