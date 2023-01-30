@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { defaultInstance } from "./Core";
 
 export interface MemberType {
@@ -38,7 +39,7 @@ export const signUp = async (memberData: MemberType) => {
     };
     let reponse = await defaultInstance
       .post(`/signup`, setMemberData)
-      .then((res) => {
+      .then(() => {
         const memberInfo: MemberInfo = {
           accountId: memberData.accountId,
           password: memberData.password,
@@ -46,7 +47,7 @@ export const signUp = async (memberData: MemberType) => {
         return memberInfo;
       });
     return reponse;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    return error.response.status;
   }
 };

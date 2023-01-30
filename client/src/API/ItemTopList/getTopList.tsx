@@ -1,3 +1,4 @@
+import { Params } from "react-router-dom";
 import { defaultInstance, authInstance } from "../Core";
 //추후 타입 변경 예정
 interface MemberType {

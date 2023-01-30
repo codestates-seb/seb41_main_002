@@ -8,10 +8,11 @@ import {
   onIdDoubleCheck,
   onPasswordConfirm,
 } from "../Function/signUp";
-import { MemberType } from "../API/SignUp";
+import { MemberType, signUp } from "../API/SignUp";
 import { useAppSelector } from "../Store/hooks";
 import "./Style/memberAccess.css";
 import AccessMenu from "../Components/SignUp/AccessMenu";
+import { error } from "console";
 
 const SignUp = () => {
   //회원가입 정보
@@ -100,7 +101,6 @@ const SignUp = () => {
     );
     const emailCheck = onEmailRegex(Member.email);
     const allCheck = idCheck && emailCheck && nullCheck && pwCheck;
-
     if (!idCheck) {
       setMessage("아이디 중복확인을 해주세요.");
       setModalState(true);
@@ -125,6 +125,8 @@ const SignUp = () => {
             <SignUpAdmission
               Member={Member}
               setSignUpModalState={setSignUpModalState}
+              setModalState={setModalState}
+              setMessage={setMessage}
             />
           }
         />

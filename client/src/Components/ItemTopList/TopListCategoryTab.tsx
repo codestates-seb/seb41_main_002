@@ -4,7 +4,6 @@ import { NavigateFunction, Params } from "react-router-dom";
 import CustomButton from "../Commons/Buttons";
 
 interface Props {
-  setCategory: React.Dispatch<React.SetStateAction<string>>;
   setCategoryENName: React.Dispatch<React.SetStateAction<string>>;
   session: string | null;
   navigate: NavigateFunction;
@@ -16,8 +15,6 @@ interface Props {
 }
 
 export default function TopListCategoryTab(props: Props) {
-  const [activateTag, setActivateTage] = useState(0);
-
   interface Category {
     categoryENName: string;
     categoryKRName: string;
@@ -53,24 +50,32 @@ export default function TopListCategoryTab(props: Props) {
   return (
     <>
       {categoryTitle.map((category, index) => {
+        // console.log(props.params.categoryENName)
+        console.log(props.params.categoryENName === category.categoryENName);
         return (
           <li key={category.categoryENName}>
             <CustomButton
-              fontColor={activateTag === index ? "black" : "white"}
-              fontsize={activateTag === index ? "21px" : "17px"}
+              fontColor={
+                props.params.categoryENName === category.categoryENName
+                  ? "black"
+                  : "white"
+              }
+              fontsize={
+                props.params.categoryENName === category.categoryENName
+                  ? "21px"
+                  : "17px"
+              }
               bgColor={
-                activateTag === index ? "var(--gray)" : "var(--lightgray)"
+                props.params.categoryENName === category.categoryENName
+                  ? "var(--gray)"
+                  : "var(--lightgray)"
               }
               width="100px"
               padding="5px"
               content={`${category.categoryKRName}`}
               onClick={() => {
-                props.setCategory(category.categoryKRName);
                 props.setCategoryENName(category.categoryENName);
-                setActivateTage(index);
-                props.navigate(
-                  `/items-top-list/${category.categoryENName}`
-                );
+                props.navigate(`/items-top-list/${category.categoryENName}`);
               }}
             />
           </li>

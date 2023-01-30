@@ -89,6 +89,12 @@ export default function MemberPageEdit() {
     }
   }, [render]);
 
+  const toResetPW = () => {
+    if (window.confirm("비밀번호를 변경하시겠습니까?")) {
+      navigate("/resetPw");
+    }
+  };
+
   const handleMemberName: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setMemberName(e.target.value);
   };
@@ -208,6 +214,7 @@ export default function MemberPageEdit() {
       cancelSubscription(memberId);
       setIsSubscribed(false);
       setRender(!render);
+      sessionStorage.removeItem("isSubscribed");
       sessionStorage.removeItem("regularPayment");
       alert("구독이 취소되었습니다.");
     }
@@ -264,17 +271,17 @@ export default function MemberPageEdit() {
           </InfoWrapper>
           <InfoWrapper>
             <div className="Info_Label">PW</div>
-            <div className="Info_Content">**********</div>
-            <Link to="/findPw" className="Find_PW">
+            <div className="Info_Content">
               <CustomButton
                 bgColor="transparent"
-                content="비밀번호 재설정"
+                content="비밀번호 변경"
                 fontColor="rgb(238, 158, 73)"
                 padding="10px"
                 width="150px"
                 border="none"
+                onClick={toResetPW}
               />
-            </Link>
+            </div>
           </InfoWrapper>
           <InfoWrapper>
             <div className="Info_Label">이름</div>
