@@ -36,19 +36,24 @@ const ItemDetail = () => {
 
   const navigate = useNavigate();
   const sendProductSaleInfo = () => {
-    const productSaleInfo = [
-      {
-        itemId: detailPageData && detailPageData?.itemInfo.itemId,
-        itemTitle: detailPageData && detailPageData.itemInfo.itemTitle,
-        itemImageURL: detailPageData && detailPageData.itemInfo.titleImageURL,
-        itemTotalPrice: detailPageData && detailPageData.itemInfo.price * productCount,
-        itemCount: productCount,
-      },
-    ];
-    window.sessionStorage.removeItem("cartpayment");
-    window.sessionStorage.removeItem("itemList");
-    const result = JSON.stringify(productSaleInfo);
-    return window.sessionStorage.setItem("itemList", result);
+    if(productCount !== 0){
+      const productSaleInfo = [
+        {
+          itemId: detailPageData && detailPageData?.itemInfo.itemId,
+          itemTitle: detailPageData && detailPageData.itemInfo.itemTitle,
+          itemImageURL: detailPageData && detailPageData.itemInfo.titleImageURL,
+          itemTotalPrice: detailPageData && detailPageData.itemInfo.price * productCount,
+          itemCount: productCount,
+        },
+      ];
+      window.sessionStorage.removeItem("cartpayment");
+      window.sessionStorage.removeItem("itemList");
+      const result = JSON.stringify(productSaleInfo);
+      window.sessionStorage.setItem("itemList", result);
+      navigate(`/order/checkout`);
+    } else {
+      alert("제품 수량을 확인해주세요 🐰")
+    }
   };
 
   const session = sessionStorage.getItem("memberId");
@@ -99,7 +104,6 @@ const ItemDetail = () => {
               content="바로 구매"
               onClick={() => {
                 sendProductSaleInfo();
-                navigate(`/order/checkout`);
               }}
             />
           </>
