@@ -3,7 +3,7 @@ import { defaultInstance } from "../Core";
 interface EventDataType {
   eventId: number;
   title: string;
-  eventImageURL: string;
+  eventTitleImageURL: string;
   createdAt: string;
   endAt: string;
 }
@@ -15,7 +15,7 @@ interface TopRankType {
 }
 
 export interface HomeDataType {
-  bannerImageUrl: string;
+  bannerImageURL: string;
   eventsInfo: EventDataType[];
   topRankBanners: TopRankType[];
 }

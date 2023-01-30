@@ -57,7 +57,6 @@ const MemberPage = () => {
         />
       ) : null}
       <div className="Profile_Container">
-        <h1>내 정보</h1>
         <div className="Profile_Edit_Link">
           <Link to="/member/edit">
             <CustomButton
@@ -66,10 +65,12 @@ const MemberPage = () => {
               fontColor="black"
               padding="10px"
               width="100px"
+              hoverColor="blue"
             />
           </Link>
         </div>
-        <ul>
+        <ul className="Profile_Info_Container">
+          <h2 className="Profile_Indicator">기본 정보</h2>
           <MemberTextBox>
             <InfoText width="33%">이름</InfoText>
             <InfoText width="67%">{profileData?.memberName}</InfoText>
@@ -103,12 +104,13 @@ const MemberPage = () => {
               ) : (
                 <div className="Member_Not_Subscribed">
                   <span>구독하고 있지 않습니다.</span>
-                  <Link to={`/members/:memberId/subscribe`}>
+                  <Link to={`/members/${memberId}/subscribe`}>
                     <CustomButton
                       bgColor="white"
                       content="구독하러 가기"
                       fontColor="black"
                       padding="10px"
+                      hoverColor="blue"
                     />
                   </Link>
                 </div>

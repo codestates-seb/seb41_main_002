@@ -22,7 +22,7 @@ export default function EventDetail() {
       <div className="Event_Posted_Date">{event?.createdAt}</div>
 
       <div className="Event_Image">
-        <img src={event?.eventImageURL} alt="event image"></img>
+        <img src={event?.eventTitleImageURL} alt="event image"></img>
       </div>
 
       <div>
@@ -30,7 +30,9 @@ export default function EventDetail() {
           기간:
           <span>{event?.createdAt}</span> ~ <span>{event?.endAt}</span>
         </div>
-        <div className="Event_Detail">{event?.content}</div>
+        <div className="Event_Detail">
+          <img src={event?.eventContentImageURL} alt="event image"></img>
+        </div>
       </div>
     </div>
   );

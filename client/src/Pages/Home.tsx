@@ -94,7 +94,7 @@ export default function Home() {
 
   return (
     <div className="Home_Container">
-      <HeroImage bgUrl={homeData?.bannerImageUrl as string}>
+      <HeroImage bgUrl={homeData?.bannerImageURL as string}>
         <div className="Hero_Text">
           <h1 className="Hero_Text_Gradient">남성 전용 화장품</h1>
           <p className="Hero_Text_Gradient">
@@ -115,7 +115,7 @@ export default function Home() {
           {homeData?.eventsInfo.map((event, idx) => {
             return (
               <CarouselSlide
-                bgUrl={event.eventImageURL}
+                bgUrl={event.eventTitleImageURL}
                 key={`slide${event.eventId}`}
                 style={carouselStyleToSlide}
                 ref={carouselRef}

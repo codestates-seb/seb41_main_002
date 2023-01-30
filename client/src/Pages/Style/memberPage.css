@@ -3,9 +3,18 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  padding: 25px 50px;
   margin: 20px 0;
   gap: 30px;
+}
+
+.Profile_Info_Container {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.Profile_Indicator {
+  margin-bottom: 25px;
 }
 
 .Profile_Edit_Link {
@@ -29,7 +38,9 @@
 }
 
 .Profile_Tags {
-  margin-bottom: 25px;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto 20px auto;
 }
 
 .Profile_Type_Badges {
