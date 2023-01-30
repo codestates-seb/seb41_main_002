@@ -51,7 +51,7 @@
 .Nav_List {
   position: absolute;
   width: 200px;
-  height: 120px;
+  height: 300px;
   background-color: var(--dark2);
   left: -40px;
   top: 65px;
