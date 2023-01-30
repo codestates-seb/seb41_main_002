@@ -37,15 +37,14 @@
 }
 
 .Events_Banner {
-  width: 85%;
-  height: 600px;
+  width: 90%;
+  height: 700px;
   margin: 0 auto;
   padding: 50px 0;
-  background-color: black;
+  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  color: white;
 }
 
 .Events_Carousel {
@@ -72,10 +71,7 @@
 }
 
 .Carousel_Arrow:hover {
-  background: linear-gradient(to right, #fcecdd, #ffc288, #fea82f, #ff6701);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--indicatorColor1);
 }
 
 .Event_Caption_Text {

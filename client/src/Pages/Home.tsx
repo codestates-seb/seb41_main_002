@@ -47,7 +47,7 @@ const TopSalesContent = styled.div<{ bgUrl: string }>`
   }
 
   p:hover {
-    color: paleturquoise;
+    color: var(--hoverColor2);
   }
 `;
 

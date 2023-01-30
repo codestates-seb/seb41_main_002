@@ -38,7 +38,7 @@
   text-align: center;
   font-size: 17px;
   border: none;
-  border-bottom: 1px solid rgba(249, 216, 170, 0.8);
+  border-bottom: 1px solid var(--lineColor1);
 }
 
 .Member_Information_Addresses {

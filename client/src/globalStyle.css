@@ -14,7 +14,11 @@
   /* ui colors */
   --indicatorColor1: #ffd56f;
   --indicatorColor2: wheat;
-  --hoverColor1: #820000;
+  --indicatorColor3: lightgoldenrodyellow;
+  --hoverColor1: #da0037;
+  --hoverColor2: #181d31;
+  --hoverColor3: #ffffff;
+  --lineColor1: rgba(249, 216, 170, 0.8);
 }
 
 /* layout*/
