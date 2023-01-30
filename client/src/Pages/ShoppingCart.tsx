@@ -158,7 +158,7 @@ export default function ShoppingCart() {
           <span> = 총 {deliveryTotalPrice}원</span>
         )}
         <div className="Cart_Payment_Button">
-          {cartData && cartData.cart.length === 1 ? (
+          {cartData && cartData.cart.length as number !== 0 ? (
             <CustomButton
               fontsize="13px"
               fontColor="white"
