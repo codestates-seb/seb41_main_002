@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 const StyledButton = styled.button<{
-  bgColor: string;
-  fontColor: string;
-  width: string;
-  padding: string;
+  bgColor?: string;
+  fontColor?: string;
+  width?: string;
+  padding?: string;
   fontsize?: string;
   border?: string;
   height?: string;
@@ -20,11 +20,11 @@ const StyledButton = styled.button<{
 `;
 
 interface ButtonType {
-  fontColor: string;
-  bgColor: string;
+  fontColor?: string;
+  bgColor?: string;
   content: string;
-  width: string;
-  padding: string;
+  width?: string;
+  padding?: string;
   type?: "button" | "submit" | "reset";
   fontsize?: string;
   height?: string;
