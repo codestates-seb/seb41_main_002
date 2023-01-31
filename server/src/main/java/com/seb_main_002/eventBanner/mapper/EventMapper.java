@@ -1,5 +1,6 @@
 package com.seb_main_002.eventBanner.mapper;
 
+import com.seb_main_002.eventBanner.dto.EventPatchDto;
 import com.seb_main_002.eventBanner.dto.EventPostDto;
 import com.seb_main_002.eventBanner.dto.EventResponseDto;
 import com.seb_main_002.eventBanner.entity.Event;
@@ -10,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 @Mapper(componentModel = "spring")
 public interface EventMapper {
     Event eventPostDtoToEvent(EventPostDto eventPostDto);
+    Event eventPatchDtoToEvent(EventPatchDto eventPatchDto);
     default EventResponseDto eventToEventResponseDto(Event event) {
         return EventResponseDto.builder()
                 .eventId(event.getEventId())

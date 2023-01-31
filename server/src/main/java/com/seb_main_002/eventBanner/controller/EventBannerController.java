@@ -1,5 +1,6 @@
 package com.seb_main_002.eventBanner.controller;
 
+import com.seb_main_002.eventBanner.dto.EventPatchDto;
 import com.seb_main_002.eventBanner.dto.EventPostDto;
 
 import com.seb_main_002.eventBanner.entity.Banner;
@@ -60,6 +61,27 @@ public class EventBannerController {
                 eventContentImage.getSize()));
 
         Event response = eventBannerService.createEvent(event);
+
+        return new ResponseEntity<>(eventMapper.eventToEventResponseDto(response), HttpStatus.OK);
+    }
+
+    @PatchMapping("/event/{eventId}")
+    public ResponseEntity patchEventImage(@PathVariable("eventId") Long eventId,
+                                          @RequestPart(value = "eventTitleImage") MultipartFile eventTitleImage,
+                                          @RequestPart(value = "eventContentImage") MultipartFile eventContentImage,
+                                          @RequestPart(value = "eventPatchDto") EventPatchDto eventPatchDto) throws IOException {
+        Event event = eventMapper.eventPatchDtoToEvent(eventPatchDto);
+        event.setEventId(eventId);
+
+        event.setEventTitleImageUrl(eventBannerService.uploadImage(eventTitleImage.getInputStream(),
+                eventTitleImage.getOriginalFilename(),
+                eventTitleImage.getSize()));
+
+        event.setEventContentImageUrl(eventBannerService.uploadImage(eventContentImage.getInputStream(),
+                eventContentImage.getOriginalFilename(),
+                eventContentImage.getSize()));
+
+        Event response = eventBannerService.updateEvent(event);
 
         return new ResponseEntity<>(eventMapper.eventToEventResponseDto(response), HttpStatus.OK);
     }
