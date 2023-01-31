@@ -60,9 +60,9 @@ public class ReviewService {
         Long requestReviewMemberId = review.getMember().getMemberId();
 
         if(savedReviewMemberId.equals(requestReviewMemberId)) {
-            verifiedReview.setReviewTitle(review.getReviewTitle());
-            verifiedReview.setReviewContent(review.getReviewContent());
-            verifiedReview.setReviewRating(review.getReviewRating());
+            Optional.ofNullable(review.getReviewTitle()).ifPresent(reviewTitle -> verifiedReview.setReviewTitle(reviewTitle));
+            Optional.ofNullable(review.getReviewContent()).ifPresent(reviewContent -> verifiedReview.setReviewContent(reviewContent));
+            Optional.ofNullable(review.getReviewRating()).ifPresent(reviewRating -> verifiedReview.setReviewRating(reviewRating));
 
             reviewRepository.save(verifiedReview);
         }  else {
