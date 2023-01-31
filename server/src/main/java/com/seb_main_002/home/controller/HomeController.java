@@ -31,7 +31,7 @@ public class HomeController {
                             .eventTitleImageURL(event.getEventTitleImageUrl())
                             .eventContentImageURL(event.getEventContentImageUrl())
                             .createdAt(event.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")))
-                            .endAt(event.getModifiedAt().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")))
+                            .endAt(event.getEndAt())
                             .build();
                 }).collect(Collectors.toList()))
                 .topRankBanners(homeService.findItemsSortedSalesCountByCategory().stream().map(item -> {
