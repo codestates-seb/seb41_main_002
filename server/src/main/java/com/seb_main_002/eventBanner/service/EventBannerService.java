@@ -51,8 +51,10 @@ public class EventBannerService {
         Optional.ofNullable(event.getTitle()).ifPresent(eventTitle -> verifiedEvent.setTitle(eventTitle));
         Optional.ofNullable(event.getContent()).ifPresent(eventContent -> verifiedEvent.setContent(eventContent));
         Optional.ofNullable(event.getEndAt()).ifPresent(eventEndAt -> verifiedEvent.setEndAt(eventEndAt));
+        Optional.ofNullable(event.getEventTitleImageUrl()).ifPresent(eventTitleImageUrl -> verifiedEvent.setEventTitleImageUrl(eventTitleImageUrl));
+        Optional.ofNullable(event.getEventContentImageUrl()).ifPresent(eventContentImageUrl -> verifiedEvent.setEventContentImageUrl(eventContentImageUrl));
 
-        return eventRepository.save(event);
+        return eventRepository.save(verifiedEvent);
     }
 
     public Event findVerifiedEvent(long eventId){

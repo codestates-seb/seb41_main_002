@@ -73,13 +73,17 @@ public class EventBannerController {
         Event event = eventMapper.eventPatchDtoToEvent(eventPatchDto);
         event.setEventId(eventId);
 
-        event.setEventTitleImageUrl(eventBannerService.uploadImage(eventTitleImage.getInputStream(),
-                eventTitleImage.getOriginalFilename(),
-                eventTitleImage.getSize()));
+        if(!eventTitleImage.getOriginalFilename().equals("")) {
+            event.setEventTitleImageUrl(eventBannerService.uploadImage(eventTitleImage.getInputStream(),
+                    eventTitleImage.getOriginalFilename(),
+                    eventTitleImage.getSize()));
+        }
 
-        event.setEventContentImageUrl(eventBannerService.uploadImage(eventContentImage.getInputStream(),
-                eventContentImage.getOriginalFilename(),
-                eventContentImage.getSize()));
+        if(!eventContentImage.getOriginalFilename().equals("")) {
+            event.setEventContentImageUrl(eventBannerService.uploadImage(eventContentImage.getInputStream(),
+                    eventContentImage.getOriginalFilename(),
+                    eventContentImage.getSize()));
+        }
 
         Event response = eventBannerService.updateEvent(event);
 
