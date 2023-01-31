@@ -76,7 +76,7 @@
 }
 
 .Product_Delete {
-  width: 10%;
+  width: 140px;
   background-color: var(--gray);
   height: 100%;
   border-left: 1px solid black;
@@ -92,13 +92,13 @@
 }
 
 .Product_Count {
-  font-size: 17px;
+  font-size: 15px;
   color: black;
   margin-right: 10px;
 }
 
 .Product_Price {
-  font-size: 17px;
+  font-size: 15px;
   color: black;
 }
 
@@ -205,4 +205,9 @@
 
 .Shopping_Cart_Container {
   padding: 20px;
+}
+
+.Cart_Product_Item_Content{
+  display: flex;
+  height: 100%;
 }

@@ -32,6 +32,7 @@ export default function CartItemList(props: Props) {
             <div key={index}>
               <li key={cartItem.itemId} className="Shopping_List_Contents">
                 <div className="Product_Container">
+                  <div className="Cart_Product_Item_Content">
                   <div className="Cart_Number">
                     <span>{index + 1}번 제품</span>
                   </div>
@@ -45,6 +46,7 @@ export default function CartItemList(props: Props) {
                         {cartItem.itemTitle}
                       </span>
                     </a>
+                  </div>
                   </div>
                   <div className="Product_Price_Info">
                     <div className="Count_Change">
@@ -97,7 +99,7 @@ export default function CartItemList(props: Props) {
                     onClick={() => {
                       deleteProduct(props.accessToken, cartItem.cartItemId);
                     }}
-                    fontColor="white"
+                    fontColor="black"
                     bgColor="transparent"
                     content="상품삭제"
                     width="100%"
