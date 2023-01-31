@@ -15,6 +15,7 @@ import com.seb_main_002.review.repository.ReviewRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -38,17 +39,17 @@ public class ReviewService {
     public void createReview(Review review, Long orderItemId) {
 
         Long memberId = review.getMember().getMemberId();
-        Long itemId = review.getItem().getItemId();
         Double reviewRating = review.getReviewRating();
 
+        Long itemId = review.getItem().getItemId();
+        Item targetItem = verifyExistsItem(itemId);
         Order findOrder = verifyExistsOrder(orderItemId);
         OrderItem findOrderItem =  verifyExistsOrderItem(orderItemId, findOrder);
-        Item findItem = verifyExistsItem(itemId);
 
         verifyPurchasingStatus(memberId, findOrderItem);
         verifyDoubleReviewWriting(findOrderItem);
 
-        setItemRating(findItem, reviewRating);
+        setItemRating(targetItem, reviewRating);
         setReviewWriting(findOrderItem);
 
         reviewRepository.save(review);
@@ -90,7 +91,17 @@ public class ReviewService {
     }
 
     public void deleteReview(Long reviewId) {
-        verifyExistsReview(reviewId);
+        Review verifiedReview = verifyExistsReview(reviewId);
+        Item reviewedItem = verifiedReview.getItem();
+        Double reviewedItemRating = reviewedItem.getRating();
+        Double reviewedRating = verifiedReview.getReviewRating();
+        Long reviewedCount = countReview(reviewedItem);
+
+        Double reviewedItemTotalRating = reviewedItemRating * reviewedCount;
+        final Long currentReviewCount = (long) 1;
+        Long modifiedReviewedCount = reviewedCount - currentReviewCount;
+        Double modifiedReviewedItemRating = (reviewedItemTotalRating - reviewedRating) / modifiedReviewedCount;
+        reviewedItem.setRating(modifiedReviewedItemRating);
 
         reviewRepository.deleteById(reviewId);
     }
@@ -139,11 +150,23 @@ public class ReviewService {
     private void setItemRating(Item item, Double reviewRating) {
         Double itemRating = item.getRating();
         Long itemId = item.getItemId();
-        int itemReviewCount = reviewRepository.findReviewsByItemId(itemId).size();
-        item.setRating((itemRating + reviewRating) / (itemReviewCount + 1));
+        final Long currentReviewCount = (long) 1;
+        Long itemReviewedCount = Long.valueOf(reviewRepository.findReviewsByItemId(itemId).size());
+        item.setRating((itemRating + reviewRating) / (itemReviewedCount + currentReviewCount));
     }
 
     private void setReviewWriting(OrderItem orderItem) {
         orderItem.setIsReviewed(true);
+    }
+
+    private Long countReview(Item item){
+        List<OrderItem> orderItems = item.getOrderItems();
+        Long reviewedCount = (long) 0;
+
+        for(OrderItem orderItem : orderItems) {
+            if(orderItem.getIsReviewed()) reviewedCount++;
+        }
+
+        return reviewedCount;
     }
 }
