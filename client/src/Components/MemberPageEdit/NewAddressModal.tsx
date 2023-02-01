@@ -39,7 +39,7 @@ export default function NewAddressModal({
   const [combinedAddress, setCombinedAddres] = useState("");
 
   useEffect(() => {
-    const wholeAddress = address + detailedAddress;
+    const wholeAddress = address + " | " + detailedAddress;
     setCombinedAddres(wholeAddress);
   }, [{ address, detailedAddress }]);
 

@@ -37,20 +37,20 @@ export default function EditAddressModal({
   const [address, setAddress] = useState(
     editingAddress?.address.slice(
       0,
-      editingAddress?.address.indexOf(")") + 1
+      editingAddress?.address.indexOf("|")
     ) as string
   );
   const [zipcode, setZipcode] = useState(editingAddress?.zipcode as string);
   const [detailedAddress, setDetailedAddress] = useState(
     editingAddress?.address.slice(
-      editingAddress?.address.indexOf(")") + 1,
+      editingAddress?.address.indexOf("|") + 2,
       editingAddress?.address.length
     ) as string
   );
   const [combinedAddress, setCombinedAddres] = useState("");
 
   useEffect(() => {
-    const wholeAddress = address + detailedAddress;
+    const wholeAddress = address + " | " + detailedAddress;
     setCombinedAddres(wholeAddress);
   }, [{ address, detailedAddress }]);
 
