@@ -2,11 +2,14 @@ package com.seb_main_002.order.entity;
 
 import com.seb_main_002.audit.Auditable;
 import com.seb_main_002.item.entity.Item;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class OrderItem extends Auditable {
     @Id
@@ -17,11 +20,13 @@ public class OrderItem extends Auditable {
 
     private Integer itemTotalPrice;
 
-    @ManyToOne
+    private Boolean isReviewed = false;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDER_ID")
     private Order order;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ITEM_ID")
     private Item item;
 }
