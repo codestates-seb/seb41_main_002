@@ -3,13 +3,16 @@ package com.seb_main_002.cart.entity;
 
 import com.seb_main_002.audit.Auditable;
 import com.seb_main_002.member.entity.Member;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Cart extends Auditable {
     @Id
