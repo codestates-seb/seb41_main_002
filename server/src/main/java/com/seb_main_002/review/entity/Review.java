@@ -3,14 +3,11 @@ package com.seb_main_002.review.entity;
 import com.seb_main_002.audit.Auditable;
 import com.seb_main_002.item.entity.Item;
 import com.seb_main_002.member.entity.Member;
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Entity
 public class Review extends Auditable {
     @Id

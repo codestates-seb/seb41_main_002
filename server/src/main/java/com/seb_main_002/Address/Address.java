@@ -1,4 +1,4 @@
-package com.seb_main_002.subscribe.entity;
+package com.seb_main_002.Address;
 
 import com.seb_main_002.audit.Auditable;
 import com.seb_main_002.member.entity.Member;
@@ -8,16 +8,20 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class Subscribe extends Auditable {
+public class Address extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long subscribeId;
+    private Long addressId;
 
-    private Boolean isSubscribed;
+    private String title;
 
-    private Integer sampleCount;
+    private String address;
 
-    @OneToOne
+    private Boolean isPrimary;
+
+    private String zipCode;
+
+    @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 

@@ -2,15 +2,11 @@ package com.seb_main_002.delivery.entity;
 
 
 import com.seb_main_002.audit.Auditable;
-import lombok.*;
+import lombok.Data;
 import com.seb_main_002.order.entity.Order;
-
 import javax.persistence.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Entity
 public class Delivery extends Auditable {
 
@@ -18,12 +14,11 @@ public class Delivery extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long deliveryId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "ORDER_ID")
     private Order order;
 
-    @Enumerated(value=EnumType.STRING)
-    private DeliveryStatus deliveryStatus = DeliveryStatus.DELIVERY_BEFORE;
+    private DeliveryStatus deliveryStatus;
 
     private String address;
 
