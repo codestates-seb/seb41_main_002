@@ -21,6 +21,7 @@ interface Props {
 export const ShoppingCategoryTab: Function = (props: Props) => {
   const navigate = useNavigate();
   const categoryTitle: Array<Category> = [
+    
     {
       categoryKRName: "전체",
       categoryENName: "all",
