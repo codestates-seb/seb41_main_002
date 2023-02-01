@@ -8,11 +8,11 @@ group = 'com.seb_main_002'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
-//configurations {
-//	compileOnly {
-//		extendsFrom annotationProcessor
-//	}
-//}
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
 
 repositories {
 	mavenCentral()
@@ -31,14 +31,6 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-	//for upload image to amazon s3
-	implementation "com.amazonaws:aws-java-sdk-s3:1.12.281"
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
-	runtimeOnly	'io.jsonwebtoken:jjwt-jackson:0.11.5'
-	implementation 'com.google.code.gson:gson'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis:2.3.1.RELEASE'
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {
