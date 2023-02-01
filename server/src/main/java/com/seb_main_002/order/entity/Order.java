@@ -3,17 +3,15 @@ package com.seb_main_002.order.entity;
 import com.seb_main_002.audit.Auditable;
 import com.seb_main_002.delivery.entity.Delivery;
 import com.seb_main_002.member.entity.Member;
-import lombok.*;
+import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity(name = "ORDERS")
+@Data
+@Entity
 public class Order extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,26 +21,25 @@ public class Order extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToOne(mappedBy = "order", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "delivery", cascade = {CascadeType.ALL})
     private Delivery delivery;
 
     private Integer reserve;
 
     private Integer totalPrice;
 
-    @Enumerated(value=EnumType.STRING)
-    private OrderStatus orderStatus = OrderStatus.ORDER_COMPLETE;
+    private OrderStatus orderStatus;
 
     @OneToMany(mappedBy = "order", cascade={CascadeType.ALL})
     private List<OrderItem> orderItems = new ArrayList<>();
 
     public void setDelivery(Delivery delivery) {
-        this.delivery = delivery;
+        this.setDelivery(delivery);
         if(delivery.getOrder() != this) {
             delivery.setOrder(this);
         }
     }
-    public void addOrderItems(OrderItem orderItem) {
+    public void setOrderItems(OrderItem orderItem) {
         this.orderItems.add(orderItem);
         if(orderItem.getOrder() != this) {
             orderItem.setOrder(this);

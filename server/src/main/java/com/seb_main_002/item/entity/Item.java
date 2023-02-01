@@ -4,17 +4,14 @@ import com.seb_main_002.audit.Auditable;
 import com.seb_main_002.cart.entity.CartItem;
 import com.seb_main_002.order.entity.OrderItem;
 import com.seb_main_002.review.entity.Review;
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Entity
 public class Item extends Auditable {
     @Id
@@ -27,8 +24,6 @@ public class Item extends Auditable {
     List<String> tagList = new ArrayList<>();
     private Integer price;
     private String contentImageUrl;
-
-    @Column(length = 8126)
     private String content;
     private String titleImageUrl;
     private Double rating;
