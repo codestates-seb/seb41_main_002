@@ -15,6 +15,7 @@ import AccessMenu from "../Components/SignUp/AccessMenu";
 import { error } from "console";
 
 const SignUp = () => {
+  //회원가입 정보
   const [Member, setMember] = useState<MemberType>({
     accountId: "",
     password: "",
