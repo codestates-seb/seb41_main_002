@@ -9,7 +9,7 @@ import Modal from "../Components/Commons/Modal";
 import {
   OrderHistoryTab,
   MyReviewsTab,
-} from "../Components/MyPageComponent/MyPageTabs";
+} from "../Components/MemberPage/MyPageTabs";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -26,6 +26,7 @@ const MemberTextBox = styled.li`
 
 const InfoText = styled.div<{ width: string }>`
   width: ${(props) => props.width};
+  font-size: 17px;
 `;
 
 const memberId = Number(sessionStorage.getItem("memberId"));
@@ -166,10 +167,30 @@ const MemberPage = () => {
         )}
         <div className="Profile_Reviews">
           <ul>
-            <li className="Profile_Tabs" onClick={() => setCurrentTab(1)}>
+            <li
+              className={
+                activeTabIndicator === 1
+                  ? "Profile_Tabs Active_Tab"
+                  : "Profile_Tabs"
+              }
+              onClick={() => {
+                setCurrentTab(1);
+                setActiveTabIndicator(1);
+              }}
+            >
               주문 내역
             </li>
-            <li className="Profile_Tabs" onClick={() => setCurrentTab(2)}>
+            <li
+              className={
+                activeTabIndicator === 2
+                  ? "Profile_Tabs Active_Tab"
+                  : "Profile_Tabs"
+              }
+              onClick={() => {
+                setCurrentTab(2);
+                setActiveTabIndicator(2);
+              }}
+            >
               내 리뷰
             </li>
           </ul>

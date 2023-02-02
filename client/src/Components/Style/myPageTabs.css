@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  border-bottom: solid 2.5px rgba(155, 155, 155, 0.5);
+  border-bottom: solid 2.5px var(--borderColor1);
   padding: 10px 0;
 }
 
@@ -10,8 +10,8 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background-color: dimgrey;
-  border-bottom: solid 1px rgba(255, 255, 255, 0.4);
+  background-color: var(--gray);
+  border-bottom: solid 1px var(--borderColor1);
   height: 200px;
 }
 
@@ -67,10 +67,10 @@
 
 .Review_Link:hover {
   cursor: pointer;
-  color: var(--indicatorColor1);
+  color: var(--hoverColor4);
 }
 
 .Review_Done {
   width: 20%;
-  color: var(--indicatorColor3);
+  color: var(--hoverColor4);
 }

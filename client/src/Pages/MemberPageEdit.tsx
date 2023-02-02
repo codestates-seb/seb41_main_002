@@ -337,7 +337,7 @@ export default function MemberPageEdit() {
                         <div className="Address_List_Address">
                           <div>
                             {address.isPrimary ? (
-                              <span className="Adrress_Primary">
+                              <span className="Addrress_Primary">
                                 (대표주소)
                               </span>
                             ) : null}
