@@ -45,7 +45,6 @@ public class JwtReIssueFilter extends OncePerRequestFilter {
 
         try {
             //헤더에 존재하는 refreshToken를 검증하고 레디스에 저장된 refreshToken과 accountId로 accessToken을 만들어서 발급한다.
-
             String refreshToken = request.getHeader("Refresh");
             String encodeBase64SecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
             jwtTokenizer.getClaims(refreshToken, encodeBase64SecretKey);
@@ -65,7 +64,6 @@ public class JwtReIssueFilter extends OncePerRequestFilter {
                     .build();
             ObjectMapper objectMapper = new ObjectMapper();
             response.getWriter().write(objectMapper.writeValueAsString(tokenInfo));
-
         } catch (ExpiredJwtException jwtException) {
             request.setAttribute("exception", jwtException);
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
@@ -73,7 +71,6 @@ public class JwtReIssueFilter extends OncePerRequestFilter {
             request.setAttribute("exception", e);
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
         }
-        //filterChain.doFilter(request,response); // request 헤더에 엑세스토큰이 없기에 엑세스토큰 검증하는 필터로 보내지 않았습니다.
     }
     public String delegateAccessToken(MemberDetails memberDetails, String encodeBase64SecretKey) {
         Map<String, Object> claims = new HashMap<>();
