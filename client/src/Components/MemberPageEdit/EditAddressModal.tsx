@@ -8,8 +8,6 @@ import { FormEvent, useEffect, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import "./../Style/addressPopup.css";
 
-const memberId = Number(sessionStorage.getItem("memberId"));
-
 export default function EditAddressModal({
   editingAddress,
   setModalState,
@@ -54,7 +52,6 @@ export default function EditAddressModal({
     setCombinedAddres(wholeAddress);
   }, [{ address, detailedAddress }]);
 
-  // 팝업창 열기
   const openSearch = () => {
     setIsSearchOn(!isSearchOn);
   };

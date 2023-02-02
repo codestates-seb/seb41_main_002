@@ -1,5 +1,3 @@
-import CustomButton from "../Components/Commons/Buttons";
-import Modal from "../Components/Commons/Modal";
 import {
   AddressType,
   cancelSubscription,
@@ -9,6 +7,8 @@ import {
   updateAddress,
   updateMemberData,
 } from "../API/MemberPageEdit/MemberPageEditAPI";
+import CustomButton from "../Components/Commons/Buttons";
+import Modal from "../Components/Commons/Modal";
 import NewAddressModal from "../Components/MemberPageEdit/NewAddressModal";
 import EditAddressModal from "../Components/MemberPageEdit/EditAddressModal";
 import { subscriptionCalculation } from "../Function/memberEditPage";
@@ -38,9 +38,6 @@ export default function MemberPageEdit() {
   const [modalState, setModalState] = useState(false);
   const [isNewAddressModalOn, setIsNewAddressModalOn] = useState(false);
   const [isEditAddressModalOn, setIsEditAddressModalOn] = useState(false);
-
-  const [messageModalState, setMessageModalState] = useState<boolean>(false);
-  const [modalMessage, setModalMessage] = useState<string>("");
 
   const [memberAddressData, setMemberAddressData] =
     useState<MemberPageDataType>();
@@ -219,7 +216,6 @@ export default function MemberPageEdit() {
 
   return (
     <>
-      {/* 최상단에 모달 창 배치를 통해 위치 고정 */}
       {isNewAddressModalOn
         ? modalState && (
             <Modal
@@ -345,7 +341,6 @@ export default function MemberPageEdit() {
                           </div>
                         </div>
                         <div className="Address_List_Button">
-                          {/* 커스텀 컴포넌트를 유지한 채로 커스텀 속성을 활용하기 위해 기존 name, id 속성을 활용 */}
                           {address.isPrimary ? null : (
                             <CustomButton
                               bgColor="transparent"
