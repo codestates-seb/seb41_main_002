@@ -3,7 +3,7 @@ name: Auto Deploy after push
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   deploy:
