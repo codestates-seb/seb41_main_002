@@ -1,7 +1,7 @@
-import { Dispatch, useState, SetStateAction } from "react";
-import { Link } from "react-router-dom";
 import { ReviewType } from "../../API/MemberPage/MemberPageAPI";
 import { Rating, SettingType } from "../Commons/Rating";
+import { Dispatch, useState, SetStateAction } from "react";
+import { Link } from "react-router-dom";
 
 interface PropsType {
   review: ReviewType;

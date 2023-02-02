@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import { getHomeData, HomeDataType } from "../API/Home/HomeAPI";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 import "./Style/home.css";
-import { getHomeData, HomeDataType } from "../API/Home/HomeAPI";
 
 const HeroImage = styled.div<{ bgUrl: string }>`
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
@@ -56,8 +56,10 @@ const memberId = Number(sessionStorage.getItem("memberId"));
 export default function Home() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [homeData, setHomeData] = useState<HomeDataType>();
-  const [xPos, setXPos] = useState(0);
-  const [carouselStyleToSlide, setCarouselStyleToSlide] = useState({
+  const [xPos, setXPos] = useState<number>(0);
+  const [carouselStyleToSlide, setCarouselStyleToSlide] = useState<{
+    transform: string;
+  }>({
     transform: `translateX(${xPos}px)`,
   });
 

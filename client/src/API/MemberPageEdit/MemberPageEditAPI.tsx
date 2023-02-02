@@ -45,6 +45,12 @@ interface UpdateMemberDataType {
   tagList: string[];
 }
 
+export interface UserAddressType {
+  recipient: string;
+  addressTitle: string;
+  phoneNumber: string;
+}
+
 export const getMemberData = async (memberId: number) => {
   try {
     const response = await authInstance.get<MemberPageDataType>(

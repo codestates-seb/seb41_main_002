@@ -4,7 +4,6 @@
 }
 .Reset_Pw_Intro {
   font-size: 25px;
-  font-weight: 600;
   margin: 25px 0;
 }
 
@@ -15,6 +14,10 @@
   font-size: 17px;
   background-color: var(--dark3);
   border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.Input_Label {
+  width: 30%;
 }
 
 .Input_Content {
