@@ -160,7 +160,7 @@ export default function ShoppingCart() {
         <div className="Cart_Payment_Button">
           {cartData && cartData.cart.length as number !== 0 ? (
             <CustomButton
-              fontsize="13px"
+              fontsize="17px"
               fontColor="white"
               bgColor="var(--dark3)"
               content="결제하기"
