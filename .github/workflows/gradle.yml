@@ -31,7 +31,13 @@ jobs:
 
       - name : Add permission
         run : chmod +x ./server/gradlew
-
+      
+      #디버그코드 삽입
+      - run : pwd
+      - run : ls -al
+      - run : ls -al ./server
+    
+      
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
