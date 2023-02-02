@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Modal from "../Components/Commons/Modal";
 import SignUpAdmission from "../Components/SignUp/SignUpAdmission";
 import {
@@ -12,10 +12,8 @@ import { MemberType, signUp } from "../API/SignUp";
 import { useAppSelector } from "../Store/hooks";
 import "./Style/memberAccess.css";
 import AccessMenu from "../Components/SignUp/AccessMenu";
-import { error } from "console";
 
 const SignUp = () => {
-  //회원가입 정보
   const [Member, setMember] = useState<MemberType>({
     accountId: "",
     password: "",
@@ -24,24 +22,18 @@ const SignUp = () => {
     email: "",
     phoneNumber: "010-",
   });
-  //비밀번호 체크 input 내용
+
   const [passwordCheck, setPasswordCheck] = useState<string>("");
-  //회원가입 승락
   const [idCheck, setIdCheck] = useState<boolean>(false);
-  //일반 모달창
   const [modalState, setModalState] = useState<boolean>(false);
-  //회원가입 확인 모달창
   const [signUpModalState, setSignUpModalState] = useState<boolean>(false);
-  //일반 모달 내용
   const [message, setMessage] = useState<string>("");
-  //input 입력 핸들러
   const onMemberTextHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     if (name === "accountId") {
       setIdCheck(false);
     }
     if (name === "phoneNumber") {
-      //전화번호 - 추가
       if (value.length < 5) {
         setMember({
           ...Member,
@@ -57,7 +49,6 @@ const SignUp = () => {
         });
       }
     } else if (name === "memberName") {
-      //특수문자, 숫자 제거
       setMember({
         ...Member,
         [name]: value
@@ -68,11 +59,10 @@ const SignUp = () => {
       setMember({ ...Member, [name]: value });
     }
   };
-  //pw확인 input 입력 핸들러
+
   const onPasswordCheckHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordCheck(e.target.value);
   };
-  //중복 체크 확인
   const idDoubleCheck = async () => {
     await onIdDoubleCheck(Member, setMessage, setModalState).then((res) => {
       setIdCheck(res);
@@ -91,7 +81,6 @@ const SignUp = () => {
   }, [userLogin]);
 
   const memberSignUpAdmission = () => {
-    //회원가입
     const nullCheck = onInputNullCheck(Member, setMessage, setModalState);
     const pwCheck = onPasswordConfirm(
       Member.password,

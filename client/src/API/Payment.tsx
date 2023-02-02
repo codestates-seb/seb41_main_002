@@ -111,7 +111,6 @@ export const kakaoPaymentRequest = async (
       fail_url: `${CLIENT_URL}/checkout`,
       cancel_url: `${CLIENT_URL}/checkout`,
     };
-    console.log(params);
     await axios({
       url: "https://kapi.kakao.com/v1/payment/ready",
       method: "POST",
@@ -121,7 +120,6 @@ export const kakaoPaymentRequest = async (
       },
       params,
     }).then((res) => {
-      console.log(res.data.tid);
       tid = res.data.tid;
       paymentURL = res.data.next_redirect_pc_url;
     });

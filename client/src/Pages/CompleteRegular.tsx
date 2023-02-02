@@ -36,7 +36,6 @@ const CompleteRegular = () => {
         const response = authInstance
           .patch(`/members/${memberId}/subscribe`, subscribeParams)
           .then((res) => {
-            console.log("SID 저장!");
             alert("구독을 완료했습니다");
             navigate("/");
             window.location.reload();

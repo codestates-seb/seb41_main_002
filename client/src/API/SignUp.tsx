@@ -15,7 +15,6 @@ interface MemberInfo {
   password: string;
 }
 
-//중복체크
 export const doubleCheck = async (accountID: string) => {
   try {
     const response = await defaultInstance
@@ -29,7 +28,6 @@ export const doubleCheck = async (accountID: string) => {
   }
 };
 
-//회원가입
 export const signUp = async (memberData: MemberType) => {
   try {
     let dateChange = memberData.birthDate.replace(/\-/gi, "/");

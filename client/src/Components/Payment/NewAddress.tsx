@@ -71,7 +71,6 @@ const NewAddress = ({ callAddressModal, setCallAddressModal, address, zipcode }:
     };
     addAddress(addressSheet).then((res) => {
       window.location.reload();
-      console.log(res);
     });
   };
 

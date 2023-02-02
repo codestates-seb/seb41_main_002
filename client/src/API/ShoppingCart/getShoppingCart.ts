@@ -19,7 +19,6 @@ export const getShoppingCart = async (
   memberId: string
 ) => {
   try {
-    //추후 데이터타입 변경예정
     const result: any = await authInstance.get(
       `/members/${memberId}/carts`,
     );

@@ -26,7 +26,6 @@ const changeToken = () => {
           window.location.reload();
         })
         .catch((err) => {
-          console.log("교체 실패");
           console.log(err);
         });
     }
