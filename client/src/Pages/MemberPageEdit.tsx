@@ -278,6 +278,7 @@ export default function MemberPageEdit() {
                 border="none"
                 onClick={toResetPW}
                 hoverColor="var(--hoverColor3)"
+                fontsize="21px"
               />
             </div>
           </InfoWrapper>
@@ -399,6 +400,7 @@ export default function MemberPageEdit() {
               border="none"
               onClick={addNewAddress}
               hoverColor="var(--hoverColor3)"
+              fontsize="21px"
             />
           </ul>
 
