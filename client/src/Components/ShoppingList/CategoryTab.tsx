@@ -65,8 +65,7 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
               onClick={() => {
                 navigate(
                   `/items-list/${category.categoryENName}?custom=${props.isCustom}`
-                )
-                window.location.reload()
+                );
               }}
             />
           </li>
