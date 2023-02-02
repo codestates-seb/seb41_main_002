@@ -6,7 +6,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { ShoppingCategoryTab } from "../Components/ShoppingList/CategoryTab";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const ProductImage = styled.img`
   width: 200px;
@@ -37,10 +37,10 @@ const ProductList = (props: ProductListProps) => {
                 <div className="Shopping_Product_Info">
                   <ProductImage src={`${item.titleImageURL}`} />
                   <div className="Product_Text_Container">
-                    <h4 className="Product_Title_Content">
-                      {item.itmeTitle}
-                    </h4>
-                    <p className="Product_Price_Content">가격: {item.price}원</p>
+                    <h4 className="Product_Title_Content">{item.itmeTitle}</h4>
+                    <p className="Product_Price_Content">
+                      가격: {item.price}원
+                    </p>
                   </div>
                 </div>
               </a>
@@ -84,6 +84,7 @@ export default function ShoppingPage() {
   const accessToken = sessionStorage.getItem("accessToken");
   const session = sessionStorage.getItem("memberId");
   const params = useParams();
+  const navigate = useNavigate();
   const fetchMemberTagData = async () => {
     const result = await getMemberTagList({
       categoryENName: params.categoryENName as string,
@@ -103,7 +104,7 @@ export default function ShoppingPage() {
     setProducts([]);
     setLock(false);
     setPageNumber(1);
-  }, [params.categoryENName, serchWord]);
+  }, [params.categoryENName]);
 
   useEffect(() => {
     fetchProducts();
@@ -132,10 +133,11 @@ export default function ShoppingPage() {
     const result = await getProducts(
       params.categoryENName as string,
       isCustom,
-      pageNumber,
-      serchWord
+      1,
+      serchWord,
+      accessToken
     );
-    return result;
+    return setProducts(result);
   };
 
   useEffect(() => {
@@ -154,8 +156,9 @@ export default function ShoppingPage() {
   }, [products]);
 
   const serchSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && serchWord.length !== 0) {
       tabChangeFetch();
+      navigate(`/items-list/all?custom=${isCustom}&title=${serchWord}`);
     }
   };
 
@@ -172,7 +175,6 @@ export default function ShoppingPage() {
             onKeyUp={(e) => {
               if (serchWord.length !== 0) {
                 serchSubmit(e);
-              } else {
               }
             }}
           />
@@ -192,7 +194,11 @@ export default function ShoppingPage() {
         </div>
         <div className="Product_List_Container">
           <ul className="Product_List">
-            <ProductList products={products} />
+            {products.length !== 0 ? (
+              <ProductList products={products} />
+            ) : (
+              <div>검색 제품이 없습니다</div>
+            )}
           </ul>
         </div>
       </div>

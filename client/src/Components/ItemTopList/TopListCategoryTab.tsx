@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { NavigateFunction, Params } from "react-router-dom";
 import CustomButton from "../Commons/Buttons";
 
@@ -50,7 +49,6 @@ export default function TopListCategoryTab(props: Props) {
   return (
     <>
       {categoryTitle.map((category, index) => {
-        // console.log(props.params.categoryENName)
         console.log(props.params.categoryENName === category.categoryENName);
         return (
           <li key={category.categoryENName}>
@@ -75,7 +73,6 @@ export default function TopListCategoryTab(props: Props) {
               content={`${category.categoryKRName}`}
               onClick={() => {
                 props.setCategoryENName(category.categoryENName);
-
                 props.navigate(`/items-top-list/${category.categoryENName}`);
               }}
             />

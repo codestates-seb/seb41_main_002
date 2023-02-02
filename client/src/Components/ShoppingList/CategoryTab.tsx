@@ -85,7 +85,7 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
               onClick={() => {
                 props.setIsCustom(!props.isCustom);
                 navigate(
-                  `/items-list/all?custom=${props.isCustom}`
+                  `/items-list/${props.params}?custom=${props.isCustom}`
                 );
               }}
             />
