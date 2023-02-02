@@ -137,7 +137,7 @@ export default function ShoppingPage() {
       serchWord,
       accessToken
     );
-    return result;
+    return setProducts(result);
   };
 
   useEffect(() => {
@@ -156,7 +156,7 @@ export default function ShoppingPage() {
   }, [products]);
 
   const serchSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && serchWord.length !== 0) {
       tabChangeFetch();
       navigate(`/items-list/all?custom=${isCustom}&title=${serchWord}`);
     }
