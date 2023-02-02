@@ -115,12 +115,17 @@
   width: 100%;
   background-color: var(--dark3);
   border: 1px solid black;
+  border-radius: 5px;
 }
 
 .Price_Info_Container > span {
   font-size: 17px;
   color: white;
   margin-right: 10px;
+}
+
+.Cart_Payment_Button > button {
+  font-weight: bold;
 }
 
 .Cart_Payment_Button {

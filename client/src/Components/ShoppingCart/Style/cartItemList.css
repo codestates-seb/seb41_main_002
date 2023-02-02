@@ -30,8 +30,9 @@
 .Product_Profile{
   display: flex;
   align-items: center;
-  width: 743.344px;
+  width: 100%;
   flex-wrap: wrap;
+  margin-left: 15px;
 }
 
 .List_Product_Name{
@@ -64,4 +65,8 @@
 
 .Product_Delete{
   width: 139.9px
+}
+
+.Product_Delete > button{
+  font-weight: bold;
 }
