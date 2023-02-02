@@ -7,6 +7,10 @@
   gap: 30px;
 }
 
+.Profile_Edit_Link {
+  text-align: right;
+}
+
 .Profile_Info_Container {
   max-width: 1000px;
   width: 100%;
@@ -15,10 +19,6 @@
 
 .Profile_Indicator {
   margin-bottom: 25px;
-}
-
-.Profile_Edit_Link {
-  text-align: right;
 }
 
 .Member_Subscribed {
@@ -41,11 +41,6 @@
   max-width: 1000px;
   width: 100%;
   margin: 0 auto 20px auto;
-}
-
-.Profile_Type_Badges {
-  color: black;
-  font-weight: bold;
 }
 
 .No_Tags {

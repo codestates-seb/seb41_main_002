@@ -32,8 +32,9 @@ const memberId = Number(sessionStorage.getItem("memberId"));
 
 const MemberPage = () => {
   const [profileData, setProfileData] = useState<ProfileDataType>();
-  const [modalState, setModalState] = useState(false);
+  const [modalState, setModalState] = useState<boolean>(false);
   const [ReviewId, setReviewId] = useState<number>(0);
+  const [activeTabIndicator, setActiveTabIndicator] = useState<number>(1);
 
   useEffect(() => {
     try {

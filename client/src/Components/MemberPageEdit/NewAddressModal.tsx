@@ -1,6 +1,7 @@
 import {
   addNewAddress,
   MemberPageDataType,
+  UserAddressType,
 } from "../../API/MemberPageEdit/MemberPageEditAPI";
 import CustomButton from "../Commons/Buttons";
 import { FormEvent, useEffect, useState } from "react";
@@ -17,26 +18,26 @@ export default function NewAddressModal({
   setIsNewAddressModalOn,
   memberAddressData,
 }: {
-  currentAddressIndex: number | undefined;
+  currentAddressIndex: number;
   setModalState: React.Dispatch<React.SetStateAction<boolean>>;
   render: boolean;
   setRender: React.Dispatch<React.SetStateAction<boolean>>;
   setIsNewAddressModalOn: React.Dispatch<React.SetStateAction<boolean>>;
   memberAddressData: MemberPageDataType;
 }) {
-  const [isSearchOn, setIsSearchOn] = useState(false);
-  const [userAddress, setUserAddress] = useState({
+  const [isSearchOn, setIsSearchOn] = useState<boolean>(false);
+  const [userAddress, setUserAddress] = useState<UserAddressType>({
     recipient: memberAddressData.memberName,
     addressTitle: "",
     phoneNumber: memberAddressData.phoneNumber,
   });
-  const [isPrimary, setIsPrimary] = useState(
+  const [isPrimary, setIsPrimary] = useState<boolean>(
     currentAddressIndex === 0 ? true : false
   );
-  const [address, setAddress] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [detailedAddress, setDetailedAddress] = useState("");
-  const [combinedAddress, setCombinedAddres] = useState("");
+  const [address, setAddress] = useState<string>("");
+  const [zipcode, setZipcode] = useState<string>("");
+  const [detailedAddress, setDetailedAddress] = useState<string>("");
+  const [combinedAddress, setCombinedAddres] = useState<string>("");
 
   useEffect(() => {
     const wholeAddress = address + " | " + detailedAddress;

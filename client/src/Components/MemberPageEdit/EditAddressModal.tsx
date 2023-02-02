@@ -2,6 +2,7 @@ import {
   AddressType,
   MemberPageDataType,
   updateAddress,
+  UserAddressType,
 } from "../../API/MemberPageEdit/MemberPageEditAPI";
 import CustomButton from "../Commons/Buttons";
 import { FormEvent, useEffect, useState } from "react";
@@ -23,29 +24,31 @@ export default function EditAddressModal({
   setIsEditAddressModalOn: React.Dispatch<React.SetStateAction<boolean>>;
   memberAddressData: MemberPageDataType;
 }) {
-  const [isSearchOn, setIsSearchOn] = useState(false);
-  const [userAddress, setUserAddress] = useState({
+  const [isSearchOn, setIsSearchOn] = useState<boolean>(false);
+  const [userAddress, setUserAddress] = useState<UserAddressType>({
     recipient: memberAddressData.memberName,
     addressTitle: editingAddress?.addressTitle as string,
     phoneNumber: memberAddressData.phoneNumber,
   });
-  const [isPrimary, setIsPrimary] = useState(
+  const [isPrimary, setIsPrimary] = useState<boolean>(
     editingAddress?.isPrimary as boolean
   );
-  const [address, setAddress] = useState(
+  const [address, setAddress] = useState<string>(
     editingAddress?.address.slice(
       0,
       editingAddress?.address.indexOf("|")
     ) as string
   );
-  const [zipcode, setZipcode] = useState(editingAddress?.zipcode as string);
-  const [detailedAddress, setDetailedAddress] = useState(
+  const [zipcode, setZipcode] = useState<string>(
+    editingAddress?.zipcode as string
+  );
+  const [detailedAddress, setDetailedAddress] = useState<string>(
     editingAddress?.address.slice(
       editingAddress?.address.indexOf("|") + 2,
       editingAddress?.address.length
     ) as string
   );
-  const [combinedAddress, setCombinedAddres] = useState("");
+  const [combinedAddress, setCombinedAddres] = useState<string>("");
 
   useEffect(() => {
     const wholeAddress = address + " | " + detailedAddress;

@@ -35,9 +35,11 @@ const memberId = Number(sessionStorage.getItem("memberId"));
 
 export default function MemberPageEdit() {
   const navigate = useNavigate();
-  const [modalState, setModalState] = useState(false);
-  const [isNewAddressModalOn, setIsNewAddressModalOn] = useState(false);
-  const [isEditAddressModalOn, setIsEditAddressModalOn] = useState(false);
+  const [modalState, setModalState] = useState<boolean>(false);
+  const [isNewAddressModalOn, setIsNewAddressModalOn] =
+    useState<boolean>(false);
+  const [isEditAddressModalOn, setIsEditAddressModalOn] =
+    useState<boolean>(false);
 
   const [memberAddressData, setMemberAddressData] =
     useState<MemberPageDataType>();
@@ -48,10 +50,10 @@ export default function MemberPageEdit() {
   const [tagList, setTagList] = useState<string[]>([]);
   const [isSubscribed, setIsSubscribed] = useState<boolean>(true);
 
-  const [render, setRender] = useState(false);
+  const [render, setRender] = useState<boolean>(false);
 
-  const [newAddressId, setNewAddressId] = useState(
-    memberAddressData?.addressList.length
+  const [newAddressId, setNewAddressId] = useState<number>(
+    memberAddressData?.addressList.length as number
   );
   const [editingAddress, setEditingAddress] = useState<AddressType>(
     memberAddressData?.addressList[0] as AddressType
@@ -224,7 +226,9 @@ export default function MemberPageEdit() {
               element={
                 <NewAddressModal
                   setModalState={setModalState}
-                  currentAddressIndex={memberAddressData?.addressList.length}
+                  currentAddressIndex={
+                    memberAddressData?.addressList.length as number
+                  }
                   render={render}
                   setRender={setRender}
                   setIsNewAddressModalOn={setIsNewAddressModalOn}

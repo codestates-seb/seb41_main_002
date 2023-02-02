@@ -56,8 +56,10 @@ const memberId = Number(sessionStorage.getItem("memberId"));
 export default function Home() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [homeData, setHomeData] = useState<HomeDataType>();
-  const [xPos, setXPos] = useState(0);
-  const [carouselStyleToSlide, setCarouselStyleToSlide] = useState({
+  const [xPos, setXPos] = useState<number>(0);
+  const [carouselStyleToSlide, setCarouselStyleToSlide] = useState<{
+    transform: string;
+  }>({
     transform: `translateX(${xPos}px)`,
   });
 
