@@ -82,18 +82,13 @@ const ReviewInfo = ({ reviewId }: PropsType) => {
     }
   };
 
-  const test = () => {
-    console.log(reviewInfo);
-    setStarRating(reviewInfo.reviewRating);
-  };
-
   return (
     <div className="ReviewInfo_Container">
       <div className="Review_Item_Info">
         <img src={reviewInfo.titleImageURL} />
         <ul>
           <li>
-            <div onClick={test} className="Review_Item_Tag">
+            <div className="Review_Item_Tag">
               제품명
             </div>
             <div className="Review_Item">{reviewInfo.itemTitle}</div>

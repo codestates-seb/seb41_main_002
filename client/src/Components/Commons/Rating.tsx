@@ -39,20 +39,6 @@ const RatingBox = styled.div<RatingStyleType>`
   }
 `;
 
-// 부모 상태값
-// const ratingSetting: settingType = {
-//   ratingEdit: true, 별점 수정 가능 여부
-//   ratingSize: 30, 별점 사이즈
-// };
-// const [starRating, setStarRating] = useState(5); 별점, 소수점이여도 그만큼 별점 표시됨
-
-// Rating 사용법
-// <Rating
-//   starRating={starRating}
-//   setStarRating={setStarRating}
-//   ratingSetting={ratingSetting}
-// />
-
 export const Rating = (props: RatingProps) => {
   const ratingClickEdit = (rating: number) => {
     if (props.ratingSetting.ratingEdit) {

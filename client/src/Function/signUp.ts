@@ -3,7 +3,6 @@ import { doubleCheck } from "../API/SignUp";
 import { MemberType } from "../API/SignUp";
 
 export const onEmailRegex = (email: string) => {
-  //이메일 정규식
   let regex = new RegExp(
     "([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\t -Z^-~]*])"
   );

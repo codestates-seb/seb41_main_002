@@ -28,7 +28,6 @@ export interface decodeType {
   sub: string;
 }
 
-//로그인 기능
 const asyncLogin = createAsyncThunk(
   "userSlice/asyncLogin",
   async (MemberInput: MemberInputType) => {

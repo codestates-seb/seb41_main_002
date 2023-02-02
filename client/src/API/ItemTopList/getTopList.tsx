@@ -1,6 +1,6 @@
 import { Params } from "react-router-dom";
 import { defaultInstance, authInstance } from "../Core";
-//추후 타입 변경 예정
+
 interface MemberType {
   memberTagList: string[];
 }
@@ -29,7 +29,6 @@ export const getTopList = (
   token: string | null
 ): Promise<Array<TopProductData>> => {
   return new Promise(async (resolve) => {
-    //추후 타입변경 예정
     let result: any;
     try {
       if (!token) {
