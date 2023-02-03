@@ -1,0 +1,24 @@
+.Subscribed_Container {
+  padding: 20px;
+}
+
+.Subscribed_Container h2{
+  text-align: center;
+  font-size: 30px;
+}
+
+.Subscribed_Container h3{
+  margin-top: 20px;
+}
+
+.Subscribed_Container ul{
+  margin-top: 20px;
+}
+
+.Subscribed_Container ul li{
+  margin-top: 7px;
+}
+
+.Subscribed_Container button{
+  margin-top: 20px;
+}

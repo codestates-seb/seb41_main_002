@@ -11,7 +11,7 @@
   border: solid white 1px;
   height: 100%;
   width: 900px;
-  font-size: 19px;
+  font-size: 17px;
   margin: 0 auto;
 }
 
@@ -36,7 +36,7 @@
   height: 50%;
   width: 50%;
   text-align: center;
-  font-size: 17px;
+  font-size: 19px;
   border: none;
   border-bottom: 1px solid var(--lineColor1);
 }
@@ -47,7 +47,7 @@
 }
 
 .Info_Title {
-  background-color: rgb(105, 105, 105);
+  background-color: var(--gray);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -59,7 +59,7 @@
 
 .No_Addresses {
   margin: 15px 0;
-  color: rgb(179, 179, 179);
+  color: var(--lightgray);
 }
 
 .Addresses_Container {
@@ -78,12 +78,14 @@
   font-size: 17px;
 }
 
-.Adrress_Primary {
-  color: #1f8a70;
+.Addrress_Primary {
+  color: var(--indicatorColor4);
 }
 
 .Address_List_Button {
   width: 30%;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .Recommend_Survey {

@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
 import { ProfileDataType } from "../../API/MemberPage/MemberPageAPI";
 import OrderHistoryItem from "./OrderHistoryItem";
 import ReviewsItem from "./ReviewsItem";
+import { Dispatch, SetStateAction } from "react";
 import "./../Style/myPageTabs.css";
 
 export const OrderHistoryTab = ({

@@ -1,10 +1,13 @@
 .Profile_Container {
-  font-size: 19px;
   display: flex;
   flex-direction: column;
   text-align: center;
   margin: 20px 0;
   gap: 30px;
+}
+
+.Profile_Edit_Link {
+  text-align: right;
 }
 
 .Profile_Info_Container {
@@ -15,10 +18,6 @@
 
 .Profile_Indicator {
   margin-bottom: 25px;
-}
-
-.Profile_Edit_Link {
-  text-align: right;
 }
 
 .Member_Subscribed {
@@ -43,11 +42,6 @@
   margin: 0 auto 20px auto;
 }
 
-.Profile_Type_Badges {
-  color: black;
-  font-weight: bold;
-}
-
 .No_Tags {
   color: white;
 }
@@ -61,15 +55,17 @@
   display: flex;
 }
 
-.Profile_Reviews li {
-  width: 100px;
-  height: 30px;
-  line-height: 30px;
+.Profile_Tabs {
+  width: 125px;
+  height: 50px;
   background-color: var(--dark3);
   border: 1px solid var(--lightgray);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Profile_Reviews li:last-child {
@@ -81,6 +77,12 @@
   background-color: var(--dark3);
   border: 1px solid var(--lightgray);
   height: calc(100% - 30px);
+}
+
+.Active_Tab {
+  color: black;
+  background-color: var(--indicatorColor3);
+  box-shadow: inset 0 0 5px var(--dark3);
 }
 
 .Profile_Tabs:hover {
