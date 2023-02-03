@@ -1,0 +1,92 @@
+.Profile_Container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 20px 0;
+  gap: 30px;
+}
+
+.Profile_Edit_Link {
+  text-align: right;
+}
+
+.Profile_Info_Container {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.Profile_Indicator {
+  margin-bottom: 25px;
+}
+
+.Member_Subscribed {
+  background: linear-gradient(to right, #fcecdd, #ffc288, #fea82f, #ff6701);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.Member_Not_Subscribed {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  color: var(--indicatorColor2);
+}
+
+.Profile_Tags {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto 20px auto;
+}
+
+.No_Tags {
+  color: white;
+}
+
+.Profile_Reviews {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.Profile_Reviews ul {
+  display: flex;
+}
+
+.Profile_Tabs {
+  width: 125px;
+  height: 50px;
+  background-color: var(--dark3);
+  border: 1px solid var(--lightgray);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Profile_Reviews li:last-child {
+  position: relative;
+  right: 1px;
+}
+
+.History_Contents {
+  background-color: var(--dark3);
+  border: 1px solid var(--lightgray);
+  height: calc(100% - 30px);
+}
+
+.Active_Tab {
+  color: black;
+  background-color: var(--indicatorColor3);
+  box-shadow: inset 0 0 5px var(--dark3);
+}
+
+.Profile_Tabs:hover {
+  cursor: pointer;
+  background-color: white;
+  color: black;
+}
