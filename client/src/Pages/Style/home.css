@@ -116,3 +116,9 @@
 .Top_Sales {
   height: 100%;
 }
+
+.Subscribe_Btn{
+  width: 100%;
+  text-align: center;
+  font-size: 19px;
+}
