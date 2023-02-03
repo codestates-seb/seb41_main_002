@@ -31,8 +31,7 @@ jobs:
 
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
-        
-#      - run : cd ./server ; pwd ; ls -al ; ./gradlew build;
+
       - name :  Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
@@ -42,29 +41,29 @@ jobs:
           # Path to the Gradle executable
           #gradle-executable: ./server
 
-#      # build한 후 프로젝트를 압축합니다.
-#      - name: Make zip file
-#        run: zip -r ./practice-deploy.zip .
-#        working-directory: ./server
-#        shell: bash
-#
-#      # Access Key와 Secret Access Key를 통해 권한을 확인합니다.
-#      # 아래 코드에 Access Key와 Secret Key를 직접 작성하지 않습니다.
-#      - name: Configure AWS credentials
-#        uses: aws-actions/configure-aws-credentials@v1
-#        with:
-#          aws-access-key-id: ${{ secrets.BE_AWS_ACCESS_KEY }} # 등록한 Github Secret이 자동으로 불려옵니다.
-#          aws-secret-access-key: ${{ secrets.BE_AWS_SECRET_ACCESS_KEY }} # 등록한 Github Secret이 자동으로 불려옵니다.
-#          aws-region: ap-northeast-2
-#
-#      # 압축한 프로젝트를 S3로 전송합니다.
-#      - name: Upload to S3
-#        run: aws s3 cp --region ap-northeast-2 ./server/practice-deploy.zip s3://$S3_BUCKET_NAME/practice-deploy.zip
-#
-#      # CodeDeploy에게 배포 명령을 내립니다.
-#      - name: Code Deploy
-#        run: >
-#          aws deploy create-deployment --application-name main_002
-#          --deployment-config-name CodeDeployDefault.AllAtOnce
-#          --deployment-group-name main_002_jbscjw
-#          --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=practice-deploy.zip
+      # build한 후 프로젝트를 압축합니다.
+      - name: Make zip file
+        run: zip -r ./practice-deploy.zip .
+        working-directory: ./server
+        shell: bash
+
+      # Access Key와 Secret Access Key를 통해 권한을 확인합니다.
+      # 아래 코드에 Access Key와 Secret Key를 직접 작성하지 않습니다.
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.BE_AWS_ACCESS_KEY }} # 등록한 Github Secret이 자동으로 불려옵니다.
+          aws-secret-access-key: ${{ secrets.BE_AWS_SECRET_ACCESS_KEY }} # 등록한 Github Secret이 자동으로 불려옵니다.
+          aws-region: ap-northeast-2
+
+      # 압축한 프로젝트를 S3로 전송합니다.
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./server/practice-deploy.zip s3://$S3_BUCKET_NAME/practice-deploy.zip
+
+      # CodeDeploy에게 배포 명령을 내립니다.
+      - name: Code Deploy
+        run: >
+          aws deploy create-deployment --application-name main_002
+          --deployment-config-name CodeDeployDefault.AllAtOnce
+          --deployment-group-name main_002_jbscjw
+          --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=practice-deploy.zip
