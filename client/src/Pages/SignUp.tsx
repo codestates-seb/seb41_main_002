@@ -27,7 +27,7 @@ const SignUp = () => {
   const [modalState, setModalState] = useState<boolean>(false);
   const [signUpModalState, setSignUpModalState] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-
+  
   const onMemberTextHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     if (name === "accountId") {
@@ -56,11 +56,12 @@ const SignUp = () => {
           .replace(/[0-9 ]/gim, ""),
       });
     } else {
-      setMember({ ...Member, [name]: value });
+      setMember({ ...Member, [name]: value.replace(/(\s*)/g, "") });
     }
   };
+
   const onPasswordCheckHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordCheck(e.target.value);
+    setPasswordCheck(e.target.value.replace(/(\s*)/g, ""));
   };
 
   const idDoubleCheck = async () => {

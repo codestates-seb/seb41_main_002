@@ -59,8 +59,6 @@ public class SecurityConfiguration {
                 .accessDeniedHandler(new MemberAccessDeniedHandler())            // (2) 추가
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        //.antMatchers(HttpMethod.PATCH,"/api/v1/home").hasRole("ADMIN")
-                        //.antMatchers(HttpMethod.DELETE,"/api/v1/home").hasRole("ADMIN")
                         .antMatchers("/api/v1/signup", "/api/v1/login", "/api/v1/home", "/api/v1/idcheck/**", "/api/v1/event/**").permitAll()
                         .antMatchers("/api/v1/orders/**").hasRole("USER") // 주문은 유저만 가능
                         .antMatchers("/api/v1/members/**").hasAnyRole("ADMIN","USER") // 멤버정보는 유저, 어드민 가능
@@ -68,11 +66,9 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.GET, "/api/v1/reviews/*").permitAll() // 리뷰 정보 읽기 누구나 가능
                         .antMatchers("/api/v1/password").permitAll() //임시번호 재발급 누구나 가능
                         .antMatchers("/api/v1/accountid").permitAll() // 아이디 재발급 누구나 가능
-                        //.antMatchers(HttpMethod.POST, "/api/v1/user/refresh-token").permitAll() // 리프레시 토큰을 이용한 엑세스토큰 재발급
                         .antMatchers("/h2/**").permitAll()
                         .antMatchers("/api/v1/user/**").hasRole("USER")
                         .anyRequest().hasAnyRole("ADMIN", "USER")); // 그 외 기능들 ADMIN, USER만 가능
-        //.anyRequest().hasAnyRole("USER","ADMIN"));
 
         return http.build();
     }
@@ -80,12 +76,11 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        //configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedOrigins(Arrays.asList("http://seb41team02.s3-website.ap-northeast-2.amazonaws.com","http://localhost:3000")); // aws 추가
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
         configuration.setAllowCredentials(true);       // 내 서버가 응답할 때 json을 JS에서 처리할 수 있게 설정
         configuration.addAllowedHeader("*");           // 모든 header에 응답 허용
-        configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh","Set-Cookie"));  //쿠키 미확인 해결
+        configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh","Set-Cookie"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

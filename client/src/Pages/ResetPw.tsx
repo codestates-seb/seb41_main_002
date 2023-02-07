@@ -14,7 +14,8 @@ const InfoWrapper = styled.div`
   height: 75px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.6);
 `;
-const memberId = Number(sessionStorage.getItem("memberId"));
+
+const MEMBER_ID = Number(sessionStorage.getItem("memberId"));
 
 export default function ResetPw() {
   const navigate = useNavigate();
@@ -39,13 +40,11 @@ export default function ResetPw() {
 
     if (resetPwData.newPassword === resetPwData.oldPassword) {
       alert("기존 비밀번호와 새 비밀번호가 동일합니다.");
-    }
-
-    if (confirmNewPw !== resetPwData.newPassword) {
+    } else if (confirmNewPw !== resetPwData.newPassword) {
       alert("새 비밀번호가 일치하지 않습니다.");
     } else if (confirmNewPw === resetPwData.newPassword) {
-      if (window.confirm("새 비밀번호로 변경합니다.")) {
-        resetMemberPw(memberId, resetPwData).then(() => {
+      if (window.confirm("비밀번호를 변경하시겠습니까?")) {
+        resetMemberPw(MEMBER_ID, resetPwData).then(() => {
           onLogout().then(() => {
             navigate("/");
             window.location.reload();
@@ -71,6 +70,7 @@ export default function ResetPw() {
               name="oldPassword"
               value={resetPwData.oldPassword}
               onChange={handleResetPwData}
+              required
             />
           </InfoWrapper>
           <InfoWrapper>
@@ -81,6 +81,7 @@ export default function ResetPw() {
               name="newPassword"
               value={resetPwData.newPassword}
               onChange={handleResetPwData}
+              required
             />
           </InfoWrapper>
           <InfoWrapper>
@@ -90,6 +91,7 @@ export default function ResetPw() {
               type="password"
               value={confirmNewPw}
               onChange={handleConfirmPw}
+              required
             />
           </InfoWrapper>
         </div>

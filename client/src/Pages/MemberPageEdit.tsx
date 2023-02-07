@@ -1,5 +1,3 @@
-import CustomButton from "../Components/Commons/Buttons";
-import Modal from "../Components/Commons/Modal";
 import {
   AddressType,
   cancelSubscription,
@@ -9,6 +7,8 @@ import {
   updateAddress,
   updateMemberData,
 } from "../API/MemberPageEdit/MemberPageEditAPI";
+import CustomButton from "../Components/Commons/Buttons";
+import Modal from "../Components/Commons/Modal";
 import NewAddressModal from "../Components/MemberPageEdit/NewAddressModal";
 import EditAddressModal from "../Components/MemberPageEdit/EditAddressModal";
 import { subscriptionCalculation } from "../Function/memberEditPage";
@@ -50,9 +50,8 @@ export default function MemberPageEdit() {
   const [newAddressId, setNewAddressId] = useState(
     memberAddressData?.addressList.length
   );
-
-  const [editingAddress, setEditingAddress] = useState<AddressType | undefined>(
-    memberAddressData?.addressList[0]
+  const [editingAddress, setEditingAddress] = useState<AddressType>(
+    memberAddressData?.addressList[0] as AddressType
   );
 
   const calcMonth = subscriptionCalculation(
@@ -71,10 +70,10 @@ export default function MemberPageEdit() {
       getMemberData(memberId).then((res) => {
         setRender(true);
         setMemberAddressData(res);
-        setMemberName(res?.memberName);
-        setEmail(res?.email);
-        setPhoneNumber(res?.phoneNumber);
-        setTagList(res?.tagList);
+        setMemberName(res?.memberName as string);
+        setEmail(res?.email as string);
+        setPhoneNumber(res?.phoneNumber as string);
+        setTagList(res?.tagList as string[]);
       });
     } catch (err) {
       console.error(err);
@@ -160,7 +159,9 @@ export default function MemberPageEdit() {
 
   const editAddress: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     const addressListIndex = Number(e.currentTarget.id);
-    setEditingAddress(memberAddressData?.addressList[addressListIndex]);
+    setEditingAddress(
+      memberAddressData?.addressList[addressListIndex] as AddressType
+    );
     setIsEditAddressModalOn(true);
     setModalState(true);
   };
@@ -221,7 +222,9 @@ export default function MemberPageEdit() {
               element={
                 <NewAddressModal
                   setModalState={setModalState}
-                  currentAddressIndex={memberAddressData?.addressList.length}
+                  currentAddressIndex={
+                    memberAddressData?.addressList.length as number
+                  }
                   render={render}
                   setRender={setRender}
                   setIsNewAddressModalOn={setIsNewAddressModalOn}
@@ -271,6 +274,7 @@ export default function MemberPageEdit() {
                 border="none"
                 onClick={toResetPW}
                 hoverColor="var(--hoverColor3)"
+                fontsize="21px"
               />
             </div>
           </InfoWrapper>
@@ -330,7 +334,7 @@ export default function MemberPageEdit() {
                         <div className="Address_List_Address">
                           <div>
                             {address.isPrimary ? (
-                              <span className="Adrress_Primary">
+                              <span className="Addrress_Primary">
                                 (대표주소)
                               </span>
                             ) : null}
@@ -392,6 +396,7 @@ export default function MemberPageEdit() {
               border="none"
               onClick={addNewAddress}
               hoverColor="var(--hoverColor3)"
+              fontsize="21px"
             />
           </ul>
 

@@ -20,10 +20,13 @@
   --indicatorColor1: #ffd56f;
   --indicatorColor2: wheat;
   --indicatorColor3: lightgoldenrodyellow;
+  --indicatorColor4: #1f8a70;
   --hoverColor1: #1c6dd0;
   --hoverColor2: #181d31;
   --hoverColor3: #ffffff;
+  --hoverColor4: #ffd56f;
   --lineColor1: rgba(249, 216, 170, 0.8);
+  --borderColor1: rgba(155, 155, 155, 0.7);
 }
 
 /* layout*/

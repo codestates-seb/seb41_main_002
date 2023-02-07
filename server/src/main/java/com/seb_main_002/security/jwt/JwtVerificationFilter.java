@@ -56,7 +56,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String authorization = request.getHeader("Authorization");
-        String[] urls = new String[] {"/api/v1/user/refresh-token", "/api/v1/user/login", "/h2.*"};
         return authorization == null || !authorization.startsWith("Bearer");
     }
 

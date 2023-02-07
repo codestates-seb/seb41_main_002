@@ -76,7 +76,6 @@ const NewAddress = ({
     };
     addAddress(addressSheet).then((res) => {
       window.location.reload();
-      console.log(res);
     });
   };
 

@@ -107,7 +107,6 @@ export default function Checkout() {
               window.sessionStorage.setItem("tid", res.tid);
               window.location.replace(res.paymentURL);
             }
-            console.log("카카오 결제가 완료되었습니다");
           }
         );
       }
@@ -131,7 +130,6 @@ export default function Checkout() {
   const handleComplete = (data: any) => {
     let fullAddress = data.address;
     let extraAddress = "";
-    console.log(data);
     if (data.addressType === "R") {
       if (data.bname !== "") {
         extraAddress += data.bname;
@@ -142,8 +140,6 @@ export default function Checkout() {
       }
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
-    console.log(data.zonecode);
-    console.log(fullAddress);
     setCallAddressModal(!callAddressModal);
     setZipcode(data.zonecode);
     setAddress(fullAddress);

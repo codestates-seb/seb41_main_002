@@ -18,7 +18,7 @@ const Login = () => {
 
   const onMemberInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
-    setMemberInput({ ...MemberInput, [name]: value });
+    setMemberInput({ ...MemberInput, [name]: value.replace(/(\s*)/g, "") });
   };
 
   const userLogin = useAppSelector((state) => {

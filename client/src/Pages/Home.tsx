@@ -1,8 +1,10 @@
-import styled from "styled-components";
+import { getHomeData, HomeDataType } from "../API/Home/HomeAPI";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { getHomeData, HomeDataType } from "../API/Home/HomeAPI";
+import styled from "styled-components";
 import "./Style/home.css";
+import Modal from "../Components/Commons/Modal";
+import InSubscribed from "../Components/Subscribed/InSubscribed";
 
 const HeroImage = styled.div<{ bgUrl: string }>`
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
@@ -56,8 +58,10 @@ const memberId = Number(sessionStorage.getItem("memberId"));
 export default function Home() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [homeData, setHomeData] = useState<HomeDataType>();
-  const [xPos, setXPos] = useState(0);
-  const [carouselStyleToSlide, setCarouselStyleToSlide] = useState({
+  const [xPos, setXPos] = useState<number>(0);
+  const [carouselStyleToSlide, setCarouselStyleToSlide] = useState<{
+    transform: string;
+  }>({
     transform: `translateX(${xPos}px)`,
   });
 
@@ -91,9 +95,21 @@ export default function Home() {
       setXPos(xPos - carouselWidth);
     }
   };
+  const [modalState, setModalState] = useState(true);
+  const memberId = sessionStorage.getItem("memberId");
+  const isSubscribed = sessionStorage.getItem("isSubscribed");
 
   return (
     <div className="Home_Container">
+      {memberId && (isSubscribed ==="false") && modalState ? (
+        <Modal
+          modalState={modalState}
+          setModalState={setModalState}
+          element={
+            <InSubscribed/>
+          }
+        />
+      ) : null}
       <HeroImage bgUrl={homeData?.bannerImageURL as string}>
         <div className="Hero_Text">
           <h1 className="Hero_Text_Gradient">남성 전용 화장품</h1>
