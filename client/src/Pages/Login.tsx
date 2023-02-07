@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../Store/hooks";
 import { asyncLogin } from "../Store/slices/userSlice";
-import "./Style/memberAccess.css";
 import AccessMenu from "../Components/SignUp/AccessMenu";
+import "./Style/memberAccess.css";
 
 const Login = () => {
   const [MemberInput, setMemberInput] = useState({
@@ -49,7 +49,7 @@ const Login = () => {
           }
         />
       ) : null}
-      <AccessMenu/>
+      <AccessMenu />
       <ul className="Member_Access_Contents">
         <li>로그인</li>
         <li>

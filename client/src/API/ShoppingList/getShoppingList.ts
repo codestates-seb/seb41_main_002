@@ -1,4 +1,3 @@
-import axios from "axios";
 import { defaultInstance, authInstance } from "../Core";
 
 interface ParamsType {
@@ -6,7 +5,7 @@ interface ParamsType {
   custom?: boolean;
   keyword?: string;
   page?: number;
-  accessToken?: any
+  accessToken?: any;
 }
 
 export interface ProductData {

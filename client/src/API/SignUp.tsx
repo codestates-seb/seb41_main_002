@@ -1,4 +1,3 @@
-import { AxiosError } from "axios";
 import { defaultInstance } from "./Core";
 
 export interface MemberType {

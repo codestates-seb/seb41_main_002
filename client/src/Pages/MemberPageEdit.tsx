@@ -35,29 +35,21 @@ const memberId = Number(sessionStorage.getItem("memberId"));
 
 export default function MemberPageEdit() {
   const navigate = useNavigate();
-  const [modalState, setModalState] = useState<boolean>(false);
-  const [isNewAddressModalOn, setIsNewAddressModalOn] =
-    useState<boolean>(false);
-  const [isEditAddressModalOn, setIsEditAddressModalOn] =
-    useState<boolean>(false);
+  const [modalState, setModalState] = useState(false);
+  const [isNewAddressModalOn, setIsNewAddressModalOn] = useState(false);
+  const [isEditAddressModalOn, setIsEditAddressModalOn] = useState(false);
 
   const [memberAddressData, setMemberAddressData] =
     useState<MemberPageDataType>();
-
-  const [memberName, setMemberName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
-  const [tagList, setTagList] = useState<string[]>([]);
-  const [isSubscribed, setIsSubscribed] = useState<boolean>(true);
-
-  const [render, setRender] = useState<boolean>(false);
-
-  const [newAddressId, setNewAddressId] = useState<number>(
-    memberAddressData?.addressList.length as number
-  );
+  const [memberName, setMemberName] = useState<string | undefined>("");
+  const [email, setEmail] = useState<string | undefined>("");
+  const [phoneNumber, setPhoneNumber] = useState<string | undefined>("");
+  const [tagList, setTagList] = useState<string[] | undefined>([]);
+  const [render, setRender] = useState(false);
   const [editingAddress, setEditingAddress] = useState<AddressType>(
     memberAddressData?.addressList[0] as AddressType
   );
+
   const calcMonth = subscriptionCalculation(
     memberAddressData?.subscribedDate as string
   );
@@ -155,8 +147,6 @@ export default function MemberPageEdit() {
   };
 
   const addNewAddress: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    const addressListIndex = Number(e.currentTarget.id);
-    setNewAddressId(addressListIndex);
     setIsNewAddressModalOn(true);
     setModalState(true);
   };
@@ -208,7 +198,6 @@ export default function MemberPageEdit() {
   const stopSubscription = () => {
     if (window.confirm("정말 구독을 취소하시겠습니까?")) {
       cancelSubscription(memberId);
-      setIsSubscribed(false);
       setRender(!render);
       sessionStorage.setItem("isSubscribed", "false");
       sessionStorage.removeItem("regularPayment");

@@ -1,11 +1,11 @@
 import CartIcon from "../../Icons/CartIcon";
 import UserIcon from "../../Icons/UserIcon";
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import LogoutIcon from "../../Icons/LogoutIcon";
 import { onLogout } from "../../API/LogoutAPI";
-import "./../Style/header.css";
+import LogoutIcon from "../../Icons/LogoutIcon";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { kakaoRegularPayment } from "../../API/SubscriptionAPI";
+import "./../Style/header.css";
 
 export default function Header() {
   const [isDropdownClicked, setIsDropdownClicked] = useState(false);
@@ -114,7 +114,6 @@ export default function Header() {
                     </li>
                   );
                 })}
-
                 <li>
                   <div className="Nav_Line"></div>
                 </li>

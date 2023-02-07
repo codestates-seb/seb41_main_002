@@ -15,12 +15,8 @@ export const onLogout = async () => {
   };
   try {
     await axios(config)
-      .then(() => {
-        sessionStorage.clear();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(() => sessionStorage.clear())
+      .catch((err) => console.log(err));
     return true;
   } catch (err) {
     console.error(err);

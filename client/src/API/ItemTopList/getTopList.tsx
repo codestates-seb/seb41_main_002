@@ -1,4 +1,3 @@
-import { Params } from "react-router-dom";
 import { defaultInstance, authInstance } from "../Core";
 
 interface MemberType {

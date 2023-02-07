@@ -1,8 +1,8 @@
 import Modal from "../Components/Commons/Modal";
+import AccessMenu from "../Components/SignUp/AccessMenu";
 import React, { useState } from "react";
 import { findId } from "../API/FindIdPw";
 import "./Style/memberAccess.css";
-import AccessMenu from "../Components/SignUp/AccessMenu";
 
 const FindId = () => {
   const [modalState, setModalState] = useState(false);
@@ -36,9 +36,7 @@ const FindId = () => {
         <Modal
           modalState={modalState}
           setModalState={setModalState}
-          element={
-            <div className="Modal_Text">{modalText}</div>
-          }
+          element={<div className="Modal_Text">{modalText}</div>}
         />
       ) : null}
       <AccessMenu />
