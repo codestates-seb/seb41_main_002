@@ -64,10 +64,7 @@ export const kakaoRegularPayment = async () => {
           "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
         },
         params,
-      }).then((res) => {
-      });
+      }).then((res) => {});
     });
-  } catch (error) {
-    
-  }
+  } catch (error) {}
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Modal from "../Components/Commons/Modal";
 import SignUpAdmission from "../Components/SignUp/SignUpAdmission";
 import {
@@ -12,7 +12,6 @@ import { MemberType, signUp } from "../API/SignUp";
 import { useAppSelector } from "../Store/hooks";
 import "./Style/memberAccess.css";
 import AccessMenu from "../Components/SignUp/AccessMenu";
-import { error } from "console";
 
 const SignUp = () => {
   //회원가입 정보

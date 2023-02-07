@@ -39,7 +39,6 @@ const axiosApi = (url: string) => {
     changeToken();
     return config;
   });
-
   return instance;
 };
 
@@ -53,7 +52,6 @@ const axiosAuthApi = (url: string) => {
     changeToken();
     return config;
   });
-
   return instance;
 };
 

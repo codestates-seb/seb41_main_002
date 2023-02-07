@@ -25,7 +25,7 @@ export interface ReviewInfoType {
   reviewContent: string;
 }
 
-export interface ReviewUpdateType extends ReviewInfoType{
+export interface ReviewUpdateType extends ReviewInfoType {
   reviewRating: number;
 }
 
@@ -46,18 +46,14 @@ export const reviewPost = async (review: ReviewType) => {
   const reviewInfo = await authInstance
     .post(`/reviews`, review)
     .then(() => {
-      alert("리뷰 작성 완료되어습니다.");
+      alert("리뷰 작성 완료 되었습니다.");
     })
-    .catch((err) => {
-      alert("리뷰 작성을 이미 하셨습니다.");
-    });
+    .catch(() => alert("이미 리뷰를 작성 하였습니다."));
   return reviewInfo;
 };
 
 export const getReviewInfo = async (reviewId: number) => {
-  const reviewInfo = await authInstance.get(
-    `/reviews/${reviewId}`
-  );
+  const reviewInfo = await authInstance.get(`/reviews/${reviewId}`);
   return reviewInfo.data;
 };
 
