@@ -9,7 +9,6 @@ interface ItemInterface {
   itemCount: number;
 }
 
-// 이후 협의를 통해 props가 더 추가될 예정입니다.
 const OrderedListItem = ({ item }: { item: ItemInterface }) => {
   return (
     <div className="Ordered_List_Item_Wrapper">
