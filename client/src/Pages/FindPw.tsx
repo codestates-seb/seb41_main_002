@@ -1,9 +1,9 @@
-import Modal from "../Components/Commons/Modal";
 import React, { useState } from "react";
-import { findPw } from "../API/FindIdPw";
-import "./Style/memberAccess.css";
+import Modal from "../Components/Commons/Modal";
 import AccessMenu from "../Components/SignUp/AccessMenu";
+import { findPw } from "../API/FindIdPw";
 import { useNavigate } from "react-router-dom";
+import "./Style/memberAccess.css";
 
 const FindPw = () => {
   const navigate = useNavigate();

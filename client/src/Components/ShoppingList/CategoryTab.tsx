@@ -15,13 +15,12 @@ interface Props {
   serchWord: string;
   pageNumber: number;
   setisCustom: React.Dispatch<React.SetStateAction<boolean>>;
-  params: string
+  params: string;
 }
 
 export const ShoppingCategoryTab: Function = (props: Props) => {
   const navigate = useNavigate();
   const categoryTitle: Array<Category> = [
-    
     {
       categoryKRName: "전체",
       categoryENName: "all",
@@ -54,10 +53,16 @@ export const ShoppingCategoryTab: Function = (props: Props) => {
           <li key={category.categoryENName}>
             <CustomButton
               height="36px"
-              fontColor={props.params === category.categoryENName ? "black" : "white"}
-              fontsize={props.params === category.categoryENName ? "21px" : "17px"}
+              fontColor={
+                props.params === category.categoryENName ? "black" : "white"
+              }
+              fontsize={
+                props.params === category.categoryENName ? "21px" : "17px"
+              }
               bgColor={
-                props.params === category.categoryENName ? "var(--gray)" : "var(--lightgray)"
+                props.params === category.categoryENName
+                  ? "var(--gray)"
+                  : "var(--lightgray)"
               }
               width="100px"
               padding="5px"

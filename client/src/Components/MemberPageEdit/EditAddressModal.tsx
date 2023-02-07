@@ -54,7 +54,6 @@ export default function EditAddressModal({
     setCombinedAddres(wholeAddress);
   }, [{ address, detailedAddress }]);
 
-  // 팝업창 열기
   const openSearch = () => {
     setIsSearchOn(!isSearchOn);
   };

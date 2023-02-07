@@ -19,7 +19,7 @@ import SubscriptionPage from "./Pages/SubscriptionPage";
 import Footer from "./Components/Commons/Footer";
 import EventDetail from "./Pages/EventDetail";
 import Header from "./Components/Commons/Header";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
 function App() {

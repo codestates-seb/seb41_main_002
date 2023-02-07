@@ -10,7 +10,6 @@ import DaumPostcode from "react-daum-postcode";
 import styled from "styled-components";
 import "./Style/checkout.css";
 
-
 const MemberSubscribe = styled.span<{ subscribeCheck: boolean }>`
   color: ${(props) => (props.subscribeCheck ? "green" : "red")};
   font-weight: 900;
@@ -168,7 +167,9 @@ export default function Checkout() {
             내 적립금 : {memberInfo && memberInfo["memberReserve"]}원
           </span>
           {memberInfo && (
-            <MemberSubscribe subscribeCheck={isSubscribe && JSON.parse(isSubscribe)}>
+            <MemberSubscribe
+              subscribeCheck={isSubscribe && JSON.parse(isSubscribe)}
+            >
               프리미엄 구독{" "}
               {isSubscribe && JSON.parse(isSubscribe) ? "사용" : "미사용"}
             </MemberSubscribe>
@@ -198,9 +199,7 @@ export default function Checkout() {
         </div>
         <div className="Calculate_Container">
           총 금액 : {itemsTotalPrice}원 + 배송비 3000원{" "}
-          {isSubscribe && JSON.parse(isSubscribe)
-            ? "- 구독 혜택 1000원"
-            : null}{" "}
+          {isSubscribe && JSON.parse(isSubscribe) ? "- 구독 혜택 1000원" : null}{" "}
           {useReserve === undefined ? null : "- 적립금 " + useReserve + "원"} =
           총 {totalPrice} 원
         </div>

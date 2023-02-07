@@ -39,13 +39,18 @@ const Input = styled.input<{ width: string }>`
 `;
 
 interface Props {
-  callAddressModal:boolean
+  callAddressModal: boolean;
   setCallAddressModal: Dispatch<SetStateAction<boolean>>;
   address: string;
   zipcode: string;
 }
 
-const NewAddress = ({ callAddressModal, setCallAddressModal, address, zipcode }: Props) => {
+const NewAddress = ({
+  callAddressModal,
+  setCallAddressModal,
+  address,
+  zipcode,
+}: Props) => {
   const [addressInfo, setAddressInfo] = useState({
     shippingAddress: "",
     zipcode: "",

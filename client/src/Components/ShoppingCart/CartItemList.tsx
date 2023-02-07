@@ -33,20 +33,20 @@ export default function CartItemList(props: Props) {
               <li key={cartItem.itemId} className="Shopping_List_Contents">
                 <div className="Product_Container">
                   <div className="Cart_Product_Item_Content">
-                  <div className="Cart_Number">
-                    <span>{index + 1}번 제품</span>
-                  </div>
-                  <div className="Product_Profile">
-                    <img
-                      src={`${cartItem.titleImageURL}`}
-                      className="List_Product_Image"
-                    />
-                    <a href={`/itemDetail/${cartItem.itemId}`}>
-                      <span className="List_Product_Name">
-                        {cartItem.itemTitle}
-                      </span>
-                    </a>
-                  </div>
+                    <div className="Cart_Number">
+                      <span>{index + 1}번 제품</span>
+                    </div>
+                    <div className="Product_Profile">
+                      <img
+                        src={`${cartItem.titleImageURL}`}
+                        className="List_Product_Image"
+                      />
+                      <a href={`/itemDetail/${cartItem.itemId}`}>
+                        <span className="List_Product_Name">
+                          {cartItem.itemTitle}
+                        </span>
+                      </a>
+                    </div>
                   </div>
                   <div className="Product_Price_Info">
                     <div className="Count_Change">
@@ -95,7 +95,6 @@ export default function CartItemList(props: Props) {
                 </div>
                 <div className="Product_Delete">
                   <CustomButton
-                    //추후 memberId로 변경될 예정
                     onClick={() => {
                       deleteProduct(props.accessToken, cartItem.cartItemId);
                     }}

@@ -17,14 +17,16 @@ interface DetailType {
   address: string;
 }
 
-const AddressDetail = (props:DetailType) => {
+const AddressDetail = (props: DetailType) => {
   return (
     <DetailContainer>
       <li>{props.memberName}</li>
       <li>{props.phoneNumber}</li>
-      <li>({props.zipcode}){props.address}</li>
+      <li>
+        ({props.zipcode}){props.address}
+      </li>
     </DetailContainer>
-  )
-}
+  );
+};
 
-export default AddressDetail
+export default AddressDetail;

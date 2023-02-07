@@ -36,24 +36,17 @@ const memberId = Number(sessionStorage.getItem("memberId"));
 export default function MemberPageEdit() {
   const navigate = useNavigate();
   const [modalState, setModalState] = useState(false);
-  // modal 컴포넌트의 element에 들어갈 컴포넌트를 결정하는 변수
   const [isNewAddressModalOn, setIsNewAddressModalOn] = useState(false);
   const [isEditAddressModalOn, setIsEditAddressModalOn] = useState(false);
 
   const [memberAddressData, setMemberAddressData] =
     useState<MemberPageDataType>();
-
-  // 각 인풋 태그의 필드값 => 객체 상태에서 값을 불러올 시 문제가 발생하여 patch 메서드 사용 및 Input값 onChange 이벤트 핸들링을 위해 각 상태를 선언, 할당해 사용
   const [memberName, setMemberName] = useState<string | undefined>("");
   const [email, setEmail] = useState<string | undefined>("");
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>("");
   const [tagList, setTagList] = useState<string[] | undefined>([]);
   const [isSubscribed, setIsSubscribed] = useState<boolean | undefined>(true);
-
-  // API 요청 이후 리랜더링이 발생하지 않는 부분을 랜더링 하기 위한 변수
   const [render, setRender] = useState(false);
-
-  // 이후 주소 추가 기능 구현 시 사용될 예정 => 사용안될 시 페이지 리팩토링 단계에서 삭제
   const [newAddressId, setNewAddressId] = useState(
     memberAddressData?.addressList.length
   );
@@ -62,7 +55,6 @@ export default function MemberPageEdit() {
     memberAddressData?.addressList[0]
   );
 
-  // 구독 정보를 기반으로 혜택을 알려주기 위한 변수
   const calcMonth = subscriptionCalculation(
     memberAddressData?.subscribedDate as string
   );
@@ -140,7 +132,6 @@ export default function MemberPageEdit() {
   const setPrimaryAddress: React.MouseEventHandler<HTMLButtonElement> = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    // 혼란을 방지하기 위해 공용 컴포넌트에서 사용한 속성을 이름에 맞게 할당
     const addressId = Number(e.currentTarget.name);
     const addressListIndex = Number(e.currentTarget.id);
 
@@ -222,7 +213,6 @@ export default function MemberPageEdit() {
 
   return (
     <>
-      {/* 최상단에 모달 창 배치를 통해 위치 고정 */}
       {isNewAddressModalOn
         ? modalState && (
             <Modal
@@ -348,7 +338,6 @@ export default function MemberPageEdit() {
                           </div>
                         </div>
                         <div className="Address_List_Button">
-                          {/* 커스텀 컴포넌트를 유지한 채로 커스텀 속성을 활용하기 위해 기존 name, id 속성을 활용 */}
                           {address.isPrimary ? null : (
                             <CustomButton
                               bgColor="transparent"
