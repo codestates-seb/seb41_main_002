@@ -12,9 +12,7 @@ export const resetMemberPw = async (
   try {
     await authInstance
       .patch(`members/edit/${memberId}/password`, ResetPwData)
-      .then((res) => {
-        console.log("비밀번호 재설정 완료");
-      });
+      .then(() => console.log("비밀번호 재설정 완료"));
   } catch (error) {
     console.error(error);
   }

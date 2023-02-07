@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getTopList } from "../API/ItemTopList/getTopList";
 import TopListCategoryTab from "../Components/ItemTopList/TopListCategoryTab";
@@ -15,9 +15,13 @@ export default function ItemsTopList() {
   const navigate = useNavigate();
 
   const params = useParams();
-  console.log(params)
+  console.log(params);
   const topProductList = async () => {
-    const result = await getTopList(params.categoryENName as string, customCheck, accessToken);
+    const result = await getTopList(
+      params.categoryENName as string,
+      customCheck,
+      accessToken
+    );
     setTopProductData(result);
   };
 

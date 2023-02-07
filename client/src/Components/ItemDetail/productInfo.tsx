@@ -1,11 +1,11 @@
-import styled from "styled-components";
 import { Rating } from "../Commons/Rating";
 import { SkinTag } from "../Commons/TypeBadge";
 import CustomButton from "../Commons/Buttons";
 import { ItemDetailDataType } from "../../API/ItemDetail/getItemDetail";
-import "./Style/productInfo.css";
 import { addCartItem } from "../../API/ItemDetail/addCartItem";
+import styled from "styled-components";
 import { NavigateFunction } from "react-router-dom";
+import "./Style/productInfo.css";
 
 const ProductList = styled.li<{ height?: string; borderBtm?: string }>`
   display: flex;
@@ -44,7 +44,7 @@ const ContentsContainer = styled.div`
 
 const CountContainer = styled(ContentsContainer)`
   justify-content: space-evenly;
-`
+`;
 
 interface ItemType {
   itemId: number;

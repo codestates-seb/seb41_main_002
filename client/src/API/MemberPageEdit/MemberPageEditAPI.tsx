@@ -64,9 +64,9 @@ export const getMemberData = async (memberId: number) => {
 
 export const addNewAddress = async (newAddressData: newAddressType) => {
   try {
-    await authInstance.post(`/addresses`, newAddressData).then((res) => {
-      console.log("새 주소지 추가 완료");
-    });
+    await authInstance
+      .post(`/addresses`, newAddressData)
+      .then(() => console.log("새 주소지 추가 완료"));
   } catch (error) {
     console.error(error);
   }
@@ -79,9 +79,7 @@ export const updateAddress = async (
   try {
     await authInstance
       .patch(`/addresses/${addressId}`, addressEditData)
-      .then((res) => {
-        console.log("내 정보 수정 완료");
-      });
+      .then(() => console.log("내 정보 수정 완료"));
   } catch (error) {
     console.error(error);
   }
@@ -89,9 +87,9 @@ export const updateAddress = async (
 
 export const deleteAddress = async (addressId: number) => {
   try {
-    await authInstance.delete(`/addresses/${addressId}`).then((res) => {
-      console.log("해당 주소지 삭제 완료");
-    });
+    await authInstance
+      .delete(`/addresses/${addressId}`)
+      .then(() => console.log("해당 주소지 삭제 완료"));
   } catch (error) {
     console.error(error);
   }
@@ -104,9 +102,7 @@ export const updateMemberData = async (
   try {
     await authInstance
       .patch(`/members/edit/${memberId}`, memberEditData)
-      .then((res) => {
-        console.log("내 정보 수정 완료");
-      });
+      .then(() => console.log("내 정보 수정 완료"));
   } catch (error) {
     console.error(error);
   }
@@ -114,7 +110,6 @@ export const updateMemberData = async (
 
 export const cancelSubscription = async (memberId: number) => {
   const reqBody = { isSubscribed: false };
-
   try {
     await authInstance.patch(`/members/${memberId}/subscribe`, reqBody);
   } catch (error) {

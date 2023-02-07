@@ -17,8 +17,12 @@ export default function TopProductList(props: Props) {
                 <div className="Shopping_Product_Info">
                   <ProductImage src={`${product.titleImageURL}`} />
                   <div className="Product_Text_Container">
-                    <h4 className="Product_Title_Content"> {product.itemTitle} </h4>
-                    <p className="Product_Price_Content">가격: {product.price}원</p>
+                    <h4 className="Product_Title_Content">
+                      {product.itemTitle}{" "}
+                    </h4>
+                    <p className="Product_Price_Content">
+                      가격: {product.price}원
+                    </p>
                   </div>
                 </div>
               </a>

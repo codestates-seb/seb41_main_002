@@ -10,7 +10,7 @@ const StyledButton = styled.button<{
   height?: string;
   hoverColor?: string;
   hoverBGColor?: string;
-  marginRight?: string
+  marginRight?: string;
 }>`
   width: ${(props) => props.width};
   height: ${(props) => (props.height ? props.height : "100%")};
@@ -42,7 +42,7 @@ interface ButtonType {
   idx?: string;
   hoverColor?: string;
   hoverBGColor?: string;
-  marginRight?: string
+  marginRight?: string;
 }
 
 export default function CustomButton({
@@ -60,7 +60,7 @@ export default function CustomButton({
   height,
   hoverColor,
   hoverBGColor,
-  marginRight
+  marginRight,
 }: ButtonType) {
   return (
     <StyledButton

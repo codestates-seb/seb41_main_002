@@ -35,29 +35,25 @@ const memberId = Number(sessionStorage.getItem("memberId"));
 
 export default function MemberPageEdit() {
   const navigate = useNavigate();
-  const [modalState, setModalState] = useState<boolean>(false);
-  const [isNewAddressModalOn, setIsNewAddressModalOn] =
-    useState<boolean>(false);
-  const [isEditAddressModalOn, setIsEditAddressModalOn] =
-    useState<boolean>(false);
+  const [modalState, setModalState] = useState(false);
+  const [isNewAddressModalOn, setIsNewAddressModalOn] = useState(false);
+  const [isEditAddressModalOn, setIsEditAddressModalOn] = useState(false);
 
   const [memberAddressData, setMemberAddressData] =
     useState<MemberPageDataType>();
-
-  const [memberName, setMemberName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
-  const [tagList, setTagList] = useState<string[]>([]);
-  const [isSubscribed, setIsSubscribed] = useState<boolean>(true);
-
-  const [render, setRender] = useState<boolean>(false);
-
-  const [newAddressId, setNewAddressId] = useState<number>(
-    memberAddressData?.addressList.length as number
+  const [memberName, setMemberName] = useState<string | undefined>("");
+  const [email, setEmail] = useState<string | undefined>("");
+  const [phoneNumber, setPhoneNumber] = useState<string | undefined>("");
+  const [tagList, setTagList] = useState<string[] | undefined>([]);
+  const [isSubscribed, setIsSubscribed] = useState<boolean | undefined>(true);
+  const [render, setRender] = useState(false);
+  const [newAddressId, setNewAddressId] = useState(
+    memberAddressData?.addressList.length
   );
   const [editingAddress, setEditingAddress] = useState<AddressType>(
     memberAddressData?.addressList[0] as AddressType
   );
+
   const calcMonth = subscriptionCalculation(
     memberAddressData?.subscribedDate as string
   );

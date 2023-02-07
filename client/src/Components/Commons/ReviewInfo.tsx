@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   getReviewInfo,
   ReviewInfoDelete,
-  ReviewInfoType,
   ReviewInfoUpdate,
   ReviewUserInfoType,
 } from "../../API/Review";
@@ -66,7 +65,7 @@ const ReviewInfo = ({ reviewId }: PropsType) => {
       ReviewInfoUpdate(reviewId, review).then(() => {
         alert("수정되었습니다.");
         window.location.reload();
-      })
+      });
     } else {
       alert("취소했습니다.");
     }

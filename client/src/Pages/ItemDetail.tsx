@@ -5,7 +5,6 @@ import ProductInfo from "../Components/ItemDetail/productInfo";
 import { ItemDetailDataType } from "../API/ItemDetail/getItemDetail";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductReview from "../Components/ItemDetail/ProductReview";
-import CustomButton from "../Components/Commons/Buttons";
 import "./Style/itemDetail.css";
 
 const ItemDetail = () => {
@@ -18,7 +17,6 @@ const ItemDetail = () => {
 
   const [detailPageData, setDetailPageData] =
     useState<ItemDetailDataType | null>(null);
-  //추후 count 로직 리팩토링 예정
   const [productCount, setProductCount] = useState(0);
   const [productTotalPrice, setProductTotalPrice] = useState(0);
 
@@ -83,8 +81,6 @@ const ItemDetail = () => {
       <div className="Item_Contents">
         <img src={`${detailPageData?.itemInfo.contentImageURL}`} />
       </div>
-      {/* <div className="Item_Submit">
-      </div> */}
       {detailPageData?.reviews && detailPageData.reviews.length !== 0 ? (
         <ProductReview reviewsInfo={detailPageData?.reviews} />
       ) : (
