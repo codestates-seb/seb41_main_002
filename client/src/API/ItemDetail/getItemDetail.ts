@@ -32,15 +32,15 @@ export default function getItemDetail(
   itemId: string | undefined
 ): Promise<ItemDetailDataType> {
   return new Promise(async (resolve) => {
-    let result: any;
+    let result: ItemDetailDataType
     try {
       const itemDetailData = await defaultInstance.get(
         `/items/details/${itemId}`
       );
       result = itemDetailData.data;
+      resolve(result);
     } catch (error) {
       console.error(error);
     }
-    resolve(result);
   });
 }

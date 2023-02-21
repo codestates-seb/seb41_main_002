@@ -19,7 +19,7 @@ export const getShoppingCart = async (
   memberId: string
 ) => {
   try {
-    const result: any = await authInstance.get(
+    const result = await authInstance.get(
       `/members/${memberId}/carts`,
     );
     return result.data;

@@ -55,7 +55,7 @@ const getProducts = async (
   custom: boolean,
   page = 0,
   keyword = "",
-  accessToken?: string | null
+  accessToken: string | null
 ): Promise<ProductProps[]> => {
   const results = await getProductList({
     categoryENName: categoryName,
