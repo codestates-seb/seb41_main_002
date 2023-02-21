@@ -20,7 +20,7 @@ const changeToken = () => {
             Refresh: refreshToken,
           },
         })
-        .then((res: any) => {
+        .then((res) => {
           sessionStorage.setItem("accessToken", res.data.accessToken);
           sessionStorage.setItem("refreshToken", res.data.refreshToken);
           window.location.reload();

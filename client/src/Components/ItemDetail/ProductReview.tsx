@@ -58,8 +58,7 @@ export default function ProductReview(props: Props) {
                   <div className="Review_User_Info">
                     <span>{review.accountId}</span>
                     <span>{review.createdAt}</span>
-                    {/* any타입 추후 리팩토링 예정 */}
-                    {session && (session as any) === review.memberId ? (
+                    {session && (session) === `${review.memberId}` ? (
                       <a href={`/reviews/${review.reviewId}`}>
                         <span>✍🏻</span>
                       </a>
