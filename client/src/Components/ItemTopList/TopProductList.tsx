@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { ProductImage } from "../../Pages/ShoppingPage";
 import "./Style/topProductList.css";
 // 추후 리팩토링 예정

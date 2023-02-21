@@ -85,7 +85,7 @@ export default function SkinTestPage() {
     conCatArr();
   }, [selectedItems]);
 
-  const skinTypeArr: any = [
+  const skinTypeArr = [
     {
       skinTag: "피부타입",
       questionAnswer: "상",
@@ -148,7 +148,7 @@ export default function SkinTestPage() {
             건조한 계절이나 환절기에 화장품을 바르지 않았을때 얼굴이 당기나요?
           </h2>
           <div className="Type_Test_Content">
-            {skinTypeArr.map((el: any, index: number) => {
+            {skinTypeArr.map((el, index) => {
               return (
                 <div className="Type_Tag_Btn" key={el.skinCategory}>
                   <TagButton
@@ -170,7 +170,7 @@ export default function SkinTestPage() {
           <div className="Test_Type_Container">
             <h2>현재 본인의 피부 트러블 상태는 어떤가요?</h2>
             <div className="Type_Test_Content">
-              {acneTypeArr.map((el: any, index: number) => {
+              {acneTypeArr.map((el, index) => {
                 return (
                   <div className="Type_Tag_Btn" key={el.questionAnswer}>
                     <TagButton
@@ -226,12 +226,12 @@ export default function SkinTestPage() {
             </div>
             <div>
               <h2>당신이 관심있는 효능은 </h2>
-              {selectedItems.map((el: any) => {
+              {selectedItems.map((el) => {
                 return <h2 key={el}>🧴 {el}</h2>;
               })}
               <h2>입니다</h2>
               <h2>
-                제품을 보러가시려면{" "}
+                제품을 보러가시려면
                 <a className="Navigate_Shopping_List" href="/items-list/all">
                   여기
                 </a>
