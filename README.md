@@ -1,6 +1,5 @@
 # 🧴 Lacier
 ♂️ 남성 화장품 맞춤 서비스 쇼핑몰<br/>
-배포링크 : http://seb41team02.s3-website.ap-northeast-2.amazonaws.com
 
 ## 💧 서비스 소개
 ### "하.. 화장품 종류도 너무많고.. 대체 내 피부에 맞는 화장품은 뭘사야되는거지?"
